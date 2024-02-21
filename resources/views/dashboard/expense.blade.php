@@ -1,0 +1,82 @@
+@extends('includes.body')
+
+@extends('includes.menu')
+
+@section('content')
+<div class="shadow-sm main-content">
+    <div class="window-title-bar">
+        <x-feathericon-menu class="window-title-icon"/>
+    </div>
+    <div class="window-body bg-white">
+        <label class="window-body-form">Registrar nuevo egreso</label>
+        <form action="{{ route('expenses.store') }}" method="POST" class="border pt-5 pb-4">
+            @csrf
+            <div class="col-md-6">                
+                <div class="row">
+                    <div class="col-md-3 pt-2 text-end">
+                        Nombre
+                    </div>    
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Descripción
+                    </div>
+                    <div class="col-md-9">
+                        <textarea class="form-control" cols="30" rows="4" name="description"></textarea>
+                    </div>                
+                </div>             
+
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Cantidad
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="amount" required>
+                    </div>
+                    <div class="col-md-3 pt-2 text-end">
+                        Precio
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" name="price" required>
+                        </div>
+                    </div>
+                </div>       
+            </div>
+            
+            <div class="col-md-6 mt-3 text-end">
+                <a href="{{ route('expenses.index') }}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-success">
+                    <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection
+
+@section('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+function showMessageAlert(){
+    Swal.fire({
+        text: 'Los datos se guardaron correctamente',
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    })
+}
+</script>    
+@endsection
