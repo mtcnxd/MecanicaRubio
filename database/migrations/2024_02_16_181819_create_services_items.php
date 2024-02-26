@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('service_id');
             $table->integer('amount');
             $table->string('item');
+            $table->string('supplier')->nullable();
             $table->double('price');
         });
     }

@@ -133,7 +133,11 @@
                                 </a>
                             </td>
                             <td>{{ $item->amount }}</td>
-                            <td>{{ $item->item }}</td>
+                            <td>
+                                <a href="#">
+                                    {{ $item->item }}
+                                </a>
+                            </td>
                             <td class="text-end">{{ '$'.number_format($item->price,2) }}</td>
                             <td class="text-end">{{ '$'.number_format($item->amount * $item->price, 2) }}</td>
                         </tr>
@@ -174,7 +178,14 @@
                 </div>
                 <div class="col-md-6 text-end">
                     <a href="{{ route('services.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a href="#" class="btn btn-secondary">
+                        <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
+                        Imprimir
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                        Guardar
+                    </button>
                 </div>
             </div>
         </form>
@@ -257,6 +268,14 @@ $(".removeItem").on('click', function (event){
                     </div>
                     <div class="col-md-9">
                         <input type="text" class="form-control" id="item">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Proveedor
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="supplier">
                     </div>
                 </div>
                 <div class="row mt-3">

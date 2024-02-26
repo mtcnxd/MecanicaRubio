@@ -38,6 +38,7 @@ class ControllerExpenses extends Controller
             'description' => $request->description,
             'amount'      => $request->amount,
             'price'       => $request->price,
+            'responsible' => $request->responsible,
             'created_at'  => Carbon::now(),
             'updated_at'  => Carbon::now(),
         ]);

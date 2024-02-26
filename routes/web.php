@@ -5,6 +5,7 @@ use App\Http\Controllers\ControllerClients;
 use App\Http\Controllers\ControllerAutos;
 use App\Http\Controllers\ControllerServices;
 use App\Http\Controllers\ControllerExpenses;
+use App\Http\Controllers\ControllerCalendar;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ use App\Http\Controllers\ControllerExpenses;
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar');
 
 Route::get('dashboard', function() {
     $services = DB::table('services')

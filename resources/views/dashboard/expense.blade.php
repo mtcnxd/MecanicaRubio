@@ -48,6 +48,18 @@
                             <input type="text" class="form-control" name="price" required>
                         </div>
                     </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Responsable
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-select" name="responsible" required>
+                            <option value="3">Alexander Xix Ortiz</option>
+                            <option value="2">Javier Rubio Magaña</option>
+                            <option value="1">Marcos Tzuc Cen</option>
+                        </select>
+                    </div>
                 </div>       
             </div>
             
