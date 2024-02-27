@@ -3,7 +3,10 @@
 	<ul class="dropdown">
 		<li>			
 			<a href="#clients">
-				<h5 class="menu-title">Clientes</h5>
+				<h5 class="menu-title">
+					<x-feathericon-user class="table-icon" style="margin-top:-4px;"/>
+					Clientes
+				</h5>
 			</a>
 			<ul class="menu-dropdown">
 				<li><a class="menu-item" href="{{ route('clients.index') }}">Buscar cliente</a></li>
@@ -14,7 +17,10 @@
 		</li>
 		<li>
 			<a href="#services">
-				<h5 class="menu-title">Servicios</h5>
+				<h5 class="menu-title">
+					<x-feathericon-tool class="table-icon" style="margin-top:-4px;"/>
+					Servicios
+				</h5>
 			</a>
 			<ul class="menu-dropdown">
 				<li><a class="menu-item" href="{{ route('services.index') }}">Buscar servicio</a></li>
@@ -24,7 +30,10 @@
 		</li>
 		<li>
 			<a href="#finance">
-				<h5 class="menu-title">Finanzas</h5>
+				<h5 class="menu-title">
+					<x-feathericon-dollar-sign class="table-icon" style="margin-top:-4px;"/>
+					Finanzas
+				</h5>
 			</a>
 			<ul class="menu-dropdown">
 				<li><a class="menu-item" href="{{ route('dashboard') }}">Resumen</a></li>
@@ -34,7 +43,10 @@
 		</li>
 		<li>
 			<a href="#settings">
-				<h5 class="menu-title">Configuracion</h5>
+				<h5 class="menu-title">
+					<x-feathericon-settings class="table-icon" style="margin-top:-4px;"/>
+					Configuracion
+				</h5>
 			</a>
 			<ul class="menu-dropdown">
 				<li>

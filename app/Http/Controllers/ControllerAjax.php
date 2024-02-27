@@ -103,4 +103,14 @@ class ControllerAjax extends Controller
         return json_encode($addresses);
     }
 
+    public function loadEvent(Request $request)
+    {
+        $event = DB::table('calendar')
+            ->join('clients', 'calendar.client_id', 'clients.id')
+            ->where('calendar.id', $request->id)
+            ->first();
+
+        return json_encode($event);
+    }
+
 }

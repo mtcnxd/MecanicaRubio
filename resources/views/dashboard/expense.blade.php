@@ -37,7 +37,7 @@
                         Cantidad
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="amount" required>
+                        <input type="text" class="form-control" name="amount" value="1">
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Precio

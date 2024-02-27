@@ -51,3 +51,7 @@ Route::post('removeItemInvoice', [
 Route::post('searchPostalCode', [
     ControllerAjax::class, 'searchPostalCode'
 ])->name('searchPostalCode');
+
+Route::post('loadEvent', [
+    ControllerAjax::class, 'loadEvent'
+])->name('loadEvent');
