@@ -5,7 +5,7 @@
 @section('content')
 <div class="calendar shadow-sm">
 	<div class="calendar-title pb-0">
-		<h4>Febrero</h4>
+		<h4>{{ $month }}</h4>
 		@foreach ($daysOfWeek as $day)
 		<div class="day title">
 			{{ $day }}	
@@ -13,6 +13,14 @@
 		@endforeach
 	</div>
 	<div class="calendar-body">
+        @for ($i = 0; $i < $weekStartsIn; $i++)
+            <div class="day date empty">
+                <div style="display: grid;">
+                    <span class="day-label" style="visibility: hidden">0</span>
+                </div>
+            </div>
+        @endfor
+
 		@foreach ($events as $key => $event)
 			<div class="day date {{ ($key + 1 == $currentDate) ? 'active' : '' }}">
 				<div style="display: grid;">

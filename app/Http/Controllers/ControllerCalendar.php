@@ -8,34 +8,35 @@ use DB;
 
 class ControllerCalendar extends Controller
 {
-    public $currentDate;
-
     public function index()
     {
-        $currentDate = date('d');
+        $month = date('n');
+        $months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
         $daysOfweek = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
         
-        for($i = 1; $i<= $this->daysOfMonth(2); $i++) {
+        for($i = 1; $i<= $this->daysOfMonth($month); $i++) {
             $date = Carbon::parse(date('Y-m-').$i);
             $events[] = DB::table('calendar')->where('date', $date)->first();
         }
 
-        // dd($events);
-
         return view('dashboard.calendar', [
-            'daysOfWeek'  => $daysOfweek,
-            'daysOfMonth' => $this->daysOfMonth(2),
-            'currentDate' => date('d'),
-            'events'      => $events,
+            'weekStartsIn' => $this->getFirstDay($month),
+            'daysOfWeek'   => $daysOfweek,
+            'daysOfMonth'  => $this->daysOfMonth($month),
+            'currentDate'  => date('d'),
+            'events'       => $events,
+            'month'        => $months[$month - 1],
         ]);
     }
 
-    public function daysOfMonth($month)
+    protected function getFirstDay($month)
     {
-        $events = DB::table('calendar')
-            ->where('date', '23-02-2024')
-            ->get();
+        $firstDay = mktime(0, 0, 0, $month, 0, date("Y"));
+        return date('N', $firstDay);
+    }
 
+    protected function daysOfMonth($month)
+    {
         return cal_days_in_month(CAL_GREGORIAN, $month, date('Y'));
     }
 }
