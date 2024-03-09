@@ -25,15 +25,16 @@ $columns = [
 
 require 'ssp.class.php';
 
-/*
-$startDate = $_GET['startDate'];
-$endDate   = $_GET['endDate'];
-*/
+$whereAll = null;
 
-// var_dump($_GET);
+if ($_GET['status'] != 'Todos'){
+    // $whereAll = "status = '". $_GET['status'] ."' AND ";
+}
 
-// $whereAll = 'created_at BETWEEN '.$startDate.' AND '. $endDate;
+if ( !empty($_GET['startDate']) && !empty($_GET['endDate']) ){
+    $whereAll .= " created_at BETWEEN '".$_GET['startDate']."' AND '". $_GET['endDate'] ."'";   
+}
 
 echo json_encode(
-    SSP::complexJoin( $_GET, $dbDetails, $table, $primaryKey, $columns, $whereResult, $whereAll, $joinWith)
+    SSP::complex( $_GET, $dbDetails, $table, $primaryKey, $columns, $whereResult, $whereAll)
 );

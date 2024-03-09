@@ -346,10 +346,12 @@ class SSP {
             $whereAllSql = 'WHERE '.$whereAll;
         }
 
+        $query = "SELECT `".implode("`, `", self::pluck($columns, 'db'))."` FROM `$table` $where $order $limit";
+
+        // var_dump($query);
+
         // Main query to actually get the data
-        $data = self::sql_exec( $db, $bindings,
-            "SELECT `".implode("`, `", self::pluck($columns, 'db'))."` FROM `$table` $where $order $limit"
-        );
+        $data = self::sql_exec( $db, $bindings, $query);
 
         // Data set length after filtering
         $resFilterLength = self::sql_exec( $db, $bindings,

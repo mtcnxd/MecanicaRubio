@@ -24,6 +24,16 @@
                 <label for="endDate">Final</label>
                 <input type="date" class="form-control" id="endDate">
             </div>
+            <div class="col-md-2">
+                <label for="endDate">Estatus</label>
+                <select class="form-select" id="status">
+                    <option>Todos</option>
+                    <option>Entregado</option>
+                    <option>Pendiente</option>
+                    <option>Esperando cliente</option>
+                    <option>Esperando refaccion</option>
+                </select>
+            </div>
             <div class="col-md-2 mt-4">
                 <input type="button" class="btn btn-primary" id="applyFilter" value="Buscar">
             </div>
@@ -42,30 +52,7 @@
             </thead>
             <tbody>
             @foreach ($services as $service)
-                <tr>
-                    <td>
-                        <a href="{{ route('clients.show', $service->client_id) }}">
-                            <x-feathericon-chevrons-right class="table-icon" style="color: var(--amber-700);"/>
-                            {{ $service->name }}
-                        </a>
-                    </td>
-                    <td>{{ $service->brand }} {{ $service->model }}</td>
-                    <td>{{ Str::limit($service->fault, 80) }}</td>
-                    <td>{{ date ('d-m-Y', strtotime($service->created_at)) }}</td>
-                    <td>
-                        @if ($service->status == 'Finalizado' || $service->status == 'Entregado')
-                            <span class="badge text-bg-success">{{ $service->status }}</span>
-                        @else
-                            <span class="badge text-bg-warning">{{ $service->status }}</span>
-                        @endif
-                    </td>
-                    <td class="text-end">{{ '$'.number_format($service->total,2) }}</td>
-                    <td class="text-end">
-                        <a href="{{ route('services.show', $service->id) }}">
-                            <x-feathericon-eye class="table-icon"/>
-                        </a>
-                    </td>
-                </tr>
+
             @endforeach
             </tbody>
         </table>
@@ -78,13 +65,17 @@
 <script>
     const startDate = document.querySelector("#startDate");
     const endDate   = document.querySelector("#endDate");
+    const status    = document.querySelector("#status");
     const applyFilter = document.querySelector('#applyFilter');
 
     const table = new DataTable('#services', {
-        ajax: "{{ asset('dataTables/index.php') }}",
-        data:{
-            startDate:startDate.value,
-            endDate:endDate.value
+        ajax: {
+            url: "{{ asset('dataTables/index.php') }}",
+            data: function(data){
+                data.startDate = startDate.value;
+                data.endDate = endDate.value;
+                data.status = status.value;
+            }
         },
         columns: [
             {
@@ -142,7 +133,6 @@
     });
     
     applyFilter.addEventListener('click', function(){
-        console.log('click: ' + startDate.value + " / " + endDate.value);
         table.draw();
     });
 
