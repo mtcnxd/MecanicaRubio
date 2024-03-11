@@ -72,7 +72,7 @@
 
     const table = new DataTable('#services', 
     {
-        url:"{{ route('searchPostalCode') }}",
+        url:"{{ assets('dataTables/index.php') }}",
         columns: [
             {
                 data:'client',
