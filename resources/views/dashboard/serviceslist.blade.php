@@ -72,7 +72,14 @@
 
     const table = new DataTable('#services', 
     {
-        url:"{{ assets('dataTables/index.php') }}",
+        ajax: {
+            url:"{{ asset('dataTables/index.php') }}",
+            data: function(data){
+                data.startDate = startDate.value;
+                data.endDate   = endDate.value;
+                data.status    = status.value;
+            }
+        },
         columns: [
             {
                 data:'client',
