@@ -116,14 +116,15 @@ class ControllerAjax extends Controller
 
     public function getDataTableServices(Request $request)
     {
-        $data = DB::table('services_view')->get();
+        $serviceData = DB::table('services_view')
+            ->select('client','car','fault','created_at','status','total')
+            ->get();
 
-        return DataTables::of($data)
-        ->addColumn('action', function($services){
-            return '<a href="{{ route(services.show, 12) }}"><x-feathericon-eye class="table-icon"/></a>';
-        })
-        ->rawColumns(['action'])
-        ->make(true);
+        return DataTables::of($serviceData)
+            ->addColumn('view', function($results){
+                return 'hola' ;
+            })
+            ->make(true);
     }
 
 }

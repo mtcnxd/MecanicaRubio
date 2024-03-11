@@ -65,6 +65,8 @@
 @section('js')
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script>
+$(document).ready(function() 
+{
     const startDate   = document.querySelector("#startDate");
     const endDate     = document.querySelector("#endDate");
     const status      = document.querySelector("#status");
@@ -72,71 +74,15 @@
 
     const table = new DataTable('#services', 
     {
-        url:"{{ route('searchPostalCode') }}",
-        columns: [
-            {
-                data:'client',
-                render: function(data, type, row){
-                    return '<a href="{{ route('clients.show', $service->client_id) }}">'+
-                           '<x-feathericon-chevrons-right class="table-icon" style="color: var(--amber-700);"/>' + row.client +'</a>';
-                }
-            },{
-                data:'car'
-            },{
-                data:'fault'
-            },{
-                data:'created_at',
-                render: function(data, type, row){
-                    return new Date(row.created_at).toLocaleDateString();
-                }
-            },{
-                data:'status',
-                render: function(data, type, row){
-                    if (row.status == 'Finalizado' || row.status == 'Entregado'){
-                        return '<span class="badge text-bg-success">'+ row.status +'</span>';
-                    }
-                    else if (row.status == 'Cancelado') {
-                        return '<span class="badge text-bg-secondary">'+ row.status +'</span>';
-                    }
-                    else {
-                        return '<span class="badge text-bg-warning">'+ row.status +'</span>';
-                    }
-                }
-            },{
-                data:'total',
-                className: 'dt-body-right',
-                render: function(data, type, row){
-                    if (row.total){
-                        return '$' + row.total;
-                    }
-                    return '$0.0';
-                }
-            },{
-                data:'show',
-                render: function(data, type, row){
-                    let id = 14;
-                    return '<a href="{{ route('services.show', '+ id +') }}"><x-feathericon-eye class="table-icon"/></a>';
-                }
-            }
-        ],
+        url:"{{ route('getDataTableServices') }}",
         processing: true,
-        serverSide: true,
-        searching:false,
-        lengthChange: false,
-        pageLength: 10,
-        columnDefs: [{
-            orderable: false,
-            target: [1,2,5,6]
-        }],
-        order: [
-            [3, 'asc']
-        ]
-    });
-    
-    applyFilter.addEventListener('click', function(){
-        table.draw();
+        serverSide: true
     });
 
+    applyFilter.addEventListener('click', function(){
+        table.draw();
+    });    
+});
 </script>
 @endsection
 
