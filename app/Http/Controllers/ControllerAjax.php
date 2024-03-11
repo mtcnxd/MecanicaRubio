@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
 use Exception;
 use DB;
 
@@ -111,6 +112,18 @@ class ControllerAjax extends Controller
             ->first();
 
         return json_encode($event);
+    }
+
+    public function getDataTableServices(Request $request)
+    {
+        $data = DB::table('services_view')->get();
+
+        return DataTables::of($data)
+        ->addColumn('action', function($services){
+            return '<a href="{{ route(services.show, 12) }}"><x-feathericon-eye class="table-icon"/></a>';
+        })
+        ->rawColumns(['action'])
+        ->make(true);
     }
 
 }

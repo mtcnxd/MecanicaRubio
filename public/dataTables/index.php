@@ -28,11 +28,16 @@ require 'ssp.class.php';
 $whereAll = null;
 
 if ($_GET['status'] != 'Todos'){
-    // $whereAll = "status = '". $_GET['status'] ."' AND ";
+    $whereAll .= "status = '". $_GET['status'] ."'";
 }
 
 if ( !empty($_GET['startDate']) && !empty($_GET['endDate']) ){
-    $whereAll .= " created_at BETWEEN '".$_GET['startDate']."' AND '". $_GET['endDate'] ."'";   
+
+    if ($_GET['status'] != 'Todos'){
+        $whereAll .= ' AND ';
+    }
+
+    $whereAll .= "created_at BETWEEN '".$_GET['startDate']."' AND '". $_GET['endDate'] ."'";   
 }
 
 echo json_encode(

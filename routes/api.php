@@ -55,3 +55,7 @@ Route::post('searchPostalCode', [
 Route::post('loadEvent', [
     ControllerAjax::class, 'loadEvent'
 ])->name('loadEvent');
+
+Route::get('getDataTableServices', [
+    ControllerAjax::class, 'getDataTableServices'
+])->name('getDataTableServices');
