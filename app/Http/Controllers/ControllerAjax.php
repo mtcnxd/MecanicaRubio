@@ -117,12 +117,11 @@ class ControllerAjax extends Controller
     public function getDataTableServices(Request $request)
     {
         $serviceData = DB::table('services_view')
-            ->select('client','car','fault','created_at','status','total')
             ->get();
 
         return DataTables::of($serviceData)
-            ->addColumn('view', function($results){
-                return 'hola' ;
+            ->addColumn('', function($results){
+                return '' ;
             })
             ->make(true);
     }

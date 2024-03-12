@@ -74,9 +74,29 @@ $(document).ready(function()
 
     const table = new DataTable('#services', 
     {
-        url:"{{ route('getDataTableServices') }}",
         processing: true,
-        serverSide: true
+        serverSide: true,        
+        ajax: "{{ route('getDataTableServices') }}",
+        columns:[
+            {
+                data:'client' 
+            },{
+                data:'car'
+            },{
+                data:'fault'
+            },{
+                data:'created_at'
+            },{
+                data:'status'
+            },{
+                data:'total'
+            }
+        ],
+        data: {
+            startDate:startDate,
+            endDate:endDate,
+            status:status
+        }        
     });
 
     applyFilter.addEventListener('click', function(){
