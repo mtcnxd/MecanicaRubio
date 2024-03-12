@@ -182,6 +182,10 @@
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
+                    <a href="{{ route('services.index') }}" class="btn btn-secondary">
+                        <x-feathericon-file-text class="table-icon" style="margin: -2px 5px 2px"/>
+                        Facturar
+                    </a>
                     <button type="submit" class="btn btn-success">
                         <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                         Guardar

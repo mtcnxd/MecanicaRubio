@@ -135,7 +135,7 @@ class ControllerAjax extends Controller
 
         return DataTables::of($serviceData)
             ->addColumn('fault', function($service){
-                return '<a href="' . route("services.show", $service->id) .'">'. Str::limit($service->fault, 40) ."</a>";
+                return '<a href="'. route("services.show", $service->id) .'">'. Str::limit($service->fault, 40) ."</a>";
             })
             ->addColumn('created_at', function($service){
                 return Carbon::parse($service->created_at)->format('d-m-Y');

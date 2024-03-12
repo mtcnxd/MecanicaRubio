@@ -37,7 +37,10 @@
                 </select>
             </div>
             <div class="col-md-2 mt-4">
-                <input type="button" class="btn btn-primary" id="applyFilter" value="Buscar">
+                <button class="btn btn-success" id="applyFilter">
+                    <x-feathericon-search class="table-icon" style="margin: -2px 5px 2px"/>
+                    Buscar
+                </button>
             </div>
         </div>
         <table class="table table-hover table-borderless" id="services" style="width:100%;">

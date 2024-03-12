@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="main-content">
-    <h3>Resumen semana</h3>
+    <h3>Resumen</h3>
     <hr>
     <div class="row">
         <div class="col-md-4">
@@ -79,5 +79,66 @@
         </div>
     </div>
 
+    <h3 class="mt-5">Gráficas</h3>
+    <hr class="mb-4">
+
+    <div class="row">
+        <div class="col-md-4">
+            <canvas id="incomes"></canvas>
+        </div>
+
+        <div class="col-md-4">
+            <canvas id="services"></canvas>
+        </div>        
+    </div>
+
 </div>
+@endsection
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('incomes').getContext('2d');
+    var incomes = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Enero','Febreo','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+            datasets: [{
+                data: [20,30,25,35,40,20,28,38,23,40,43,58],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins:{
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+    var ctx = document.getElementById('services').getContext('2d');
+    var services = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Enero','Febreo','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+            datasets: [{
+                // label: 'Data',
+                data: [20,30,25,35,40,20,28,38,23,40,43,58],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins:{
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });    
+</script>
 @endsection
