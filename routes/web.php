@@ -6,6 +6,7 @@ use App\Http\Controllers\ControllerAutos;
 use App\Http\Controllers\ControllerServices;
 use App\Http\Controllers\ControllerExpenses;
 use App\Http\Controllers\ControllerCalendar;
+use App\Http\Controllers\ControllerCharts;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,16 +25,17 @@ Route::get('/', function () {
 
 Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar');
 
-Route::get('dashboard', function() {
+Route::get('dashboard', function() 
+{
     $services = DB::table('services')
         ->join('autos', 'services.car_id', 'autos.id')
         ->where('services.status', 'Entregado')
         ->get();
 
-
     return view('dashboard.index',[
         'services' => $services,
         'expenses' => DB::table('expenses')->get(),
+        'servicesChart' =>     ControllerCharts::getServicesChart(),
     ]);
 })->name('dashboard');
 

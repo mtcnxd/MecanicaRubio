@@ -64,7 +64,7 @@
                 <x-feathericon-tool class="window-title-icon"/>
             </div>
             <div class="window-body bg-white shadow-sm">
-                <table class="table table-sm">
+                <table class="table table-sm table-striped">
                 @foreach ($services as $row => $service)
                     <tr>
                         <td>{{ $row +1 }}</td>
@@ -102,9 +102,9 @@
     var incomes = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Enero','Febreo','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+            labels: @json($servicesChart['labels']),
             datasets: [{
-                data: [20,30,25,35,40,20,28,38,23,40,43,58],
+                data: @json($servicesChart['values']),
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
