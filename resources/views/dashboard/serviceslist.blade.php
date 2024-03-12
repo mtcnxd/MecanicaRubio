@@ -40,12 +40,12 @@
                 <input type="button" class="btn btn-primary" id="applyFilter" value="Buscar">
             </div>
         </div>
-        <table class="table table-hover table-borderless" id="services">
+        <table class="table table-hover table-borderless" id="services" style="width:100%;">
             <thead>
                 <tr>
+                    <th>Servicio/Fallo</th>
                     <th>Cliente</th>
                     <th>Automovil</th>
-                    <th>Servicio/Fallo</th>
                     <th>Fecha servicio</th>
                     <th>Estatus</th>
                     <th class="text-end">Total</th>
@@ -83,18 +83,19 @@ const table = new DataTable('#services',
     },
     columns:[
         {
+            data:'fault',
+            orderable: false
+        },{
             data:'client'
         },{
             data:'car'
-        },{
-            data:'fault',
-            orderable: false
         },{
             data:'created_at'
         },{
             data:'status'
         },{
             data:'total',
+            className: 'text-end',
             orderable: false
         }
     ]

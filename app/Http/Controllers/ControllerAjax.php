@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DataTables;
 use Exception;
+use Str;
 use DB;
 
 class ControllerAjax extends Controller
@@ -133,8 +134,8 @@ class ControllerAjax extends Controller
         }
 
         return DataTables::of($serviceData)
-            ->addColumn('client', function($service){
-                return '<a href="' . route("services.show", $service->id) .'">'. $service->client ."</a>";
+            ->addColumn('fault', function($service){
+                return '<a href="' . route("services.show", $service->id) .'">'. Str::limit($service->fault, 40) ."</a>";
             })
             ->addColumn('created_at', function($service){
                 return Carbon::parse($service->created_at)->format('d-m-Y');
@@ -153,7 +154,7 @@ class ControllerAjax extends Controller
             ->addColumn('total', function($service){
                 return '$'.number_format($service->total, 2);
             })
-            ->rawColumns(['client','status'])
+            ->rawColumns(['fault','status'])
             ->make(true);
     }
 
