@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use DataTables;
 use Exception;
 use DB;
@@ -119,10 +120,40 @@ class ControllerAjax extends Controller
         $serviceData = DB::table('services_view')
             ->get();
 
+        if($request->startDate && $request->endDate){
+            $serviceData = DB::table('services_view')
+                ->whereBetween('created_at', [$request->startDate, $request->endDate])
+                ->get();
+        }
+
+        if ($request->status != 'Todos'){
+            $serviceData = DB::table('services_view')
+                ->where('status', $request->status)
+                ->get();
+        }
+
         return DataTables::of($serviceData)
-            ->addColumn('', function($results){
-                return '' ;
+            ->addColumn('client', function($service){
+                return '<a href="' . route("services.show", $service->id) .'">'. $service->client ."</a>";
             })
+            ->addColumn('created_at', function($service){
+                return Carbon::parse($service->created_at)->format('d-m-Y');
+            })
+            ->addColumn('status', function($service){
+                if ($service->status == 'Finalizado' || $service->status == 'Entregado'){
+                    return '<span class="badge text-bg-success">'. $service->status .'</span>';
+                }
+                else if ($service->status == 'Cancelado') {
+                    return '<span class="badge text-bg-secondary">'. $service->status .'</span>';
+                }
+                else {
+                    return '<span class="badge text-bg-warning">'. $service->status .'</span>';
+                }
+            })
+            ->addColumn('total', function($service){
+                return '$'.number_format($service->total, 2);
+            })
+            ->rawColumns(['client','status'])
             ->make(true);
     }
 

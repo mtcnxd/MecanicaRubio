@@ -52,11 +52,6 @@
                     <th>&nbsp;</th>
                 </tr>
             </thead>
-            <tbody>
-            @foreach ($services as $service)
-
-            @endforeach
-            </tbody>
         </table>
     </div>
 </div>
@@ -65,44 +60,49 @@
 @section('js')
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script>
-$(document).ready(function() 
+const startDate   = document.querySelector("#startDate");
+const endDate     = document.querySelector("#endDate");
+const status      = document.querySelector("#status");
+const applyFilter = document.querySelector('#applyFilter');
+
+const table = new DataTable('#services', 
 {
-    const startDate   = document.querySelector("#startDate");
-    const endDate     = document.querySelector("#endDate");
-    const status      = document.querySelector("#status");
-    const applyFilter = document.querySelector('#applyFilter');
-
-    const table = new DataTable('#services', 
-    {
-        processing: true,
-        serverSide: true,        
-        ajax: "{{ route('getDataTableServices') }}",
-        columns:[
-            {
-                data:'client' 
-            },{
-                data:'car'
-            },{
-                data:'fault'
-            },{
-                data:'created_at'
-            },{
-                data:'status'
-            },{
-                data:'total'
-            }
-        ],
-        data: {
-            startDate:startDate,
-            endDate:endDate,
-            status:status
-        }        
-    });
-
-    applyFilter.addEventListener('click', function(){
-        table.draw();
-    });    
+    processing: true,
+    serverSide: true,
+    searching: false,
+    lengthChange:false,
+    pageLength: 10,
+    order: [3, 'asc'],
+    ajax: {
+        url: "{{ route('getDataTableServices') }}",
+        data: function(data) {
+            data.startDate = startDate.value;
+            data.endDate   = endDate.value;
+            data.status    = status.value;
+        }
+    },
+    columns:[
+        {
+            data:'client'
+        },{
+            data:'car'
+        },{
+            data:'fault',
+            orderable: false
+        },{
+            data:'created_at'
+        },{
+            data:'status'
+        },{
+            data:'total',
+            orderable: false
+        }
+    ]
 });
+
+applyFilter.addEventListener('click', function(){
+    table.draw();
+});    
 </script>
 @endsection
 
