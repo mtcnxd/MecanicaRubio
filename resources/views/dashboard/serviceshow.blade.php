@@ -225,8 +225,6 @@ $("#addItemInvoice").on('click', function(event){
             labour:labour
         },
         success:function(response){
-            console.log(response);
-
             $("#createItem").modal('hide');
             var tbody = $("#table-items tbody");
             var object = JSON.parse(response);

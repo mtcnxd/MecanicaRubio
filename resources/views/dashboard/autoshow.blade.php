@@ -114,7 +114,7 @@
                     <thead>
                         <th>Automovil</th>
                         <th>Servicio/Fallo</th>
-                        <th>Comentarios</th>
+                        <th>Fecha</th>
                         <th>Status</th>
                         <th class="text-end">Total</th>
                     </thead>
@@ -123,7 +123,7 @@
                             <tr>
                                 <td>{{ $service->brand }} {{ $service->model }}</td>
                                 <td>{{ Str::limit($service->fault, 80) }}</td>
-                                <td>{{ Str::limit($service->comments, 80) }}</td>
+                                <td>{{ \Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
                                 <td>
                                     <span class="badge text-bg-success">{{ $service->status }}</span>
                                 </td>
