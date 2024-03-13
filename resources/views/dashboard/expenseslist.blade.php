@@ -45,7 +45,7 @@
 
                 <tr>
                     <td>
-                        @if ($total > 750)
+                        @if ($total >= 1000)
                             <x-feathericon-alert-triangle class="table-icon" style="margin: -2px 5px 0 0; color:red;"/>
                         @else 
                             <x-feathericon-check class="table-icon" style="margin: -2px 5px 0 0"/>

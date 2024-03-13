@@ -22,19 +22,19 @@
 
         <div class="col-md-4">
             <div class="window-title-bar shadow-sm">
-                <h6 class="window-title-text">Servicios entregados</h6>
+                <h6 class="window-title-text">Ingresos por servicios (Mano de obra)</h6>
                 <x-feathericon-dollar-sign class="window-title-icon"/>
             </div>
             <div class="window-body bg-white shadow-sm text-end fs-5">
                 @php
-                    $total_invoices = 0;
+                    $total_income = 0;
                 @endphp
-                @foreach ($services as $invoice)
+                @foreach ($services as $income)
                     @php
-                        $total_invoices += $invoice->total
+                        $total_income += $income->price
                     @endphp
                 @endforeach
-                {{ '$'.number_format($total_invoices,2) }}
+                {{ '$'.number_format($total_income,2) }}
             </div>
         </div>
 
@@ -68,7 +68,7 @@
                 @foreach ($services as $row => $service)
                     <tr>
                         <td>{{ $row +1 }}</td>
-                        <td>{{ $service->brand }} {{ $service->model }}</td>
+                        <td>{{ $service->car }}</td>
                         <td class="text-end">
                             <x-feathericon-check-circle class="table-icon"/>
                         </td>
@@ -111,6 +111,11 @@
             }]
         },
         options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
             plugins:{
                 legend: {
                     display: false

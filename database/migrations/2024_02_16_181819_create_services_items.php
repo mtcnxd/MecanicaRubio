@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->string('item');
             $table->string('supplier')->nullable();
+            $table->boolean('labour')->default(false);
             $table->double('price');
         });
     }

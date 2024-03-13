@@ -72,11 +72,18 @@ class ControllerAjax extends Controller
 
     public function createItemInvoice(Request $request)
     {
-        DB::table('services_items')->insert([
+        $labour = false;
+        if ($request->labour == 'true'){
+            $labour = true;
+        }
+
+        $result = DB::table('services_items')->insert([
             'service_id' => $request->service,
-            'amount'     => $request->amount,
-            'item'       => $request->item,
+            'amount'     => ($labour) ? 1 : $request->amount,
+            'item'       => ($labour) ? 'Servicio (Mano de obra)' : $request->item,
+            'supplier'   => $request->supplier,
             'price'      => $request->price,
+            'labour'     => $labour,
         ]);
 
         $invoiceItems = DB::table('services_items')->where('service_id', $request->service)->get();

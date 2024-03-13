@@ -206,10 +206,12 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $("#addItemInvoice").on('click', function(event){
-    var service = $("#service").val();
-    var amount  = $("#amount").val();
-    var item    = $("#item").val();
-    var price   = $("#price").val();
+    var service  = $("#service").val();
+    var amount   = $("#amount").val();
+    var item     = $("#item").val();
+    var supplier = $("#supplier").val();
+    var price    = $("#price").val();
+    var labour   = $("#labour").prop('checked');
 
     $.ajax({
         url:"{{ route('createItemInvoice') }}",
@@ -218,13 +220,16 @@ $("#addItemInvoice").on('click', function(event){
             service:service,
             amount:amount,
             item:item,
-            price:price
+            supplier:supplier,
+            price:price,
+            labour:labour
         },
         success:function(response){
+            console.log(response);
+
             $("#createItem").modal('hide');
             var tbody = $("#table-items tbody");
             var object = JSON.parse(response);
-
             history.go();
         }
     });
@@ -291,6 +296,17 @@ $(".removeItem").on('click', function (event){
                             <span class="input-group-text">$</span>
                             <input type="text" class="form-control" id="price">
                           </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 pt-2">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-9">
+                        <input class="form-check-input" type="checkbox" id="labour">
+                        <label class="form-check-label" for="labour">
+                            Mano de obra
+                        </label>
                     </div>
                 </div>
             </div>

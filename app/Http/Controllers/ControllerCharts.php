@@ -13,16 +13,16 @@ class ControllerCharts extends Controller
         $startDate = date('Y-m-01');
         $endDate = Carbon::now();
 
-        $data = DB::table('services_view')
-            ->selectRaw('count(*) as count, client')
-            ->groupBy('client')
-            ->get();
+        $data = DB::select(
+            'select count(*) as services, date_format(created_at,"%d-%m-%Y") as created_at
+            from services_view group by date_format(created_at,"%d-%m-%Y")'
+        );
 
         $values = array();
         $labels = array();
         foreach($data as $key => $value){
-            $labels[] = $value->client;
-            $values[] = $value->count;
+            $labels[] = $value->created_at;
+            $values[] = $value->services;
         }
 
         return array(

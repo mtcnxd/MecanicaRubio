@@ -6,7 +6,9 @@
 <div class="shadow-sm main-content">
     <div class="window-title-bar">
         <h6 class="window-title-text">Buscar cliente</h6>
-        <x-feathericon-user class="window-title-icon"/>
+        <a href="{{ route('clients.create') }}">
+            <x-feathericon-user-plus class="window-title-icon"/>
+        </a>
     </div>
     <div class="window-body bg-white">
         @if ( session('message') )

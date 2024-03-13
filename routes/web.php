@@ -27,15 +27,16 @@ Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar');
 
 Route::get('dashboard', function() 
 {
-    $services = DB::table('services')
-        ->join('autos', 'services.car_id', 'autos.id')
-        ->where('services.status', 'Entregado')
+    $services = DB::table('services_view')
+        ->join('services_items','services_view.id','services_items.service_id')
+        ->where('services_items.labour', true)
+        ->where('services_view.status', 'Entregado')
         ->get();
 
     return view('dashboard.index',[
         'services' => $services,
         'expenses' => DB::table('expenses')->get(),
-        'servicesChart' =>     ControllerCharts::getServicesChart(),
+        'servicesChart' => ControllerCharts::getServicesChart(),
     ]);
 })->name('dashboard');
 
