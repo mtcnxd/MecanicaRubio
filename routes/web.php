@@ -23,6 +23,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('profile', function () {
+    return view('dashboard.profile');
+})->name('profile');
+
 Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar');
 
 Route::get('dashboard', function() 

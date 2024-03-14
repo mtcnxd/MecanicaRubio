@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="main-content">
-    <h3>Resumen</h3>
+    <h4>Resumen</h4>
     <hr>
     <div class="row">
         <div class="col-md-4">
@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <h3 class="mt-5">Gráficas</h3>
+    <h4 class="mt-5">Gráficas</h4>
     <hr class="mb-4">
 
     <div class="row">

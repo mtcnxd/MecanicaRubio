@@ -4,11 +4,14 @@
 
 @section('content')
 <div class="calendar shadow-sm">
+    <div class="window-title-bar calendar-title-bar">
+        <x-feathericon-calendar class="window-title-icon"/>
+    </div>
+
 	<div class="calendar-title pb-0">
-		<h4>{{ $month }}</h4>
-		@foreach ($daysOfWeek as $day)
+		@foreach ($daysOfWeek as $dayName)
 		<div class="day title">
-			{{ $day }}	
+			{{ $dayName }}	
 		</div>
 		@endforeach
 	</div>
@@ -32,7 +35,7 @@
 			</div>
 		@endforeach
 	</div>
-</div>    
+</div>
 @endsection
 
 @section('css')
@@ -44,22 +47,22 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-	$(".event").on('click', function(){
-		const id = this.id;
+$(".event").on('click', function(){
+    const id = this.id;
 
-		$.ajax({
-			url: '{{ route('loadEvent') }}',
-			method: 'POST',
-			data: {id},
-			success: function(response){
-				const object = JSON.parse(response);
-				$("#event").val(object.event);
-				$("#description").val(object.description);
-				$("#client").val(object.name);
-				$("#phone").val(object.phone);
-			}
-		});
-	})
+    $.ajax({
+        url: '{{ route('loadEvent') }}',
+        method: 'POST',
+        data: {id},
+        success: function(response){
+            const object = JSON.parse(response);
+            $("#event").val(object.event);
+            $("#description").val(object.description);
+            $("#client").val(object.name);
+            $("#phone").val(object.phone);
+        }
+    });
+})
 </script>
 @endsection
 

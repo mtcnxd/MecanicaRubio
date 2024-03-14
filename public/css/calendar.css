@@ -4,12 +4,18 @@
     background-color: #fff;
 }
 
+.calendar-title-bar {
+    background-color: var(--red-400) !important;
+    border-radius: 10px 10px 0 0;
+    border: 0px !important;
+    display: inline-table;
+    width: 100%;
+    color: #fff;
+}
+
 .calendar-title {
     text-align: center;
-    background-color: var(--red-400);
     color: #fff;
-    padding: 10px 0;
-    border-radius: 10px 10px 0 0;
     display: inline-table;
     width: 100%;
 }

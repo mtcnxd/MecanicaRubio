@@ -6,7 +6,9 @@
 <div class="shadow-sm main-content">
     <div class="window-title-bar">
         <h6 class="window-title-text">Administrar autos</h6>
-        <x-feathericon-truck class="window-title-icon"/>
+        <a href="{{ route('autos.create') }}">
+            <x-feathericon-truck class="window-title-icon" data-bs-toggle="tooltip" data-bs-title="Nuevo automovil" data-bs-placement="left"/>
+        </a>
     </div>
     <div class="window-body bg-white">
         @if ( session('message') )
@@ -30,7 +32,7 @@
                 <tr>
                     <td>
                         <a href="{{ route('autos.show', $auto->id) }}">
-                            <x-feathericon-chevrons-right class="table-icon" style="color: var(--amber-700)"/>
+                            <span class="table-icon-round">{{ Str::limit($auto->brand,1, null) }}</span>
                             {{ $auto->brand }} {{ $auto->model }}
                         </a>
                     </td>
@@ -56,16 +58,19 @@
 
 @section('js')
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script>
-        new DataTable('#autos', {
-            pageLength: 15,
-            lengthMenu: [15, 50, 100],
-            columnDefs: [{
-                orderable: false,
-                target: [1,3,4]
-            }]            
-        });
-    </script>
+<script>
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+new DataTable('#autos', {
+    pageLength: 15,
+    lengthMenu: [15, 50, 100],
+    columnDefs: [{
+        orderable: false,
+        target: [1,3,4]
+    }]            
+});
+</script>
 @endsection
 
 @section('css')

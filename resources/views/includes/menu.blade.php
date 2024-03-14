@@ -50,7 +50,7 @@
 			</a>
 			<ul class="menu-dropdown">
 				<li>
-					<a class="menu-item" href="http://">Perfil</a>
+					<a class="menu-item" href="{{ route('profile') }}">Perfil</a>
 				</li>
 			</ul>
 		</li>
