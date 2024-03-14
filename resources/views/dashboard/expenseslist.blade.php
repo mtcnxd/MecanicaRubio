@@ -30,9 +30,10 @@
                     <th>Egreso</th>
                     <th>Descripción</th>
                     <th>Fecha</th>
+                    <th>Estatus</th>
                     <th>Cantidad / Precio</th>
                     <th class="text-end">Total</th>
-                    <th width="30px">&nbsp;</th>
+                    <th width="25px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,6 +56,7 @@
                     </td>
                     <td>{{ $expense->description }}</td>
                     <td>{{ date('d-m-Y', strtotime($expense->created_at)) }}</td>
+                    <td><span class="badge bg-success">Pagado</span></td>
                     <td>{{ $expense->amount }} / {{ '$'.number_format($expense->price, 2) }}</td>
                     <td class="text-end">{{ '$'.number_format($total, 2) }}</td>
                     <td class="text-end">
