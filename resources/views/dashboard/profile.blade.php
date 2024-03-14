@@ -13,11 +13,6 @@
                 <x-feathericon-tool class="window-title-icon"/>
             </div>
             <div class="window-body bg-white shadow-sm">
-<<<<<<< HEAD
-                <form>
-                    <label>Nombre</label>
-                    <input type="text" class="form-control">
-=======
                 <label class="window-body-form">Editar perfil</label>
                 <form action="#" method="POST" class="border pt-5 pb-4">
                     <div class="row">
@@ -68,7 +63,6 @@
                             </button>
                         </div>
                     </div>
->>>>>>> 52f5411 (Se agregaron estatus en los gastos)
                 </form>
             </div>
         </div>
@@ -78,9 +72,6 @@
                 <h6 class="window-title-text">Configuración del entorno</h6>
                 <x-feathericon-tool class="window-title-icon"/>
             </div>
-<<<<<<< HEAD
-            <div class="window-body bg-white shadow-sm text-end fs-5">
-=======
             <div class="window-body bg-white shadow-sm">
                 <div class="row col-md-4 mb-3">
                     <div class="btn-group">
@@ -91,7 +82,6 @@
                         <button type="button" class="btn btn-outline-success">Eliminar</button>
                     </div>
                 </div>
->>>>>>> 52f5411 (Se agregaron estatus en los gastos)
             </div>
         </div>
     </div>

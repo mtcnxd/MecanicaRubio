@@ -49,14 +49,8 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-<<<<<<< HEAD
-				<li>
-					<a class="menu-item" href="{{ route('profile') }}">Perfil</a>
-				</li>
-=======
 				<li><a class="menu-item" href="{{ route('profile') }}">Perfil</a></li>				
 				<li><a class="menu-item" href="{{ route('profile') }}">Usuarios</a></li>
->>>>>>> 52f5411 (Se agregaron estatus en los gastos)
 			</ul>
 		</li>
 	</ul>

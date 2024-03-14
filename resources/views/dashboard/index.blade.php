@@ -84,34 +84,8 @@
             </div>
         </div>
     </div>
-
-<<<<<<< HEAD
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="window-title-bar shadow-sm">
-                <h6 class="window-title-text">Autos Entregados</h6>
-                <x-feathericon-tool class="window-title-icon"/>
-            </div>
-            <div class="window-body bg-white shadow-sm">
-                <table class="table table-sm table-striped">
-                @foreach ($services as $row => $service)
-                    <tr>
-                        <td>{{ $row +1 }}</td>
-                        <td>{{ $service->car }}</td>
-                        <td class="text-end">
-                            <x-feathericon-check-circle class="table-icon"/>
-                        </td>
-                    </tr>                    
-                @endforeach
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <h4 class="mt-5">Gráficas</h4>
-=======
+    
     <h4 class="mt-4">Gráficas</h4>
->>>>>>> 52f5411 (Se agregaron estatus en los gastos)
     <hr class="mb-4">
 
     <div class="row">
