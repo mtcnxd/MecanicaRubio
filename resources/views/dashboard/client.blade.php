@@ -9,11 +9,11 @@
     </div>
     <div class="window-body bg-white">
         @if (isset($client))
-        <label class="window-body-form">Editar cliente</label>
+            <label class="window-body-form">Editar cliente</label>
             <form action="{{ route('clients.update', $client->id) }}" method="POST" class="border pt-5 pb-4">
             @method('PUT')
         @else
-        <label class="window-body-form">Registrar nuevo cliente</label>
+            <label class="window-body-form">Registrar nuevo cliente</label>
             <form action="{{ route('clients.store') }}" method="POST" class="border pt-5 pb-4">
             @method('POST')
         @endif

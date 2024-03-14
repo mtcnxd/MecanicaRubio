@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->integer('amount')->default(1);
             $table->double('price');
+            $table->string('status')->default('Pagado');
             $table->integer('responsible');
             $table->timestamps();
         });

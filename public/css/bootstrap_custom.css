@@ -17,8 +17,8 @@
     --red-400: #EF5350;
 }
 
-.btn {
-    border-radius: 3px;
+.btn, .form-control {
+    border-radius: 4px;
 }
 
 .btn-success {
@@ -34,10 +34,6 @@
 .table-hover tbody td {
     height: 45px;
     vertical-align:middle;
-}
-
-.form-control {
-    border-radius: 2px;
 }
 
 .select2 .selection .select2-selection {

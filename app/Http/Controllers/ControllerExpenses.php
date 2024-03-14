@@ -75,6 +75,10 @@ class ControllerExpenses extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('expenses')
+            ->where('id',$id)
+            ->delete();
+
+        return to_route('expenses.index')->with('error', 'El gasto se eliminó correctamente');
     }
 }

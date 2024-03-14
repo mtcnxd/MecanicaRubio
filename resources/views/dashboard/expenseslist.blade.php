@@ -32,6 +32,7 @@
                     <th>Fecha</th>
                     <th>Cantidad / Precio</th>
                     <th class="text-end">Total</th>
+                    <th width="30px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,8 +42,8 @@
                 @foreach ($expenses as $expense)
                 @php
                     $total = $expense->amount * $expense->price;
+                    $expense_total += $total;
                 @endphp
-
                 <tr>
                     <td>
                         @if ($total >= 1000)
@@ -56,9 +57,15 @@
                     <td>{{ date('d-m-Y', strtotime($expense->created_at)) }}</td>
                     <td>{{ $expense->amount }} / {{ '$'.number_format($expense->price, 2) }}</td>
                     <td class="text-end">{{ '$'.number_format($total, 2) }}</td>
-                    @php
-                        $expense_total += $total;
-                    @endphp
+                    <td class="text-end">
+                        <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn">
+                                <x-feathericon-trash-2 class="table-icon" style="margin: -2px 5px 0 0"/>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
