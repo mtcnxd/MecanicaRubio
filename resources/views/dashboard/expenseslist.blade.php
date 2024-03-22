@@ -29,8 +29,8 @@
                 <tr>
                     <th>Egreso</th>
                     <th>Descripción</th>
-                    <th>Fecha</th>
                     <th>Estatus</th>
+                    <th>Fecha</th>
                     <th>Cantidad / Precio</th>
                     <th class="text-end">Total</th>
                     <th width="25px">&nbsp;</th>
@@ -55,8 +55,10 @@
                         {{ $expense->name }}
                     </td>
                     <td>{{ $expense->description }}</td>
+                    <td>
+                        <span class="badge {{ ($expense->status == 'Pendiente') ? 'bg-warning' : 'bg-success' }}">{{ $expense->status }}</span>
+                    </td>
                     <td>{{ date('d-m-Y', strtotime($expense->created_at)) }}</td>
-                    <td><span class="badge bg-success">Pagado</span></td>
                     <td>{{ $expense->amount }} / {{ '$'.number_format($expense->price, 2) }}</td>
                     <td class="text-end">{{ '$'.number_format($total, 2) }}</td>
                     <td class="text-end">

@@ -36,6 +36,7 @@ class ControllerExpenses extends Controller
         DB::table('expenses')->insert([
             'name'        => $request->name,
             'description' => $request->description,
+            'status'      => $request->status,
             'amount'      => $request->amount,
             'price'       => $request->price,
             'responsible' => $request->responsible,

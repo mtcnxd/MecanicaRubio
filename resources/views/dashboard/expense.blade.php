@@ -60,6 +60,17 @@
                             <option value="1">Marcos Tzuc Cen</option>
                         </select>
                     </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Estatus
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" name="status" required>
+                            <option>Pendiente</option>
+                            <option>Pagado</option>
+                        </select>
+                    </div>
                 </div>       
             </div>
             
