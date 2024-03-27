@@ -14,7 +14,7 @@ class ControllerExpenses extends Controller
     public function index()
     {
         $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
-        $endDate = Carbon::now()->format('Y-m-d');
+        $endDate   = Carbon::now()->format('Y-m-d');
 
         $expenses = DB::table('expenses')
             ->whereBetween('created_at', [$startDate, Carbon::now()])

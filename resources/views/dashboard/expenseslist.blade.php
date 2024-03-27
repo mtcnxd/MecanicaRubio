@@ -25,12 +25,21 @@
         <div class="row m-1 mb-3 pb-3">
             <div class="col-md-2">
                 <label class="fw-bold">Inicio</label>
-                <input type="date" class="form-control" value="{{ $startDate }}">
+                <input type="date" class="form-control" value="{{ $startDate }}" id="startDate">
             </div>
 
             <div class="col-md-2">
                 <label class="fw-bold">Final</label>
-                <input type="date" class="form-control" value="{{ $endDate }}">
+                <input type="date" class="form-control" value="{{ $endDate }}" id="endDate">
+            </div>
+
+            <div class="col-md-2">
+                <label class="fw-bold">Responsable</label>
+                <select class="form-select" name="responsible" id="responsible">
+                    <option value="3">Alexander Xix Ortiz</option>
+                    <option value="2">Javier Rubio Magaña</option>
+                    <option value="1">Marcos Tzuc Cen</option>
+                </select>
             </div>
 
             <div class="col-md-2 mt-4">
@@ -40,9 +49,7 @@
                 </button>
             </div>
         </div>
-        <p class="p-2 pb-0 pt-0">Se encontraron {{ count($expenses) }} registros</p>
-        <hr>
-        <table class="table table-hover table-borderless" id="expenses">
+        <table class="table table-hover table-borderless" id="expenses" style="width:100%;">
             <thead>
                 <tr>
                     <th>Egreso</th>
@@ -63,40 +70,7 @@
                 @php
                     $total = $expense->amount * $expense->price;
                     $expense_total += $total;
-                @endphp
-                <tr>
-                    <td>
-                        @if ($total >= 1000)
-                            <x-feathericon-alert-triangle class="table-icon" style="margin: -2px 5px 0 0; color:red;"/>
-                        @else 
-                            <x-feathericon-check class="table-icon" style="margin: -2px 5px 0 0"/>
-                        @endif
-                        {{ $expense->name }}
-                    </td>
-                    <td>{{ $expense->description }}</td>
-                    <td>
-                        <span class="badge {{ ($expense->status == 'Pendiente') ? 'bg-warning' : 'bg-success' }}">{{ $expense->status }}</span>
-                    </td>
-                    <td>{{ date('d-m-Y', strtotime($expense->created_at)) }}</td>
-                    <td>{{ $expense->amount }} / {{ '$'.number_format($expense->price, 2) }}</td>
-                    <td class="text-end">{{ '$'.number_format($total, 2) }}</td>
-                    <td class="text-end">
-                        @if ($expense->attach)
-                            <button type="submit" class="btn attach" data-bs-target="#attached" data-bs-toggle="modal" id="{{ $expense->id }}">
-                                <x-feathericon-paperclip class="table-icon" style="margin: -2px 5px 0 0"/>
-                            </button>
-                        @endif
-                    </td>
-                    <td class="text-end">
-                        <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn">
-                                <x-feathericon-trash-2 class="table-icon" style="margin: -2px 5px 0 0"/>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
+                @endphp                    
                 @endforeach
             </tbody>
             <tfoot>
@@ -107,6 +81,8 @@
                     <td>&nbsp;</td>
                     <td class="text-end fw-bold">TOTAL:</td>
                     <td class="text-end fw-bold">{{ '$'.number_format($expense_total, 2) }}</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
                 </tr>
             </tfoot>
         </table>
@@ -115,29 +91,134 @@
 @endsection
 
 @section('js')
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    const buttonsArray = document.getElementsByClassName('attach');
+const startDate   = document.querySelector("#startDate");
+const endDate     = document.querySelector("#endDate");
+const responsible = document.querySelector("#responsible");
+const applyFilter = document.querySelector('#applyFilter');
 
-    $(buttonsArray).on('click', function(){
-        const buttonPressed = this.id;
-
-        $.ajax({
-            url:"{{ route('getImageAttached') }}",
-            method: 'POST',
-            data: {
-                id:buttonPressed
-            },
-            success:function(response){
-                console.log(response.attach);
-                
-                let image = '/storage/' + response.attach;
-                $("#modal-image").attr('src', image);
+const table = new DataTable('#expenses', 
+{
+    processing: true,
+    serverSide: true,
+    searching: false,
+    lengthChange:false,
+    pageLength: 10,
+    order: [3, 'asc'],
+    ajax: {
+        url: "{{ route('getDataTableExpenses') }}",
+        data: function(data) {
+            data.startDate = startDate.value;
+            data.endDate   = endDate.value;
+            data.status    = status.value;
+        }
+    },
+    columns:[
+        {
+            data:'name',
+            orderable: false,
+        },{
+            data:'description',
+            orderable: false
+        },{
+            data:'status',
+            render: function(row){
+                var style = (row == 'Pendiente') ? 'bg-warning' : 'bg-success';
+                return '<span class="badge '+ style +'">' + row + '</span>';
             }
-        });
+        },{
+            data:'created_at'
+        },{
+            data:'price',
+            className: 'text-end',
+            orderable: false
+        },{
+            data:'total',
+            className: 'text-end'
+        },{
+            data:'attach',
+            orderable: false,
+            render: function(row, type, data){
+                if (data.attach){
+                    return '<button class="btn attach" data-bs-target="#attached" data-bs-toggle="modal" id="'+ data.id +'" onclick="getImageAttached(this.id)">'+
+                                '<x-feathericon-paperclip class="table-icon" style="margin: -2px 5px 0 0"/>'+
+                           '</button>';           
+                }
+                else {
+                    return '';
+                }   
+            }
+        },{
+            data: 'delete',
+            render: function(row, type, data){
+                return '<button class="btn" id="'+ data.id +'" onclick="removeItemExpense(this.id)">'+
+                            '<x-feathericon-trash-2 class="table-icon" style="margin: -2px 5px 0 0"/>'+
+                       '</button>';
+            }
+        }
+    ]
+});
 
+applyFilter.addEventListener('click', function(){
+    table.draw();
+});
+
+function removeItemExpense(buttonPressed){
+    $.ajax({
+        url:"{{ route('removeItemExpense') }}",
+        method: 'POST',
+        data: {
+            id:buttonPressed
+        },
+        success:function(response){
+            let image = '/storage/' + response.attach;
+            $("#modal-image").attr('src', image);
+        }
     });
+}
 
+function removeItemExpense(buttonPressed){
+    $.ajax({
+        url:"{{ route('removeItemExpense') }}",
+        method: 'POST',
+        data: {
+            id:buttonPressed
+        },
+        success:function(response){
+            console.log(response);
+            showMessageAlert(response);
+        }
+    });
+}
+
+function getImageAttached(buttonPressed){
+    $.ajax({
+        url:"{{ route('getImageAttached') }}",
+        method: 'POST',
+        data: {
+            id:buttonPressed
+        },
+        success:function(response){
+            let image = '/storage/' + response.attach;
+            $("#modal-image").attr('src', image);
+        }
+    });
+}
+
+function showMessageAlert(message){
+    Swal.fire({
+        text: message,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    })
+}
 </script>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 @endsection
 
 @section('modal')

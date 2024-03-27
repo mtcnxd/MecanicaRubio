@@ -104,6 +104,15 @@ class ControllerAjax extends Controller
         return json_encode($invoiceItems);
     }
 
+    public function removeItemExpense(Request $request)
+    {
+        DB::table('expenses')
+            ->where('id', $request->id)
+            ->delete();
+
+        return 'Eliminado correctamente';
+    }
+
     public function searchPostalCode(Request $request)
     {
         $addresses = DB::table('postalcodes')
@@ -165,10 +174,35 @@ class ControllerAjax extends Controller
             ->make(true);
     }
 
+    public function getDataTableExpenses(Request $request)
+    {
+        $expensesData = DB::table('expenses')
+            ->get();
+
+        return DataTables::of($expensesData)
+            ->addColumn('created_at', function($expense){
+                return Carbon::parse($expense->created_at)->format('d-m-Y');
+            })        
+            ->addColumn('price', function($expense){
+                return $expense->amount." / $".number_format($expense->price, 2);
+            })
+            ->addColumn('total', function($expense){
+                return "$".number_format($expense->amount * $expense->price, 2);
+            })
+            ->addColumn('attach', function($expense){
+                return $expense->attach;
+            })
+            ->addColumn('delete', function($expense){
+                return $expense->id;
+            })
+            ->make(true);
+    }
+
     public function getImageAttached(Request $request)
     {
-        $image = DB::table('expenses')->where('id', $request->id)->first();
-        return $image;
+        return DB::table('expenses')
+            ->where('id', $request->id)
+            ->first();
     }
 
 }

@@ -60,6 +60,14 @@ Route::get('getDataTableServices', [
     ControllerAjax::class, 'getDataTableServices'
 ])->name('getDataTableServices');
 
+Route::get('getDataTableExpenses', [
+    ControllerAjax::class, 'getDataTableExpenses'
+])->name('getDataTableExpenses');
+
 Route::post('getImageAttached', [
     ControllerAjax::class, 'getImageAttached'
 ])->name('getImageAttached');
+
+Route::post('removeItemExpense', [
+    ControllerAjax::class, 'removeItemExpense'
+])->name('removeItemExpense');
