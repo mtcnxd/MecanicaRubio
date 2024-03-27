@@ -13,8 +13,17 @@ class ControllerExpenses extends Controller
      */
     public function index()
     {
+        $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $endDate = Carbon::now()->format('Y-m-d');
+
+        $expenses = DB::table('expenses')
+            ->whereBetween('created_at', [$startDate, Carbon::now()])
+            ->get();
+
         return view('dashboard.expenseslist', [
-            'expenses' => DB::table('expenses')->orderBy('created_at')->get()
+            'expenses'  => $expenses,
+            'startDate' => $startDate,
+            'endDate'   => $endDate,
         ]);
     }
 
@@ -33,6 +42,11 @@ class ControllerExpenses extends Controller
      */
     public function store(Request $request)
     {
+        if($request->hasFile('attach')){
+            $result = $request->file('attach')->store('public');
+            $filename = explode('/', $result)[1];
+        }
+
         DB::table('expenses')->insert([
             'name'        => $request->name,
             'description' => $request->description,
@@ -40,6 +54,7 @@ class ControllerExpenses extends Controller
             'amount'      => $request->amount,
             'price'       => $request->price,
             'responsible' => $request->responsible,
+            'attach'      => isset($filename) ? $filename : '',
             'created_at'  => Carbon::now(),
             'updated_at'  => Carbon::now(),
         ]);

@@ -7,6 +7,7 @@ use App\Http\Controllers\ControllerServices;
 use App\Http\Controllers\ControllerExpenses;
 use App\Http\Controllers\ControllerCalendar;
 use App\Http\Controllers\ControllerCharts;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,13 @@ Route::get('dashboard', function()
         ->where('services_view.status', 'Entregado')
         ->get();
 
+    $expenses = DB::table('expenses')
+        ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()])
+        ->get();
+
     return view('dashboard.index',[
         'services' => $services,
-        'expenses' => DB::table('expenses')->get(),
+        'expenses' => $expenses,
         'servicesChart' => ControllerCharts::getServicesChart(),
     ]);
 })->name('dashboard');

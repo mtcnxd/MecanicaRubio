@@ -59,3 +59,7 @@ Route::post('loadEvent', [
 Route::get('getDataTableServices', [
     ControllerAjax::class, 'getDataTableServices'
 ])->name('getDataTableServices');
+
+Route::post('getImageAttached', [
+    ControllerAjax::class, 'getImageAttached'
+])->name('getImageAttached');

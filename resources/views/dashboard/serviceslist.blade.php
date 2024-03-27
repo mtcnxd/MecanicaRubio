@@ -17,15 +17,15 @@
         @endif
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-2">
-                <label for="startDate">Inicio</label>
+                <label for="startDate" class="fw-bold">Inicio</label>
                 <input type="date" class="form-control" id="startDate" value="{{ date('Y-m-01') }}">
             </div>
             <div class="col-md-2">
-                <label for="endDate">Final</label>
+                <label for="endDate" class="fw-bold">Final</label>
                 <input type="date" class="form-control" id="endDate" value="{{ Carbon\Carbon::now()->addDay()->format('Y-m-d') }}">
             </div>
             <div class="col-md-2">
-                <label for="endDate">Estatus</label>
+                <label for="endDate" class="fw-bold">Estatus</label>
                 <select class="form-select" id="status">
                     <option>Todos</option>
                     <option>Cancelado</option>

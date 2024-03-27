@@ -22,6 +22,24 @@
             </div>
         @endif
 
+        <div class="row m-1 mb-3 pb-3">
+            <div class="col-md-2">
+                <label class="fw-bold">Inicio</label>
+                <input type="date" class="form-control" value="{{ $startDate }}">
+            </div>
+
+            <div class="col-md-2">
+                <label class="fw-bold">Final</label>
+                <input type="date" class="form-control" value="{{ $endDate }}">
+            </div>
+
+            <div class="col-md-2 mt-4">
+                <button class="btn btn-success" id="applyFilter">
+                    <x-feathericon-search class="table-icon" style="margin: -2px 5px 2px"/>
+                    Buscar
+                </button>
+            </div>
+        </div>
         <p class="p-2 pb-0 pt-0">Se encontraron {{ count($expenses) }} registros</p>
         <hr>
         <table class="table table-hover table-borderless" id="expenses">
@@ -33,7 +51,8 @@
                     <th>Fecha</th>
                     <th>Cantidad / Precio</th>
                     <th class="text-end">Total</th>
-                    <th width="25px">&nbsp;</th>
+                    <th width="20px">&nbsp;</th>
+                    <th width="20px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,6 +81,13 @@
                     <td>{{ $expense->amount }} / {{ '$'.number_format($expense->price, 2) }}</td>
                     <td class="text-end">{{ '$'.number_format($total, 2) }}</td>
                     <td class="text-end">
+                        @if ($expense->attach)
+                            <button type="submit" class="btn attach" data-bs-target="#attached" data-bs-toggle="modal" id="{{ $expense->id }}">
+                                <x-feathericon-paperclip class="table-icon" style="margin: -2px 5px 0 0"/>
+                            </button>
+                        @endif
+                    </td>
+                    <td class="text-end">
                         <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -78,6 +104,7 @@
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
+                    <td>&nbsp;</td>
                     <td class="text-end fw-bold">TOTAL:</td>
                     <td class="text-end fw-bold">{{ '$'.number_format($expense_total, 2) }}</td>
                 </tr>
@@ -85,4 +112,51 @@
         </table>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    const buttonsArray = document.getElementsByClassName('attach');
+
+    $(buttonsArray).on('click', function(){
+        const buttonPressed = this.id;
+
+        $.ajax({
+            url:"{{ route('getImageAttached') }}",
+            method: 'POST',
+            data: {
+                id:buttonPressed
+            },
+            success:function(response){
+                console.log(response.attach);
+                
+                let image = '/storage/' + response.attach;
+                $("#modal-image").attr('src', image);
+            }
+        });
+
+    });
+
+</script>
+@endsection
+
+@section('modal')
+<div class="modal fade" id="attached" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Archivo adjunto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <img id="modal-image" src="{{ asset('image.gif') }}" alt="Image">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>      
 @endsection

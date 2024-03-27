@@ -165,4 +165,10 @@ class ControllerAjax extends Controller
             ->make(true);
     }
 
+    public function getImageAttached(Request $request)
+    {
+        $image = DB::table('expenses')->where('id', $request->id)->first();
+        return $image;
+    }
+
 }

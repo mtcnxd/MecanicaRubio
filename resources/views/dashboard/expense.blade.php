@@ -9,7 +9,7 @@
     </div>
     <div class="window-body bg-white">
         <label class="window-body-form">Registrar nuevo egreso</label>
-        <form action="{{ route('expenses.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('expenses.store') }}" method="POST" class="border pt-5 pb-4" enctype="multipart/form-data">
             @csrf
             <div class="col-md-6">                
                 <div class="row">
@@ -71,7 +71,13 @@
                             <option>Pagado</option>
                         </select>
                     </div>
-                </div>       
+                    <div class="col-md-3 pt-2 text-end">
+                        Adjuntar recibo/nota
+                    </div>
+                    <div class="col-md-3">
+                        <input type="file" class="form-control" name="attach">
+                    </div>
+                </div>
             </div>
             
             <div class="col-md-6 mt-3 text-end">
