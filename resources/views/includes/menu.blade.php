@@ -38,7 +38,8 @@
 			<ul class="menu-dropdown">
 				<li><a class="menu-item" href="{{ route('dashboard') }}">Resumen</a></li>
 				<li><a class="menu-item" href="{{ route('expenses.index') }}">Listado de egresos</a></li>
-				<li><a class="menu-item" href="{{ route('expenses.create') }}">Nuevo egreso</a></li>
+				<li><a class="menu-item" href="{{ route('expenses.create') }}">Egresos</a></li>
+				<li><a class="menu-item" href="{{ route('payroll.index') }}">Nomina</a></li>
 			</ul>
 		</li>
 		<li>

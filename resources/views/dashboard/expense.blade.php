@@ -8,7 +8,7 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <label class="window-body-form">Registrar nuevo egreso</label>
+        <label class="window-body-form">Registrar egreso</label>
         <form action="{{ route('expenses.store') }}" method="POST" class="border pt-5 pb-4" enctype="multipart/form-data">
             @csrf
             <div class="col-md-6">                

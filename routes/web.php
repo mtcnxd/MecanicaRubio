@@ -7,6 +7,7 @@ use App\Http\Controllers\ControllerServices;
 use App\Http\Controllers\ControllerExpenses;
 use App\Http\Controllers\ControllerCalendar;
 use App\Http\Controllers\ControllerCharts;
+use App\Http\Controllers\ControllerPayroll;
 use Carbon\Carbon;
 
 /*
@@ -56,3 +57,5 @@ Route::resource('autos', ControllerAutos::class);
 Route::resource('services', ControllerServices::class);
 
 Route::resource('expenses', ControllerExpenses::class);
+
+Route::resource('payroll', ControllerPayroll::class);

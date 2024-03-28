@@ -61,40 +61,4 @@ class ControllerExpenses extends Controller
 
         return to_route('expenses.index');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        DB::table('expenses')
-            ->where('id',$id)
-            ->delete();
-
-        return to_route('expenses.index')->with('error', 'El gasto se eliminó correctamente');
-    }
 }
