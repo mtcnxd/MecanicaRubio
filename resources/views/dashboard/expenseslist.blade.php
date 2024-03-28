@@ -36,6 +36,7 @@
             <div class="col-md-2">
                 <label class="fw-bold">Responsable</label>
                 <select class="form-select" name="responsible" id="responsible">
+                    <option value="0"> - Filtrar por responsable - </option>
                     <option value="3">Alexander Xix Ortiz</option>
                     <option value="2">Javier Rubio Magaña</option>
                     <option value="1">Marcos Tzuc Cen</option>
@@ -99,8 +100,7 @@ const endDate     = document.querySelector("#endDate");
 const responsible = document.querySelector("#responsible");
 const applyFilter = document.querySelector('#applyFilter');
 
-const table = new DataTable('#expenses', 
-{
+const table = new DataTable('#expenses', {
     processing: true,
     serverSide: true,
     searching: false,
@@ -112,7 +112,6 @@ const table = new DataTable('#expenses',
         data: function(data) {
             data.startDate = startDate.value;
             data.endDate   = endDate.value;
-            data.status    = status.value;
         }
     },
     columns:[
@@ -187,7 +186,6 @@ function removeItemExpense(buttonPressed){
             id:buttonPressed
         },
         success:function(response){
-            console.log(response);
             showMessageAlert(response);
         }
     });
@@ -212,7 +210,9 @@ function showMessageAlert(message){
         text: message,
         icon: 'success',
         confirmButtonText: 'Aceptar'
-    })
+    }).then(() => {
+        history.go();
+    });
 }
 </script>
 @endsection

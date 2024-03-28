@@ -97,11 +97,7 @@ class ControllerAjax extends Controller
             ->where('id', $request->item)
             ->delete();
 
-        $invoiceItems = DB::table('services_items')
-            ->where('service_id', $request->service)
-            ->get();
-
-        return json_encode($invoiceItems);
+        return 'Eliminado correctamente';
     }
 
     public function removeItemExpense(Request $request)
@@ -178,6 +174,12 @@ class ControllerAjax extends Controller
     {
         $expensesData = DB::table('expenses')
             ->get();
+
+        if($request->startDate && $request->endDate){
+            $expensesData = DB::table('expenses')
+                ->whereBetween('created_at', [$request->startDate, Carbon::parse($request->endDate)->addDay()])
+                ->get();
+        } 
 
         return DataTables::of($expensesData)
             ->addColumn('created_at', function($expense){

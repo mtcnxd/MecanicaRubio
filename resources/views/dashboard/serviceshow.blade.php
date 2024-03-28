@@ -245,10 +245,20 @@ $(".removeItem").on('click', function (event){
             item:item
         },
         success:function(response){
-            history.go();
+            showMessageAlert(response);
         }
     });
 });
+
+function showMessageAlert(message){
+    Swal.fire({
+        text: message,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    }).then(() => {
+        history.go();
+    });
+}
 </script>    
 @endsection
 

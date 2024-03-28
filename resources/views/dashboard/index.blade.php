@@ -24,7 +24,7 @@
         
                 <div class="col-md-6">
                     <div class="window-title-bar shadow-sm">
-                        <h6 class="window-title-text">Ingresos por servicios (Mano de obra)</h6>
+                        <h6 class="window-title-text">Ingresos por servicios entregados (Mano de obra)</h6>
                         <x-feathericon-dollar-sign class="window-title-icon"/>
                     </div>
                     <div class="window-body bg-white shadow-sm text-end fs-5">

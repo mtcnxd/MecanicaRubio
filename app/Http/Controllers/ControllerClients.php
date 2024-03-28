@@ -49,7 +49,7 @@ class ControllerClients extends Controller
             ]);
             session()->flash('message', 'El registro se guardó correctamente');
         
-        } catch (\Exception $error){
+        } catch (Exception $error){
             session()->flash('error', 'El número de teléfono ya se encuentra registrado');
         }
 
