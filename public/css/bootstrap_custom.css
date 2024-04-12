@@ -1,0 +1,61 @@
+:root {
+    --amber-50: #FFF8E1;
+    --amber-100:#FFECB3;
+    --amber-200: #FFE082;
+    --amber-400: #FFCA28;
+    --amber-600:#FFB300;
+    --amber-700:#FFA000;
+    --teal-50: #E0F2F1;
+    --teal-100: #B2DFDB;
+	--teal-300: #4DB6AC;
+	--teal-600: #00897B;
+	--blue-gray-100: #CFD8DC;
+    --blue-gray-50: #ECEFF1;
+    --gray-200: #EEEEEE;
+    --cyan-700: #0097A7;
+    --cyan-600: #00ACC1;
+    --red-400: #EF5350;
+}
+
+.btn, .form-control {
+    border-radius: 4px;
+}
+
+.btn-success {
+    background-color: var(--teal-300);
+    border-color: var(--teal-300);
+}
+
+.btn-success:hover {
+    background-color: var(--teal-600);
+    border-color: var(--teal-600);
+}
+
+.table-hover tbody td {
+    height: 45px;
+    vertical-align:middle;
+}
+
+.select2 .selection .select2-selection {
+    border-color: #ddd;
+    height: 37px;
+    padding-top: 5px;
+}
+
+.select2 .selection .select2-selection .select2-selection__arrow {
+    top: 7px;
+}
+
+.alert-success {
+    background-color: var(--teal-50);
+}
+
+.swal2-actions .swal2-confirm {
+    background-color: var(--teal-600);
+    width: 150px;
+}
+
+.swal2-actions .swal2-confirm :focus {
+    background-color: var(--teal-600);
+    width: 150px;
+}

@@ -1,0 +1,107 @@
+.menu-container {
+	background: var(--teal-300);
+	height: 55px;
+	border-bottom: solid #DDD 5px;
+	padding-left: 160px;
+	box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.2);
+}
+
+li {
+	display: block;
+}
+
+a.menu-item {
+	display: block;
+	padding: 10px 15px;
+}
+
+li:hover {
+	cursor: pointer;
+	position: relative;
+	background-color: #DDD;
+}
+
+ul li ul {
+	visibility: hidden;
+	opacity: 0;
+	position: absolute;
+	transition: all 0.5s ease;
+	display: none;
+}
+
+ul li:hover > ul,
+ul li ul:hover {
+	visibility: visible;
+	opacity: 1;
+	display: block;
+}
+
+ul li ul li {
+	clear: both;
+	width: 100%;
+}
+
+.dropdown {
+	list-style:none;
+	margin: 0px;
+}
+
+.dropdown > * {
+	float: left;
+}
+
+.dropdown > * + * {
+	margin-left: 0;
+}
+
+.menu-title {
+	display: block;
+	width: 200px;
+	height: 50px;
+	padding: 13px 0 0;
+	background: var(--teal-300);
+	text-align: center;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 18px;
+	text-transform: uppercase;
+	transition: 0.3s background-color;
+	margin-bottom: 0px;
+}
+
+.menu-title:hover { 
+	background: var(--teal-600); 
+}
+
+.menu-dropdown > * {
+	overflow: hidden;
+	background: rgba(0,0,0,0);
+	white-space: nowrap;
+	border: solid 1px #ebebeb;
+}
+
+.menu-dropdown {
+	padding: 15px 0;
+	background: #ebebeb;
+	width: 100%;
+	z-index: 100;
+	border-radius: 0 0 7px 7px;
+	animation: fadeIn 0.5s ease forwards;
+	box-shadow: -2px 2px 6px 2px rgba(0, 0, 0, 0.1);
+}
+
+.menu-dropdown > *:hover {
+	background: rgba(0,0,0,0.1);
+	border: solid 1px var(--teal-300);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}
