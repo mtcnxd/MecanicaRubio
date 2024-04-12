@@ -17,11 +17,11 @@
                         Empleado
                     </div>
                     <div class="col-md-9">
-                        <select class="form-select" name="responsible" required>
+                        <select class="form-select" name="employee" id="employee">
                             <option value="0"> - Seleccione empleado - </option>
-                            <option value="3">Alexander Xix Ortiz</option>
-                            <option value="2">Javier Rubio Magaña</option>
-                            <option value="1">Marcos Tzuc Cen</option>
+                            @foreach ($employees as $employee)
+                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     </div>    
                     <div class="col-md-4">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="name" placeholder="Nomina #2301" required>
+                            <input type="text" class="form-control" name="name" value="Nomina #{{ date('Ymd') }}">
                         </div>
                     </div>
                 </div>         
@@ -120,4 +120,12 @@
         </form>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+$("#employee").on('change', function(){
+    console.log($(this).val());
+});
+</script>
 @endsection

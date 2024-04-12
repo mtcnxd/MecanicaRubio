@@ -106,6 +106,74 @@
 </div>
 @endsection
 
+@section('modal') 
+<div class="modal fade" id="createBrand" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Crear nueva marca</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3 pt-2 text-end">
+                        Marca
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="new_brand">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Premium
+                    </div>
+                    <div class="col-md-9 pt-2">
+                        <input class="form-check-input" type="checkbox" id="premium">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="newBrand">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>    
+
+<div class="modal fade" id="createModel" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Crear nuevo modelo</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3 pt-2 text-end">
+                        Marca
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="model_brand">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Modelo
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="model">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="newModel">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>    
+@endsection
+
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
@@ -200,74 +268,5 @@ function showMessageAlert(){
         confirmButtonText: 'Aceptar'
     })
 }
-
 </script>    
-@endsection
-
-@section('modal') 
-<div class="modal fade" id="createBrand" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Crear nueva marca</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Marca
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="new_brand">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Premium
-                    </div>
-                    <div class="col-md-9 pt-2">
-                        <input class="form-check-input" type="checkbox" id="premium">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="newBrand">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>    
-
-<div class="modal fade" id="createModel" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Crear nuevo modelo</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Marca
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="model_brand">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Modelo
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="model">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="newModel">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>    
 @endsection

@@ -197,71 +197,6 @@
 </div>
 @endsection
 
-@section('css')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-@endsection
-
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-$("#addItemInvoice").on('click', function(event){
-    var service  = $("#service").val();
-    var amount   = $("#amount").val();
-    var item     = $("#item").val();
-    var supplier = $("#supplier").val();
-    var price    = $("#price").val();
-    var labour   = $("#labour").prop('checked');
-
-    $.ajax({
-        url:"{{ route('createItemInvoice') }}",
-        method:'POST',
-        data: {
-            service:service,
-            amount:amount,
-            item:item,
-            supplier:supplier,
-            price:price,
-            labour:labour
-        },
-        success:function(response){
-            $("#createItem").modal('hide');
-            var tbody = $("#table-items tbody");
-            var object = JSON.parse(response);
-            history.go();
-        }
-    });
-});
-
-$(".removeItem").on('click', function (event){
-    event.preventDefault();
-    const service = $("#service").val();
-    const item = this.id;
-    
-    $.ajax({
-        url:"{{ route('removeItemInvoice') }}",
-        method:'POST',
-        data: {
-            item:item
-        },
-        success:function(response){
-            showMessageAlert(response);
-        }
-    });
-});
-
-function showMessageAlert(message){
-    Swal.fire({
-        text: message,
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-    }).then(() => {
-        history.go();
-    });
-}
-</script>    
-@endsection
-
 @section('modal')
 <div class="modal fade" id="createItem" tabindex="-1">
     <div class="modal-dialog">
@@ -325,4 +260,69 @@ function showMessageAlert(message){
         </div>
     </div>
 </div>    
+@endsection
+
+@section('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+$("#addItemInvoice").on('click', function(event){
+    var service  = $("#service").val();
+    var amount   = $("#amount").val();
+    var item     = $("#item").val();
+    var supplier = $("#supplier").val();
+    var price    = $("#price").val();
+    var labour   = $("#labour").prop('checked');
+
+    $.ajax({
+        url:"{{ route('createItemInvoice') }}",
+        method:'POST',
+        data: {
+            service:service,
+            amount:amount,
+            item:item,
+            supplier:supplier,
+            price:price,
+            labour:labour
+        },
+        success:function(response){
+            $("#createItem").modal('hide');
+            var tbody = $("#table-items tbody");
+            var object = JSON.parse(response);
+            history.go();
+        }
+    });
+});
+
+$(".removeItem").on('click', function (event){
+    event.preventDefault();
+    const service = $("#service").val();
+    const item = this.id;
+    
+    $.ajax({
+        url:"{{ route('removeItemInvoice') }}",
+        method:'POST',
+        data: {
+            item:item
+        },
+        success:function(response){
+            showMessageAlert(response);
+        }
+    });
+});
+
+function showMessageAlert(message){
+    Swal.fire({
+        text: message,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    }).then(() => {
+        history.go();
+    });
+}
+</script>    
 @endsection

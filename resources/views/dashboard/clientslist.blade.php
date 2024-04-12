@@ -59,6 +59,10 @@
 </div>
 @endsection
 
+@section('css')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+@endsection
+
 @section('js')
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script>
@@ -74,8 +78,4 @@ new DataTable('#clients', {
     }]
 });
 </script>
-@endsection
-
-@section('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 @endsection

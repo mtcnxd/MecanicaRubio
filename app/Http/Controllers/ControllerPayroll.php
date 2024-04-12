@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class ControllerPayroll extends Controller
 {
@@ -11,7 +12,11 @@ class ControllerPayroll extends Controller
      */
     public function index()
     {
-        return view('dashboard.payroll');
+        $employees = DB::table('employees')->get();
+
+        return view('dashboard.payroll', [
+            'employees' => $employees
+        ]);
     }
 
     /**

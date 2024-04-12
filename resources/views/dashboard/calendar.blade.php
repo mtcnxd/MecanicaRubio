@@ -38,34 +38,6 @@
 </div>
 @endsection
 
-@section('css')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<link href="{{ asset('css/calendar.css') }}" rel="stylesheet" />
-@endsection
-
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-$(".event").on('click', function(){
-    const id = this.id;
-
-    $.ajax({
-        url: '{{ route('loadEvent') }}',
-        method: 'POST',
-        data: {id},
-        success: function(response){
-            const object = JSON.parse(response);
-            $("#event").val(object.event);
-            $("#description").val(object.description);
-            $("#client").val(object.name);
-            $("#phone").val(object.phone);
-        }
-    });
-})
-</script>
-@endsection
-
 @section('modal')
 <div class="modal fade" id="eventDetails" tabindex="-1">
     <div class="modal-dialog">
@@ -114,4 +86,32 @@ $(".event").on('click', function(){
         </div>
     </div>
 </div>    
+@endsection
+
+@section('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="{{ asset('css/calendar.css') }}" rel="stylesheet" />
+@endsection
+
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+$(".event").on('click', function(){
+    const id = this.id;
+
+    $.ajax({
+        url: '{{ route('loadEvent') }}',
+        method: 'POST',
+        data: {id},
+        success: function(response){
+            const object = JSON.parse(response);
+            $("#event").val(object.event);
+            $("#description").val(object.description);
+            $("#client").val(object.name);
+            $("#phone").val(object.phone);
+        }
+    });
+})
+</script>
 @endsection

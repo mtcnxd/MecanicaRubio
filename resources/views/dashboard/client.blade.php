@@ -43,7 +43,7 @@
                         Teléfono
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="phone" value="{{ isset($client) ? $client->phone : '' }}" required>
+                        <input type="number" class="form-control" name="phone" value="{{ isset($client) ? $client->phone : '' }}" required>
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Código Postal
@@ -139,6 +139,35 @@
 </div>
 @endsection
 
+@section('modal')
+<div class="modal fade" id="searchModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Buscar codigo postal</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3 pt-2 text-end">
+                        Colonia
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="textPostalCode">
+                        <ul id="resultList">
+                            <li>Results</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="newModel">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -220,34 +249,4 @@
         });
     }
 </script>
-@endsection
-
-@section('modal')
-<div class="modal fade" id="searchModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Buscar codigo postal</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Colonia
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="textPostalCode">
-                        <ul id="resultList">
-                            <li>Results</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="newModel">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
