@@ -60,6 +60,10 @@ Route::post('loadEvent', [
     ControllerAjax::class, 'loadEvent'
 ])->name('loadEvent');
 
+Route::post('loadEmployee', [
+    ControllerAjax::class, 'loadEmployee'
+])->name('loadEmployee');
+
 Route::get('getDataTableServices', [
     ControllerAjax::class, 'getDataTableServices'
 ])->name('getDataTableServices');

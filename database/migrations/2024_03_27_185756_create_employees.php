@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->double('salary');
+            $table->double('extra');
             $table->string('periodicity');
             $table->string('status')->default('Pendiente');
             $table->timestamps();

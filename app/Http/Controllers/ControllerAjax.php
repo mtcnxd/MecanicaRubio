@@ -225,4 +225,11 @@ class ControllerAjax extends Controller
             ->first();
     }
 
+    public function loadEmployee(Request $request)
+    {
+        return json_encode(
+            DB::table('employees')->where('id', $request->employee)->first()
+        );
+    }
+
 }
