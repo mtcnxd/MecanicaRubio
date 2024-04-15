@@ -9,7 +9,7 @@
     </div>
     <div class="window-body bg-white">
         <label class="window-body-form">Registrar Nomina</label>
-        <form action="{{ route('expenses.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('payroll.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf
             <div class="col-md-6">
                 <div class="row">
