@@ -22,61 +22,68 @@
             </div>
         @endif
 
-        <div class="row m-1 mb-3 pb-3">
-            <div class="col-md-2">
-                <label class="fw-bold">Inicio</label>
-                <input type="date" class="form-control" value="{{ $startDate }}" id="startDate">
-            </div>
+        <form action="{{ route('payroll.index') }}" method="POST">
+            @csrf
+            @method('GET')
 
-            <div class="col-md-2">
-                <label class="fw-bold">Final</label>
-                <input type="date" class="form-control" value="{{ $endDate }}" id="endDate">
-            </div>
+            <div class="row m-1 mb-3 pb-3">
+                <div class="col-md-2">
+                    <label class="fw-bold">Inicio</label>
+                    <input type="date" class="form-control" name="startDate" id="startDate" value="{{ $startDate }}">
+                </div>
 
-            <div class="col-md-2">
-                <label class="fw-bold">Responsable</label>
-                <select class="form-select" name="responsible" id="responsible">
-                    <option value="0"> - Filtrar por responsable - </option>
-                    <option value="3">Alexander Xix Ortiz</option>
-                    <option value="2">Javier Rubio Magaña</option>
-                    <option value="1">Marcos Tzuc Cen</option>
-                </select>
-            </div>
+                <div class="col-md-2">
+                    <label class="fw-bold">Final</label>
+                    <input type="date" class="form-control" name="endDate" id="endDate" value="{{ $endDate }}">
+                </div>
 
-            <div class="col-md-2 mt-4">
-                <button class="btn btn-success" id="applyFilter">
-                    <x-feathericon-search class="table-icon" style="margin: -2px 5px 2px"/>
-                    Buscar
-                </button>
+                <div class="col-md-2">
+                    <label class="fw-bold">Responsable</label>
+                    <select class="form-select" name="employee" id="employee">
+                        <option value="0"> - Filtrar por responsable - </option>
+                        <option value="1">Alexander Xix Ortiz</option>
+                        <option value="3">Javier Rubio Magaña</option>
+                        <option value="2">Marcos Tzuc Cen</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 mt-4">
+                    <button class="btn btn-success" id="applyFilter">
+                        <x-feathericon-search class="table-icon" style="margin: -2px 5px 2px"/>
+                        Buscar
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
         
         <table class="table table-hover table-borderless" id="expenses" style="width:100%;">
             <thead>
                 <tr>
-                    <th width="400px">Egreso</th>
-                    <th width="400px">Descripción</th>
+                    <th width="400px">Fecha</th>
+                    <th width="400px">Empleado</th>
                     <th>Estatus</th>
-                    <th>Fecha</th>
-                    <th>Cantidad / Precio</th>
                     <th class="text-end">Total</th>
-                    <th width="20px">&nbsp;</th>
-                    <th width="20px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($salaryData as $salary)
+                @php
+                    $total = $salary->salary + ($salary->hours * $salary->price) + $salary->bonds - $salary->discount; 
+                @endphp
+                <tr>
+                    <td>
+                        <a href="http://">
+                            {{ Carbon\Carbon::parse($salary->created_at)->format('d-m-Y') }}
+                        </a>
+                    </td>
+                    <td>{{ $salary->name }}</td>
+                    <td>{{ $salary->status }}</td>
+                    <td class="text-end">{{ "$".number_format($total, 2) }}</td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
 
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <input type="button" value="Marcar como pagado" class="btn btn-sm btn-outline-success" id="markAsPaid">
-            </div>
-            
-            <div class="col">
-                <span id="result" class="fw-bold"></span>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

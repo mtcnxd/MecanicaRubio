@@ -11,11 +11,32 @@ class ControllerPayroll extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $employee  = null;
+        $startDate = Carbon::now()->format('Y-m-01');
+        $endDate   = Carbon::now()->addDay()->format('Y-m-d');
+
+        $salaryData = DB::table('salaries')
+            ->select('salaries.*', 'employees.name')
+            ->join('employees', 'salaries.employee','employees.id')
+            ->whereBetween('salaries.created_at', [$startDate, $endDate])
+            ->get();
+
+        if(isset($request->employee)){
+            $employee   = $request->employee;
+            $salaryData = DB::table('salaries')
+            ->select('salaries.*', 'employees.name')
+            ->join('employees', 'salaries.employee','employees.id')
+            ->where('salaries.employee', $employee)
+            ->get();
+        }
+
         return view('dashboard.payrollslist', [
-            "startDate" => "", 
-            "endDate"   => "",
+            "startDate"  => $startDate,
+            "endDate"    => $endDate,
+            "salaryData" => $salaryData,
+            "employee"   => $employee,
         ]);
     }
 
@@ -50,7 +71,7 @@ class ControllerPayroll extends Controller
             'updated_at' => Carbon::now(),
         ]);
 
-        return view('');
+        return to_route('payroll.index');
     }
 
     /**

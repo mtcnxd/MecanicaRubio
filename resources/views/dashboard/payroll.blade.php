@@ -144,14 +144,16 @@
 <script>
 function calculate(){
     var hours    = parseFloat( $("#hours").val() );
+    var price    = parseFloat( $("#price").val() );
     var salary   = parseFloat( $("#salary").val() );
     var bonds    = parseFloat( $("#bonds").val() );
     var discount = parseFloat( $("#discount").val() );
-    var hours_total = hours * 50;
 
-    $("#hours_total").val( (hours_total) );
+    var extra    = hours * price;
 
-    total = salary + hours_total + (hours * 50) + bonds - discount;
+    $("#hours_total").val(extra);
+
+    total = salary + extra + bonds - discount;
 
     $("#total").val( numeral(parseFloat(total)).format('0,0.00') );
 }
