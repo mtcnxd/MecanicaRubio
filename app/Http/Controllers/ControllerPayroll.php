@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use DB;
 
 class ControllerPayroll extends Controller
@@ -12,10 +13,9 @@ class ControllerPayroll extends Controller
      */
     public function index()
     {
-        $employees = DB::table('employees')->get();
-
-        return view('dashboard.payroll', [
-            'employees' => $employees
+        return view('dashboard.payrollslist', [
+            "startDate" => "", 
+            "endDate"   => "",
         ]);
     }
 
@@ -24,7 +24,11 @@ class ControllerPayroll extends Controller
      */
     public function create()
     {
-        //
+        $employees = DB::table('employees')->get();
+
+        return view('dashboard.payroll', [
+            'employees' => $employees
+        ]);
     }
 
     /**
@@ -32,7 +36,21 @@ class ControllerPayroll extends Controller
      */
     public function store(Request $request)
     {
-        dd ($request);
+        DB::table('salaries')->insert([
+            'employee'   => $request->employee,
+            'salary'     => $request->salary,
+            'hours'      => $request->hours,
+            'price'      => $request->price,
+            'bonds_comment'    => $request->bonds_comment,
+            'bonds'      => $request->bonds,
+            'discount_comment' => $request->discount_comment,
+            'discount'   => $request->discount,
+            'status'     => $request->status,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return view('');
     }
 
     /**
