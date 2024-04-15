@@ -9,7 +9,7 @@
     </div>
     <div class="window-body bg-white">
         <label class="window-body-form">Registrar Nomina</label>
-        <form action="{{ route('expenses.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('payroll.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf
             <div class="col-md-6">
                 <div class="row">
@@ -35,7 +35,7 @@
                     <div class="col-md-5">
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="name" id="salary" style="text-align: right" disabled>
+                            <input type="text" class="form-control" name="salary" id="salary" value="" style="text-align: right">
                         </div>
                     </div>
                 </div>
@@ -45,14 +45,15 @@
                         Horas extra
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="amount_hours" id="amount_hours" value="0">
+                        <input type="number" class="form-control" name="hours" id="hours" value="0">
                     </div>
                     <div class="col-md-2">
                     </div>
                     <div class="col-md-5">
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="price_hour" id="price_hour" value="0" style="text-align: right" disabled>
+                            <input type="hidden" name="price" id="price" value="">
+                            <input type="text" class="form-control" name="hours_total" id="hours_total" value="0" style="text-align: right">                            
                         </div>
                     </div>
                 </div>
@@ -62,7 +63,7 @@
                         Bonos
                     </div>
                     <div class="col-md-9">
-                        <textarea name="" class="form-control" id="" cols="30" rows="2"></textarea>
+                        <textarea class="form-control" name="bonds_comment" id="bonds_comment" cols="30" rows="2"></textarea>
                     </div>
                 </div>
 
@@ -72,7 +73,7 @@
                     <div class="col-md-5">
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="bonos" id="bonos" value="0" style="text-align: right">
+                            <input type="text" class="form-control" name="bonds" id="bonds" value="0" style="text-align: right">
                         </div>
                     </div>
                 </div>
@@ -82,7 +83,7 @@
                         Descuentos
                     </div>
                     <div class="col-md-9">
-                        <textarea name="" class="form-control" id="" cols="30" rows="2"></textarea>
+                        <textarea class="form-control" name="discount_comment" id="discount_comment" cols="30" rows="2"></textarea>
                     </div>
                 </div>
 
@@ -142,14 +143,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <script>
 function calculate(){
-    var amount_hours = parseFloat( $("#amount_hours").val() );
-    var salary       = parseFloat( $("#salary").val() );
-    var bonos        = parseFloat( $("#bonos").val() );
-    var discount     = parseFloat( $("#discount").val() );
+    var hours    = parseFloat( $("#hours").val() );
+    var price    = parseFloat( $("#price").val() );
+    var salary   = parseFloat( $("#salary").val() );
+    var bonds    = parseFloat( $("#bonds").val() );
+    var discount = parseFloat( $("#discount").val() );
 
-    $("#price_hour").val( (amount_hours * 50) );
+    var extra    = hours * price;
 
-    total = salary + (amount_hours * 50) + bonos - discount;
+    $("#hours_total").val(extra);
+
+    total = salary + extra + bonds - discount;
 
     $("#total").val( numeral(parseFloat(total)).format('0,0.00') );
 }
@@ -164,9 +168,10 @@ $("#employee").on('change', function(){
             employee: employee
         },
         success: function(response){
-            const json = JSON.parse(response);
+            const json = JSON.parse(response);            
             $("#salary").val(json.salary);
-       json.salary }
+            $("#price").val(json.extra);
+        }
     })
 });
 </script>
