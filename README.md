@@ -1,20 +1,15 @@
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<img src="https://scontent.fmid3-1.fna.fbcdn.net/v/t39.30808-6/422162603_3653566461627766_1554580159527816843_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=E7K6NKypPEgAb6Zinn2&_nc_ht=scontent.fmid3-1.fna&oh=00_AfCnVyx1_1eslMQ4_ibx8wsWPH3eGwqWKyVxJazTMSfoHg&oe=6625E157" width="250px" />
 
-## About Laravel
+## Ingenieria Mecanica Rubio
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Software para Ingenieria Mecanica Rubio, esta aplicacion web esta desarrollada a medida para administrar clientes y servicios. En la etapa actual cuenta con los siguientes modulos.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* Clientes.
+* Vehiculos.
+* Servicios.
+* Proveedores.
+* Ingresos.
+* Egresos.
+* Nominas.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Esta aplicacion esta desarrollada en Laravel y aun esta en etapa temprana de desarrollo. Sin embargo ya es capaz de ser implementada.
