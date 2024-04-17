@@ -8,6 +8,8 @@ use App\Http\Controllers\ControllerExpenses;
 use App\Http\Controllers\ControllerCalendar;
 use App\Http\Controllers\ControllerCharts;
 use App\Http\Controllers\ControllerPayroll;
+use App\Mail\NotificationSender;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
 /*
@@ -59,3 +61,13 @@ Route::resource('services', ControllerServices::class);
 Route::resource('expenses', ControllerExpenses::class);
 
 Route::resource('payroll', ControllerPayroll::class);
+
+
+Route::get('notificationSender', function(){
+   // return ( new NotificationSender() )->render();
+    $mailResponse = Mail::to('mtc.nxd@gmail.com')->send(
+        new NotificationSender()
+    );
+
+    dd($mailResponse);
+});
