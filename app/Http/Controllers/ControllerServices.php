@@ -58,7 +58,7 @@ class ControllerServices extends Controller
     public function show(string $id)
     {
         $service = DB::table('services')
-            ->select('services.*', 'autos.brand', 'autos.model', 'clients.name')
+            ->select('services.*','autos.brand','autos.model','clients.name')
             ->join('autos', 'services.car_id', 'autos.id')
             ->join('clients', 'services.client_id', 'clients.id')
             ->where('services.id', $id)

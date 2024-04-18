@@ -14,17 +14,22 @@ class NotificationSender extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct($message = null)
+    public $service;
+    public $items;
+    public $data;
+
+    public function __construct($service, $items)
     {
-        echo $message;
+        $this->service = $service;
+        $this->items = $items;
     }
 
     public function build()
     {
-        return $this->view('email.templateInvoice');
+        return $this->view('email.templateInvoice')->with([
+            'service' => $this->service,
+            'items'   => $this->items,
+        ]);
     }
 
     /**
@@ -33,8 +38,8 @@ class NotificationSender extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address("mtc.nxd@gmail.com"),
-            subject: 'Notification Sender',
+            from: new Address("j-ar-8@hotmail.com"),
+            subject: 'Ing. Mecanica Rubio',
         );
     }
 

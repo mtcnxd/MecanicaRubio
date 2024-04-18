@@ -63,10 +63,21 @@ Route::resource('expenses', ControllerExpenses::class);
 Route::resource('payroll', ControllerPayroll::class);
 
 
-Route::get('notificationSender', function(){
-    $mailResponse = Mail::to('mtc.nxd@icloud.com')->send(
-        new NotificationSender()
-    );
+Route::get('notificationSender/{serviceid}', function($serviceid)
+{
+    $service = DB::table('services')
+        ->join('clients', 'services.client_id', 'clients.id')
+        ->where('services.id', $serviceid)
+        ->first();
 
-    dd($mailResponse);
-});
+    $items = DB::table('services_items')
+        ->where('service_id', $serviceid)
+        ->get();
+
+    $mailResponse = Mail::to($service->email)->send(
+        new NotificationSender($service, $items)
+    );
+    
+    return to_route('services.index');
+
+})->name('sendMail');
