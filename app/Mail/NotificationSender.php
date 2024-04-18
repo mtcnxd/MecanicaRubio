@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -16,9 +17,9 @@ class NotificationSender extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($message = null)
     {
-        //
+        echo $message;
     }
 
     public function build()
@@ -32,6 +33,7 @@ class NotificationSender extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address("mtc.nxd@gmail.com"),
             subject: 'Notification Sender',
         );
     }

@@ -64,8 +64,7 @@ Route::resource('payroll', ControllerPayroll::class);
 
 
 Route::get('notificationSender', function(){
-   // return ( new NotificationSender() )->render();
-    $mailResponse = Mail::to('mtc.nxd@gmail.com')->send(
+    $mailResponse = Mail::to('mtc.nxd@icloud.com')->send(
         new NotificationSender()
     );
 
