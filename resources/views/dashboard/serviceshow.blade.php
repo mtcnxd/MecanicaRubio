@@ -182,7 +182,7 @@
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
-                    <a href="{{ route('services.index') }}" class="btn btn-secondary">
+                    <a href="{{ route('sendMail', $service->id) }}" class="btn btn-secondary">
                         <x-feathericon-file-text class="table-icon" style="margin: -2px 5px 2px"/>
                         Facturar
                     </a>
