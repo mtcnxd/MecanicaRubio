@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('bonds')->nullable();
             $table->text('discount_comment')->nullable();
             $table->integer('discount')->nullable();
-            $table->string('status')->default('Pendiente');
+            $table->enum('status',['Pendiente', 'Pagado', 'Cancelado'])->default('Pendiente');
             $table->timestamps();
         });
     }
