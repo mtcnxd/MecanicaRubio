@@ -40,7 +40,7 @@
                             Teléfono
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" required>
+                            <input type="number" class="form-control" name="name" required>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -136,7 +136,7 @@
                             Teléfono
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="phone" required>
+                            <input type="number" class="form-control" name="phone" required>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -175,8 +175,14 @@
                         <div class="col-md-3 pt-2 text-end">
                             Fecha inicio
                         </div>
-                        <div class="col-md-8">
-                            <input type="date" class="form-control" name="register" required>
+                        <div class="col-md-4">
+                            <input type="date" class="form-control" name="register" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="checkbox" class="mt-2">
+                                <input type="checkbox" class="form-check-input" name="create" id="create">
+                                Crear usuario
+                            </label>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -184,10 +190,10 @@
                             Contraseña
                         </div>
                         <div class="col-md-4">
-                            <input type="password" class="form-control" name="password" required>
+                            <input type="password" class="form-control" name="password" id="password" disabled>
                         </div>
                         <div class="col-md-4">
-                            <input type="password" class="form-control" name="repeat" required>
+                            <input type="password" class="form-control" name="repeat" id="repeat" disabled>
                         </div>
                     </div>
 
@@ -227,7 +233,7 @@
                         <td>{{ $employee->phone }}</td>
                         <td>{{ $employee->email }}</td>
                         <td>{{ $employee->status }}</td>
-                        <td>{{ \Carbon\Carbon::parse($employee->created_at)->format('d-m-Y') }}</td>
+                        <td>{{ Carbon\Carbon::parse($employee->created_at)->format('d-m-Y') }}</td>
                         <td>{{ number_format($employee->salary,2) }}</td>
                         <td>{{ $employee->periodicity }}</td>
                     </tr>
@@ -237,4 +243,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+
+@section('js')
+<script>
+    $("#create").on('change', function(){
+        if ($(this).prop('checked')) {
+            $("#password").removeAttr('disabled');
+            $("#repeat").removeAttr('disabled');
+        } else {
+            $("#password").attr('disabled', 'disabled');
+            $("#repeat").attr('disabled','disabled');
+        }
+    });
+</script>
 @endsection
