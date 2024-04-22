@@ -6,7 +6,8 @@
 <div class="main-content">
     <h4>Resumen</h4>
     <hr>
-    <div class="row">            
+    <div class="row">
+
         <div class="col-md-3 mb-4">
             <div class="window-title-bar shadow-sm">
                 <h6 class="window-title-text">Servicios Entregados</h6>
@@ -73,6 +74,24 @@
                     @endphp
                 @endforeach
                 {{ '$'.number_format($total_expenses,2) }}
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="window-title-bar shadow-sm">
+                <h6 class="window-title-text">Nominas pagadas</h6>
+                <x-feathericon-dollar-sign class="window-title-icon"/>
+            </div>
+            <div class="window-body bg-white shadow-sm text-end fs-5 dashboard-widget">
+                @php
+                    $total_salaries = 0;
+                @endphp
+                @foreach ($salaries as $salary)
+                    @php
+                        $total_salaries += $salary->salary;
+                    @endphp
+                @endforeach
+                {{ '$'.number_format($total_salaries, 2) }}
             </div>
         </div>
 

@@ -35,7 +35,7 @@ class ControllerExpenses extends Controller
     {
         return view('dashboard.expense', [
             "expenses"  => array(),
-            "employees" => Employee::get(),
+            "employees" => Employee::orderBy('name')->get(),
         ]);
     }
 

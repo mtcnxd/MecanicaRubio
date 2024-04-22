@@ -32,7 +32,7 @@
                             Nombre
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" required>
+                            <input type="text" class="form-control" name="name" value="{{ $self->name }}">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -40,7 +40,7 @@
                             Teléfono
                         </div>
                         <div class="col-md-8">
-                            <input type="number" class="form-control" name="name" required>
+                            <input type="number" class="form-control" name="name" value="{{ $self->phone }}">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -48,7 +48,7 @@
                             Correo
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" required>
+                            <input type="text" class="form-control" name="name" value="{{ $self->email }}">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -58,7 +58,7 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text">$</span>
-                                <input type="text" class="form-control" name="name" required>
+                                <input type="text" class="form-control" name="name" value="{{ $self->salary }}">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -78,7 +78,7 @@
                         <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text">$</span>
-                                <input type="text" class="form-control" name="extra" required>
+                                <input type="text" class="form-control" name="extra" value="{{ $self->extra }}">
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                             Fecha inicio
                         </div>
                         <div class="col-md-8">
-                            <input type="date" class="form-control" name="name" required>
+                            <input type="date" class="form-control" name="name" value="{{ Carbon\Carbon::parse($self->created_at)->format('Y-m-d') }}">
                         </div>
                     </div>
 

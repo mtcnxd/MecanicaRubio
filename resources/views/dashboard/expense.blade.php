@@ -55,6 +55,7 @@
                     </div>
                     <div class="col-md-9">
                         <select class="form-select" name="responsible" required>
+                            <option value="0"> - Seleccione un responsable - </option>
                             @foreach ($employees as $employee)
                                 <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                             @endforeach
