@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Employee;
 use Carbon\Carbon;
 use DB;
 
@@ -33,7 +34,8 @@ class ControllerExpenses extends Controller
     public function create()
     {
         return view('dashboard.expense', [
-            'expenses' => array()
+            "expenses"  => array(),
+            "employees" => Employee::orderBy('name')->get(),
         ]);
     }
 

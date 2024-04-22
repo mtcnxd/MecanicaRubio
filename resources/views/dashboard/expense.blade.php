@@ -55,9 +55,10 @@
                     </div>
                     <div class="col-md-9">
                         <select class="form-select" name="responsible" required>
-                            <option value="3">Alexander Xix Ortiz</option>
-                            <option value="2">Javier Rubio Magaña</option>
-                            <option value="1">Marcos Tzuc Cen</option>
+                            <option value="0"> - Seleccione un responsable - </option>
+                            @foreach ($employees as $employee)
+                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

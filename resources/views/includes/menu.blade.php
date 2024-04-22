@@ -51,8 +51,8 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-				<li><a class="menu-item" href="{{ route('profile') }}">Perfil</a></li>				
-				<li><a class="menu-item" href="{{ route('profile') }}">Usuarios</a></li>
+				<!-- <li><a class="menu-item" href="{{ route('profile') }}">Perfil</a></li>	-->
+				<li><a class="menu-item" href="{{ route('profile') }}">Usuarios/Empleados</a></li>
 			</ul>
 		</li>
 	</ul>

@@ -8,7 +8,9 @@ use App\Http\Controllers\ControllerExpenses;
 use App\Http\Controllers\ControllerCalendar;
 use App\Http\Controllers\ControllerCharts;
 use App\Http\Controllers\ControllerPayroll;
+use App\Http\Controllers\ControllerEmployees;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Employee;
 use App\Mail\emailInvoice;
 use Carbon\Carbon;
 
@@ -27,10 +29,13 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('profile', function (){
-    $employees = DB::table('employees')->get();
+Route::get('profile', function ()
+{
+    return view('dashboard.profile')->with([
+        'employees' => Employee::orderBy('name')->get(),
+        'self'      => Employee::find(1),
+    ]);
 
-    return view('dashboard.profile')->with('employees', $employees);
 })->name('profile');
 
 Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar');
@@ -47,9 +52,12 @@ Route::get('dashboard', function()
         ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()])
         ->get();
 
+    $salaries = DB::table('salaries')->get();
+
     return view('dashboard.index',[
         'services' => $services,
         'expenses' => $expenses,
+        'salaries' => $salaries,
         'servicesChart' => ControllerCharts::getServicesChart(),
     ]);
 })->name('dashboard');
@@ -64,6 +72,7 @@ Route::resource('expenses', ControllerExpenses::class);
 
 Route::resource('payroll', ControllerPayroll::class);
 
+Route::post('employees', [ControllerEmployees::class, 'store'])->name('employees.store');
 
 Route::get('emailInvoice/{serviceid}', function($serviceid)
 {

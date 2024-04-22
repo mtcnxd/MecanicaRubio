@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('phone');
+            $table->string('email');
             $table->double('salary');
             $table->double('extra');
             $table->string('periodicity');
-            $table->string('status')->default('Pendiente');
+            $table->enum('status',['Activo','Baja'])->default('Activo');
             $table->timestamps();
         });
     }

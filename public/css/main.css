@@ -61,8 +61,8 @@ a:hover {
 
 .window-title-bar .window-title-text {
     display: inline;
-    text-transform: capitalize;
     margin-bottom: 0px;
+    font-size: 13px;
 }
 
 .window-title-bar .window-title-icon {
@@ -97,4 +97,8 @@ a:hover {
 
 #resultList li {
     padding: 5px;
+}
+
+.dashboard-widget {
+    min-height: 80px;
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Employee;
 use Carbon\Carbon;
 use DB;
 
@@ -45,10 +46,8 @@ class ControllerPayroll extends Controller
      */
     public function create()
     {
-        $employees = DB::table('employees')->get();
-
         return view('dashboard.payroll', [
-            'employees' => $employees
+            'employees' => Employee::orderBy('name')->get()
         ]);
     }
 
