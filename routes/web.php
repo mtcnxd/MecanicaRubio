@@ -8,8 +8,8 @@ use App\Http\Controllers\ControllerExpenses;
 use App\Http\Controllers\ControllerCalendar;
 use App\Http\Controllers\ControllerCharts;
 use App\Http\Controllers\ControllerPayroll;
-use App\Mail\NotificationSender;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\emailInvoice;
 use Carbon\Carbon;
 
 /*
@@ -27,8 +27,10 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('profile', function () {
-    return view('dashboard.profile');
+Route::get('profile', function (){
+    $employees = DB::table('employees')->get();
+
+    return view('dashboard.profile')->with('employees', $employees);
 })->name('profile');
 
 Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar');
@@ -63,7 +65,7 @@ Route::resource('expenses', ControllerExpenses::class);
 Route::resource('payroll', ControllerPayroll::class);
 
 
-Route::get('notificationSender/{serviceid}', function($serviceid)
+Route::get('emailInvoice/{serviceid}', function($serviceid)
 {
     $service = DB::table('services')
         ->join('clients', 'services.client_id', 'clients.id')
@@ -75,9 +77,9 @@ Route::get('notificationSender/{serviceid}', function($serviceid)
         ->get();
 
     $mailResponse = Mail::to($service->email)->send(
-        new NotificationSender($service, $items)
+        new emailInvoice($service, $items)
     );
     
-    return to_route('services.index');
+    return to_route('services.show', $serviceid);
 
 })->name('sendMail');

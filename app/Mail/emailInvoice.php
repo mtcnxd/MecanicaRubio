@@ -10,13 +10,12 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NotificationSender extends Mailable
+class emailInvoice extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $service;
     public $items;
-    public $data;
 
     public function __construct($service, $items)
     {

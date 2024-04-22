@@ -38,9 +38,9 @@
 			<ul class="menu-dropdown">
 				<li><a class="menu-item" href="{{ route('dashboard') }}">Resumen</a></li>
 				<li><a class="menu-item" href="{{ route('expenses.index') }}">Buscar egresos</a></li>
-				<li><a class="menu-item" href="{{ route('expenses.create') }}">Crear egreso</a></li>
+				<li><a class="menu-item" href="{{ route('expenses.create') }}">Nuevo egreso</a></li>
 				<li><a class="menu-item" href="{{ route('payroll.index') }}">Buscar Nominas</a></li>
-				<li><a class="menu-item" href="{{ route('payroll.create') }}">Crear nomina</a></li>
+				<li><a class="menu-item" href="{{ route('payroll.create') }}">Nuevo nomina</a></li>
 			</ul>
 		</li>
 		<li>

@@ -183,9 +183,15 @@
                         Imprimir
                     </a>
                     <a href="{{ route('sendMail', $service->id) }}" class="btn btn-secondary">
+                        <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
+                        Enviar
+                    </a>
+                    <!-- 
+                    <a href="#" class="btn btn-secondary">
                         <x-feathericon-file-text class="table-icon" style="margin: -2px 5px 2px"/>
                         Facturar
                     </a>
+                    -->
                     <button type="submit" class="btn btn-success">
                         <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                         Guardar

@@ -45,7 +45,7 @@
                         <x-feathericon-phone-call class="table-icon" style="margin-top: -2px; color: var(--amber-700);"/>
                         {{ $client->phone }}
                     </td>
-                    <td>{{ $client->street }} - {{ $client->address }}</td>
+                    <td>{{ $client->street }} {{ $client->address }}</td>
                     <td class="text-end">
                         <a href="{{ route('clients.edit', $client->id) }}">
                             <x-feathericon-edit class="table-icon"/>

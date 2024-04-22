@@ -47,7 +47,7 @@
                             <input type="password" class="form-control" name="name" required>
                         </div>
                         <div class="col-md-4">
-                            <input type="password" class="form-control" name="name" placeholder="Confirmar" required>
+                            <input type="password" class="form-control" name="name" required>
                         </div>
                     </div>
 
@@ -83,6 +83,29 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <table class="table table-hover" style="border: solid 1px #dedede">
+                <thead>
+                    <th>Nombres</th>
+                    <th>Salario</th>
+                    <th>Periodicidad</th>
+                    <th>Estatus</th>
+                    <th>Fecha Alta</th>
+                </thead>
+                <tbody>
+                    @foreach ($employees as $employee)
+                        <td>{{ $employee->name }}</td>
+                        <td>{{ number_format($employee->salary,2) }}</td>
+                        <td>{{ $employee->periodicity }}</td>
+                        <td>{{ $employee->status }}</td>
+                        <td>{{ $employee->created_at }}</td>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
