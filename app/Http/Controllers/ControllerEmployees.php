@@ -29,6 +29,6 @@ class ControllerEmployees extends Controller
         }
 
         return to_route('profile')
-        ->with('message', 'Los datos se guardaron correctamente');
+            ->with('message', 'Los datos se guardaron correctamente');
     }
 }

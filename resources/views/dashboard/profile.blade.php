@@ -56,7 +56,10 @@
                             Salario
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="name" required>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <select class="form-select">
@@ -73,7 +76,10 @@
                             Hora extra
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="extra" required>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" name="extra" required>
+                            </div>
                         </div>
                     </div>
 
@@ -152,7 +158,10 @@
                             Salario
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="salary" required>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>                            
+                                <input type="text" class="form-control" name="salary" required>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <select class="form-select" name="periodicity">
@@ -168,7 +177,10 @@
                             Hora extra
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" name="extra" required>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" name="extra" required>
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-3">
