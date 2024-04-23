@@ -79,7 +79,7 @@ class ControllerClients extends Controller
      */
     public function edit(string $id)
     {
-        return view('dashboard.client', [
+        return view('dashboard.clientedit', [
             'client' => DB::table('clients')->where('id', $id)->first()
         ]);
     }

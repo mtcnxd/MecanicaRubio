@@ -122,6 +122,7 @@ class ControllerAjax extends Controller
     {
         $addresses = DB::table('postalcodes')
             ->where('address','LIKE', "%".$request->address."%")
+            ->limit(10)
             ->get();
 
         return json_encode($addresses);

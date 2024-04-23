@@ -11,10 +11,15 @@ class ControllerCalendar extends Controller
     public function index()
     {
         $month = date('n');
-        $months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-        $daysOfweek = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
+        $months = [
+            'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'
+        ];
         
-        for($i = 1; $i<= $this->daysOfMonth($month); $i++) {
+        $daysOfweek = [
+            'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'
+        ];
+        
+        for($i = 1; $i<= date('t'); $i++) {
             $date = Carbon::parse(date('Y-m-').$i);
             $events[] = DB::table('calendar')->where('date', $date)->first();
         }
@@ -22,7 +27,7 @@ class ControllerCalendar extends Controller
         return view('dashboard.calendar', [
             'weekStartsIn' => $this->getFirstDay($month),
             'daysOfWeek'   => $daysOfweek,
-            'daysOfMonth'  => $this->daysOfMonth($month),
+            'daysOfMonth'  => date('t'),
             'currentDate'  => date('d'),
             'events'       => $events,
             'month'        => $months[$month - 1],
@@ -32,11 +37,11 @@ class ControllerCalendar extends Controller
     protected function getFirstDay($month)
     {
         $firstDay = mktime(0, 0, 0, $month, 0, date("Y"));
-        return date('N', $firstDay);
-    }
 
-    protected function daysOfMonth($month)
-    {
-        return cal_days_in_month(CAL_GREGORIAN, $month, date('Y'));
+        if ( date('N',$firstDay) == 7 ){
+            return 0;
+        }
+
+        return date('N', $firstDay);
     }
 }

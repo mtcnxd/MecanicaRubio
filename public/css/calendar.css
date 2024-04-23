@@ -68,9 +68,8 @@
 }
 
 .calendar a {
-    background-color: var(--amber-200);
+    background-color: var(--teal-100);
     padding-left: 10px;
-    margin: 3px 0;
-    font-size: 13px;
-    font-weight: bold;
+    margin: 3px 3px;
+    font-size: 14px;
 }

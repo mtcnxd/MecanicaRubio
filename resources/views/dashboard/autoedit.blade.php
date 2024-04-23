@@ -8,23 +8,36 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <label class="window-body-form">Registrar nuevo automovil</label>
-        <form action="{{ route('autos.store') }}" method="POST" class="border pt-5 pb-4">
+        <label class="window-body-form">Editar automovil</label>
+        <form action="{{ route('autos.update', $auto->id) }}" method="POST" class="border pt-5 pb-4">
             @csrf
-            @method('POST')
+            @method('PUT')
             <div class="col-md-6">                
                 <div class="row">
+                    <div class="col-md-3 pt-2 text-end">
+                        Cliente
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client" id="client" value="{{ $auto->name }}" disabled>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
                         Marca
                     </div>    
                     <div class="col-md-9">
                         <div class="input-group">
                             <select class="form-select" id="select-brand" name="brand">
-                                <option>- Seleccione una marca -</option>
+                                @if (isset($auto))
+                                    <option>{{ $auto->brand  }} </option>
+                                @else
+                                    <option>- Seleccione una marca -</option>
+                                @endif
                                 @foreach ($brands as $brand)
                                     <option>{{ $brand->brand }}</option>
                                 @endforeach
-                            </select>                            
+                            </select>
                             <span class="input-group-text">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#createBrand">Agregar</a>
                             </span>
@@ -39,7 +52,11 @@
                     <div class="col-md-9">
                         <div class="input-group">
                             <select class="form-select" id="select-model" name="model">
-                                <option>- Seleccione un modelo -</option>
+                                @if (isset($auto))
+                                    <option>{{ $auto->model }}</option>
+                                @else
+                                    <option>- Seleccione un modelo -</option>
+                                @endif
                             </select>
                             <span class="input-group-text">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#createModel">Agregar</a>
@@ -53,26 +70,13 @@
                         Año
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="year" required>
+                        <input type="text" class="form-control" name="year" value="{{ isset($auto) ? $auto->year : '' }}" required>
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Placa
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="plate">
-                    </div>
-                </div>    
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Cliente
-                    </div>
-                    <div class="col-md-9">
-                        <select id="client" class="form-select" name="client">
-                            @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->name }}</option>
-                            @endforeach
-                        </select>
+                        <input type="text" class="form-control" name="plate" value="{{ isset($auto) ? $auto->plate : '' }}">
                     </div>
                 </div>
 
@@ -81,7 +85,7 @@
                         Comentarios
                     </div>
                     <div class="col-md-9">
-                        <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
+                        <textarea class="form-control" cols="30" rows="4" name="comments">{{ isset($auto) ? $auto->comments : '' }}</textarea>
                     </div>                
                 </div>                
             </div>
@@ -175,10 +179,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(document).ready(function() {
-    $('#client').select2({
-        placeholder: 'Selecciona un cliente para asignar automovil'
-    });
-
     $('#newBrand').on('click', function(){
         const brand   = $("#new_brand").val();
         const premium = $("#premium").prop('checked');

@@ -87,7 +87,6 @@
         </div>
     </div>
     
-    <h4>Gráficas</h4>
     <hr class="mb-4">
 
     <div class="row">

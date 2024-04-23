@@ -142,7 +142,7 @@ $("#markAsPaid").on('click', function(){
 
     $.ajax({
         url: "{{ route('markExpensesAsPaid') }}",
-        method: 'GET',
+        method: 'POST',
         data: {
             checkboxResult:checkboxResult
         },

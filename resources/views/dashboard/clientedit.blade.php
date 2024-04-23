@@ -8,9 +8,9 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <label class="window-body-form">Registrar nuevo cliente</label>
-        <form action="{{ route('clients.store') }}" method="POST" class="border pt-5 pb-4">
-        @method('POST')
+        <label class="window-body-form">Editar cliente</label>
+        <form action="{{ route('clients.update', $client->id) }}" method="POST" class="border pt-5 pb-4">
+        @method('PUT')
         @csrf
         <div class="row">
             <div class="col-md-6">
@@ -19,7 +19,7 @@
                         Nombre
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="name" required>
+                        <input type="text" class="form-control" name="name" value="{{ isset($client) ? $client->name : '' }}" required>
                     </div>
                 </div>
 
@@ -28,7 +28,7 @@
                         Correo
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" name="email" value="{{ isset($client) ? $client->email : '' }}">
                     </div>
                 </div>
 
@@ -37,13 +37,13 @@
                         Teléfono
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" name="phone" required>
+                        <input type="number" class="form-control" name="phone" value="{{ isset($client) ? $client->phone : '' }}" required>
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Código Postal
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="postcode" name="postcode">
+                        <input type="text" class="form-control" id="postcode" name="postcode" value="{{ isset($client) ? $client->postcode : '' }}">
                     </div>
                 </div>
 
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-md-9">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="street">
+                            <input type="text" class="form-control" name="street" value="{{ isset($client) ? $client->street : '' }}">
                             <span class="input-group-text">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#searchModal">Buscar</a>
                             </span>
@@ -67,7 +67,9 @@
                     </div>
                     <div class="col-md-9">
                         <select class="form-select" id="address" name="address">
-                            <option> - Selecciona una colonia - </option>
+                            @if ( isset($client) )
+                                <option>{{ $client->address }}</option>
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -77,13 +79,13 @@
                         Ciudad
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="city" name="city">
+                        <input type="text" class="form-control" id="city" name="city" value="{{ isset($client) ? $client->city : '' }}">
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Estado
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="state" name="state">
+                        <input type="text" class="form-control" id="state" name="state" value="{{ isset($client) ? $client->state : '' }}">
                     </div>
                 </div>
 
@@ -92,7 +94,7 @@
                         RFC
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="rfc">
+                        <input type="text" class="form-control" name="rfc" value="{{ isset($client) ? $client->rfc : '' }}">
                     </div>
                 </div>
 
@@ -101,7 +103,7 @@
                         Comentarios
                     </div>
                     <div class="col-md-9">
-                        <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
+                        <textarea class="form-control" cols="30" rows="4" name="comments">{{ isset($client) ? $client->comments : '' }}</textarea>
                     </div>
                 </div>
             </div>
@@ -109,7 +111,13 @@
 
         <div class="row">
             <div class="col-md-6">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <div class="row">
+                    <div class="col-md-3">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <button type="button" href="#" class="btn btn-danger" id="deleteClient" data-bs-client="{{ isset($client) ? $client->id : ''}}">Eliminar</button>
+                    </div>
                     <div class="col-md-6 mt-3 text-end">
                         <a href="{{ route('clients.index') }}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" class="btn btn-success">

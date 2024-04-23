@@ -17,9 +17,3 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
-
-/*
-Artisan::command('send-message-to-clients', function(){
-    DB::table('employees')->delete();
-})->purpose('Envia mensajes de whatsap')->dailyAt('17:30');
-*/

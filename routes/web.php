@@ -38,8 +38,6 @@ Route::get('profile', function ()
 
 })->name('profile');
 
-Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar');
-
 Route::get('dashboard', function() 
 {
     $services = DB::table('services_view')
@@ -71,6 +69,8 @@ Route::resource('services', ControllerServices::class);
 Route::resource('expenses', ControllerExpenses::class);
 
 Route::resource('payroll', ControllerPayroll::class);
+
+Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar.index');
 
 Route::post('employees', [ControllerEmployees::class, 'store'])->name('employees.store');
 

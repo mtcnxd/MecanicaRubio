@@ -25,7 +25,7 @@
 			<ul class="menu-dropdown">
 				<li><a class="menu-item" href="{{ route('services.index') }}">Buscar servicio</a></li>
 				<li><a class="menu-item" href="{{ route('services.create') }}">Nuevo servicio</a></li>
-				<li><a class="menu-item" href="{{ route('calendar') }}">Calendario</a></li>
+				<li><a class="menu-item" href="{{ route('calendar.index') }}">Calendario</a></li>
 			</ul>
 		</li>
 		<li>

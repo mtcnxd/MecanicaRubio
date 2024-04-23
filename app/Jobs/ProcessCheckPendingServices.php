@@ -27,18 +27,21 @@ class ProcessCheckPendingServices implements ShouldQueue
      */
     public function handle(): void
     {
-        # select a.*, b.name, b.phone 
-        # from  a join clients b on a.client_id = b.id 
-        # where fault like ('%%') 
-        # and a.created_at < now() interval 1 month;
+        $services = DB::table('services')
+            ->where('fault','like', '%mantenimiento menor%')
+            ->get();
 
-        // DB::table('services')
-        //  ->select('services.*, clients.name, clients.phone, clients.email')
-        //  ->join('clients', 'services.client_id', 'clients.id')
-        //  ->whereLike('%mantenimiento menor%)
-        //  ->where('created_at','<', Carbon::now()->subDays(150))
-        //  ->get();
+        foreach($services as $service){
+            DB::table('calendar')->insert([
+                'event'       => 'Mantenimiento programado',
+                'description' => 'Llamar cliente por mantenimiento programado',
+                'client_id'   => $service->client_id,
+                'date'        => Carbon::now()->format('Y-m-d'),
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            ]);
 
-        DB::table('salaries')->delete(); 
+            # Enviar correo electronico y mensaje por whatsapp
+        }
     }
 }

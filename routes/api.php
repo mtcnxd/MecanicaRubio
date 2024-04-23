@@ -72,7 +72,7 @@ Route::get('getDataTableExpenses', [
     ControllerAjax::class, 'getDataTableExpenses'
 ])->name('getDataTableExpenses');
 
-Route::get('markExpensesAsPaid', [
+Route::post('markExpensesAsPaid', [
     ControllerAjax::class, 'markExpensesAsPaid'
 ])->name('markExpensesAsPaid');
 

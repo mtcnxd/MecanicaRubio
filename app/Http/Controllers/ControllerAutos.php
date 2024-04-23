@@ -18,7 +18,7 @@ class ControllerAutos extends Controller
             ->where('clients.status','Activo')
             ->get();
 
-        return view ('dashboard/autoslist', [
+        return view ('dashboard.autoslist', [
             'autos' => $autos
         ]);
     }
@@ -28,7 +28,7 @@ class ControllerAutos extends Controller
      */
     public function create()
     {
-        return view('dashboard/auto', [
+        return view('dashboard.auto', [
             'brands'  => DB::table('brands')->orderBy('brand')->get(),
             'clients' => DB::table('clients')->where('status','Activo')->orderBy('name')->get(),
         ]);
@@ -79,9 +79,13 @@ class ControllerAutos extends Controller
      */
     public function edit(string $id)
     {
-        $auto = DB::table('autos')->where('id', $id)->first();
+        $auto = DB::table('autos')
+            ->select('autos.*', 'clients.name')
+            ->join('clients', 'autos.client_id','clients.id')
+            ->where('autos.id', $id)
+            ->first();
 
-        return view('dashboard.auto', [
+        return view('dashboard.autoedit', [
             'auto'    => $auto,
             'brands'  => array(),
             'clients' => array(),
@@ -93,7 +97,15 @@ class ControllerAutos extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::table('autos')->where('id', $id)->update([
+            "brand" => $request->brand,
+            "model" => $request->model,
+            "year"  => $request->year,
+            "plate" => $request->plate,
+            "comments" => $request->comments,
+        ]);
+
+        return to_route('autos.index')->with('message', 'Los datos se guardaron correctamente');
     }
 
     /**
