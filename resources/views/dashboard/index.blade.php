@@ -10,76 +10,85 @@
         <div class="col-md-7">
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <div class="window-title-bar shadow-sm">
-                        <h6 class="window-title-text">Servicios Entregados</h6>
-                        <x-feathericon-tool class="window-title-icon"/>
-                    </div>
-                    <div class="window-body bg-white shadow-sm text-end fs-5 dashboard-widget">
-                        @php
-                            $countServices = count($services);
-                        @endphp
-                        {{ $countServices }} Servicio(s)
+                    <div class="widget-simple">
+                        <div class="widget-simple-head">
+                            <span class="pt-1">Servicios Entregados</span>
+                            <x-feathericon-tool class="window-title-icon"/>
+                        </div>
+                        <div class="widget-simple-body">
+                            @php
+                                $count = count($services);
+                            @endphp
+                            {{ ($count > 1) ? $count.' servicios' : $count.' servicio' }}
+                        </div>
                     </div>
                 </div>
                 
                 <div class="col-md-6 mb-4">
-                    <div class="window-title-bar shadow-sm">
-                        <h6 class="window-title-text">Lista servicios entregados</h6>
-                        <x-feathericon-tool class="window-title-icon"/>
-                    </div>
-                    <div class="window-body bg-white shadow-sm dashboard-widget" style="overflow-y: scroll; padding:0px; max-height: 230px;">
-                        <table class="table table-sm table-striped">
-                        @foreach ($services as $row => $service)
-                            <tr>
-                                <td>{{ $row +1 }}</td>
-                                <td>{{ $service->car }}</td>
-                                <td class="text-end">
-                                    <x-feathericon-check-circle class="table-icon"/>
-                                </td>
-                            </tr>                    
-                        @endforeach
-                        </table>
+                    <div class="widget-simple">
+                        <div class="widget-simple-head">
+                            <span class="pt-1">Lista servicios entregados</span>
+                            <x-feathericon-tool class="window-title-icon"/>
+                        </div>
+                        <div class="widget-simple-body">
+                            <table class="table table-sm table-striped">
+                                @foreach ($services as $row => $service)
+                                    <tr>
+                                        <td>{{ $row +1 }}</td>
+                                        <td>{{ $service->car }}</td>
+                                        <td class="text-end">
+                                            <x-feathericon-check-circle class="table-icon"/>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <div class="window-title-bar shadow-sm">
-                        <h6 class="window-title-text">Ingresos (servicios entregados)</h6>
-                        <x-feathericon-dollar-sign class="window-title-icon"/>
-                    </div>
-                    <div class="window-body bg-white shadow-sm text-end fs-5 dashboard-widget">
-                        @php
-                            $total_income = 0;
-                        @endphp
-                        @foreach ($services as $income)
+                    <div class="widget-simple">
+                        <div class="widget-simple-head">
+                            <span class="pt-1">Ingresos (servicios entregados)</span>
+                            <x-feathericon-dollar-sign class="window-title-icon"/>
+                        </div>
+                        <div class="widget-simple-body">
                             @php
-                                $total_income += $income->price
+                                $total_income = 0;
                             @endphp
-                        @endforeach
-                        {{ '$'.number_format($total_income,2) }}
+                            @foreach ($services as $income)
+                                @php
+                                    $total_income += $income->price
+                                @endphp
+                            @endforeach
+                            {{ '$'.number_format($total_income,2) }}
+                        </div>
                     </div>
                 </div>
         
                 <div class="col-md-6 mb-4">
-                    <div class="window-title-bar shadow-sm">
-                        <h6 class="window-title-text">Egresos</h6>
-                        <x-feathericon-dollar-sign class="window-title-icon"/>
-                    </div>
-                    <div class="window-body bg-white shadow-sm text-end fs-5 dashboard-widget">
-                        @php
-                            $total_expenses = 0;
-                        @endphp
-                        @foreach ($expenses as $expense)
+                    <div class="widget-simple">
+                        <div class="widget-simple-head">
+                            <span class="pt-1">Egresos</span>
+                            <x-feathericon-dollar-sign class="window-title-icon"/>
+                        </div>
+                        <div class="widget-simple-body">
                             @php
-                                $total_expenses += $expense->amount * $expense->price;
+                                $total_expenses = 0;
                             @endphp
-                        @endforeach
-                        {{ '$'.number_format($total_expenses,2) }}
+                            @foreach ($expenses as $expense)
+                                @php
+                                    $total_expenses += $expense->amount * $expense->price;
+                                @endphp
+                            @endforeach
+                            {{ '$'.number_format($total_expenses,2) }}
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="col-md-5">
@@ -92,14 +101,15 @@
     <div class="row">
         <div class="col-md-4">
             <canvas id="services"></canvas>
-        </div>        
+        </div>
+
         <div class="col-md-3">
-            <div class="col-md-12 mb-4">
-                <div class="window-title-bar shadow-sm">
-                    <h6 class="window-title-text">Nominas pagadas</h6>
+            <div class="widget-simple">
+                <div class="widget-simple-head">
+                    <span class="pt-1">Nominas pagadas</span>
                     <x-feathericon-dollar-sign class="window-title-icon"/>
                 </div>
-                <div class="window-body bg-white shadow-sm text-end fs-5 dashboard-widget">
+                <div class="widget-simple-body">
                     @php
                         $total_salaries = 0;
                     @endphp
