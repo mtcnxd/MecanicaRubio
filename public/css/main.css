@@ -118,3 +118,7 @@ a:hover {
 .widget-simple-body {
     min-height: 75px;
 }
+
+.widget-simple-body:hover {
+    color: var(--orange-800);
+}

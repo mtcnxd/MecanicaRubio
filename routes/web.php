@@ -57,6 +57,7 @@ Route::get('dashboard', function()
         'expenses' => $expenses,
         'salaries' => $salaries,
         'servicesChart' => ControllerCharts::getServicesChart(),
+        'incomesChart'  => ControllerCharts::getIncomeChart(),
     ]);
 })->name('dashboard');
 

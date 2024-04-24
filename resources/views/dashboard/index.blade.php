@@ -5,7 +5,7 @@
 @section('content')
 <div class="main-content">
     <h4>Resumen</h4>
-    <hr>
+    <hr class="mb-4" style="color: var(--orange-800);">
     <div class="row">
         <div class="col-md-7">
             <div class="row">
@@ -23,7 +23,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="col-md-6 mb-4">
                     <div class="widget-simple">
                         <div class="widget-simple-head">
@@ -51,10 +50,10 @@
                 <div class="col-md-6 mb-4">
                     <div class="widget-simple">
                         <div class="widget-simple-head">
-                            <span class="pt-1">Ingresos (servicios entregados)</span>
+                            <span class="pt-1">Ingresos</span>
                             <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
-                        <div class="widget-simple-body">
+                        <div class="widget-simple-body fs-2">
                             @php
                                 $total_income = 0;
                             @endphp
@@ -64,17 +63,17 @@
                                 @endphp
                             @endforeach
                             {{ '$'.number_format($total_income,2) }}
+                            <div class="fs-6">Servicios entregados</div>
                         </div>
                     </div>
                 </div>
-        
                 <div class="col-md-6 mb-4">
                     <div class="widget-simple">
                         <div class="widget-simple-head">
                             <span class="pt-1">Egresos</span>
                             <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
-                        <div class="widget-simple-body">
+                        <div class="widget-simple-body fs-2">
                             @php
                                 $total_expenses = 0;
                             @endphp
@@ -88,7 +87,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="col-md-5">
@@ -96,7 +94,7 @@
         </div>
     </div>
     
-    <hr class="mb-4">
+    <hr class="mb-5" style="color: var(--orange-800);">
 
     <div class="row">
         <div class="col-md-4">
@@ -145,7 +143,14 @@
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    },
+                    title: {
+                        display: true,
+                        text: 'AUTOMOVILES / SERVICIOS'
+                    }
                 }
             },
             plugins:{
@@ -160,16 +165,23 @@
     var services = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Enero','Febreo','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+            labels: @json($incomesChart['labels']),
             datasets: [{
-                // label: 'Data',
-                data: [20,30,25,35,40,20,28,38,23,40,43,58],
+                data: @json($incomesChart['values']),
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
         },
         options: {
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'INGRESOS POR MES'
+                    }
+                }
+            },
             plugins:{
                 legend: {
                     display: false
