@@ -34,23 +34,18 @@ class ControllerCharts extends Controller
     static function getIncomeChart()
     {
         $data = DB::select(
-            "select date_format(due_date,'%m') as month, sum(price) as price
+            "select date_format(created_at,'%m') as month, sum(price) as price
             from services a join services_items b on a.id = b.service_id
-            where labour = true group by date_format(due_date,'%m')"
+            where labour = true group by date_format(created_at,'%m')"
         );
 
         $months = [
             'Enero', 'Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'
         ];
 
-        for ($i=0; $i<count($months); $i++){
-            $labels[] = $months[$i];
-
-            if ( (Integer)$data[0]->month == $i +1 ){
-                $values[$i] = $data[0]->price;
-            } else {
-                $values[$i] = 0;
-            }
+        foreach($data as $value){
+            $labels[] = $months[(Integer)$value->month -1];
+            $values[] = $value->price;
         }
 
         return array(

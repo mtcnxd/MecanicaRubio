@@ -15,7 +15,7 @@
                             <span class="pt-1">Servicios Entregados</span>
                             <x-feathericon-tool class="window-title-icon"/>
                         </div>
-                        <div class="widget-simple-body">
+                        <div class="widget-simple-body fs-3">
                             @php
                                 $count = count($services);
                             @endphp
@@ -23,24 +23,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6">
                     <div class="widget-simple">
                         <div class="widget-simple-head">
-                            <span class="pt-1">Lista servicios entregados</span>
-                            <x-feathericon-tool class="window-title-icon"/>
+                            <span class="pt-1">Nominas pagadas</span>
+                            <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
-                        <div class="widget-simple-body">
-                            <table class="table table-sm table-striped">
-                                @foreach ($services as $row => $service)
-                                    <tr>
-                                        <td>{{ $row +1 }}</td>
-                                        <td>{{ $service->car }}</td>
-                                        <td class="text-end">
-                                            <x-feathericon-check-circle class="table-icon"/>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </table>
+                        <div class="widget-simple-body fs-3">
+                            @php
+                                $total_salaries = 0;
+                            @endphp
+                            @foreach ($salaries as $salary)
+                                @php
+                                    $total_salaries += $salary->salary;
+                                @endphp
+                            @endforeach
+                            {{ '$'.number_format($total_salaries, 2) }}
                         </div>
                     </div>
                 </div>
@@ -53,7 +51,7 @@
                             <span class="pt-1">Ingresos</span>
                             <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
-                        <div class="widget-simple-body fs-2">
+                        <div class="widget-simple-body fs-3">
                             @php
                                 $total_income = 0;
                             @endphp
@@ -73,7 +71,7 @@
                             <span class="pt-1">Egresos</span>
                             <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
-                        <div class="widget-simple-body fs-2">
+                        <div class="widget-simple-body fs-3">
                             @php
                                 $total_expenses = 0;
                             @endphp
@@ -101,22 +99,24 @@
             <canvas id="services"></canvas>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3 mb-4">
             <div class="widget-simple">
                 <div class="widget-simple-head">
-                    <span class="pt-1">Nominas pagadas</span>
-                    <x-feathericon-dollar-sign class="window-title-icon"/>
+                    <span class="pt-1">Lista servicios entregados</span>
+                    <x-feathericon-tool class="window-title-icon"/>
                 </div>
-                <div class="widget-simple-body">
-                    @php
-                        $total_salaries = 0;
-                    @endphp
-                    @foreach ($salaries as $salary)
-                        @php
-                            $total_salaries += $salary->salary;
-                        @endphp
-                    @endforeach
-                    {{ '$'.number_format($total_salaries, 2) }}
+                <div class="widget-simple-body" style="max-height: 150px;">
+                    <table class="table table-sm table-striped">
+                        @foreach ($services as $row => $service)
+                            <tr>
+                                <td>{{ $row +1 }}</td>
+                                <td>{{ $service->car }}</td>
+                                <td class="text-end">
+                                    <x-feathericon-check-circle class="table-icon"/>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </div>
             </div>
         </div>
