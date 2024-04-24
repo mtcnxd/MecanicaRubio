@@ -51,7 +51,10 @@ Route::get('dashboard', function()
         ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()])
         ->get();
 
-    $salaries = DB::table('salaries')->get();
+    $salaries = DB::table('salaries')
+        ->where('status','Pagado')
+        ->whereBetween('created_at', [Carbon::now()->format('Y-m-01'), Carbon::now()])
+        ->get();
 
     return view('dashboard.index',[
         'services' => $services,

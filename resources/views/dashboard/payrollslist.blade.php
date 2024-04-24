@@ -59,10 +59,11 @@
         <table class="table table-hover table-borderless" id="expenses" style="width:100%;">
             <thead>
                 <tr>
-                    <th width="400px">Fecha</th>
                     <th width="400px">Empleado</th>
+                    <th width="400px">Fecha</th>
                     <th>Estatus</th>
                     <th class="text-end">Total</th>
+                    <th width="30px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,14 +72,31 @@
                     $total = $salary->salary + ($salary->hours * $salary->price) + $salary->bonds - $salary->discount; 
                 @endphp
                 <tr>
+                    <td>{{ $salary->name }}</td>
                     <td>
                         <a href="http://">
                             {{ Carbon\Carbon::parse($salary->created_at)->format('d-m-Y') }}
                         </a>
                     </td>
-                    <td>{{ $salary->name }}</td>
-                    <td>{{ $salary->status }}</td>
+                    <td>
+                        @if ($salary->status == 'Pagado')
+                            <span class="badge rounded-pill text-bg-success">{{ $salary->status }}</span>
+                        @else
+                            <span class="badge rounded-pill text-bg-warning">{{ $salary->status }}</span>
+                        @endif
+                    </td>
                     <td class="text-end">{{ "$".number_format($total, 2) }}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" style="margin-top:-3px;">
+                                <x-feathericon-more-vertical style="height:20px;"/>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#">Cancelar</a></li>
+                              <li><a class="dropdown-item" href="#">Pagar</a></li>
+                            </ul>
+                          </div>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

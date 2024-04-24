@@ -38,6 +38,10 @@
     vertical-align:middle;
 }
 
+.table > thead {
+    border-bottom: solid 1px #aaa;
+}
+
 .select2 .selection .select2-selection {
     border-color: #ddd;
     height: 37px;
