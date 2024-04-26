@@ -49,7 +49,7 @@ a:hover {
 
 .window-title-bar {
     background: var(--blue-gray-100);
-    padding: 10px 0 7px 15px;
+    padding: 10px 15px 7px 15px;
     border-radius: 5px 5px 0 0;
     border: solid 2px var(--blue-gray-100);
     display: flex;
@@ -69,7 +69,6 @@ a:hover {
     display: inline;
     width: 18px;
     height: 18px;
-    margin: 0px 20px 0px 5px;
 }
 
 .window-body {
@@ -121,4 +120,11 @@ a:hover {
 
 .widget-simple-body:hover {
     color: var(--orange-800);
+}
+.widget-simple-body::-webkit-scrollbar {
+    width: 4px;
+    height: 8px;
+}
+.widget-simple-body::-webkit-scrollbar-thumb {
+    background: #ccc;
 }

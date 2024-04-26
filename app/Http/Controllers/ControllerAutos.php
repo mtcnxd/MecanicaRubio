@@ -18,8 +18,15 @@ class ControllerAutos extends Controller
             ->where('clients.status','Activo')
             ->get();
 
+        # select brand, count(*) count from autos group by brand
+        $statistics = DB::table('autos')
+            ->select(DB::raw('count(*) as count, brand'))
+            ->groupBy('brand')
+            ->get();
+
         return view ('dashboard.autoslist', [
-            'autos' => $autos
+            'autos' => $autos,
+            'statistics' => $statistics,
         ]);
     }
 

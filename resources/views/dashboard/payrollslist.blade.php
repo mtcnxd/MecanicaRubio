@@ -72,7 +72,10 @@
                     $total = $salary->salary + ($salary->hours * $salary->price) + $salary->bonds - $salary->discount; 
                 @endphp
                 <tr>
-                    <td>{{ $salary->name }}</td>
+                    <td>
+                        <span class="material-symbols-outlined" style="position:relative; top:5px; margin-right:6px;">badge</span>
+                        {{ $salary->name }}
+                    </td>
                     <td>
                         <a href="http://">
                             {{ Carbon\Carbon::parse($salary->created_at)->format('d-m-Y') }}
@@ -108,6 +111,7 @@
 
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 @endsection
 
 @section('js')

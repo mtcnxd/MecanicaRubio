@@ -36,7 +36,7 @@ class ControllerCharts extends Controller
         $data = DB::select(
             "select date_format(created_at,'%m') as month, sum(price) as price
             from services a join services_items b on a.id = b.service_id
-            where labour = true group by date_format(created_at,'%m')"
+            where labour = true and a.status = 'Entregado' group by date_format(created_at,'%m')"
         );
 
         $months = [

@@ -89,7 +89,7 @@ class ControllerAjax extends Controller
         $result = DB::table('services_items')->insert([
             'service_id' => $request->service,
             'amount'     => ($labour) ? 1 : $request->amount,
-            'item'       => ($labour) ? 'Servicio (Mano de obra)' : $request->item,
+            'item'       => ($labour) ? 'Mano de obra' : $request->item,
             'supplier'   => $request->supplier,
             'price'      => $request->price,
             'labour'     => $labour,

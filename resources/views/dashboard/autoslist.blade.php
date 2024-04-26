@@ -5,7 +5,7 @@
 @section('content')
 <div class="shadow-sm main-content">
     <div class="window-title-bar">
-        <h6 class="window-title-text">Administrar autos</h6>
+        <h6 class="window-title-text">Buscar auto</h6>
         <a href="{{ route('autos.create') }}">
             <x-feathericon-truck class="window-title-icon" data-bs-toggle="tooltip" data-bs-title="Nuevo automovil" data-bs-placement="left"/>
         </a>
@@ -22,6 +22,7 @@
                 <tr>
                     <th scope="col">Automovil</th>
                     <th scope="col" class="text-center">Año / Modelo</th>
+                    <th scope="col">Comentario</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Placa</th>
                     <th scope="col" class="text-end">&nbsp;</th>
@@ -37,6 +38,7 @@
                         </a>
                     </td>
                     <td class="text-center">{{ $auto->year }}</td>
+                    <td>{{ $auto->comments }}</td>
                     <td>
                         <a href="{{ route('clients.show', $auto->client_id) }}">
                             {{ $auto->name }}
@@ -54,6 +56,23 @@
         </table>
     </div>
 </div>
+
+<div class="main-content mt-4">
+    <div class="col-md-3">
+        <div class="window-body shadow-sm" style="padding: 0;">
+            <div class="widget-simple-body" style="max-height:180px; overflow-y:overlay;">
+                <ul class="list-group list-group-flush">
+                    @foreach ($statistics as $brand)
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">{{ $brand->brand }}</div>
+                            <span class="badge text-bg-warning rounded-pill">{{ $brand->count }}</span>
+                        </li>                            
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('css')
@@ -67,8 +86,8 @@ const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
 new DataTable('#autos', {
-    pageLength: 15,
-    lengthMenu: [15, 50, 100],
+    pageLength: 10,
+    lengthMenu: [10, 25, 50],
     columnDefs: [{
         orderable: false,
         target: [1,3,4]

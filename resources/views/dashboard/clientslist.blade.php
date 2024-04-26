@@ -7,7 +7,7 @@
     <div class="window-title-bar">
         <h6 class="window-title-text">Buscar cliente</h6>
         <a href="{{ route('clients.create') }}">
-            <x-feathericon-user-plus class="window-title-icon" data-bs-toggle="tooltip" data-bs-title="Nuevo cliente" data-bs-placement="left"/>
+            <x-feathericon-user-plus class="window-title-icon"/>
         </a>
     </div>
     <div class="window-body bg-white">
