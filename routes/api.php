@@ -83,3 +83,7 @@ Route::post('getImageAttached', [
 Route::post('removeItemExpense', [
     ControllerAjax::class, 'removeItemExpense'
 ])->name('removeItemExpense');
+
+Route::post('manageSalaries', [
+    ControllerAjax::class, 'manageSalaries'
+])->name('manageSalaries');

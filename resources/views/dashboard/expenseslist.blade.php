@@ -135,7 +135,7 @@ $("#markAsPaid").on('click', function(){
     var checkboxResult = [];
 
     checkboxGroup.each(function() {
-    if ($(this).prop('checked')) {
+        if ($(this).prop('checked')) {
             checkboxResult.push( $(this).attr('id') );
         }
     });

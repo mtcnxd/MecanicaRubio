@@ -41,10 +41,12 @@ Route::get('profile', function ()
 Route::get('dashboard', function() 
 {
     $services = DB::table('services_view')
+        ->select(DB::raw('sum(price) as price, car'))
         ->join('services_items','services_view.id','services_items.service_id')
         ->where('services_items.labour', true)
         ->where('services_view.status', 'Entregado')
         ->whereBetween('created_at', [Carbon::now()->format('Y-m-01'), Carbon::now()])
+        ->groupBy('services_view.car')
         ->get();
 
     $expenses = DB::table('expenses')

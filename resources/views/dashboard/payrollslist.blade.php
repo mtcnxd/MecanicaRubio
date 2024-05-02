@@ -95,10 +95,10 @@
                                 <x-feathericon-more-vertical style="height:20px;"/>
                             </button>
                             <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">Cancelar</a></li>
-                              <li><a class="dropdown-item" href="#">Pagar</a></li>
+                              <li><a class="dropdown-item" href="#" data-action="pay" data-id="{{ $salary->id }}">Pagar</a></li>
+                              <li><a class="dropdown-item" href="#" data-action="cancell" data-id="{{ $salary->id }}">Cancelar</a></li>
                             </ul>
-                          </div>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
@@ -118,4 +118,32 @@
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script>
+$(".dropdown-item").on('click', function(){
+    const buttonGroup = $(this);
+
+    $.ajax({
+        url: "{{ route('manageSalaries') }}",
+        method: 'POST',
+        data: {
+            id:buttonGroup.data('id'),
+            action:buttonGroup.data('action')
+        },
+        success: function(response){
+            showMessageAlert(response);
+        }
+    });
+
+});
+
+function showMessageAlert(message){
+    Swal.fire({
+        text: message,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    }).then( () => {
+        history.go();
+    })
+}
+</script>
 @endsection

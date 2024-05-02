@@ -89,7 +89,7 @@ class ControllerAjax extends Controller
         $result = DB::table('services_items')->insert([
             'service_id' => $request->service,
             'amount'     => ($labour) ? 1 : $request->amount,
-            'item'       => ($labour) ? 'Mano de obra' : $request->item,
+            'item'       => $request->item,
             'supplier'   => $request->supplier,
             'price'      => $request->price,
             'labour'     => $labour,
@@ -231,6 +231,26 @@ class ControllerAjax extends Controller
         return json_encode(
             DB::table('employees')->where('id', $request->employee)->first()
         );
+    }
+
+    public function manageSalaries(Request $request)
+    {
+        switch ($request->action){
+            case 'pay':
+                DB::table('salaries')->where('id', $request->id)->update([
+                    'status' => 'Pagado'
+                ]);
+                $response = "El pago se registro correctamente";
+                break;
+            case 'cancell':
+                DB::table('salaries')->where('id', $request->id)->update([
+                    'status' => 'Cancelado'
+                ]);
+                $response = "El pago se cancelo correctamente";
+                break;
+        }
+
+        return $response;
     }
 
 }
