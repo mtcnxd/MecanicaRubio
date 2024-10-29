@@ -31,6 +31,14 @@ Route::get('/', function () {
 
 Route::get('profile', function ()
 {
+    try {
+        $resul = ControllerEmployees::operation();
+        echo $resul;
+
+    } catch(Exception $e){
+        echo "ERROR:".$e->getMessage() ;
+    }
+
     return view('dashboard.profile')->with([
         'employees' => Employee::orderBy('name')->get(),
         'self'      => Employee::find(1),
