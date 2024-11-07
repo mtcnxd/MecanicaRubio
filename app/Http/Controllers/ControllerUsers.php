@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Exception;
 use DB;
 
 class ControllerUsers extends Controller
@@ -24,6 +26,24 @@ class ControllerUsers extends Controller
         $user = User::find($id);
         
         return view('dashboard.users.edit', compact('user'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        if ($request->change == 'on'){
+            if($request->password != $request->repeat){
+                return back()->with('error', 'Las contraseñas no coinciden. Intente nuevamente');
+            }
+        }
+
+        DB::table('users')->where('id', $id)->update([
+            'rol'      => $request->rol,
+            'status'   => $request->status,
+            'comments' => $request->comments,
+        ]);
+
+        return to_route('users.index')
+            ->with('message', 'Los datos se actualizaron correctamente');
     }
 
     public function store(Request $request)
@@ -49,5 +69,14 @@ class ControllerUsers extends Controller
 
         return to_route('users.index')
             ->with('message', 'Los datos se guardaron correctamente');
+    }
+
+    public function destroy($id)
+    {
+        User::destroy($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'Usuario eliminado correctamente'
+        ]);
     }
 }

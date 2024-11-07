@@ -14,9 +14,12 @@ class ControllerClients extends Controller
      */
     public function index()
     {
-        return view ('dashboard.clients.index', [
-            'clients' => DB::table('clients')->where('status', 'Activo')->get()
-        ]);
+        $clients = DB::table('clients')->where('status', 'Activo')->get();
+
+        return view (
+            'dashboard.clients.index', 
+            compact('clients')
+        );
     }
 
     /**

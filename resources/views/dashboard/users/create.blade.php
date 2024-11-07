@@ -28,7 +28,7 @@
                         Correo
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" name="email" required>
                     </div>
                 </div>
 
@@ -52,11 +52,11 @@
                             <option value="client">Client</option>
                         </select>
                     </div>
-                    <div class="col-md-3 pt-2 text-end" name="status">
+                    <div class="col-md-3 pt-2 text-end">
                         Estatus
                     </div>
                     <div class="col-md-3">
-                        <select class="form-select">
+                        <select class="form-select" name="status">
                             <option value="Activo">Activo</option>
                             <option value="Inactivo">Inactivo</option>
                         </select>
