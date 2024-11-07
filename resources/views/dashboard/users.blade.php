@@ -43,18 +43,6 @@
             </tbody>
             @endforeach
         </table>
-        <hr>
-        <div class="row pt-1">
-            <div class="col-md-3">
-                <a href="{{ route('users.create') }}" class="btn btn-secondary">Crear nuevo</a>
-            </div>
-        </div>
-
-        <ul>
-            <li>Prueba 1</li>
-            <li>Prueba 2</li>
-        </ul>
-
     </div>
 </div>
 @endsection

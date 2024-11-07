@@ -24,6 +24,8 @@ a:hover {
 .main-content {
     width: 80%;
     margin: 1rem auto;
+    position: relative;
+    top: 70px;
 }
 
 .table-icon {

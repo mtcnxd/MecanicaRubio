@@ -1,7 +1,7 @@
 @section('menu')
 <div class="menu-container">
 	<ul class="dropdown">
-		<li>			
+		<li>
 			<a href="#clients">
 				<h5 class="menu-title">
 					<x-feathericon-user class="table-icon" style="margin-top:-4px;"/>
@@ -9,10 +9,10 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-				<li><a class="menu-item" href="{{ route('clients.index') }}">Buscar cliente</a></li>
-				<li><a class="menu-item" href="{{ route('clients.create') }}">Nuevo cliente</a></li>
-				<li><a class="menu-item" href="{{ route('autos.index') }}">Buscar Automovil</a></li>
-				<li><a class="menu-item" href="{{ route('autos.create') }}">Nuevo Automovil</a></li>
+				<li><a class="a-item" href="{{ route('clients.index') }}">Buscar cliente</a></li>
+				<li><a class="a-item" href="{{ route('clients.create') }}">Nuevo cliente</a></li>
+				<li><a class="a-item" href="{{ route('autos.index') }}">Buscar Automovil</a></li>
+				<li><a class="a-item" href="{{ route('autos.create') }}">Nuevo Automovil</a></li>
 			</ul>
 		</li>
 		<li>
@@ -23,9 +23,9 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-				<li><a class="menu-item" href="{{ route('services.index') }}">Buscar servicio</a></li>
-				<li><a class="menu-item" href="{{ route('services.create') }}">Nuevo servicio</a></li>
-				<li><a class="menu-item" href="{{ route('calendar.index') }}">Calendario</a></li>
+				<li><a class="a-item" href="{{ route('services.index') }}">Buscar servicio</a></li>
+				<li><a class="a-item" href="{{ route('services.create') }}">Nuevo servicio</a></li>
+				<li><a class="a-item" href="{{ route('calendar.index') }}">Calendario</a></li>
 			</ul>
 		</li>
 		<li>
@@ -36,11 +36,11 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-				<li><a class="menu-item" href="{{ route('dashboard') }}">Resumen</a></li>
-				<li><a class="menu-item" href="{{ route('expenses.index') }}">Buscar egresos</a></li>
-				<li><a class="menu-item" href="{{ route('expenses.create') }}">Nuevo egreso</a></li>
-				<li><a class="menu-item" href="{{ route('payroll.index') }}">Buscar Nominas</a></li>
-				<li><a class="menu-item" href="{{ route('payroll.create') }}">Nuevo nomina</a></li>
+				<li><a class="a-item" href="{{ route('dashboard') }}">Resumen</a></li>
+				<li><a class="a-item" href="{{ route('expenses.index') }}">Buscar egresos</a></li>
+				<li><a class="a-item" href="{{ route('expenses.create') }}">Nuevo egreso</a></li>
+				<li><a class="a-item" href="{{ route('payroll.index') }}">Buscar Nominas</a></li>
+				<li><a class="a-item" href="{{ route('payroll.create') }}">Nuevo nomina</a></li>
 			</ul>
 		</li>
 		<li>
@@ -52,13 +52,14 @@
 			</a>
 			<ul class="menu-dropdown">
 				<li>
-					<a class="menu-item" href="{{ route('users.index') }}">Usuarios</a>
+					<a class="a-item">Usuarios</a>
 					<ul class="submenu">
-						<li><a href="{{ route('users.create') }}">Crear nuevo</a></li>
+						<li><a class="a-item" href="{{ route('users.create') }}">Crear nuevo</a></li>
+						<li><a class="a-item" href="{{ route('users.index') }}">Buscar</a></li>
 					</ul>
 				</li>
-				<li><a class="menu-item" href="{{ route('employees.index') }}">Empleados</a></li>
-				<li><a class="menu-item" href="{{ route('profile') }}">Perfil</a></li>
+				<li><a class="a-item" href="{{ route('employees.index') }}">Empleados</a></li>
+				<li><a class="a-item" href="{{ route('profile') }}">Perfil</a></li>
 			</ul>
 		</li>
 	</ul>
