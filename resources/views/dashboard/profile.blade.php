@@ -51,38 +51,7 @@
                             <input type="text" class="form-control" name="name" value="{{ $self->email }}">
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Salario
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                <input type="text" class="form-control" name="name" value="{{ $self->salary }}">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <select class="form-select">
-                                <option>Semanal</option>
-                                <option>Quincenal</option>
-                                <option>Mensual</option>
-                                <option>Variable</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Hora extra
-                        </div>
-                        <div class="col-md-4">
-                            <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                <input type="text" class="form-control" name="extra" value="{{ $self->extra }}">
-                            </div>
-                        </div>
-                    </div>
-
+                    
                     <div class="row mt-3">
                         <div class="col-md-3 pt-2 text-end">
                             Fecha inicio
@@ -223,35 +192,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <table class="table table-hover shadow-sm" style="border: solid 1px #dedede">
-                <thead>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Correo</th>
-                    <th>Estatus</th>
-                    <th>Fecha Alta</th>
-                    <th>Salario</th>
-                    <th>Periodicidad</th>
-                </thead>
-                <tbody>
-                    @foreach ($employees as $employee)
-                    <tr>
-                        <td>{{ $employee->name }}</td>
-                        <td>{{ $employee->phone }}</td>
-                        <td>{{ $employee->email }}</td>
-                        <td>{{ $employee->status }}</td>
-                        <td>{{ Carbon\Carbon::parse($employee->created_at)->format('d-m-Y') }}</td>
-                        <td>{{ number_format($employee->salary,2) }}</td>
-                        <td>{{ $employee->periodicity }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
         </div>
     </div>
 </div>

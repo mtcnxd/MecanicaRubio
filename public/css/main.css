@@ -13,12 +13,12 @@ body {
 }
 
 a {
-    color: inherit;
+    color: var(--teal-600);
     text-decoration: none;
 }
 
 a:hover {
-    color: var(--teal-600);
+    color: var(--orange-800);
 }
 
 .main-content {

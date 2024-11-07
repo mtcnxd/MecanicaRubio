@@ -12,6 +12,18 @@ use DB;
 
 class ControllerEmployees extends Controller
 {
+    public function index()
+    {
+        $employees = Employee::all();
+
+        return view('dashboard.employees', compact('employees'));
+    }
+
+    public function create()
+    {
+        
+    }
+
     public function store(Request $request)
     {
         Employee::create($request->all());
@@ -31,33 +43,5 @@ class ControllerEmployees extends Controller
 
         return to_route('profile')
             ->with('message', 'Los datos se guardaron correctamente');
-    }
-
-    public static function operation()
-    {
-        $errorInterno = true;
-        try {
-            if (!self::connect())
-            {
-                throw new Exception("Error Processing operation");
-            }
-            
-            if ($errorInterno)
-            {
-                throw new Exception("Error Processing operation");
-            }
-
-            return "exito";
-
-        } catch(Exception $e){
-            throw new Exception($e->getMessage());
-        }
-
-    }
-
-    public static function connect()
-    {
-        # throw new Exception("Error Processing connection");
-        return true;
     }
 }

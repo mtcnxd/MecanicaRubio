@@ -9,6 +9,7 @@ use App\Http\Controllers\ControllerCalendar;
 use App\Http\Controllers\ControllerCharts;
 use App\Http\Controllers\ControllerPayroll;
 use App\Http\Controllers\ControllerEmployees;
+use App\Http\Controllers\ControllerUsers;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Employee;
 use App\Mail\emailInvoice;
@@ -31,18 +32,9 @@ Route::get('/', function () {
 
 Route::get('profile', function ()
 {
-    try {
-        $resul = ControllerEmployees::operation();
-        echo $resul;
+    $self = Employee::find(1);
 
-    } catch(Exception $e){
-        echo "ERROR:".$e->getMessage() ;
-    }
-
-    return view('dashboard.profile')->with([
-        'employees' => Employee::orderBy('name')->get(),
-        'self'      => Employee::find(1),
-    ]);
+    return view('dashboard.profile', compact('self'));
 
 })->name('profile');
 
@@ -85,9 +77,11 @@ Route::resource('expenses', ControllerExpenses::class);
 
 Route::resource('payroll', ControllerPayroll::class);
 
-Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar.index');
+Route::resource('employees', ControllerEmployees::class);
 
-Route::post('employees', [ControllerEmployees::class, 'store'])->name('employees.store');
+Route::resource('users', ControllerUsers::class);
+
+Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar.index');
 
 Route::get('emailInvoice/{serviceid}', function($serviceid)
 {

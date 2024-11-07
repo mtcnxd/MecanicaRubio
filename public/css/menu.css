@@ -6,13 +6,28 @@
 	box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.2);
 }
 
-li {
+.menu-title {
 	display: block;
+	width: 200px;
+	height: 50px;
+	padding: 13px 0 0;
+	background: var(--teal-300);
+	text-align: center;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 18px;
+	text-transform: uppercase;
+	transition: 0.3s background-color;
+	margin-bottom: 0px;
 }
 
 a.menu-item {
 	display: block;
 	padding: 10px 15px;
+}
+
+li {
+	display: block;
 }
 
 li:hover {
@@ -22,15 +37,13 @@ li:hover {
 }
 
 ul li ul {
-	visibility: hidden;
 	opacity: 0;
 	position: absolute;
 	transition: all 0.5s ease;
 	display: none;
 }
 
-ul li:hover > ul,
-ul li ul:hover {
+ul li:hover > ul, ul li ul:hover {
 	visibility: visible;
 	opacity: 1;
 	display: block;
@@ -52,21 +65,6 @@ ul li ul li {
 
 .dropdown > * + * {
 	margin-left: 0;
-}
-
-.menu-title {
-	display: block;
-	width: 200px;
-	height: 50px;
-	padding: 13px 0 0;
-	background: var(--teal-300);
-	text-align: center;
-	color: #ffffff;
-	font-weight: bold;
-	font-size: 18px;
-	text-transform: uppercase;
-	transition: 0.3s background-color;
-	margin-bottom: 0px;
 }
 
 .menu-title:hover { 
@@ -93,6 +91,14 @@ ul li ul li {
 .menu-dropdown > *:hover {
 	background: rgba(0,0,0,0.1);
 	border: solid 1px var(--teal-300);
+}
+
+.menu-dropdown > .submenu {
+	margin-left: 15px;
+}
+
+.menu-dropdown > li:hover > .submenu {
+	display: block;
 }
 
 @keyframes fadeIn {

@@ -51,8 +51,14 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-				<!-- <li><a class="menu-item" href="{{ route('profile') }}">Perfil</a></li>	-->
-				<li><a class="menu-item" href="{{ route('profile') }}">Usuarios/Empleados</a></li>
+				<li>
+					<a class="menu-item" href="{{ route('users.index') }}">Usuarios</a>
+					<ul class="submenu">
+						<li><a href="{{ route('users.create') }}">Crear nuevo</a></li>
+					</ul>
+				</li>
+				<li><a class="menu-item" href="{{ route('employees.index') }}">Empleados</a></li>
+				<li><a class="menu-item" href="{{ route('profile') }}">Perfil</a></li>
 			</ul>
 		</li>
 	</ul>
