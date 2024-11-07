@@ -32,13 +32,13 @@
             <tbody>
                 <tr>
                     <td>{{ $user->id }}</td>
-                    <td><a href="#">{{ $user->name }}</a></td>
+                    <td><a href="{{ route('users.edit', $user->id) }}">{{ $user->name }}</a></td>
                     <td>{{ $user->phone }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->status }}</td>
                     <td>{{ Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}</td>
                     <td>{{ $user->rol }}</td>
-                    <td><x-feathericon-edit class="table-icon"/></td>
+                    <td><a href="{{ route('users.edit', $user->id) }}"><x-feathericon-edit class="table-icon"/></a></td>
                 </tr>
             </tbody>
             @endforeach

@@ -21,7 +21,7 @@ class ControllerExpenses extends Controller
             ->whereBetween('created_at', [$startDate, Carbon::now()])
             ->get();
 
-        return view('dashboard.expenseslist', [
+        return view('dashboard.expenses.index', [
             'expenses'  => $expenses,
             'startDate' => $startDate,
             'endDate'   => $endDate,
@@ -33,7 +33,7 @@ class ControllerExpenses extends Controller
      */
     public function create()
     {
-        return view('dashboard.expense', [
+        return view('dashboard.expenses.create', [
             "expenses"  => array(),
             "employees" => Employee::orderBy('name')->get(),
         ]);

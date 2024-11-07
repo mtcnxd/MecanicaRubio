@@ -34,7 +34,7 @@
 			</a>
 			<ul class="menu-dropdown">
 				<li>
-					<a class="a-item" href="{{ route('services.index') }}">Buscar servicio</a>
+					<a class="a-item" href="{{ route('services.index') }}">Servicios</a>
 					<ul class="submenu">
 						<li><a class="a-item" href="{{ route('services.create') }}">Crear nuevo</a></li>
 						<li><a class="a-item" href="{{ route('services.index') }}">Buscar</a></li>
@@ -52,10 +52,21 @@
 			</a>
 			<ul class="menu-dropdown">
 				<li><a class="a-item" href="{{ route('dashboard') }}">Resumen</a></li>
-				<li><a class="a-item" href="{{ route('expenses.index') }}">Buscar egresos</a></li>
-				<li><a class="a-item" href="{{ route('expenses.create') }}">Nuevo egreso</a></li>
-				<li><a class="a-item" href="{{ route('payroll.index') }}">Buscar Nominas</a></li>
-				<li><a class="a-item" href="{{ route('payroll.create') }}">Nuevo nomina</a></li>
+				<li>
+					<a class="a-item" href="{{ route('expenses.index') }}">Egresos</a>
+					<ul class="submenu">
+						<li><a class="a-item" href="{{ route('expenses.create') }}">Crear nuevo</a></li>
+						<li><a class="a-item" href="{{ route('expenses.index') }}">Buscar</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="a-item" href="{{ route('payroll.index') }}">Nominas</a>
+					<ul class="submenu">
+						<li><a class="a-item" href="{{ route('payroll.create') }}">Crear nuevo</a></li>
+						<li><a class="a-item" href="{{ route('payroll.index') }}">Buscar</a></li>
+					</ul>
+				</li>
+				<li><a class="a-item" href="#">Reportes</a></li>
 			</ul>
 		</li>
 		<li>
@@ -73,8 +84,15 @@
 						<li><a class="a-item" href="{{ route('users.index') }}">Buscar</a></li>
 					</ul>
 				</li>
-				<li><a class="a-item" href="{{ route('employees.index') }}">Empleados</a></li>
-				<li><a class="a-item" href="{{ route('profile') }}">Perfil</a></li>
+				<li>
+					<a class="a-item" href="{{ route('employees.index') }}">Empleados</a>
+					<ul class="submenu">
+						<li><a class="a-item" href="{{ route('employees.create') }}">Crear nuevo</a></li>
+						<li><a class="a-item" href="{{ route('employees.index') }}">Buscar</a></li>
+					</ul>
+				</li>
+				<li><a class="a-item" href="{{ route('profile') }}">Mi perfil</a></li>
+				<li><a class="a-item" href="#">Configuración</a></li>
 			</ul>
 		</li>
 	</ul>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('status',['Activo', 'Inactivo', 'Cancelado'])->default('Activo');
             $table->enum('rol',['Admin', 'Limit', 'Client'])->default('Admin');
+            $table->text('comments')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

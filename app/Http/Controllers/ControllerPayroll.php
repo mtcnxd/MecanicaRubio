@@ -33,7 +33,7 @@ class ControllerPayroll extends Controller
             ->get();
         }
 
-        return view('dashboard.payrollslist', [
+        return view('dashboard.payrolls.index', [
             "startDate"  => $startDate,
             "endDate"    => $endDate,
             "salaryData" => $salaryData,
@@ -46,7 +46,7 @@ class ControllerPayroll extends Controller
      */
     public function create()
     {
-        return view('dashboard.payroll', [
+        return view('dashboard.payrolls.create', [
             'employees' => Employee::orderBy('name')->get()
         ]);
     }

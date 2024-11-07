@@ -8,7 +8,7 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <label class="window-body-form">Crear nuevo usuario</label>
+        <label class="window-body-form">Editar usuario</label>
         <form action="{{ route('users.store') }}" method="POST" class="border pt-5 pb-4">
         @method('POST')
         @csrf
@@ -19,7 +19,7 @@
                         Nombre
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="name" required>
+                        <input type="text" class="form-control" name="name" value="{{ $user->name }}" required>
                     </div>
                 </div>
 
@@ -28,7 +28,7 @@
                         Correo
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" name="email" value="{{ $user->email }}">
                     </div>
                 </div>
 
@@ -37,7 +37,7 @@
                         Teléfono
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" name="phone" required>
+                        <input type="number" class="form-control" name="phone" value="{{ $user->phone }}" required>
                     </div>
                 </div>
 
@@ -61,20 +61,29 @@
                             <option value="Inactivo">Inactivo</option>
                         </select>
                     </div>
-                </div>                
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Cambiar
+                    </div>
+                    <div class="col-md-3">
+                        <input type="checkbox" class="form-checkbox" name="change">
+                    </div>
+                </div>
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
                         Contraseña
                     </div>
                     <div class="col-md-3">
-                        <input type="password" class="form-control" name="password" required>
+                        <input type="password" class="form-control" name="password" disabled>
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Repetir contraseña
                     </div>
                     <div class="col-md-3">
-                        <input type="password" class="form-control" name="repeat" required>
+                        <input type="password" class="form-control" name="repeat" disabled>
                     </div>
                 </div>
 
@@ -83,7 +92,7 @@
                         Comentarios
                     </div>
                     <div class="col-md-9">
-                        <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
+                        <textarea class="form-control" cols="30" rows="4" name="comments">{{ $user->comments }}</textarea>
                     </div>
                 </div>
             </div>
