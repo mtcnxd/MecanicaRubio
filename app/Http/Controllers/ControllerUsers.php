@@ -11,18 +11,16 @@ class ControllerUsers extends Controller
     public function index()
     {
         $users = User::all();
-
-        return view('dashboard.users', compact('users'));
+        return view('dashboard.users.index', compact('users'));
     }
 
     public function create()
     {
-        return "create new user";
+        return view('dashboard.users.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-
-
+        dd($request);
     }
 }

@@ -14,7 +14,7 @@ class ControllerClients extends Controller
      */
     public function index()
     {
-        return view ('dashboard/clientslist', [
+        return view ('dashboard.clients.index', [
             'clients' => DB::table('clients')->where('status', 'Activo')->get()
         ]);
     }
@@ -24,7 +24,7 @@ class ControllerClients extends Controller
      */
     public function create()
     {
-        return view('dashboard/client');
+        return view('dashboard.clients.create');
     }
 
     /**
@@ -67,7 +67,7 @@ class ControllerClients extends Controller
             ->orderBy('services.created_at', 'desc')
             ->get();
 
-        return view('dashboard.clientshow', [
+        return view('dashboard.clients.show', [
             'client'   => DB::table('clients')->where('id', $id)->first(),
             'services' => $services,
             'cars'     => DB::table('autos')->where('client_id', $id)->get(),
@@ -79,7 +79,7 @@ class ControllerClients extends Controller
      */
     public function edit(string $id)
     {
-        return view('dashboard.clientedit', [
+        return view('dashboard.clients.edit', [
             'client' => DB::table('clients')->where('id', $id)->first()
         ]);
     }

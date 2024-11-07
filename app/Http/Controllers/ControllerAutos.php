@@ -24,7 +24,7 @@ class ControllerAutos extends Controller
             ->groupBy('brand')
             ->get();
 
-        return view ('dashboard.autoslist', [
+        return view ('dashboard.autos.index', [
             'autos' => $autos,
             'statistics' => $statistics,
         ]);
@@ -35,7 +35,7 @@ class ControllerAutos extends Controller
      */
     public function create()
     {
-        return view('dashboard.auto', [
+        return view('dashboard.autos.create', [
             'brands'  => DB::table('brands')->orderBy('brand')->get(),
             'clients' => DB::table('clients')->where('status','Activo')->orderBy('name')->get(),
         ]);
@@ -75,7 +75,7 @@ class ControllerAutos extends Controller
             ->where('autos.id', $id)
             ->get();
 
-        return view('dashboard.autoshow', [
+        return view('dashboard.autos.show', [
             'services' => $services,
             'client'   => $client,
         ]);
@@ -92,7 +92,7 @@ class ControllerAutos extends Controller
             ->where('autos.id', $id)
             ->first();
 
-        return view('dashboard.autoedit', [
+        return view('dashboard.autos.edit', [
             'auto'    => $auto,
             'brands'  => array(),
             'clients' => array(),

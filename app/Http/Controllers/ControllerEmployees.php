@@ -16,12 +16,12 @@ class ControllerEmployees extends Controller
     {
         $employees = Employee::all();
 
-        return view('dashboard.employees', compact('employees'));
+        return view('dashboard.employees.index', compact('employees'));
     }
 
     public function create()
     {
-        
+        return view('dashboard.employees.create');
     }
 
     public function store(Request $request)

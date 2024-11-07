@@ -19,7 +19,7 @@ class ControllerServices extends Controller
             ->join('clients', 'services.client_id', 'clients.id')
             ->get();
 
-        return view('dashboard.serviceslist', [
+        return view('dashboard.services.index', [
             'services' => $services
         ]);
     }
@@ -29,7 +29,7 @@ class ControllerServices extends Controller
      */
     public function create()
     {
-        return view('dashboard.service', [
+        return view('dashboard.services.create', [
             'clients' => DB::table('clients')->where('status','Activo')->orderBy('name')->get()
         ]);
     }
@@ -66,7 +66,7 @@ class ControllerServices extends Controller
 
         $items = DB::table('services_items')->where('service_id', $id)->get();
 
-        return view('dashboard.serviceshow', [
+        return view('dashboard.services.show', [
             'service' => $service,
             'items'   => $items,
         ]);

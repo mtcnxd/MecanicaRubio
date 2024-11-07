@@ -24,7 +24,7 @@ class ControllerCalendar extends Controller
             $events[] = DB::table('calendar')->where('date', $date)->first();
         }
 
-        return view('dashboard.calendar', [
+        return view('dashboard.services.calendar', [
             'weekStartsIn' => $this->getFirstDay($month),
             'daysOfWeek'   => $daysOfweek,
             'daysOfMonth'  => date('t'),
