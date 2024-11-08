@@ -8,7 +8,7 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <label class="window-body-form">Crear nuevo</label>
+        <label class="window-body-form">Crear nuevo empleado</label>
         <form action="{{ route('users.store') }}" method="POST" class="border pt-5 pb-4">
         @method('POST')
         @csrf
@@ -40,59 +40,55 @@
                         <input type="number" class="form-control" name="phone" required>
                     </div>
                     <div class="col-md-3 pt-2 text-end">
-                        Código Postal
+                        RFC
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="postcode" name="postcode">
+                        <input type="text" class="form-control" name="rfc">
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        Dirección
+                        Salario
                     </div>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="street">
-                            <span class="input-group-text">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#searchModal">Buscar</a>
-                            </span>
-                          </div>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control" name="salary">
                     </div>
-                </div>
-
-                <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        Colónia
+                        Periodo
                     </div>
-                    <div class="col-md-9">
-                        <select class="form-select" id="address" name="address">
-                            <option> - Selecciona una colonia - </option>
+                    <div class="col-md-3">
+                        <select class="form-select" name="periodicity">
+                            <option value="">Semanal</option>
+                            <option value="">Quincenal</option>
+                            <option value="">Mensual</option>
+                            <option value="">Comisionista</option>
+                            <option value="">Sin definir</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        Ciudad
+                        Hora extra
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="city" name="city">
+                        <input type="text" class="form-control" name="extra">
                     </div>
                     <div class="col-md-3 pt-2 text-end">
-                        Estado
+                        Estatus
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="state" name="state">
+                        <input type="text" class="form-control" name="status">
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        RFC
+                        Crear usuario
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="rfc">
+                        <input type="checkbox" class="form-checkbox" name="create">
                     </div>
                 </div>
 
@@ -111,7 +107,7 @@
             <div class="col-md-6">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <div class="col-md-6 mt-3 text-end">
-                        <a href="{{ route('clients.index') }}" class="btn btn-secondary">Cancelar</a>
+                        <a href="{{ route('employees.index') }}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" class="btn btn-success">
                             <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                             Guardar
@@ -121,36 +117,6 @@
             </div>
         </div>
     </form>
-    </div>
-</div>
-@endsection
-
-@section('modal')
-<div class="modal fade" id="searchModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Buscar codigo postal</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Colonia
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="textPostalCode">
-                        <ul id="resultList">
-                            <li>Results</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="newModel">Guardar</button>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

@@ -23,7 +23,7 @@
                     <th>Teléfono</th>
                     <th>Correo</th>
                     <th>Estatus</th>
-                    <th>Fecha alta</th>
+                    <th>Fecha de alta</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -31,21 +31,20 @@
             <tbody>
                 <tr>
                     <td>{{ $employee->id }}</td>
-                    <td><a href="#">{{ $employee->name }}</a></td>
+                    <td><a href="{{ route('employees.edit', $employee->id) }}">{{ $employee->name }}</a></td>
                     <td>{{ $employee->phone }}</td>
                     <td>{{ $employee->email }}</td>
                     <td>{{ $employee->status }}</td>
                     <td>{{ $employee->created_at }}</td>
-                    <td><x-feathericon-edit class="table-icon"/></td>
+                    <td>
+                        <a href="{{ route('employees.edit', $employee->id) }}">
+                            <x-feathericon-edit class="table-icon"/>
+                        </a>
+                    </td>
                 </tr>
             </tbody>
             @endforeach
         </table>
-        <div class="row pt-1">
-            <div class="col-md-3">
-                <a href="{{ route('users.create') }}" class="btn btn-secondary">Crear nuevo</a>
-            </div>
-        </div>
     </div>
 </div>
 @endsection
