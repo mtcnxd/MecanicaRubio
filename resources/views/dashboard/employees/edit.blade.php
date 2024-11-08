@@ -8,7 +8,7 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <label class="window-body-form">Crear nuevo empleado</label>
+        <label class="window-body-form">Editar empleado</label>
         <form action="{{ route('users.store') }}" method="POST" class="border pt-5 pb-4">
         @method('POST')
         @csrf
@@ -19,7 +19,7 @@
                         Nombre
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="name" required>
+                        <input type="text" class="form-control" name="name" value="{{ $employee->name }}">
                     </div>
                 </div>
 
@@ -28,7 +28,7 @@
                         Correo
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" name="email" value="{{ $employee->email }}">
                     </div>
                 </div>
 
@@ -37,13 +37,13 @@
                         Teléfono
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" name="phone" required>
+                        <input type="number" class="form-control" name="phone" value="{{ $employee->phone }}">
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         RFC
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="rfc">
+                        <input type="text" class="form-control" name="rfc" value="{{ $employee->rfc }}">
                     </div>
                 </div>
 
@@ -52,7 +52,10 @@
                         Salario
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" name="salary">
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" name="salary" value="{{ $employee->salary }}">
+                        </div>
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Periodo
@@ -73,22 +76,19 @@
                         Hora extra
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="extra">
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" name="extra" value="{{ $employee->extra }}">
+                        </div>
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Estatus
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="status">
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Crear usuario
-                    </div>
-                    <div class="col-md-3">
-                        <input type="checkbox" class="form-checkbox" name="create">
+                        <select class="form-select" name="statuc">
+                            <option value="">Activo</option>
+                            <option value="">Inactivo</option>
+                        </select>
                     </div>
                 </div>
 
@@ -97,7 +97,7 @@
                         Comentarios
                     </div>
                     <div class="col-md-9">
-                        <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
+                        <textarea class="form-control" cols="30" rows="4" name="comments">{{ $employee->comments }}</textarea>
                     </div>
                 </div>
             </div>

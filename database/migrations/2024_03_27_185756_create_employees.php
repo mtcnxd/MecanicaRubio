@@ -19,7 +19,9 @@ return new class extends Migration
             $table->double('salary');
             $table->double('extra');
             $table->string('periodicity');
+            $table->string('rfc');
             $table->enum('status',['Activo','Baja'])->default('Activo');
+            $table->text('comments');
             $table->timestamps();
         });
     }

@@ -44,4 +44,14 @@ class ControllerEmployees extends Controller
         return to_route('profile')
             ->with('message', 'Los datos se guardaron correctamente');
     }
+
+    public function edit(Request $request, string $id)
+    {
+        $employee = Employee::find($id);
+        
+        return view(
+            'dashboard.employees.edit', 
+            compact('employee')
+        );
+    }
 }
