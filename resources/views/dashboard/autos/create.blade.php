@@ -191,15 +191,18 @@ $(document).ready(function() {
                 premium:premium
             },
             success:function(response){
-                $('#createBrand').modal('hide');
-                $("#select-brand").empty();
+                if (!response.success){
+                    showMessageAlert('error', response.message);
+                    return;
+                }
 
-                const brands = JSON.parse(response);
-                brands.forEach(brand => {
-                    $("#select-brand").append('<option>' + brand.brand + '</option');
+                $("#select-brand").empty();
+                response.data.forEach(element =>{
+                    $("#select-brand").append('<option>' + element.brand + '</option');
                 });
 
-                showMessageAlert();
+                showMessageAlert('success', response.message);
+                $('#createModel').modal('hide');
             }
         });
 
@@ -217,9 +220,7 @@ $(document).ready(function() {
                 brand:brand
             },
             success:function(response){
-                const models = JSON.parse(response);
-
-                models.forEach( model => {
+                response.data.forEach( model => {
                     $("#select-model").append('<option>' + model.model + '</option');
                 });
             }
@@ -238,27 +239,31 @@ $(document).ready(function() {
                 model:model
             },
             success:function(response){
+                if (!response.success){
+                    showMessageAlert('error', response.message);
+                    return;
+                }
+
                 $('#createModel').modal('hide');
                 $("#select-model").empty();
 
-                const models = JSON.parse(response);
-                models.forEach(model => {
+                showMessageAlert('success', response.message);
+
+                response.data.forEach(model => {
                     $("#select-model").append('<option>' + model.model + '</option');
                 });
-
-                showMessageAlert();
             }
         });
     
     });
 });
 
-function showMessageAlert(){
+function showMessageAlert(type, message){
     Swal.fire({
-        text: 'Los datos se guardaron correctamente',
-        icon: 'success',
+        text: message,
+        icon: type,
         confirmButtonText: 'Aceptar'
-    })
+    });
 }
 </script>    
 @endsection

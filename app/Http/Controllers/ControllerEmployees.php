@@ -30,18 +30,17 @@ class ControllerEmployees extends Controller
 
         if ($request->create == 'on')
         {
-            if ($request->password != $request->repeat){
-                return to_route('profile')
-                    ->with('error', 'Las contraseñas no coinciden');
-            }
-
             User::create([
+                'name'     => $request->name,
                 'email'    => $request->email,
+                'phone'    => $request->phone,
                 'password' => md5($request->password),
+                'rol'      => 'Limit',
+                'comments' => $request->comments,
             ]);
         }
 
-        return to_route('profile')
+        return to_route('employees')
             ->with('message', 'Los datos se guardaron correctamente');
     }
 
