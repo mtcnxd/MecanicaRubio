@@ -73,7 +73,7 @@
                     <div class="col-md-3 pt-2 text-end">
                         Cambiar
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 pt-2">
                         <input type="checkbox" class="form-checkbox" name="change">
                     </div>
                 </div>

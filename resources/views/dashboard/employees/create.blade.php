@@ -9,7 +9,7 @@
     </div>
     <div class="window-body bg-white">
         <label class="window-body-form">Crear nuevo empleado</label>
-        <form action="{{ route('users.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('employees.store') }}" method="POST" class="border pt-5 pb-4">
         @method('POST')
         @csrf
         <div class="row">
@@ -59,11 +59,11 @@
                     </div>
                     <div class="col-md-3">
                         <select class="form-select" name="periodicity">
-                            <option value="">Semanal</option>
-                            <option value="">Quincenal</option>
-                            <option value="">Mensual</option>
-                            <option value="">Comisionista</option>
-                            <option value="">Sin definir</option>
+                            <option value="Semanal">Semanal</option>
+                            <option value="Quincenal">Quincenal</option>
+                            <option value="Mensual">Mensual</option>
+                            <option value="Comisionista">Comisionista</option>
+                            <option value="Sin definir">Sin definir</option>
                         </select>
                     </div>
                 </div>
@@ -79,7 +79,10 @@
                         Estatus
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="status">
+                        <select class="form-select" name="status">
+                            <option value="">Activo</option>
+                            <option value="">Inactivo</option>
+                        </select>
                     </div>
                 </div>
 
@@ -87,8 +90,10 @@
                     <div class="col-md-3 pt-2 text-end">
                         Crear usuario
                     </div>
-                    <div class="col-md-3">
-                        <input type="checkbox" class="form-checkbox" name="create">
+                    <div class="col-md-3 pt-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" name="create">
+                        </div>
                     </div>
                 </div>
 

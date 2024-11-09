@@ -13,6 +13,15 @@ class ControllerAjax extends Controller
 {
     public function createBrand(Request $request)
     {
+        $exists = DB::table('brands')->where('brand', $request->brand)->first();
+
+        if ($exists){
+            return response()->json([
+                'success' => false,
+                'message' => 'La marca que intentas crear ya existe'
+            ]);
+        }
+
         try {
             DB::table('brands')->insert([
                 'brand'   => $request->brand,
@@ -21,21 +30,38 @@ class ControllerAjax extends Controller
 
             $brands = DB::table('brands')->get();
 
-        } catch (Exception $e){
-            return $e;
-        }
+            return response()->json([
+                'success' => true,
+                'message' => 'Los datos se guardaron con exito',
+                'data'    => $brands
+            ]);            
 
-        return json_encode($brands);
+        } catch (Exception $e){
+            return $e->getMessage();
+        }
     }
 
     public function loadModels(Request $request)
     {
         $models = DB::table('models')->where('brand', $request->brand)->get();
-        return json_encode($models);
+        
+        return response()->json([
+            'success' => true,
+            'data'    => $models
+        ]);
     }
 
     public function createModel(Request $request)
     {
+        $exists = DB::table('models')->where('model', $request->model)->first();
+
+        if ($exists){
+            return response()->json([
+                'success' => false,
+                'message' => 'El modelo que intentas crear ya existe'
+            ]);
+        }
+
         try {
             DB::table('models')->insert([
                 'brand' => $request->brand,
@@ -47,11 +73,15 @@ class ControllerAjax extends Controller
                 ->orderBy('model')
                 ->get();
 
-        } catch (Exception $e){
-            return $e;
-        }
+            return response()->json([
+                'success' => true,
+                'message' => 'Los datos se guardaron con exito',
+                'data'    => $models
+            ]);
 
-        return json_encode($models);
+        } catch (Exception $e){
+            return $e->getMessage();
+        }
     }
 
     public function searchPostcode(Request $request)

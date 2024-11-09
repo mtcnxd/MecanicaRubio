@@ -19,6 +19,11 @@
     --orange-800: #EF6C00;
 }
 
+.form-check-input:checked {
+    background-color:var(--teal-300);
+    border-color: var(--teal-600);
+}
+
 .btn, .form-control {
     border-radius: 4px;
 }
