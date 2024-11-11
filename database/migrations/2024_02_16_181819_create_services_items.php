@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('services_items', function (Blueprint $table) {
             $table->id();
             $table->integer('service_id');
-            $table->integer('amount');
-            $table->string('item');
+            $table->integer('amount')->nullable();
+            $table->string('item')->nullable();
             $table->string('supplier')->nullable();
             $table->boolean('labour')->default(false);
             $table->double('price');

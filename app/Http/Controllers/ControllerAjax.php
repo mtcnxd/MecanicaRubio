@@ -112,22 +112,34 @@ class ControllerAjax extends Controller
     public function createItemInvoice(Request $request)
     {
         $labour = false;
+        $item   = $request->item;
+        $amount = $request->amount;
+
         if ($request->labour == 'true'){
+            if ( empty($request->item) ){
+                $item   = "Servicio (mano de obra)";
+            }
+
             $labour = true;
+            $amount = 1;
         }
 
-        $result = DB::table('services_items')->insert([
+        DB::table('services_items')->insert([
             'service_id' => $request->service,
-            'amount'     => ($labour) ? 1 : $request->amount,
-            'item'       => $request->item,
+            'amount'     => $amount,
+            'item'       => $item,
             'supplier'   => $request->supplier,
             'price'      => $request->price,
             'labour'     => $labour,
         ]);
 
-        $invoiceItems = DB::table('services_items')->where('service_id', $request->service)->get();
+        $data = DB::table('services_items')->where('service_id', $request->service)->get();
 
-        return json_encode($invoiceItems);
+        return response()->json([
+            "success" => true,
+            "message" => "Agregado correctamente",
+            "data"    => $data
+        ]);
     }
 
     public function removeItemInvoice(Request $request)

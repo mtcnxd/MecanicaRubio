@@ -77,7 +77,7 @@
                         {{ $salary->name }}
                     </td>
                     <td>
-                        <a href="http://">
+                        <a href="{{ route('payroll.show', $salary->id) }}">
                             {{ Carbon\Carbon::parse($salary->created_at)->format('d-m-Y') }}
                         </a>
                     </td>

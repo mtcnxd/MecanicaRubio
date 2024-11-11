@@ -243,7 +243,7 @@
                     <div class="col-md-9">
                         <div class="input-group mb-3">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" id="price">
+                            <input type="number" class="form-control" id="price">
                           </div>
                     </div>
                 </div>
@@ -284,6 +284,12 @@ $("#addItemInvoice").on('click', function(event){
     var price    = $("#price").val();
     var labour   = $("#labour").prop('checked');
 
+    if (item.length < 3 && !labour) {
+        console.log("Debe escribir una descripcion");
+        $("#item").focus();
+        return;
+    }
+
     $.ajax({
         url:"{{ route('createItemInvoice') }}",
         method:'POST',
@@ -296,10 +302,10 @@ $("#addItemInvoice").on('click', function(event){
             labour:labour
         },
         success:function(response){
-            $("#createItem").modal('hide');
-            var tbody = $("#table-items tbody");
-            var object = JSON.parse(response);
-            history.go();
+            if (response.success){
+                $("#createItem").modal('hide');
+                location.reload();
+            }
         }
     });
 });
