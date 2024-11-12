@@ -17,12 +17,7 @@
                         Empleado
                     </div>
                     <div class="col-md-9">
-                        <select class="form-select" name="employee" id="employee">
-                            <option value="0"> - Seleccione empleado - </option>
-                            @foreach ($employees as $employee)
-                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                            @endforeach
-                        </select>
+                        <input type="text" class="form-control" name="employee" id="employee" value="{{ $employee->name }}" disabled>
                     </div>
                 </div>
 
@@ -35,7 +30,7 @@
                     <div class="col-md-5">
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="salary" id="salary" value="" style="text-align: right">
+                            <input type="text" class="form-control" name="salary" id="salary" style="text-align: right" value="{{ $employee->salary }}" disabled>
                         </div>
                     </div>
                 </div>
@@ -45,14 +40,14 @@
                         Horas extra
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="hours" id="hours" value="0">
+                        <input type="number" class="form-control" name="hours" id="hours" value="{{ $employee->hours }}">
                     </div>
                     <div class="col-md-2">
                     </div>
                     <div class="col-md-5">
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="hidden" name="price" id="price" value="">
+                            <input type="hidden" name="price" id="price" value="{{ $employee->price }}">
                             <input type="text" class="form-control" name="hours_total" id="hours_total" value="0" style="text-align: right">
                         </div>
                     </div>
@@ -73,7 +68,7 @@
                     <div class="col-md-5">
                         <div class="input-group">
                             <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="bonds" id="bonds" value="0" style="text-align: right">
+                            <input type="text" class="form-control" name="bonds" id="bonds" style="text-align: right" value="{{ $employee->bonds }}">
                         </div>
                     </div>
                 </div>
@@ -120,18 +115,11 @@
                             <option>Pagado</option>
                         </select>
                     </div>
-                    <div class="col-md-5">
-                        <input type="date" name="date_paid" class="form-control">
-                    </div>
                 </div>
             </div>
 
             <div class="col-md-6 mt-3 text-end">
-                <a href="{{ route('payroll.index') }}" class="btn btn-secondary">Cancelar</a>
-                <a href="#" onclick="calculate()" class="btn btn-success">
-                    <x-feathericon-refresh-cw class="table-icon" style="margin: -2px 5px 2px"/>
-                    Calcular
-                </a>
+                <a href="{{ route('expenses.index') }}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-success">
                     <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                     Guardar
@@ -143,39 +131,4 @@
 @endsection
 
 @section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-<script>
-function calculate(){
-    var hours    = parseFloat( $("#hours").val() );
-    var price    = parseFloat( $("#price").val() );
-    var salary   = parseFloat( $("#salary").val() );
-    var bonds    = parseFloat( $("#bonds").val() );
-    var discount = parseFloat( $("#discount").val() );
-
-    var extra    = hours * price;
-
-    $("#hours_total").val(extra);
-
-    total = salary + extra + bonds - discount;
-
-    $("#total").val( numeral(parseFloat(total)).format('0,0.00') );
-}
-
-$("#employee").on('change', function(){
-    var employee = $(this).val();
-
-    $.ajax({
-        url: "{{ route('loadEmployee') }}",
-        method: 'POST',
-        data: {
-            employee: employee
-        },
-        success: function(response){
-            const json = JSON.parse(response);
-            $("#salary").val(json.salary);
-            $("#price").val(json.extra);
-        }
-    })
-});
-</script>
 @endsection

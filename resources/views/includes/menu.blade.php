@@ -66,7 +66,23 @@
 						<li><a class="a-item" href="{{ route('payroll.index') }}">Buscar</a></li>
 					</ul>
 				</li>
-				<li><a class="a-item" href="#">Reportes</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#settings">
+				<h5 class="menu-title">
+					<x-feathericon-settings class="table-icon" style="margin-top:-4px;"/>
+					Reportes
+				</h5>
+			</a>
+			<ul class="menu-dropdown">
+				<li>
+					<a class="a-item" href="#">Reportes</a>
+					<ul class="submenu">
+						<li><a class="a-item" href="#">Servicios</a></li>
+						<li><a class="a-item" href="#">Empleados</a></li>
+					</ul>
+				</li>
 			</ul>
 		</li>
 		<li>
