@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
+use App\Http\Controllers\ControllerServices;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,3 +88,7 @@ Route::post('removeItemExpense', [
 Route::post('manageSalaries', [
     ControllerAjax::class, 'manageSalaries'
 ])->name('manageSalaries');
+
+Route::get('downloadPDF', [
+    ControllerServices::class, 'downloadPDF'
+])->name('downloadPDF');

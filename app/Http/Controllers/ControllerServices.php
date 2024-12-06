@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use PDF;
 use DB;
 
 class ControllerServices extends Controller
@@ -101,5 +102,13 @@ class ControllerServices extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function downloadPDF()
+    {
+        $data = ['nombre' => 'Marcos'];
+        $pdf = PDF::loadView('dashboard.services.create_invoice', $data);
+        
+        return $pdf->download('invoice.pdf');
     }
 }

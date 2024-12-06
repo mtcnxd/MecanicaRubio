@@ -178,7 +178,7 @@
                 </div>
                 <div class="col-md-6 text-end">
                     <a href="{{ route('services.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <a href="#" class="btn btn-secondary">
+                    <a href="#" class="btn btn-secondary" onclick="downloadPDF()">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
@@ -336,5 +336,28 @@ function showMessageAlert(message){
         history.go();
     });
 }
+
+function downloadPDF(){
+    $.ajax({
+        url: '/api/downloadPDF',
+        method:'GET',
+        xhrFields: {
+            responseType: 'blob' // Recibir respuesta como un Blob
+        },
+        success: function (response){
+            const blob = new Blob([response], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'invoice.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        },
+    });
+}
+
 </script>    
 @endsection
