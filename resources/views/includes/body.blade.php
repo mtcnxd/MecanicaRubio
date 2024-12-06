@@ -10,7 +10,7 @@
     <link href="{{ asset('css/bootstrap_custom.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/menu.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
-@yield('css')
+	@yield('css')
 </head>
 <body>
     @yield('menu')

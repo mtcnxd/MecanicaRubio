@@ -11,6 +11,8 @@ use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\HeaderUtils;
 
 /**
  * A Laravel wrapper for Dompdf
@@ -158,11 +160,13 @@ class PDF
      *
      * @param array<string, mixed> $options
      */
-    public function setOptions(array $options): self
+    public function setOptions(array $options, bool $mergeWithDefaults = false): self
     {
-        $dompdfOptions = new Options(app()->make('dompdf.options'));
-        $dompdfOptions->set($options);
-        $this->dompdf->setOptions($dompdfOptions);
+        if ($mergeWithDefaults) {
+            $options = array_merge(app()->make('dompdf.options'), $options);
+        }
+
+        $this->dompdf->setOptions(new Options($options));
         return $this;
     }
 
@@ -208,9 +212,11 @@ class PDF
     public function download(string $filename = 'document.pdf'): Response
     {
         $output = $this->output();
+        $fallback = $this->fallbackName($filename);
+
         return new Response($output, 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' =>  'attachment; filename="' . $filename . '"',
+            'Content-Disposition' => HeaderUtils::makeDisposition('attachment', $filename, $fallback),
             'Content-Length' => strlen($output),
         ]);
     }
@@ -221,9 +227,12 @@ class PDF
     public function stream(string $filename = 'document.pdf'): Response
     {
         $output = $this->output();
+        $fallback = $this->fallbackName($filename);
+
+
         return new Response($output, 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' =>  'inline; filename="' . $filename . '"',
+            'Content-Disposition' => HeaderUtils::makeDisposition('inline', $filename, $fallback),
         ]);
     }
 
@@ -298,5 +307,13 @@ class PDF
         }
 
         throw new \UnexpectedValueException("Method [{$method}] does not exist on PDF instance.");
+    }
+
+    /**
+     * Make a safe fallback filename
+     */
+    protected function fallbackName(string $filename): string
+    {
+        return str_replace('%', '', Str::ascii($filename));
     }
 }
