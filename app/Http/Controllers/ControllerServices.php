@@ -106,7 +106,18 @@ class ControllerServices extends Controller
 
     public function downloadPDF()
     {
-        $data = ['nombre' => 'Marcos'];
+        $service = DB::table('services')->where('id', 9)->first();
+        $client  = DB::table('clients')->where('id', $service->client_id)->first();
+        $auto    = DB::table('autos')->where('id', $service->car_id)->first();
+        $items   = DB::table('services_items')->where('service_id', 9)->get();
+
+        $data = [
+            "service" => $service,
+            "client"  => $client,
+            "auto"    => $auto,
+            "items"   => $items
+        ];
+        
         $pdf = PDF::loadView('dashboard.services.create_invoice', $data);
         
         return $pdf->download('invoice.pdf');

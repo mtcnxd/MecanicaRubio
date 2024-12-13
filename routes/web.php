@@ -30,6 +30,24 @@ Route::get('/', function () {
     return view('index');
 });
 
+/*
+Route::get('/print', function () {
+    $service = DB::table('services')->where('id', 9)->first();
+    $client  = DB::table('clients')->where('id', $service->client_id)->first();
+    $auto    = DB::table('autos')->where('id', $service->car_id)->first();
+    $items   = DB::table('services_items')->where('service_id', 9)->get();
+
+    $data = [
+        "service" => $service,
+        "client"  => $client,
+        "auto"    => $auto,
+        "items"   => $items
+    ];
+
+    return view('dashboard.services.create_invoice', compact('client','service','items','auto'));
+});
+*/
+
 Route::get('profile', function ()
 {
     $self = Employee::find(1);
