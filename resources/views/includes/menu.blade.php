@@ -1,4 +1,3 @@
-@section('menu')
 <div class="menu-container">
 	<ul class="dropdown">
 		<li>
@@ -113,4 +112,3 @@
 		</li>
 	</ul>
 </div>
-@endsection
