@@ -1,6 +1,10 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 
+.fs-7 {
+    font-size: 11px;
+}
+
 * {
     box-sizing: border-box;
 }
