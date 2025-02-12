@@ -170,13 +170,13 @@
         var client = $(this).data('bsClient');
 
         $.ajax({
-            url: "{{ route('deleteClient') }}",
+            url: "/api/deleteClient",
             method: 'POST',
             data: {
                 client:client
             },
             success: function(response){
-                showMessageAlert(response);
+                showMessageAlert(response.message);
             }
         });
     });

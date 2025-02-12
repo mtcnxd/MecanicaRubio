@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
 use App\Http\Controllers\ControllerServices;
+use App\Http\Controllers\ControllerClients;
+use App\Http\Controllers\ControllerAutos;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,15 +24,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 Route::post('createBrand', [
-    ControllerAjax::class, 'createBrand'
+    ControllerAutos::class, 'createBrand'
 ])->name('createBrand');
 
 Route::post('createModel', [
-    ControllerAjax::class, 'createModel'
+    ControllerAutos::class, 'createModel'
 ])->name('createModel');
 
 Route::post('loadModels', [
-    ControllerAjax::class, 'loadModels'
+    ControllerAutos::class, 'loadModels'
 ])->name('loadModels');
 
 Route::post('searchPostcode', [
@@ -42,7 +44,7 @@ Route::post('carsByClient', [
 ])->name('carsByClient');
 
 Route::post('deleteClient', [
-    ControllerAjax::class, 'deleteClient'
+    ControllerClients::class, 'destroy'
 ])->name('deleteClient');
 
 Route::post('createItemInvoice', [

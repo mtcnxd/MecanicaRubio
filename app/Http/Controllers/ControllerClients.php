@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Exception;
 use DB;
 
 class ControllerClients extends Controller
@@ -35,27 +36,33 @@ class ControllerClients extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            DB::table('clients')->insert([
-                'name'       => $request->name,
-                'email'      => $request->email,
-                'phone'      => $request->phone,
-                'postcode'   => $request->postcode,
-                'street'     => $request->street,
-                'address'    => $request->address,
-                'city'       => $request->city,
-                'state'      => $request->state,
-                'rfc'        => $request->rfc,
-                'comments'   => $request->comments,
-                'created_at' => Carbon::now(), 
-                'updated_at' => Carbon::now(),
-            ]);
-            session()->flash('message', 'El registro se guardó correctamente');
-        
-        } catch (Exception $error){
-            session()->flash('error', 'El número de teléfono ya se encuentra registrado');
+        $contactExists = DB::table('clients')->where('phone', $request->phone)->first();
+
+        if ($contactExists){
+            session()->flash('message', 'El número de teléfono ya esta registrado');
+            return to_route('clients.index');
         }
 
+        $customerId = DB::table('clients')->insertGetId([
+            'name'       => $request->name,
+            'email'      => $request->email,
+            'phone'      => $request->phone,
+            'postcode'   => $request->postcode,
+            'street'     => $request->street,
+            'address'    => $request->address,
+            'city'       => $request->city,
+            'state'      => $request->state,
+            'rfc'        => $request->rfc,
+            'comments'   => $request->comments,
+            'created_at' => Carbon::now(), 
+            'updated_at' => Carbon::now(),
+        ]);
+
+        Helpers::sendTelegram(
+            sprintf("Customer created: <b>%s</b> ID: %s", $request->name, $customerId)
+        );
+
+        session()->flash('message', 'El cliente se guardó correctamente');
         return to_route('clients.index');
     }
 
@@ -108,17 +115,14 @@ class ControllerClients extends Controller
         return to_route('clients.index')->with('message', 'El registro se actualizo correctamente');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        dd($id);
-
-        DB::table('clients')->where('id', $id)->update([
+        DB::table('clients')->where('id', $request->client)->update([
             'status' => 'Eliminado'
         ]);
 
-        return to_route('clients.index')->with('message', 'El registro se elimino correctamente');
+        return Response()->json([
+            'message' => 'El cliente se elimino correctamente'
+        ]);
     }
 }

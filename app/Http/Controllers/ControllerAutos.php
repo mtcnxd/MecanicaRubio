@@ -8,9 +8,6 @@ use DB;
 
 class ControllerAutos extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $autos = DB::table('clients')
@@ -18,16 +15,7 @@ class ControllerAutos extends Controller
             ->where('clients.status','Activo')
             ->get();
 
-        # select brand, count(*) count from autos group by brand
-        $statistics = DB::table('autos')
-            ->select(DB::raw('count(*) as count, brand'))
-            ->groupBy('brand')
-            ->get();
-
-        return view ('dashboard.autos.index', [
-            'autos' => $autos,
-            'statistics' => $statistics,
-        ]);
+        return view ('dashboard.autos.index', compact('autos'));
     }
 
     /**
@@ -35,10 +23,10 @@ class ControllerAutos extends Controller
      */
     public function create()
     {
-        return view('dashboard.autos.create', [
-            'brands'  => DB::table('brands')->orderBy('brand')->get(),
-            'clients' => DB::table('clients')->where('status','Activo')->orderBy('name')->get(),
-        ]);
+        $brands  = DB::table('brands')->orderBy('brand')->get();
+        $clients = DB::table('clients')->where('status','Activo')->orderBy('name')->get();
+
+        return view('dashboard.autos.create', compact('brands','clients'));
     }
 
     /**
@@ -47,10 +35,10 @@ class ControllerAutos extends Controller
     public function store(Request $request)
     {
         DB::table('autos')->insert([
-            "brand" => $request->brand,
-            "model" => $request->model,
-            "year"  => $request->year,
-            "plate" => $request->plate,
+            "brand"      => $request->brand,
+            "model"      => $request->model,
+            "year"       => $request->year,
+            "plate"      => $request->plate,
             "client_id"  => $request->client,
             "comments"   => $request->comments,
             "created_at" => Carbon::now(),
@@ -75,10 +63,7 @@ class ControllerAutos extends Controller
             ->where('autos.id', $id)
             ->get();
 
-        return view('dashboard.autos.show', [
-            'services' => $services,
-            'client'   => $client,
-        ]);
+        return view('dashboard.autos.show', compact('services','client'));
     }
 
     /**
@@ -86,17 +71,16 @@ class ControllerAutos extends Controller
      */
     public function edit(string $id)
     {
+        $brands  = array();
+        $clients = array();
+        
         $auto = DB::table('autos')
             ->select('autos.*', 'clients.name')
             ->join('clients', 'autos.client_id','clients.id')
             ->where('autos.id', $id)
             ->first();
 
-        return view('dashboard.autos.edit', [
-            'auto'    => $auto,
-            'brands'  => array(),
-            'clients' => array(),
-        ]);
+        return view('dashboard.autos.edit', compact('brands','clients','auto'));
     }
 
     /**
@@ -105,10 +89,10 @@ class ControllerAutos extends Controller
     public function update(Request $request, string $id)
     {
         DB::table('autos')->where('id', $id)->update([
-            "brand" => $request->brand,
-            "model" => $request->model,
-            "year"  => $request->year,
-            "plate" => $request->plate,
+            "brand"    => $request->brand,
+            "model"    => $request->model,
+            "year"     => $request->year,
+            "plate"    => $request->plate,
             "comments" => $request->comments,
         ]);
 
@@ -122,4 +106,77 @@ class ControllerAutos extends Controller
     {
         //
     }
+
+    public function createBrand(Request $request)
+    {
+        $brandExists = DB::table('brands')->where('brand', $request->brand)->first();
+
+        if ($brandExists){
+            return response()->json([
+                'success' => false,
+                'message' => 'La marca que intentas crear ya existe'
+            ]);
+        }
+
+        try {
+            DB::table('brands')->insert([
+                'brand'   => $request->brand,
+                'premium' => ($request->premium == 'true') ? 1 : 0
+            ]);
+
+            $brands = DB::table('brands')->get();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Los datos se guardaron con exito',
+                'data'    => $brands
+            ]);            
+
+        } catch (Exception $e){
+            return $e->getMessage();
+        }
+    }    
+
+    public function loadModels(Request $request)
+    {
+        $models = DB::table('models')->where('brand', $request->brand)->get();
+        
+        return response()->json([
+            'success' => true,
+            'data'    => $models
+        ]);
+    }
+    
+    public function createModel(Request $request)
+    {
+        $exists = DB::table('models')->where('model', $request->model)->first();
+
+        if ($exists){
+            return response()->json([
+                'success' => false,
+                'message' => 'El modelo que intentas crear ya existe'
+            ]);
+        }
+
+        try {
+            DB::table('models')->insert([
+                'brand' => $request->brand,
+                'model' => $request->model
+            ]);
+
+            $models = DB::table('models')
+                ->where('brand', $request->brand)
+                ->orderBy('model')
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Los datos se guardaron con exito',
+                'data'    => $models
+            ]);
+
+        } catch (Exception $e){
+            return $e->getMessage();
+        }
+    }    
 }

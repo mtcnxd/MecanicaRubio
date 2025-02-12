@@ -8,6 +8,14 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
+        @if ( session('message') )
+            <div class="alert alert-warning alert-dismissible fade show">
+                <strong>{{ session('title') }}: </strong>{{ session('message') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+
         <label class="window-body-form">Registrar Nuevo Servicio</label>
         <form action="{{ route('services.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf

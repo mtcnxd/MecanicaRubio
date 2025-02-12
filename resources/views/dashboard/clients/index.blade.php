@@ -14,17 +14,11 @@
     </div>
     <div class="window-body bg-white">
         @if ( session('message') )
-            <div class="alert alert-success alert-dismissible fade show">
-                <strong>Mensaje: </strong>{{ session('message') }}
+            <div class="alert alert-warning alert-dismissible fade show">
+                <strong>Mensaje: </strong> {{ session('message') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        @if ( session('error') )
-            <div class="alert alert-danger alert-dismissible fade show">
-                <strong>Mensaje: </strong>{{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif        
         <table class="table table-hover table-borderless" id="clients">
             <thead>
                 <tr>

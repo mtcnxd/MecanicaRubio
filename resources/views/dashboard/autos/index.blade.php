@@ -58,23 +58,6 @@
         </table>
     </div>
 </div>
-
-<div class="main-content mt-4">
-    <div class="col-md-3">
-        <div class="window-body shadow-sm" style="padding: 0;">
-            <div class="widget-simple-body" style="max-height:180px; overflow-y:overlay;">
-                <ul class="list-group list-group-flush">
-                    @foreach ($statistics as $brand)
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                            <div class="ms-2 me-auto">{{ $brand->brand }}</div>
-                            <span class="badge text-bg-warning rounded-pill">{{ $brand->count }}</span>
-                        </li>                            
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('css')

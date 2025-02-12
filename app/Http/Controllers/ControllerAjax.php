@@ -11,79 +11,6 @@ use DB;
 
 class ControllerAjax extends Controller
 {
-    public function createBrand(Request $request)
-    {
-        $exists = DB::table('brands')->where('brand', $request->brand)->first();
-
-        if ($exists){
-            return response()->json([
-                'success' => false,
-                'message' => 'La marca que intentas crear ya existe'
-            ]);
-        }
-
-        try {
-            DB::table('brands')->insert([
-                'brand'   => $request->brand,
-                'premium' => ($request->premium == 'true') ? 1 : 0
-            ]);
-
-            $brands = DB::table('brands')->get();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Los datos se guardaron con exito',
-                'data'    => $brands
-            ]);            
-
-        } catch (Exception $e){
-            return $e->getMessage();
-        }
-    }
-
-    public function loadModels(Request $request)
-    {
-        $models = DB::table('models')->where('brand', $request->brand)->get();
-        
-        return response()->json([
-            'success' => true,
-            'data'    => $models
-        ]);
-    }
-
-    public function createModel(Request $request)
-    {
-        $exists = DB::table('models')->where('model', $request->model)->first();
-
-        if ($exists){
-            return response()->json([
-                'success' => false,
-                'message' => 'El modelo que intentas crear ya existe'
-            ]);
-        }
-
-        try {
-            DB::table('models')->insert([
-                'brand' => $request->brand,
-                'model' => $request->model
-            ]);
-
-            $models = DB::table('models')
-                ->where('brand', $request->brand)
-                ->orderBy('model')
-                ->get();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Los datos se guardaron con exito',
-                'data'    => $models
-            ]);
-
-        } catch (Exception $e){
-            return $e->getMessage();
-        }
-    }
-
     public function searchPostcode(Request $request)
     {
         $result = DB::table('postalcodes')
@@ -98,15 +25,6 @@ class ControllerAjax extends Controller
     {
         $autos = DB::table('autos')->where('client_id', $request->client)->orderBy('brand')->get();
         return json_encode($autos);
-    }
-
-    public function deleteClient(Request $request)
-    {
-        DB::table('clients')->where('id',$request->client)->update([
-            'status' => 'Eliminado'
-        ]);
-
-        return 'Eliminado correctamente';
     }
 
     public function createItemInvoice(Request $request)

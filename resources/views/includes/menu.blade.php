@@ -78,6 +78,7 @@
 				<li>
 					<a class="a-item" href="#">Reportes</a>
 					<ul class="submenu">
+						<li><a class="a-item" href="{{ route('/reports/autos') }}">Autos</a></li>
 						<li><a class="a-item" href="#">Servicios</a></li>
 						<li><a class="a-item" href="#">Empleados</a></li>
 					</ul>

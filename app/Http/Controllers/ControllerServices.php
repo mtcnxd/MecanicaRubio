@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Helpers;
 use Carbon\Carbon;
+use Exception;
 use PDF;
 use DB;
 
@@ -31,6 +32,13 @@ class ControllerServices extends Controller
      */
     public function create()
     {
+        try {
+            Helpers::sendWhatsapp();
+        } catch(Exception $err){
+            session()->flash('title','Error message');
+            session()->flash('message', $err->getMessage());
+        }
+
         return view('dashboard.services.create', [
             'clients' => DB::table('clients')->where('status','Activo')->orderBy('name')->get()
         ]);
@@ -51,7 +59,7 @@ class ControllerServices extends Controller
             "updated_at" => Carbon::now(),
         ]);
 
-        Helpers::sendNotify(
+        Helpers::sendTelegram(
             sprintf("Service created: %s Reported fail: %s", $serviceId, $request->fault)
         );
 

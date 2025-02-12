@@ -185,7 +185,7 @@
 
             <div class="row">
                 <div class="col-md-12 text-end" style="padding-right: 40px;">
-                    <a href="{{ route('clients.index') }}" class="btn btn-success">Aceptar</a>
+                    <a href="{{ route('clients.index') }}" class="btn btn-success">Atras</a>
                 </div>
             </div>
         </form>
