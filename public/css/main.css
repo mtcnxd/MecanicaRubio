@@ -17,7 +17,7 @@ body {
 }
 
 a {
-    color: var(--teal-600);
+    color: var(--smooth-black);
     text-decoration: none;
 }
 
@@ -38,7 +38,7 @@ a:hover {
 }
 
 .table-icon:hover {
-    color: var(--teal-600);
+    color: var(--orange-800);
 }
 
 .table-icon-round {

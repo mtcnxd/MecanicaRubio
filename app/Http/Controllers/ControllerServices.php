@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Helpers;
 use Carbon\Carbon;
 use PDF;
 use DB;
@@ -40,7 +41,7 @@ class ControllerServices extends Controller
      */
     public function store(Request $request)
     {
-        DB::table('services')->insert([
+        $serviceId = DB::table('services')->insertGetId([
             "client_id"  => $request->client,
             "car_id"     => $request->car,
             "odometer"   => $request->odometer,
@@ -49,6 +50,10 @@ class ControllerServices extends Controller
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now(),
         ]);
+
+        Helpers::sendNotify(
+            sprintf("Service created: %s Reported fail: %s", $serviceId, $request->fault)
+        );
 
         return to_route('services.index')->with('message', 'Los datos se guardaron con exito');
     }
