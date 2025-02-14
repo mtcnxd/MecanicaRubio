@@ -179,4 +179,14 @@ class ControllerAutos extends Controller
             return $e->getMessage();
         }
     }    
+
+    public function report()
+    {
+        $statistics = DB::table('autos')
+            ->select(DB::raw('count(*) as count, brand'))
+            ->groupBy('brand')
+            ->get();
+    
+        return view('dashboard.autos.reports', compact('statistics'));
+    }
 }

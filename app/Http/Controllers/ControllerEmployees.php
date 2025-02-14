@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\User;
@@ -67,5 +68,12 @@ class ControllerEmployees extends Controller
             "message" => 'El usuario a sido eliminado',
             "data"    => $request->user
         ]);
+    }
+
+    public function profile()
+    {
+        $self = Employee::find(Auth::user()->id);
+        
+        return view('dashboard.profile', compact('self'));
     }
 }

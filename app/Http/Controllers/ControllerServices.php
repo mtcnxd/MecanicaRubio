@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\ControllerCharts;
 use App\Http\Controllers\Helpers;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Exception;
 use PDF;
@@ -11,14 +12,6 @@ use DB;
 
 class ControllerServices extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function __construct()
-    {
-        // $this->middleware('auth:users');
-    }
-
     public function index()
     {
         $services = DB::table('services')
@@ -119,14 +112,6 @@ class ControllerServices extends Controller
         return to_route('services.index')->with('message', 'Guardado con exito');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
     public function downloadPDF()
     {
         $service = DB::table('services')->where('id', 9)->first();
@@ -144,5 +129,52 @@ class ControllerServices extends Controller
         $pdf = PDF::loadView('dashboard.services.create_invoice', $data);
         
         return $pdf->download('invoice.pdf');
+    }
+
+    public function dashboard()
+    {
+        $services = DB::table('services_view')
+            ->select(DB::raw('sum(price) as price, car'))
+            ->join('services_items','services_view.id','services_items.service_id')
+            ->where('services_items.labour', true)
+            ->where('services_view.status', 'Entregado')
+            ->whereBetween('created_at', [Carbon::now()->format('Y-m-01'), Carbon::now()])
+            ->groupBy('services_view.car')
+            ->get();
+
+        $expenses = DB::table('expenses')
+            ->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()])
+            ->get();
+
+        $salaries = DB::table('salaries')
+            ->where('status','Pagado')
+            ->whereBetween('created_at', [Carbon::now()->format('Y-m-01'), Carbon::now()])
+            ->get();
+
+        return view('dashboard.index',[
+            'services' => $services,
+            'expenses' => $expenses,
+            'salaries' => $salaries,
+            'servicesChart' => ControllerCharts::getServicesChart(),
+            'incomesChart'  => ControllerCharts::getIncomeChart(),
+        ]);        
+    }
+
+    public function sendMail()
+    {
+        $service = DB::table('services')
+        ->join('clients', 'services.client_id', 'clients.id')
+        ->where('services.id', $serviceid)
+        ->first();
+
+        $items = DB::table('services_items')
+            ->where('service_id', $serviceid)
+            ->get();
+
+        $mailResponse = Mail::to($service->email)->send(
+            new emailInvoice($service, $items)
+        );
+        
+        return to_route('services.show', $serviceid);
     }
 }

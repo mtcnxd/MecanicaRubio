@@ -18,7 +18,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="name" value="{{ isset($client) ? $client->name : '' }}" disabled>
+                                <input type="text" class="form-control" name="name" value="{{ isset($client) ? "#".$client->id ." - ". $client->name : '' }}" disabled>
                                 <span class="input-group-text">
                                     <a href="{{ route('clients.edit', $client->id) }}">Editar</a>
                                 </span>
@@ -133,7 +133,6 @@
                                 <th>Servicio/Fallo</th>
                                 <th>Status</th>
                                 <th class="text-center">Fecha servicio</th>
-                                <th class="text-end">Total</th>
                             </thead>
                             <tbody>
                                 @foreach ($services as $service)
@@ -145,7 +144,6 @@
                                         <span class="badge text-bg-success">{{ $service->status }}</span>
                                     </td>
                                     <td class="text-center">{{ date ('d-m-Y', strtotime($service->created_at)) }}</td>
-                                    <td class="text-end">{{ '$'.number_format($service->total,2) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -185,7 +183,8 @@
 
             <div class="row">
                 <div class="col-md-12 text-end" style="padding-right: 40px;">
-                    <a href="{{ route('clients.index') }}" class="btn btn-success">Atras</a>
+                    <a href="{{ route('clients.index') }}" class="btn btn-sm btn-success">Atras</a>
+                    <a href="{{ route('finance', $client->id) }}" class="btn btn-sm btn-success">Mas Información</a>
                 </div>
             </div>
         </form>
