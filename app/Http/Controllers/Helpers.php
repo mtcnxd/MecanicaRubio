@@ -36,14 +36,6 @@ class Helpers extends Controller
                 "language" => [
                     "code" => "en_US"
                 ]
-            ],
-            "components" => [
-                "type"   => "body",
-                "parameters" => [
-                    "type"  => "text",
-                    "index" => 0,
-                    "text"  => "Javier"
-                ]
             ]
         ]);
 

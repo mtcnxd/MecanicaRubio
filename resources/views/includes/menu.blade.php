@@ -68,7 +68,7 @@
 			</ul>
 		</li>
 		<li>
-			<a href="#settings">
+			<a href="#reports">
 				<h5 class="menu-title">
 					<x-feathericon-settings class="table-icon" style="margin-top:-4px;"/>
 					Reportes
@@ -109,6 +109,7 @@
 				</li>
 				<li><a class="a-item" href="{{ route('profile') }}">Mi perfil</a></li>
 				<li><a class="a-item" href="#">Configuración</a></li>
+				<li><a class="a-item" href="{{ route('logout') }}">Cerrar sesion</a></li>
 			</ul>
 		</li>
 	</ul>

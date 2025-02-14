@@ -10,6 +10,7 @@ use App\Http\Controllers\ControllerCharts;
 use App\Http\Controllers\ControllerPayroll;
 use App\Http\Controllers\ControllerEmployees;
 use App\Http\Controllers\ControllerUsers;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Employee;
 use App\Mail\emailInvoice;
@@ -26,35 +27,34 @@ use Carbon\Carbon;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
 /*
 Route::get('/print', function () {
     $service = DB::table('services')->where('id', 9)->first();
     $client  = DB::table('clients')->where('id', $service->client_id)->first();
     $auto    = DB::table('autos')->where('id', $service->car_id)->first();
     $items   = DB::table('services_items')->where('service_id', 9)->get();
-
+    
     $data = [
         "service" => $service,
         "client"  => $client,
         "auto"    => $auto,
         "items"   => $items
-    ];
-
+        ];
+        
     return view('dashboard.services.create_invoice', compact('client','service','items','auto'));
 });
 */
 
-Route::get('profile', function ()
-{
-    $self = Employee::find(1);
+Route::get('login', [LoginController::class, 'showLogin'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('profile', function (){
+    
+    $self = Employee::find(1);
     return view('dashboard.profile', compact('self'));
 
-})->name('profile');
+})->name('profile')->middleware('auth');
 
 Route::get('dashboard', function() 
 {

@@ -14,7 +14,7 @@
     </div>
     <div class="window-body bg-white">
         @if ( session('message') )
-            <div class="alert alert-success alert-dismissible fade show">
+            <div class="alert alert-warning alert-dismissible fade show">
                 <strong>Mensaje: </strong>{{ session('message') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>

@@ -27,8 +27,8 @@
                     </div>    
                     <div class="col-md-9">
                         <div class="input-group">
-                            <select class="form-select" id="select-client" name="client">
-                                <option>- Seleccione un cliente -</option>
+                            <select class="form-select" id="select-client" name="client" required>
+                                <option value="">- Seleccione un cliente -</option>
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->id }}">{{ $client->name }}</option>
                                 @endforeach
@@ -62,7 +62,7 @@
                         Servicio/Fallo reportado
                     </div>
                     <div class="col-md-9">
-                        <textarea class="form-control" cols="30" rows="4" name="fault"></textarea>
+                        <textarea class="form-control" cols="30" rows="4" name="fault" required></textarea>
                     </div>
                 </div>
 

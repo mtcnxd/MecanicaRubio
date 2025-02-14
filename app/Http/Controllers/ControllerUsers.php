@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Exception;
@@ -34,6 +35,16 @@ class ControllerUsers extends Controller
             if($request->password != $request->repeat){
                 return back()->with('error', 'Las contraseñas no coinciden. Intente nuevamente');
             }
+
+            DB::table('users')->where('id', $id)->update([
+                'rol'      => $request->rol,
+                'status'   => $request->status,
+                'password' => Hash::make($request->password),
+                'comments' => $request->comments,
+            ]);
+
+            return to_route('users.index')
+                ->with('message', 'Los datos se actualizaron correctamente');
         }
 
         DB::table('users')->where('id', $id)->update([
@@ -77,6 +88,34 @@ class ControllerUsers extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Usuario eliminado correctamente'
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        $ok = DB::table('users')
+            ->where('email', $request->username)
+            ->where('password', md5($request->password))
+            ->first();
+
+        session([
+            "comments" => 'Prueba holra mundo'
+        ]);
+
+        sleep(3);
+
+        if ($ok){
+            Auth::guard('usuarios')->login($ok);
+
+            return response()->json([
+                "success" => true,
+                "message" => 'login success',
+            ]);
+        }
+
+        return response()->json([
+            "success" => false,
+            "message" => 'login error',
         ]);
     }
 }

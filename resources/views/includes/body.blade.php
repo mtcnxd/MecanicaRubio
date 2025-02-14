@@ -12,12 +12,14 @@
     <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
 	@yield('css')
 </head>
+
 <body>
     @yield('menu')
     @yield('body')
     @yield('content')
-    
+    <!--
     @include('includes.footer')
+    -->
 
     @yield('modal')
 

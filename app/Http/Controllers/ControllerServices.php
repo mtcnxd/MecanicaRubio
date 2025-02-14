@@ -14,6 +14,11 @@ class ControllerServices extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        // $this->middleware('auth:users');
+    }
+
     public function index()
     {
         $services = DB::table('services')
@@ -22,9 +27,15 @@ class ControllerServices extends Controller
             ->join('clients', 'services.client_id', 'clients.id')
             ->get();
 
-        return view('dashboard.services.index', [
-            'services' => $services
+        /*
+        session([
+            "comments" => 'hola mundo'
         ]);
+        */
+
+        // dd(session()->get('comments'));
+
+        return view('dashboard.services.index', compact('services'));
     }
 
     /**
@@ -32,12 +43,14 @@ class ControllerServices extends Controller
      */
     public function create()
     {
+        /*
         try {
             Helpers::sendWhatsapp();
         } catch(Exception $err){
             session()->flash('title','Error message');
             session()->flash('message', $err->getMessage());
         }
+        */
 
         return view('dashboard.services.create', [
             'clients' => DB::table('clients')->where('status','Activo')->orderBy('name')->get()
@@ -80,10 +93,7 @@ class ControllerServices extends Controller
 
         $items = DB::table('services_items')->where('service_id', $id)->get();
 
-        return view('dashboard.services.show', [
-            'service' => $service,
-            'items'   => $items,
-        ]);
+        return view('dashboard.services.show', compact('service','items'));
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\ControllerAjax;
 use App\Http\Controllers\ControllerServices;
 use App\Http\Controllers\ControllerClients;
 use App\Http\Controllers\ControllerAutos;
+use App\Http\Controllers\ControllerUsers;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
+
+Route::post('startSession', [
+    ControllerUsers::class, 'login'
+])->name('startSession');
 
 Route::post('createBrand', [
     ControllerAutos::class, 'createBrand'
