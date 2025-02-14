@@ -9,7 +9,7 @@
     </div>
     <div class="window-body bg-white">
         <label class="window-body-form">Editar empleado</label>
-        <form action="{{ route('users.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('employees.store') }}" method="POST" class="border pt-5 pb-4">
         @method('POST')
         @csrf
         <div class="row">
@@ -107,8 +107,10 @@
             <div class="col-md-6">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <div class="col-md-6 mt-3 text-end">
-                        <a href="{{ route('employees.index') }}" class="btn btn-secondary">Cancelar</a>
-                        <button type="submit" class="btn btn-success">
+                        <img src="{{ asset('image.gif') }}" width="20px" height="20px" id="loader" style="margin-right: 20px; display:none;">
+                        <a href="#" id="btn-delete" class="btn btn-secondary btn-sm">Eliminar</a>
+                        <a href="{{ route('employees.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-success">
                             <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                             Guardar
                         </button>
@@ -116,10 +118,44 @@
                 </div>
             </div>
         </div>
+
     </form>
     </div>
 </div>
 @endsection
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    btnDelete = document.getElementById('btn-delete');
+    btnDelete.addEventListener('click', function(event){
+        $("#loader").show();
+        $.ajax({
+            type: "POST",
+            url:  "/api/deleteUser",
+            data: {
+                user: {{ $employee->id }}
+            },
+            success: function (response) {
+                console.log(response);
+                showMessageAlert('success', response.message);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.table(jqXHR)
+            }
+        }).then(() => {
+            $("#loader").hide();
+        });
+    })
+
+    function showMessageAlert(type, message){
+        Swal.fire({
+            text: message,
+            icon: type,
+            confirmButtonText: 'Aceptar'
+        }).then(() => {
+            location.replace('/employees');
+        });
+    }
+</script>
 @endsection

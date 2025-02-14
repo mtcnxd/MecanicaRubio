@@ -26,7 +26,7 @@ use Psy\Exception\ErrorException;
  */
 class CalledClassPass extends CodeCleanerPass
 {
-    private bool $inClass = false;
+    private $inClass;
 
     /**
      * @param array $nodes

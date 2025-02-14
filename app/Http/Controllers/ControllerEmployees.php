@@ -48,9 +48,24 @@ class ControllerEmployees extends Controller
     {
         $employee = Employee::find($id);
         
-        return view(
-            'dashboard.employees.edit', 
-            compact('employee')
-        );
+        return view('dashboard.employees.edit', compact('employee'));
+    }
+
+    public function update(Request $request)
+    {
+
+    }
+
+    public function destroy(Request $request)
+    {
+        DB::table('employees')->where('id', $request->user)->delete();
+
+        sleep(random_int(1,3));
+
+        return Response()->json([
+            "success" => true,
+            "message" => 'El usuario a sido eliminado',
+            "data"    => $request->user
+        ]);
     }
 }

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
 use App\Http\Controllers\ControllerServices;
 use App\Http\Controllers\ControllerClients;
+use App\Http\Controllers\ControllerEmployees;
 use App\Http\Controllers\ControllerAutos;
 
 /*
@@ -22,6 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
+
+Route::post('deleteUser', [
+    ControllerEmployees::class, 'destroy'
+])->name('deleteUser');
 
 Route::post('createBrand', [
     ControllerAutos::class, 'createBrand'

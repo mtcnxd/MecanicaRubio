@@ -24,7 +24,7 @@ class LoginController extends Controller
             return to_route('services.index');
         }
 
-        sleep(3);
+        sleep(random_int(1,3));
         return to_route('login')->with('error', 'Error al iniciar sesion');
     }
 
