@@ -1,9 +1,9 @@
-<div class="menu-container">
-	<ul class="dropdown">
+<div class="menu-container" style="display: flex; justify-content: space-around;">
+	<ul class="dropdown p-0">
 		<li>
 			<a href="#clients">
 				<h5 class="menu-title">
-					<x-feathericon-user class="table-icon" style="margin-top:-4px;"/>
+					<x-feathericon-users class="table-icon" style="margin-top:-4px;"/>
 					Clientes
 				</h5>
 			</a>
@@ -94,11 +94,7 @@
 			</a>
 			<ul class="menu-dropdown">
 				<li>
-					<a class="a-item" href="{{ route('users.index') }}">Usuarios</a>
-					<ul class="submenu">
-						<li><a class="a-item" href="{{ route('users.create') }}">Crear nuevo</a></li>
-						<li><a class="a-item" href="{{ route('users.index') }}">Buscar</a></li>
-					</ul>
+					<a class="a-item" href="{{ route('clients.index') }}">Clientes</a>
 				</li>
 				<li>
 					<a class="a-item" href="{{ route('employees.index') }}">Empleados</a>
@@ -107,9 +103,29 @@
 						<li><a class="a-item" href="{{ route('employees.index') }}">Buscar</a></li>
 					</ul>
 				</li>
-				<li><a class="a-item" href="{{ route('profile') }}">Mi perfil</a></li>
 				<li><a class="a-item" href="#">Configuración</a></li>
-				<li><a class="a-item" href="{{ route('logout') }}">Cerrar sesion</a></li>
+			</ul>
+		</li>
+	</ul>
+	
+	<ul class="dropdown p-0">
+		<li>
+			<a href="#clients">
+				<h5 class="menu-title">
+					<x-feathericon-user class="table-icon" style="margin-top:-4px;"/>
+					{{ Auth::user()->name }}
+				</h5>
+			</a>
+			<ul class="menu-dropdown">
+				<li>
+					<a class="a-item" href="{{ route('profile') }}">Perfil</a>
+				</li>
+				<li>
+					<form action="{{ route('logout') }}" method="POST">
+						@csrf
+						<button class="btn btn-logout a-item" type="submit">Cerrar sesion</button>
+					</form>
+				</li>
 			</ul>
 		</li>
 	</ul>

@@ -24,10 +24,11 @@ class LoginController extends Controller
             return to_route('services.index');
         }
 
-        return to_route('login')->with('error', 'No se puede iniciar sesion con los datos proporcionados');
+        sleep(3);
+        return to_route('login')->with('error', 'Error al iniciar sesion');
     }
 
-    public function logout(Rquest $request)
+    public function logout(Request $request)
     {
         Auth::logout();
 

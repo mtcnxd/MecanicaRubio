@@ -1,8 +1,7 @@
 .menu-container {
-	background: var(--teal-300);
+	background: var(--blue-gray-600);
 	height: 55px;
 	border-bottom: solid #DDD 5px;
-	padding-left: 160px;
 	box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.2);
 	position: absolute;
 	width: 100%;
@@ -14,19 +13,18 @@
 	width: 200px;
 	height: 50px;
 	padding: 13px 0 0;
-	background: var(--teal-300);
+	background: var(--blue-gray-600);
 	text-align: center;
 	color: #ffffff;
 	font-weight: bold;
-	font-size: 18px;
-	text-transform: uppercase;
+	font-size: 17px;
 	transition: 0.3s background-color;
 	margin-bottom: 0px;
 }
 
 /* cambio de color de los botones del menu principal */
 .menu-title:hover { 
-	background: var(--teal-600); 
+	background: var(--blue-gray-800); 
 }
 
 a.a-item {
@@ -48,7 +46,7 @@ ul li:hover > ul, ul li ul:hover {
 
 /*	each button from main menu	*/
 .dropdown li ul li:hover {
-	background-color: var(--teal-300);
+	background-color: var(--blue-gray-600);
 }
 
 /* hide all sub menus */
