@@ -11,20 +11,9 @@
         <x-feathericon-dollar-sign class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        @if ( session('message') )
-            <div class="alert alert-success alert-dismissible fade show">
-                <strong>Mensaje: </strong>{{ session('message') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        @if ( session('error') )
-            <div class="alert alert-danger alert-dismissible fade show">
-                <strong>Mensaje: </strong>{{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
-        <div class="row m-1 mb-3 pb-3">
+        @include('includes.div_warning')
+        
+        <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-2">
                 <label class="fw-bold">Inicio</label>
                 <input type="date" class="form-control" value="{{ $startDate }}" id="startDate">

@@ -11,12 +11,8 @@
         <x-feathericon-tool class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        @if ( session('message') )
-            <div class="alert alert-warning alert-dismissible fade show">
-                <strong>Mensaje: </strong>{{ session('message') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+        @include('includes.div_warning')
+
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-2">
                 <label for="startDate" class="fw-bold">Inicio</label>
@@ -45,6 +41,7 @@
                 </button>
             </div>
         </div>
+
         <table class="table table-hover table-borderless" id="services" style="width:100%;">
             <thead>
                 <tr>

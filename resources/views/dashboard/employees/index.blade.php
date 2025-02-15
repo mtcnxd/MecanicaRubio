@@ -11,13 +11,8 @@
         <x-feathericon-tool class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        @if ( session('message') )
-            <div class="alert alert-success alert-dismissible fade show">
-                <strong>Mensaje: </strong>{{ session('message') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        <table class="table table-hover table-borderless" id="services" style="width:100%;">
+        @include('includes.div_warning')
+        <table class="table table-hover table-borderless" id="services">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -49,10 +44,4 @@
         </table>
     </div>
 </div>
-@endsection
-
-@section('css')
-@endsection
-
-@section('js')
 @endsection
