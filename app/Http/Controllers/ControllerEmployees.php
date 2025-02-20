@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Employee;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -15,7 +14,7 @@ class ControllerEmployees extends Controller
 {
     public function index()
     {
-        $employees = Employee::all();
+        $employees = User::all();
 
         return view('dashboard.employees.index', compact('employees'));
     }
