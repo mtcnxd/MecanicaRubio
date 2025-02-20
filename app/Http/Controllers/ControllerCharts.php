@@ -33,7 +33,10 @@ class ControllerCharts extends Controller
 
     static function getIncomeChart()
     {
-        $data = DB::select(
+        $labels = array();
+        $value  = array();
+        
+        $data   = DB::select(
             "select date_format(created_at,'%m') as month, sum(price) as price
             from services a join services_items b on a.id = b.service_id
             where labour = true and a.status = 'Entregado' group by date_format(created_at,'%m')"
