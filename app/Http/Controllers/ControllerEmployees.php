@@ -71,7 +71,7 @@ class ControllerEmployees extends Controller
 
     public function profile()
     {
-        $self = Employee::find(Auth::user()->id);
+        $self = User::find(Auth::user()->id);
         
         return view('dashboard.profile', compact('self'));
     }
