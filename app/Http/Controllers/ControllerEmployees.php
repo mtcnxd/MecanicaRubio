@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
@@ -26,27 +27,22 @@ class ControllerEmployees extends Controller
 
     public function store(Request $request)
     {
-        Employee::create($request->all());
+        User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'phone'    => $request->phone,
+            'password' => Hash::make($request->phone),
+            'rol'      => 'Limit',
+            'comments' => $request->comments,
+        ]);
 
-        if ($request->create == 'on')
-        {
-            User::create([
-                'name'     => $request->name,
-                'email'    => $request->email,
-                'phone'    => $request->phone,
-                'password' => md5($request->password),
-                'rol'      => 'Limit',
-                'comments' => $request->comments,
-            ]);
-        }
-
-        return to_route('employees')
+        return to_route('employees.index')
             ->with('message', 'Los datos se guardaron correctamente');
     }
 
     public function edit(Request $request, string $id)
     {
-        $employee = Employee::find($id);
+        $employee = User::find($id);
         
         return view('dashboard.employees.edit', compact('employee'));
     }
@@ -58,7 +54,7 @@ class ControllerEmployees extends Controller
 
     public function destroy(Request $request)
     {
-        DB::table('employees')->where('id', $request->user)->delete();
+        DB::table('users')->where('id', $request->user)->delete();
 
         sleep(random_int(1,3));
 

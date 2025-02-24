@@ -100,9 +100,11 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
+				<!--
 				<li>
 					<a class="a-item" href="{{ route('clients.index') }}">Clientes</a>
 				</li>
+				-->
 				<li>
 					<a class="a-item" href="{{ route('employees.index') }}">Empleados</a>
 					<ul class="submenu">

@@ -129,7 +129,9 @@
 <script>
     btnDelete = document.getElementById('btn-delete');
     btnDelete.addEventListener('click', function(event){
+        event.preventDefault();
         $("#loader").show();
+        
         $.ajax({
             type: "POST",
             url:  "/api/deleteUser",
