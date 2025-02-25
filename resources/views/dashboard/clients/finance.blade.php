@@ -11,35 +11,38 @@
         </a>
     </h4>
     <hr>
-    @if ( session('message') )
-        <div class="alert alert-warning alert-dismissible fade show">
-            <strong>Mensaje: </strong>{{ session('message') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+    @include('includes.div_warning')
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="window-title-bar shadow-sm">
-                <h6 class="window-title-text">Desglose</h6>
-                <x-feathericon-tool class="window-title-icon"/>
+                <h6 class="window-title-text">Ingreso de servicios entregados</h6>
+                <x-feathericon-dollar-sign class="window-title-icon"/>
             </div>
             <div class="window-body bg-white shadow-sm">
                 {{ "$".number_format($services->sum('total'), 2) }}
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
             <div class="window-title-bar shadow-sm">
-                <h6 class="window-title-text">Desglose</h6>
+                <h6 class="window-title-text">Resumen de servicios</h6>
                 <x-feathericon-tool class="window-title-icon"/>
             </div>
             <div class="window-body bg-white shadow-sm">
-                @foreach ($resumen as $item)
-                    <ul>
-                        <li>
-                            {{ $item->status }} {{ $item->count }} {{ $item->total }}
+                <ul class="list-group list-group-flush">
+                    @foreach ($resumen as $item)
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-3 fw-bold" style="width: 150px">
+                                {{ $item->status }}
+                            </div>
+                            <div class="ms-3" style="width: 150px">
+                                {{ $item->count }}
+                            </div>
+                            <div class="ms-3 text-end" style="width: 150px">
+                                {{ "$".number_format($item->total, 2) }}
+                            </div>
                         </li>
-                    </ul>
-                @endforeach
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>
@@ -51,7 +54,7 @@
                 <div class="col">
                     <span class="text-center" style="background-color: var(--amber-400); width: 150px; padding:2px; border-radius: 15px; display:block;">{{ $service->status }}</span>
                 </div>
-                <div class="col">{{ $service->total }}</div>
+                <div class="col text-end">{{ number_format($service->total, 2) }}</div>
             </div>
         @endforeach
     </div>

@@ -20,6 +20,6 @@ class FinanceController extends Controller
             ->groupBy('status')
             ->get();
 
-        return view('dashboard.employees.finance', compact('services', 'resumen'));
+        return view('dashboard.clients.finance', compact('services', 'resumen'));
     }
 }

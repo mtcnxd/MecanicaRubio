@@ -122,7 +122,9 @@
                         @foreach ($services as $service)
                             <tr>
                                 <td>{{ $service->brand }} {{ $service->model }}</td>
-                                <td>{{ Str::limit($service->fault, 80) }}</td>
+                                <td>
+                                    <a href="{{ route('services.show', $service->id) }}">{{ Str::limit($service->fault, 80) }}</a>
+                                </td>
                                 <td>{{ \Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
                                 <td>
                                     <span class="badge text-bg-success">{{ $service->status }}</span>
@@ -144,7 +146,8 @@
                     @endif
                 </div>
                 <div class="col-md-6 mt-3 text-end" style="padding-right: 40px;">
-                    <a href="{{ route('autos.index') }}" class="btn btn-success">Aceptar</a>
+                    <a href="{{ route('autos.index') }}" class="btn btn-sm btn-success">Atras</a>
+                    <a href="{{ route('finance', $client->id) }}" class="btn btn-sm btn-success">Mas Información</a>
                 </div>
             </div>
         </form>

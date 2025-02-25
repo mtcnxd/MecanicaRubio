@@ -18,7 +18,10 @@
                     <div class="col-md-3 pt-2 text-end">
                         Nombre
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" value="{{ $employee->id }}" disabled>
+                    </div>
+                    <div class="col-md-7">
                         <input type="text" class="form-control" name="name" value="{{ $employee->name }}">
                     </div>
                 </div>
@@ -101,15 +104,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col mb-0 mt-0 m-4 border">
                 <div class="row">
                     <div class="col-md-6 pt-2">
-                        Fecha de alta: {{ $extra }}
+                        <strong>Fecha de alta:</strong> {{ $extra->format('d-m-Y') }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 pt-2">
-                        Antiguedad: {{ $extra->diffInMonths() }} meses
+                        <strong>Antiguedad:</strong> {{ $extra->diffInMonths() }} meses
                     </div>
                 </div>
             </div>
