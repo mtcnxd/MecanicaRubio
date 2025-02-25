@@ -9,8 +9,8 @@
     </div>
     <div class="window-body bg-white">
         <label class="window-body-form">Editar empleado</label>
-        <form action="{{ route('employees.store') }}" method="POST" class="border pt-5 pb-4">
-        @method('POST')
+        <form action="{{ route('employees.update', $employee->id) }}" method="POST" class="border pt-5 pb-4">
+        @method('PUT')
         @csrf
         <div class="row">
             <div class="col-md-6">
@@ -101,6 +101,18 @@
                     </div>
                 </div>
             </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col-md-6 pt-2">
+                        Fecha de alta: {{ $extra }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 pt-2">
+                        Antiguedad: {{ $extra->diffInMonths() }} meses
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -131,7 +143,7 @@
     btnDelete.addEventListener('click', function(event){
         event.preventDefault();
         $("#loader").show();
-        
+
         $.ajax({
             type: "POST",
             url:  "/api/deleteUser",

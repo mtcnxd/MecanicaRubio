@@ -69,7 +69,9 @@ Route::middleware(['auth'])->group( function ()
 
     Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar.index');
 
-    Route::get('profile', [ControllerEmployees::class, 'profile'])->name('profile');
+    Route::get('profile', [ControllerEmployees::class, 'profileIndex'])->name('profile');
+
+    Route::post('profile', [ControllerEmployees::class, 'profileUpdate'])->name('profileUpdate');
 
     Route::get('emailInvoice/{serviceid}', [ControllerServices::class, 'sendMail'])->name('sendMail');    
 
