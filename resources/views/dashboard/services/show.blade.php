@@ -8,115 +8,104 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <label class="window-body-form">Detalles del Servicio</label>
+        <label class="window-body-form">Servicio</label>
         <form action="{{ route('services.update', $service->id) }}" method="POST" class="border pt-5 pb-4">
             @csrf
             @method('PATCH')
             <div class="row">
-                <div class="col-md-6" style="padding-right: 40px;">         
-                    <div class="row">
-                        <div class="col-md-3 pt-2 text-end">
-                            Cliente
-                        </div>    
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="client" value="{{ $service->name }}" disabled>
-                            <input type="hidden" value="{{ $service->id }}" id="service">
-                        </div>
+                <div class="row col-md-6">
+                    <div class="col-md-3 pt-2 text-end">
+                        Cliente
+                    </div>    
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="client" value="{{ $service->name }}" disabled>
+                        <input type="hidden" value="{{ $service->id }}" id="service">
                     </div>
+                </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Automovil
-                        </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" id="car" name="car" value="{{ $service->brand }} {{ $service->model }}" disabled>
-                        </div>
-                        <div class="col-md-3 pt-2 text-end">
-                            Odometro
-                        </div>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                            <input type="text" class="form-control" name="odometer" value="{{ number_format($service->odometer,0,',') }}" disabled>
-                                <span class="input-group-text">Km</span>
-                            </div>
-                        </div>
+                <div class="row col-md-6">
+                    <div class="col-md-3 pt-2 text-end">
+                        Ingresó
+                    </div>    
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="client" value="{{ date('d-m-Y', strtotime($service->created_at)) }}" disabled>
                     </div>
+                    <div class="col-md-3 pt-2 text-end">
+                        Días transcurridos
+                    </div>    
+                    <div class="col-md-3">
+                        @if ($service->status == 'Entregado')
+                            @php
+                            $elapsed = Carbon\Carbon::parse($service->created_at)->diffInDays(Carbon\Carbon::parse($service->due_date));
+                            @endphp
+                            <input type="text" class="form-control" name="client" value="{{ $elapsed }}" disabled>
+                        @else
+                            @php
+                            $elapsed = Carbon\Carbon::parse($service->created_at)->diffInDays(Carbon\Carbon::now());
+                            @endphp
+                            <input type="text" class="form-control {{($elapsed >= 4) ? 'is-invalid' : '' }}" name="client" value="{{ $elapsed }}" disabled>
+                        @endif
+                    </div>
+                </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Servicio/Fallo reportado
-                        </div>
-                        <div class="col-md-9">
-                            <textarea class="form-control" cols="30" rows="4" name="fault" disabled>{{ $service->fault }}</textarea>
+                <div class="row col-md-6 mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Automovil
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="car" name="car" value="{{ $service->brand }} {{ $service->model }}" disabled>
+                    </div>
+                    <div class="col-md-3 pt-2 text-end">
+                        Odometro
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                        <input type="text" class="form-control" name="odometer" value="{{ number_format($service->odometer,0,',') }}" disabled>
+                            <span class="input-group-text">Km</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-6" style="padding-right: 40px;">
-                    <div class="row">
-                        <div class="col-md-3 pt-2 text-end">
-                            Ingresó
-                        </div>    
-                        <div class="col-md-3">
-                            <input type="text" class="form-control" name="client" value="{{ date('d-m-Y', strtotime($service->created_at)) }}" disabled>
-                        </div>
-                        <div class="col-md-3 pt-2 text-end">
-                            Días transcurridos
-                        </div>    
-                        <div class="col-md-3">
-                            @if ($service->status == 'Entregado')
-                                @php
-                                $elapsed = Carbon\Carbon::parse($service->created_at)->diffInDays(Carbon\Carbon::parse($service->due_date));
-                                @endphp
-                                <input type="text" class="form-control" name="client" value="{{ $elapsed }}" disabled>
-                            @else
-                                @php
-                                $elapsed = Carbon\Carbon::parse($service->created_at)->diffInDays(Carbon\Carbon::now());
-                                @endphp
-                                <input type="text" class="form-control {{($elapsed >= 4) ? 'is-invalid' : '' }}" name="client" value="{{ $elapsed }}" disabled>
-                            @endif
-                        </div>
+                <div class="row col-md-6 mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Entrega
+                    </div>    
+                    <div class="col-md-3">
+                        @if (isset($service->due_date))
+                            <input type="text" class="form-control" name="client" value="{{ date('d-m-Y', strtotime($service->due_date)) }}" disabled>
+                        @else 
+                            <input type="text" class="form-control" name="client" disabled>
+                        @endif
                     </div>
+                </div>
 
-                    <div class="row pt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Entrega
-                        </div>    
-                        <div class="col-md-3">
-                            @if (isset($service->due_date))
-                                <input type="text" class="form-control" name="client" value="{{ date('d-m-Y', strtotime($service->due_date)) }}" disabled>
-                            @else 
-                                <input type="text" class="form-control" name="client" disabled>
-                            @endif
-                        </div>
+                <div class="row col-md-6 mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Servicio/Fallo reportado
                     </div>
+                    <div class="col-md-9">
+                        <textarea class="form-control" cols="30" rows="4" name="fault" disabled>{{ $service->fault }}</textarea>
+                    </div>
+                </div>
 
-                    <div class="row pt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Comentarios
-                        </div>
-                        <div class="col-md-9">
-                            <textarea class="form-control" cols="30" rows="4" name="comments" disabled>{{ $service->comments }}</textarea>
-                        </div>
+                <div class="row col-md-6 mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Comentarios
+                    </div>
+                    <div class="col-md-9">
+                        <textarea class="form-control" cols="30" rows="4" name="comments" disabled>{{ $service->comments }}</textarea>
                     </div>
                 </div>
             </div>
-            <hr>
 
-            <div class="col-md-12 p-4 pb-2">
-                <h5>
-                    Lista de materiales
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#createItem" id="addItem">
-                        <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
-                    </a>
-                </h5>
-                <table class="table table-hover" id="table-items">
+            <div class="col-md-12 mt-4 mb-4 border-top border-bottom bg-body-tertiary" style="height: 300px; overflow-y: scroll">
+                <table class="table table-hover table-borderless dataTable no-footer">
                     <thead>
-                        <th width="20px">&nbsp;</th>
-                        <th>Cant</th>
+                        <th width="30px">#</th>
                         <th>Descripción</th>
                         <th class="text-end">P.Unitario</th>
                         <th class="text-end">Importe</th>
+                        <th width="30px"></th>
                     </thead>
                     <tbody>
                         @php
@@ -127,44 +116,51 @@
                             $total_invoice += $item->amount * $item->price;
                         @endphp
                         <tr>
+                            <td>{{ $item->amount }}</td>
+                            <td>{{ $item->item }}</td>
+                            <td class="text-end">{{ '$'.number_format($item->price,2) }}</td>
+                            <td class="text-end">{{ '$'.number_format($item->amount * $item->price, 2) }}</td>
                             <td>
                                 <a href="#" class="removeItem" id="{{ $item->id }}">
                                     <x-feathericon-trash-2 class="table-icon"/>
                                 </a>
                             </td>
-                            <td>{{ $item->amount }}</td>
-                            <td>
-                                <a href="#">
-                                    {{ $item->item }}
-                                </a>
-                            </td>
-                            <td class="text-end">{{ '$'.number_format($item->price,2) }}</td>
-                            <td class="text-end">{{ '$'.number_format($item->amount * $item->price, 2) }}</td>
                         </tr>
                         @endforeach
                     </tbody>
+                    <tfoot class="border-top">
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#createItem" id="addItem">
+                                    Agregar
+                                    <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
+                                </a>
+                            </td>
+                            <td></td>
+                            <td class="text-end">
+                                {{ '$'.number_format($total_invoice, 2) }}
+                                <input type="hidden" name="total" value="{{ $total_invoice }}">
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
-                
-                <div class="col-md-12 fs-5 text-end" style="padding-right: 10px;"> 
-                    {{ '$'.number_format($total_invoice, 2) }}
-                    <input type="hidden" name="total" value="{{ $total_invoice }}">
+            </div>
+
+            <div class="row">
+                <div class="row col-md-6">
+                    <div class="col-md-3 text-end pt-2">
+                        Comentarios
+                    </div>
+                    <div class="col-md-9">
+                        <textarea name="notes" class="form-control" cols="30" rows="3">{{ $service->notes }}</textarea>
+                    </div>
                 </div>
-            </div>
-
-            <div class="col-md-12 p-4 pt-2 pb-0">
-                Comentarios
-            </div>
-
-            <div class="col-md-12 p-4 pt-2 pb-0">
-                <textarea name="notes" class="form-control" cols="30" rows="3">{{ $service->notes }}</textarea>
-            </div>
-
-            <div class="row p-4 pt-3" style="display: flex; align-items: flex-end">
-                <div class="col-md-6">
-                    <div class="col-md-3">
+                <div class="row col-md-6">
+                    <div class="col-md-3 text-end pt-2">
                         Estatus
                     </div>
-                    <div class="col-md-3 pt-2">
+                    <div class="col-md-9">
                         <select class="form-select" name="status">
                             <option {{$service->status == "Cancelado" ? 'selected' : '' }}>Cancelado</option>
                             <option {{$service->status == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
@@ -174,9 +170,11 @@
                             <option {{$service->status == 'Entregado' ? 'selected' : '' }}>Entregado</option>
                         </select>
                     </div>
-
                 </div>
-                <div class="col-md-6 text-end">
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-end mt-3 pe-5">
                     <a href="{{ route('services.index') }}" class="btn btn-secondary">Atras</a>
                     <!-- 
                     <a href="#" class="btn btn-secondary">

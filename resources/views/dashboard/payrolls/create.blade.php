@@ -8,6 +8,7 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
+        @include('includes.div_warning')
         <label class="window-body-form">Nomina</label>
         <form action="{{ route('payroll.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf
@@ -69,14 +70,14 @@
                 </div>
             </div>
 
-            <div class="col-md-12 mt-5 mb-4 border-top border-bottom bg-body-tertiary" style="height: 300px; overflow-y: scroll">
+            <div class="col-md-12 mt-4 mb-4 border-top border-bottom bg-body-tertiary" style="height: 300px; overflow-y: scroll">
                 <table class="table table-hover table-borderless dataTable no-footer">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th width="30px">#</th>
                             <th>Concepto</th>
                             <th class="text-end">Importe</th>
-                            <th></th>
+                            <th width="30px"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,38 +85,31 @@
                             <td>1</td>
                             <td>Nomina</td>
                             <td class="text-end">$3000</td>
-                            <td width="30px"><x-feathericon-trash class="table-icon"/></td>
+                            <td><x-feathericon-trash-2 class="table-icon"/></td>
                         </tr>
                         <tr>
                             <td>2</td>
                             <td>Caja de ahorro</td>
                             <td class="text-end">$50</td>
-                            <td width="30px"><x-feathericon-trash class="table-icon"/></td>
+                            <td><x-feathericon-trash-2 class="table-icon"/></td>
                         </tr>
                     </tbody>
+                    <tfoot class="border-top">
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#createItem" id="add-concept">
+                                    Agregar
+                                    <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
+                                </a>
+                            </td>
+                            <td class="text-end">
+                                {{ '$'.number_format('0.0', 2) }}
+                                <input type="hidden" name="total">
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
-            </div>
-
-            <div class="row">
-                <div class="row col-md-6">
-                    <div class="col-md-4 pt-2 text-end">
-                        <a href="#" class="btn btn-sm btn-outline-secondary" id="add-concept">
-                            <x-feathericon-plus class="button-icon"/>
-                            Agregar concepto
-                        </a>
-                    </div>
-                </div>
-                <div class="row col-md-6">
-                    <div class="col-md-3 pt-2 text-end">
-                        Total
-                    </div>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="name" id="total" value="0" style="text-align: right" disabled>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="row">
