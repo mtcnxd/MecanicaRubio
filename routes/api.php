@@ -49,6 +49,10 @@ Route::post('manageSalaries', [
     ControllerPayroll::class, 'manageSalaries'
 ])->name('manageSalaries');
 
+Route::post('addConcept', [
+    ControllerPayroll::class, 'addConcept'
+])->name('addConcept');
+
 Route::post('searchPostcode', [
     ControllerAjax::class, 'searchPostcode'
 ])->name('searchPostcode');

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('status',['Activo', 'Inactivo', 'Cancelado'])->default('Activo');
+            $table->enum('status',['Activo', 'Inactivo', 'Cancelado']);
             $table->enum('rol',['Admin', 'Limit', 'Client'])->default('Admin');
             $table->text('comments')->nullable();
             $table->rememberToken();

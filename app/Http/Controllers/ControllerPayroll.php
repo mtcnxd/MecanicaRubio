@@ -42,11 +42,19 @@ class ControllerPayroll extends Controller
      */
     public function create()
     {
+        $details = null;
+
         $employees = DB::table('employees')
             ->join('users', 'employees.user_id', 'users.id')
             ->get();
 
-        return view('dashboard.payrolls.create', compact('employees'));
+        $id = DB::table('salaries')->max('id') + 1;
+        
+        $details = DB::table('salaries_details')
+            ->where('salary_id', $id)
+            ->get();
+
+        return view('dashboard.payrolls.create', compact('employees', 'details'));
     }
 
     /**
@@ -55,22 +63,17 @@ class ControllerPayroll extends Controller
     public function store(Request $request)
     {
         $insert = DB::table('salaries')->insert([
-            'user_id'           => $request->employee,
-            'salary'            => $request->salary,
-            'hours'             => $request->hours,
-            'price'             => $request->price,
-            'bonds_comment'     => $request->bonds_comment,
-            'bonds'             => $request->bonds,
-            'discount_comment'  => $request->discount_comment,
-            'discount'          => $request->discount,
-            'status'            => 'Pendiente',
-            'start_date'        => $request->start_date,
-            'end_date'          => $request->end_date,
-            'created_at'        => Carbon::now(),
-            'updated_at'        => Carbon::now(),
+            "user_id"    => $request->employee,
+            "type"       => $request->type,
+            "status"     => 'Pendiente',
+            "start_date" => $request->start_date,
+            "end_date"   => $request->end_date,
+            "total"      => $request->total,
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now(),
         ]);
 
-        return to_route('payroll.index');
+        return to_route('payroll.index')->with('message', 'El registro se guardo correctamente');
     }
 
     /**
@@ -79,13 +82,15 @@ class ControllerPayroll extends Controller
     public function show(string $id)
     {
         $salary = DB::table('salaries')
-            ->join('users','users.id','salaries.user_id')
-            ->where('salaries.id', $id)
+            ->join('users', 'salaries.user_id', 'users.id')
+            ->where('salaries.id', 1)
             ->first();
 
-        // dd($salary);
+        $details = DB::table('salaries_details')
+            ->where('salary_id', 1)
+            ->get();
 
-        return view('dashboard.payrolls.show', compact('salary'));  
+        return view('dashboard.payrolls.show', compact('salary','details'));  
     }
 
     /**
@@ -109,10 +114,7 @@ class ControllerPayroll extends Controller
      */
     public function destroy(string $id)
     {
-        return Response()->json([
-            'status' => true,
-            'message' => 'Data has been deleted',
-        ]);
+        //
     }
 
     public function manageSalaries(Request $request)
@@ -142,5 +144,22 @@ class ControllerPayroll extends Controller
             'status' => true,
             'message' => $response
         ]);
-    }    
+    }
+    
+    public function addConcept(Request $request)
+    {   
+        $id = DB::table('salaries')->max('id') +1;
+
+        DB::table('salaries_details')->insert([
+            'salary_id' => $id,
+            'concept'   => $request->concept,
+            'amount'    => $request->amount,
+            'number'    => ""
+        ]);
+
+        return Response()->json([
+            'status'  => true,
+            'message' => $request->all()
+        ]);
+    }
 }

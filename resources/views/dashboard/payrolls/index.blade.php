@@ -11,12 +11,7 @@
         <x-feathericon-dollar-sign class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        @if ( session('message') )
-            <div class="alert alert-success alert-dismissible fade show">
-                <strong>Mensaje: </strong>{{ session('message') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+        @include('includes.div_warning')
         <form action="{{ route('payroll.index') }}" method="POST">
             @csrf
             @method('GET')
@@ -65,9 +60,6 @@
             </thead>
             <tbody>
                 @foreach ($salaryData as $salary)
-                @php
-                    $total = $salary->salary + ($salary->hours * $salary->price) + $salary->bonds - $salary->discount; 
-                @endphp
                 <tr>
                     <td>{{ $salary->id }}</td>
                     <td>
@@ -93,7 +85,7 @@
                             @endif
                         @endif
                     </td>
-                    <td class="text-end">{{ "$".number_format($total, 2) }}</td>
+                    <td class="text-end">{{ "$".number_format($salary->total, 2) }}</td>
                     <td>
                         <div class="dropdown">
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" style="margin-top:-3px;">

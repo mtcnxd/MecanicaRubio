@@ -168,7 +168,7 @@
                                 @foreach ($cars as $car)
                                 <tr>
                                     <td>
-                                        <x-feathericon-arrow-right class="table-icon" style="margin: 0 5px 2px"/>
+                                        <x-feathericon-arrow-right-circle class="table-icon" style="margin: 0 5px 2px"/>
                                         <a href="{{ route('autos.show', $car->id) }}">{{ $car->brand }} {{ $car->model }}</a>
                                     </td>
                                     <td>{{ $car->plate }}</td>

@@ -32,15 +32,7 @@
                             <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
                         <div class="widget-simple-body fs-3">
-                            @php
-                                $total_salaries = 0;
-                            @endphp
-                            @foreach ($salaries as $salary)
-                                @php
-                                    $total_salaries += $salary->salary;
-                                @endphp
-                            @endforeach
-                            {{ '$'.number_format($total_salaries, 2) }}
+                            {{ '$'.number_format($salaries->sum('total'), 2) }}
                         </div>
                     </div>
                 </div>

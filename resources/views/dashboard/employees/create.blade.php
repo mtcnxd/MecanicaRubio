@@ -28,7 +28,7 @@
                         Correo
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" name="email" required>
                     </div>
                 </div>
 
@@ -52,7 +52,7 @@
                         Salario
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" name="salary">
+                        <input type="number" class="form-control" name="salary" required>
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Periodo
@@ -80,8 +80,8 @@
                     </div>
                     <div class="col-md-3">
                         <select class="form-select" name="status">
-                            <option value="">Activo</option>
-                            <option value="">Inactivo</option>
+                            <option>Activo</option>
+                            <option>Inactivo</option>
                         </select>
                     </div>
                 </div>

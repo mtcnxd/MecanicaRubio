@@ -18,12 +18,17 @@
                         Empleado
                     </div>
                     <div class="col-md-9">
-                        <select class="form-select" name="employee" id="employee">
-                            <option value="0"> - Seleccione empleado - </option>
-                            @foreach ($employees as $employee)
-                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="input-group mb-3">
+                            <select class="form-select" name="employee" id="employee" required>
+                                <option value="0"> - Seleccione empleado - </option>
+                                @foreach ($employees as $employee)
+                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                @endforeach
+                            </select>
+                            <span class="input-group-text" id="basic-addon2">
+                                <x-feathericon-user class="table-icon" style="margin: -2px 5px 2px"/>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -32,7 +37,12 @@
                         Correo
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}" disabled>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="email" id="email" disabled>
+                            <span class="input-group-text" id="basic-addon2">
+                                <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -62,10 +72,10 @@
                         Periodo
                     </div>
                     <div class="col-md-4">
-                        <input type="date" name="start_date" class="form-control">
+                        <input type="date" name="start_date" class="form-control" required>
                     </div>
                     <div class="col-md-5">
-                        <input type="date" name="end_date" class="form-control">
+                        <input type="date" name="end_date" class="form-control" required>
                     </div>
                 </div>
             </div>
@@ -81,31 +91,31 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($details as $count => $item)
                         <tr>
-                            <td>1</td>
-                            <td>Nomina</td>
-                            <td class="text-end">$3000</td>
-                            <td><x-feathericon-trash-2 class="table-icon"/></td>
+                            <td>{{ $count +1 }}</td>
+                            <td>{{ $item->concept }}</td>
+                            <td class="text-end">{{ "$".number_format($item->amount, 2) }}</td>
+                            <td>
+                                <a href="#" class="removeItem" id="{{ $item->id }}">
+                                    <x-feathericon-trash-2 class="table-icon"/>
+                                </a>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Caja de ahorro</td>
-                            <td class="text-end">$50</td>
-                            <td><x-feathericon-trash-2 class="table-icon"/></td>
-                        </tr>
+                        @endforeach
                     </tbody>
                     <tfoot class="border-top">
                         <tr>
                             <td></td>
                             <td>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#createItem" id="add-concept">
+                                <a href="#" id="addConcept">
                                     Agregar
                                     <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
                                 </a>
                             </td>
                             <td class="text-end">
-                                {{ '$'.number_format('0.0', 2) }}
-                                <input type="hidden" name="total">
+                                {{ '$'.number_format($details->sum('amount'), 2) }}
+                                <input type="hidden" name="total" value="{{ $details->sum('amount') }}" id="total">
                             </td>
                         </tr>
                     </tfoot>
@@ -115,10 +125,6 @@
             <div class="row">
                 <div class="col-md-12 text-end mt-3 pe-5">
                     <a href="{{ route('payroll.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <a href="#" onclick="calculate()" class="btn btn-secondary">
-                        <x-feathericon-refresh-cw class="table-icon" style="margin: -2px 5px 2px"/>
-                        Calcular
-                    </a>
                     <a href="#" onclick="print()" class="btn btn-secondary">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
@@ -135,20 +141,24 @@
 
 <div id="popup">
     <div class="row">
-        <label for="hours">Concepto</label>
-        <select name="" id="" class="form-select">
+        <label for="concept">Concepto</label>
+        <select name="concept" id="concept" class="form-select">
             <optgroup label="Prestaciones">
-                <option value="">Caja de ahorro</option>
-                <option value="">Prestamo de nomina</option>
+                <option>Salario</option>
+                <option>Caja de ahorro</option>
+                <option>Prestamo de nomina</option>
+                <option>Hora Extra</option>
+                <option>Bono adicional</option>
             </optgroup>
             <optgroup label="Descuentos">
-                <option value="">Descuento por prestamo</option>
+                <option>Descuento</option>
+                <option>Descuento por prestamo</option>
             </optgroup>
         </select>
     </div>
     <div class="row mt-3">
-        <label for="hours">Importe</label>
-        <input type="text" class="form-control" id="hours" name="hours">
+        <label for="amount">Importe</label>
+        <input type="text" class="form-control" id="amount" name="amount">
     </div>
     <hr>
     <button class="btn btn-sm btn-secondary" id="closePopup">Agregar</button>
@@ -160,22 +170,6 @@
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <script>
-function calculate(){
-    var hours    = parseFloat( $("#hours").val() );
-    var price    = parseFloat( $("#price").val() );
-    var salary   = parseFloat( $("#salary").val() );
-    var bonds    = parseFloat( $("#bonds").val() );
-    var discount = parseFloat( $("#discount").val() );
-
-    var extra    = hours * price;
-
-    $("#hours_total").val(extra);
-
-    total = salary + extra + bonds - discount;
-
-    $("#total").val( numeral(parseFloat(total)).format('0,0.00') );
-}
-
 $("#employee").on('change', function(){
     var employee = $(this).val();
 
@@ -187,32 +181,44 @@ $("#employee").on('change', function(){
         },
         success: function(response){
             $("#salary").val(response.data.salary);
-            $("#price").val(response.data.extra);
+            $("#email").val(response.data.email);
         }
     })
 });
 
-const addConcept = document.getElementById('add-concept');
+const addConcept = document.getElementById('addConcept');
 
 addConcept.addEventListener('click', function(btn){
     btn.preventDefault();
-    console.log('click');
-    $('#popup').fadeIn(); // Muestra el popup
-    $('#overlay').fadeIn(); // Muestra el fondo oscuro
+    $('#popup').fadeIn();
+    $('#overlay').fadeIn();
 });
 
-// Cerrar el popup al hacer clic en el botón de cerrar
 $('#closePopup').click(function() {
+    $.ajax({
+        url: "/api/addConcept",
+        method: 'POST',
+        data: {
+            concept: $("#concept").val(),
+            amount: $("#amount").val()
+        },
+        success: function(response){
+            console.log(response);
+        }
+    })
+    .then(() => {
+        history.go();
+    });
+
     $('#popup').fadeOut(); // Oculta el popup
     $('#overlay').fadeOut(); // Oculta el fondo oscuro
 });
 
-// Cerrar el popup al hacer clic fuera del popup
+
 $('#overlay').click(function() {
     $('#popup').fadeOut(); // Oculta el popup
     $('#overlay').fadeOut(); // Oculta el fondo oscuro
 });
-
 </script>
 @endsection
 

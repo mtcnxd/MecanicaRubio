@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('type',['Nomina','Aguinaldo','Finiquito','Liquidacion'])->default('Nomina');
             $table->date('start_date');
             $table->date('end_date');
+            $table->double('total');
             $table->timestamps();
         });
     }

@@ -26,19 +26,23 @@ class ControllerEmployees extends Controller
     }
 
     public function store(Request $request)
-    {
+    {        
+        $status = 'Inactivo';
         if ($request->create == 'on'){
-            User::create([
-                "name"       => $request->name,
-                "email"      => $request->email,
-                "phone"      => $request->phone,
-                "password"   => Hash::make($request->phone),
-                "rol"        => 'Limit',
-                "comments"   => $request->comments,
-                "created_at" => Carbon::now(),
-                "updated_at" => Carbon::now()
-            ]);
+            $status = 'Activo';
         }
+
+        User::create([
+            "name"       => $request->name,
+            "email"      => $request->email,
+            "phone"      => $request->phone,
+            "password"   => Hash::make($request->phone),
+            "status"     => $status,
+            "rol"        => 'Limit',
+            "comments"   => $request->comments,
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now()
+        ]);
 
         DB::table('employees')
             ->insert([
@@ -60,8 +64,8 @@ class ControllerEmployees extends Controller
     public function edit(Request $request, string $id)
     {
         $employee = DB::table('employees')
-            ->join('users','employees.userid','users.id')
-            ->where('employees.userid', $id)
+            ->join('users','employees.user_id','users.id')
+            ->where('employees.user_id', $id)
             ->first();
 
         $extra = Carbon::parse($employee->created_at);
