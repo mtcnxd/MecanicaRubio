@@ -32,6 +32,12 @@ a:hover {
     top: 70px;
 }
 
+.button-icon {
+    width: 18px;
+    height: 18px;
+    margin-bottom: 2px;
+}
+
 .table-icon {
     width: 18px;
     height: 18px;

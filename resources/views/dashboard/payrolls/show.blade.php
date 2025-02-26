@@ -11,109 +11,126 @@
         <label class="window-body-form">Detaller de movimiento</label>
         <form action="{{ route('payroll.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Empleado
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-3 pt-2 text-end">
+                            Empleado
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="employee" id="employee" value="{{ $salary->name }}" disabled>
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="employee" id="employee" value="{{ $employee->name }}" disabled>
-                    </div>
-                </div>
 
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Sueldo
+                    <div class="row mt-3">
+                        <div class="col-md-3 pt-2 text-end">
+                            Sueldo
+                        </div>
+                        <div class="col-md-2">
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" name="salary" id="salary" style="text-align: right" value="{{ $salary->salary }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 pt-2 text-end">
+                            Horas extra
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" name="hours" id="hours" value="{{ $salary->hours }}">
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="hidden" name="price" id="price" value="{{ $salary->price }}">
+                                <input type="text" class="form-control" name="hours_total" id="hours_total" value="0" style="text-align: right">
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
+
+                    <div class="row mt-3">
+                        <div class="col-md-3 pt-2 text-end">
+                            Bonos
+                        </div>
+                        <div class="col-md-9">
+                            <textarea class="form-control" name="bonds_comment" id="bonds_comment" cols="30" rows="2"></textarea>
+                        </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="salary" id="salary" style="text-align: right" value="{{ $employee->salary }}" disabled>
+
+                    <div class="row mt-3">
+                        <div class="col-md-7">
+                        </div>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" name="bonds" id="bonds" style="text-align: right" value="{{ $salary->bonds }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-3 pt-2 text-end">
+                            Descuentos
+                        </div>
+                        <div class="col-md-9">
+                            <textarea class="form-control" name="discount_comment" id="discount_comment" cols="30" rows="2">{{ $salary->discount_comment }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-7">
+                        </div>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" name="discount" id="discount" value="{{ $salary->discount }}" style="text-align: right">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-3 pt-2 text-end">
+                            Total
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" name="name" id="total" value="0" style="text-align: right" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-3 pt-2 text-end">
+                            Estatus
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select" name="status" required>
+                                <option>Pendiente</option>
+                                <option>Pagado</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Horas extra
-                    </div>
-                    <div class="col-md-2">
-                        <input type="number" class="form-control" name="hours" id="hours" value="{{ $employee->hours }}">
-                    </div>
-                    <div class="col-md-2">
-                    </div>
-                    <div class="col-md-5">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="hidden" name="price" id="price" value="{{ $employee->price }}">
-                            <input type="text" class="form-control" name="hours_total" id="hours_total" value="0" style="text-align: right">
+                
+                <div class="col">
+                    <div class="row">
+                        <div class="col-md-3 pt-2 text-end">
+                            Email
+                        </div>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="employee" id="employee" value="{{ $salary->email }}" disabled>
                         </div>
                     </div>
-                </div>
 
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Bonos
-                    </div>
-                    <div class="col-md-9">
-                        <textarea class="form-control" name="bonds_comment" id="bonds_comment" cols="30" rows="2"></textarea>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-7">
-                    </div>
-                    <div class="col-md-5">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="bonds" id="bonds" style="text-align: right" value="{{ $employee->bonds }}">
+                    <div class="row">
+                        <div class="col-md-3 pt-2 text-end">
+                            Phone
                         </div>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Descuentos
-                    </div>
-                    <div class="col-md-9">
-                        <textarea class="form-control" name="discount_comment" id="discount_comment" cols="30" rows="2"></textarea>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-7">
-                    </div>
-                    <div class="col-md-5">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="discount" id="discount" value="0" style="text-align: right">
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="employee" id="employee" value="{{ $salary->phone }}" disabled>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Total
-                    </div>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="name" id="total" value="0" style="text-align: right" disabled>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Estatus
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-select" name="status" required>
-                            <option>Pendiente</option>
-                            <option>Pagado</option>
-                        </select>
                     </div>
                 </div>
             </div>

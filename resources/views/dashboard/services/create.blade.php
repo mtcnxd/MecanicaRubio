@@ -15,7 +15,6 @@
             </div>
         @endif
 
-
         <label class="window-body-form">Registrar Nuevo Servicio</label>
         <form action="{{ route('services.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf

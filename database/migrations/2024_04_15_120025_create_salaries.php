@@ -14,15 +14,8 @@ return new class extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('salary');
-            $table->integer('hours')->nullable();
-            $table->integer('price')->nullable();
-            $table->text('bonds_comment')->nullable();
-            $table->integer('bonds')->nullable();
-            $table->text('discount_comment')->nullable();
-            $table->integer('discount')->nullable();
             $table->enum('status',['Pendiente', 'Pagado', 'Cancelado'])->default('Pendiente');
-            $table->enum('type',['Nomina','Aguinaldo','Finiquito','Liquidacion','Caja de ahorro'])->default('Nomina');
+            $table->enum('type',['Nomina','Aguinaldo','Finiquito','Liquidacion'])->default('Nomina');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

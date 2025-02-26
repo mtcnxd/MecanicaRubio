@@ -78,12 +78,14 @@ class ControllerPayroll extends Controller
      */
     public function show(string $id)
     {
-        $employee = DB::table('salaries')
+        $salary = DB::table('salaries')
             ->join('users','users.id','salaries.user_id')
             ->where('salaries.id', $id)
             ->first();
 
-        return view('dashboard.payrolls.show', compact('employee'));
+        // dd($salary);
+
+        return view('dashboard.payrolls.show', compact('salary'));  
     }
 
     /**

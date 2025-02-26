@@ -26,6 +26,14 @@
     --gray-200: #EEEEEE;
 }
 
+.table {
+    --bs-table-bg:"";
+}
+
+.table > thead {
+    background-color: #fff;
+}
+
 .form-check-input:checked {
     background-color:var(--teal-300);
     border-color: var(--teal-600);
