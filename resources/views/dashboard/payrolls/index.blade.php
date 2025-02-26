@@ -17,13 +17,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        @if ( session('error') )
-            <div class="alert alert-danger alert-dismissible fade show">
-                <strong>Mensaje: </strong>{{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
         <form action="{{ route('payroll.index') }}" method="POST">
             @csrf
             @method('GET')
@@ -61,8 +54,10 @@
         <table class="table table-hover table-borderless" id="expenses" style="width:100%;">
             <thead>
                 <tr>
+                    <th width="75px">Folio</th>
                     <th width="400px">Empleado</th>
-                    <th width="400px">Fecha</th>
+                    <th width="300px">Periodo</th>
+                    <th width="300px">Elaborado</th>
                     <th>Estatus</th>
                     <th class="text-end">Total</th>
                     <th width="30px">&nbsp;</th>
@@ -74,20 +69,28 @@
                     $total = $salary->salary + ($salary->hours * $salary->price) + $salary->bonds - $salary->discount; 
                 @endphp
                 <tr>
+                    <td>{{ $salary->id }}</td>
                     <td>
                         <span class="material-symbols-outlined" style="position:relative; top:5px; margin-right:6px;">badge</span>
-                        {{ $salary->name }}
+                        <a href="{{ route('payroll.show', $salary->id) }}">
+                            {{ $salary->name }}
+                        </a>
                     </td>
                     <td>
-                        <a href="{{ route('payroll.show', $salary->id) }}">
-                            {{ Carbon\Carbon::parse($salary->date_paid)->format('d-m-Y') }}
-                        </a>
+                        {{ Carbon\Carbon::parse($salary->start_date)->format('d-m-Y') }} / {{ Carbon\Carbon::parse($salary->end_date)->format('d-m-Y') }}
+                    </td>
+                    <td>
+                        {{ Carbon\Carbon::parse($salary->created_at)->format('d-m-Y') }}
                     </td>
                     <td>
                         @if ($salary->status == 'Pagado')
                             <span class="badge rounded-pill text-bg-success">{{ $salary->status }}</span>
                         @else
-                            <span class="badge rounded-pill text-bg-warning">{{ $salary->status }}</span>
+                            @if ($salary->status == 'Cancelado')
+                                <span class="badge rounded-pill text-bg-secondary">{{ $salary->status }}</span>    
+                            @else
+                                <span class="badge rounded-pill text-bg-warning">{{ $salary->status }}</span>
+                            @endif
                         @endif
                     </td>
                     <td class="text-end">{{ "$".number_format($total, 2) }}</td>
@@ -99,6 +102,7 @@
                             <ul class="dropdown-menu">
                               <li><a class="dropdown-item" href="#" data-action="pay" data-id="{{ $salary->id }}">Pagar</a></li>
                               <li><a class="dropdown-item" href="#" data-action="cancell" data-id="{{ $salary->id }}">Cancelar</a></li>
+                              <li><a class="dropdown-item" href="#" data-action="delete" data-id="{{ $salary->id }}">Eliminar</a></li>
                             </ul>
                         </div>
                     </td>
@@ -123,7 +127,6 @@
 <script>
 $(".dropdown-item").on('click', function(){
     const buttonGroup = $(this);
-
     $.ajax({
         url: "{{ route('manageSalaries') }}",
         method: 'POST',
@@ -132,7 +135,7 @@ $(".dropdown-item").on('click', function(){
             action:buttonGroup.data('action')
         },
         success: function(response){
-            showMessageAlert(response);
+            showMessageAlert(response.message);
         }
     });
 

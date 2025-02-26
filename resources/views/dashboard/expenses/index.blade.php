@@ -162,7 +162,8 @@ const table = new DataTable('#expenses', {
             data:'name',
             orderable: false,
             render:function(row, type, data){
-                return '<input type="checkbox" id="'+ data.id +'" class="form-check-input" style="margin-right:10px" data-bs-amount="'+ data.total +'"></input>' + row;
+                return '<input type="checkbox" id="'+ data.id +'" class="form-check-input" style="margin-right:10px" data-bs-amount="'+ data.total +'"></input>' + 
+                '<a href="'+ data.id +'">' + row + '</a>'
             }
         },{
             data:'description',

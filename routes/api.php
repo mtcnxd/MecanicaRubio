@@ -7,6 +7,7 @@ use App\Http\Controllers\ControllerServices;
 use App\Http\Controllers\ControllerClients;
 use App\Http\Controllers\ControllerEmployees;
 use App\Http\Controllers\ControllerAutos;
+use App\Http\Controllers\ControllerPayroll;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,10 @@ Route::post('deleteUser', [
     ControllerEmployees::class, 'destroy'
 ])->name('deleteUser');
 
+Route::post('loadEmployee', [
+    ControllerEmployees::class, 'loadEmployee'
+])->name('loadEmployee');
+
 Route::post('createBrand', [
     ControllerAutos::class, 'createBrand'
 ])->name('createBrand');
@@ -39,6 +44,10 @@ Route::post('createModel', [
 Route::post('loadModels', [
     ControllerAutos::class, 'loadModels'
 ])->name('loadModels');
+
+Route::post('manageSalaries', [
+    ControllerPayroll::class, 'manageSalaries'
+])->name('manageSalaries');
 
 Route::post('searchPostcode', [
     ControllerAjax::class, 'searchPostcode'
@@ -68,10 +77,6 @@ Route::post('loadEvent', [
     ControllerAjax::class, 'loadEvent'
 ])->name('loadEvent');
 
-Route::post('loadEmployee', [
-    ControllerAjax::class, 'loadEmployee'
-])->name('loadEmployee');
-
 Route::get('getDataTableServices', [
     ControllerAjax::class, 'getDataTableServices'
 ])->name('getDataTableServices');
@@ -91,10 +96,6 @@ Route::post('getImageAttached', [
 Route::post('removeItemExpense', [
     ControllerAjax::class, 'removeItemExpense'
 ])->name('removeItemExpense');
-
-Route::post('manageSalaries', [
-    ControllerAjax::class, 'manageSalaries'
-])->name('manageSalaries');
 
 Route::get('downloadPDF', [
     ControllerServices::class, 'downloadPDF'

@@ -28,15 +28,35 @@
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        Sueldo
+                        Movimiento
                     </div>
                     <div class="col-md-4">
+                        <select class="form-select" name="type" id="type">
+                            <option value="0"> - Seleccione movimiento - </option>
+                            <option>Nomina</option>
+                            <option>Aguinaldo</option>
+                            <option>Finiquito</option>
+                            <option>Liquidacion</option>
+                            <option>Caja de ahorro</option>
+                        </select>
                     </div>
                     <div class="col-md-5">
                         <div class="input-group">
                             <span class="input-group-text">$</span>
                             <input type="text" class="form-control" name="salary" id="salary" value="" style="text-align: right">
                         </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Periodo
+                    </div>
+                    <div class="col-md-4">
+                        <input type="date" name="start_date" class="form-control">
+                    </div>
+                    <div class="col-md-5">
+                        <input type="date" name="end_date" class="form-control">
                     </div>
                 </div>
 
@@ -109,28 +129,17 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Estatus
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-select" name="status" required>
-                            <option>Pendiente</option>
-                            <option>Pagado</option>
-                        </select>
-                    </div>
-                    <div class="col-md-5">
-                        <input type="date" name="date_paid" class="form-control">
-                    </div>
-                </div>
             </div>
 
             <div class="col-md-6 mt-3 text-end">
                 <a href="{{ route('payroll.index') }}" class="btn btn-secondary">Cancelar</a>
-                <a href="#" onclick="calculate()" class="btn btn-success">
+                <a href="#" onclick="calculate()" class="btn btn-secondary">
                     <x-feathericon-refresh-cw class="table-icon" style="margin: -2px 5px 2px"/>
                     Calcular
+                </a>
+                <a href="#" onclick="print()" class="btn btn-secondary">
+                    <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
+                    Imprimir
                 </a>
                 <button type="submit" class="btn btn-success">
                     <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
@@ -165,15 +174,14 @@ $("#employee").on('change', function(){
     var employee = $(this).val();
 
     $.ajax({
-        url: "{{ route('loadEmployee') }}",
+        url: "/api/loadEmployee",
         method: 'POST',
         data: {
             employee: employee
         },
         success: function(response){
-            const json = JSON.parse(response);
-            $("#salary").val(json.salary);
-            $("#price").val(json.extra);
+            $("#salary").val(response.data.salary);
+            $("#price").val(response.data.extra);
         }
     })
 });

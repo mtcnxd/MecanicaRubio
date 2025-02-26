@@ -8,7 +8,7 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <label class="window-body-form">Registrar Nomina</label>
+        <label class="window-body-form">Detaller de movimiento</label>
         <form action="{{ route('payroll.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf
             <div class="col-md-6">
@@ -119,10 +119,14 @@
             </div>
 
             <div class="col-md-6 mt-3 text-end">
-                <a href="{{ route('expenses.index') }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route('payroll.index') }}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-success">
                     <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                     Guardar
+                </button>
+                <button type="submit" class="btn btn-success">
+                    <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                    Pagar
                 </button>
             </div>
         </form>

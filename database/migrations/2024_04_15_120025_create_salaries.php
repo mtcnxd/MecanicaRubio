@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->integer('employee_id');
+            $table->integer('user_id');
             $table->integer('salary');
             $table->integer('hours')->nullable();
             $table->integer('price')->nullable();
@@ -22,7 +22,9 @@ return new class extends Migration
             $table->text('discount_comment')->nullable();
             $table->integer('discount')->nullable();
             $table->enum('status',['Pendiente', 'Pagado', 'Cancelado'])->default('Pendiente');
-            $table->date('date_paid');
+            $table->enum('type',['Nomina','Aguinaldo','Finiquito','Liquidacion','Caja de ahorro'])->default('Nomina');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

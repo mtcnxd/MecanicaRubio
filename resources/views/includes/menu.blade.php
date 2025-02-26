@@ -52,17 +52,17 @@
 			<ul class="menu-dropdown">
 				<li><a class="a-item" href="{{ route('dashboard') }}">Resumen</a></li>
 				<li>
-					<a class="a-item" href="{{ route('expenses.index') }}">Egresos</a>
-					<ul class="submenu">
-						<li><a class="a-item" href="{{ route('expenses.create') }}">Crear nuevo</a></li>
-						<li><a class="a-item" href="{{ route('expenses.index') }}">Buscar</a></li>
-					</ul>
-				</li>
-				<li>
 					<a class="a-item" href="{{ route('payroll.index') }}">Nominas</a>
 					<ul class="submenu">
 						<li><a class="a-item" href="{{ route('payroll.create') }}">Crear nuevo</a></li>
 						<li><a class="a-item" href="{{ route('payroll.index') }}">Buscar</a></li>
+					</ul>
+				</li>
+				<li>
+					<a class="a-item" href="{{ route('expenses.index') }}">Egresos</a>
+					<ul class="submenu">
+						<li><a class="a-item" href="{{ route('expenses.create') }}">Crear nuevo</a></li>
+						<li><a class="a-item" href="{{ route('expenses.index') }}">Buscar</a></li>
 					</ul>
 				</li>
 			</ul>

@@ -27,14 +27,31 @@ class ControllerEmployees extends Controller
 
     public function store(Request $request)
     {
-        User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'phone'    => $request->phone,
-            'password' => Hash::make($request->phone),
-            'rol'      => 'Limit',
-            'comments' => $request->comments,
-        ]);
+        if ($request->create == 'on'){
+            User::create([
+                "name"       => $request->name,
+                "email"      => $request->email,
+                "phone"      => $request->phone,
+                "password"   => Hash::make($request->phone),
+                "rol"        => 'Limit',
+                "comments"   => $request->comments,
+                "created_at" => Carbon::now(),
+                "updated_at" => Carbon::now()
+            ]);
+        }
+
+        DB::table('employees')
+            ->insert([
+                "user_id"     => User::where('email', $request->email)->first()->id,
+                "salary"      => $request->salary,
+                "extra"       => $request->extra,
+                "periodicity" => $request->periodicity,
+                "rfc"         => $request->rfc,
+                "status"      => 'Activo',
+                "comments"    => $request->comments,
+                "created_at"  => Carbon::now(),
+                "updated_at"  => Carbon::now()
+            ]);        
 
         return to_route('employees.index')
             ->with('message', 'Los datos se guardaron correctamente');
@@ -91,5 +108,18 @@ class ControllerEmployees extends Controller
         ]);
 
         return to_route('profile')->with('message', 'Los datos se actualizaron correctamente');
+    }
+
+    public function loadEmployee(Request $request)
+    {
+        $employee = DB::table('employees')
+            ->join('users', 'employees.user_id', 'users.id')
+            ->where('users.id', $request->employee)
+            ->first();
+
+        return Response()->json([
+            "success" => true,
+            "data"    => $employee
+        ]);
     }
 }

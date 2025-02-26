@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use DB;
 
 class LoginController extends Controller
 {
     public function showLogin()
     {
+        // dd(Hash::make('nodoubt'));
+
         return view('dashboard.login');
     }
 

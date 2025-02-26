@@ -88,6 +88,17 @@
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
+                        Crear usuario
+                    </div>
+                    <div class="col-md-3 pt-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" name="create">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
                         Comentarios
                     </div>
                     <div class="col-md-9">

@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Employee;
+use App\Models\User;
 use Carbon\Carbon;
 use DB;
 
 class ControllerExpenses extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
@@ -35,7 +32,7 @@ class ControllerExpenses extends Controller
     {
         return view('dashboard.expenses.create', [
             "expenses"  => array(),
-            "employees" => Employee::orderBy('name')->get(),
+            "employees" => User::orderBy('name')->get(),
         ]);
     }
 
