@@ -15,7 +15,12 @@ class ControllerEmployees extends Controller
 {
     public function index()
     {
-        $employees = User::all();
+        $employees = DB::table('employees')
+            ->select('employees.*', 'users.name','users.phone','users.email', DB::raw('users.status as user_status'))
+            ->join('users','employees.user_id','users.id')
+            ->get();
+
+        // dd($employees);
 
         return view('dashboard.employees.index', compact('employees'));
     }

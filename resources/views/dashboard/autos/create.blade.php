@@ -263,6 +263,9 @@ function showMessageAlert(type, message){
         text: message,
         icon: type,
         confirmButtonText: 'Aceptar'
+    })
+    .then(() => {
+        history.go();
     });
 }
 </script>    
