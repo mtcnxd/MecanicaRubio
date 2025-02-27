@@ -27,7 +27,7 @@ a:hover {
 
 .main-content {
     width: 80%;
-    margin: 1rem auto;
+    margin: 1rem auto 100px;
     position: relative;
     top: 70px;
 }
