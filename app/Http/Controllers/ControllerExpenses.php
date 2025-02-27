@@ -60,4 +60,24 @@ class ControllerExpenses extends Controller
 
         return to_route('expenses.index');
     }
+
+    public function loadBalance()
+    {
+        $services = DB::table('services')
+            ->join('services_items','services.id','services_items.service_id')
+            ->join('autos','services.car_id', 'autos.id')
+            ->where('labour', true)
+            ->where('services.status','Entregado')
+            ->get();
+
+        $salaries = DB::table('salaries')
+            ->where('status', 'Pagado')
+            ->get();
+
+        $expenses = DB::table('expenses')
+            ->where('status','Pagado')
+            ->get();
+
+        return view('dashboard.expenses.balance', compact('services', 'salaries', 'expenses'));
+    }
 }

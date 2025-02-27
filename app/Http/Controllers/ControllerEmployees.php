@@ -20,8 +20,6 @@ class ControllerEmployees extends Controller
             ->join('users','employees.user_id','users.id')
             ->get();
 
-        // dd($employees);
-
         return view('dashboard.employees.index', compact('employees'));
     }
 
@@ -78,11 +76,22 @@ class ControllerEmployees extends Controller
         return view('dashboard.employees.edit', compact('employee','extra'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, string $id)
     {
-        dd($request);
+        DB::table('employees')->where('user_id', $id)->update([
+            "rfc"  => $request->rfc,
+            "curp" => $request->curp,
+            "nss"  => $request->nss,
+        ]);
 
-        return "update";
+        DB::table('users')->where('id', $id)->update([
+            "name"  => $request->name,
+            "phone" => $request->phone,
+            "email" => $request->email,
+        ]);
+
+        return to_route('employees.index')
+            ->with('message', 'Los datos se actualizaron correctamente');
     }
 
     public function destroy(Request $request)

@@ -52,6 +52,21 @@
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
+                        CURP
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="curp" value="{{ $employee->curp }}">
+                    </div>
+                    <div class="col-md-3 pt-2 text-end">
+                        NSS
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="nss" value="{{ $employee->nss }}">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
                         Salario
                     </div>
                     <div class="col-md-3">
@@ -65,11 +80,11 @@
                     </div>
                     <div class="col-md-3">
                         <select class="form-select" name="periodicity">
-                            <option value="">Semanal</option>
-                            <option value="">Quincenal</option>
-                            <option value="">Mensual</option>
-                            <option value="">Comisionista</option>
-                            <option value="">Sin definir</option>
+                            <option>Semanal</option>
+                            <option>Quincenal</option>
+                            <option>Mensual</option>
+                            <option>Comisionista</option>
+                            <option>Sin definir</option>
                         </select>
                     </div>
                 </div>
@@ -88,7 +103,7 @@
                         Estatus
                     </div>
                     <div class="col-md-3">
-                        <select class="form-select" name="statuc">
+                        <select class="form-select" name="status">
                             <option value="">Activo</option>
                             <option value="">Inactivo</option>
                         </select>

@@ -166,8 +166,8 @@
                             <option {{$service->status == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
                             <option {{$service->status == 'Esperando cliente' ? 'selected' : '' }}>Esperando cliente</option>
                             <option {{$service->status == 'Esperando refaccion' ? 'selected' : '' }}>Esperando refaccion</option>
-                            <option {{$service->status == 'Finalizado' ? 'selected' : '' }}>Finalizado</option>
-                            <option {{$service->status == 'Entregado' ? 'selected' : '' }}>Entregado</option>
+                            <option {{$service->status == 'Finalizado' ? 'selected' : '' }} value="Finalizado">Finalizado [NO PAGADO]</option>
+                            <option {{$service->status == 'Entregado' ? 'selected' : '' }} value="Entregado">Entregado [PAGADO]</option>
                         </select>
                     </div>
                 </div>

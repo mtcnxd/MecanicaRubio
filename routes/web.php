@@ -77,5 +77,7 @@ Route::middleware(['auth'])->group( function ()
 
     Route::get('reports/autos', [ControllerAutos::class, 'report'])->name('reports.autos');
     
-    Route::get('finance/{client}', [FinanceController::class, 'show'])->name('finance');    
+    Route::get('finance/{client}', [FinanceController::class, 'show'])->name('finance');
+
+    Route::get('dashboard/balance', [ControllerExpenses::class, 'loadBalance'])->name('balance');
 });

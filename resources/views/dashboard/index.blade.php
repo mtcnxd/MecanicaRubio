@@ -116,6 +116,21 @@
         </div>
     </div>
 
+    <hr class="mb-5" style="color: var(--orange-800);">
+
+    <div class="row">
+        <div class="row col-md-3">
+            <div class="col">
+                <a class="btn btn-sm btn-outline-success" href="{{ route('balance') }}">
+                    Estado financiero del mes
+                </a>
+                <a class="btn btn-sm btn-outline-success">
+                    Cierre de mes
+                </a>
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection
 
