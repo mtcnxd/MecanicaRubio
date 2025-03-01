@@ -98,7 +98,9 @@ class ControllerServices extends Controller
             'total'    => $request->total,
             'notes'    => $request->notes,
             'status'   => $request->status,
+            'odometer' => $request->odometer,
             'due_date' => ($request->status == 'Entregado') ? Carbon::now() : null,
+            'created_at' => Carbon::parse($request->entry)
         ]);
 
         return to_route('services.index')->with('message', 'Guardado con exito');

@@ -25,10 +25,10 @@
 
                 <div class="row col-md-6">
                     <div class="col-md-3 pt-2 text-end">
-                        Ingresó
+                        Ingreso
                     </div>    
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="client" value="{{ date('d-m-Y', strtotime($service->created_at)) }}">
+                        <input type="text" class="form-control" name="entry" value="{{ date('d-m-Y', strtotime($service->created_at)) }}">
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Días transcurridos

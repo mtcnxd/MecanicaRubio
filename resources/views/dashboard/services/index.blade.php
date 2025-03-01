@@ -57,7 +57,7 @@
             <tbody>
                 @foreach ($services as $service)
                 <tr>
-                    <td> <a href="{{ route('services.show', $service) }}">{{ $service->fault }}</a></td>
+                    <td> <a href="{{ route('services.show', $service->id) }}">{{ $service->fault }}</a></td>
                     <td>{{ $service->name }}</td>
                     <td>{{ $service->brand }} {{ $service->model }}</td>
                     <td>{{ $service->created_at }}</td>
