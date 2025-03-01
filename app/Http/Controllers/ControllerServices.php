@@ -20,13 +20,7 @@ class ControllerServices extends Controller
             ->join('clients', 'services.client_id', 'clients.id')
             ->get();
 
-        /*
-        session([
-            "comments" => 'hola mundo'
-        ]);
-        */
-
-        // dd(session()->get('comments'));
+        dd($services);
 
         return view('dashboard.services.index', compact('services'));
     }
