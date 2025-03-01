@@ -28,7 +28,7 @@
                         Ingresó
                     </div>    
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="client" value="{{ date('d-m-Y', strtotime($service->created_at)) }}" disabled>
+                        <input type="text" class="form-control" name="client" value="{{ date('d-m-Y', strtotime($service->created_at)) }}">
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Días transcurridos
@@ -60,7 +60,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="input-group">
-                        <input type="text" class="form-control" name="odometer" value="{{ number_format($service->odometer,0,',') }}" disabled>
+                        <input type="text" class="form-control" name="odometer" value="{{ number_format($service->odometer,0,',') }}">
                             <span class="input-group-text">Km</span>
                         </div>
                     </div>
