@@ -54,6 +54,19 @@
                     <th>&nbsp;</th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach ($services as $service)
+                <tr>
+                    <td>{{ $service->fault }}</td>
+                    <td>{{ $service->name }}</td>
+                    <td>{{ $service->brand }} {{ $service->model }}</td>
+                    <td>{{ $service->created_at }}</td>
+                    <td>{{ $service->status }}</td>
+                    <td>{{ $service->total }}</td>
+                    <td></td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 </div>
@@ -66,6 +79,7 @@
 @section('js')
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script>
+    /*
 const startDate   = document.querySelector("#startDate");
 const endDate     = document.querySelector("#endDate");
 const status      = document.querySelector("#status");
@@ -92,7 +106,7 @@ const table = new DataTable('#services',
             data:'fault',
             orderable: false
         },{
-            data:'client'
+            data:'name'
         },{
             data:'car'
         },{
@@ -109,6 +123,7 @@ const table = new DataTable('#services',
 
 applyFilter.addEventListener('click', function(){
     table.draw();
-});    
+}); 
+*/
 </script>
 @endsection
