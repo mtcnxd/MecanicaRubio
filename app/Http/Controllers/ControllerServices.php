@@ -20,8 +20,6 @@ class ControllerServices extends Controller
             ->join('clients', 'services.client_id', 'clients.id')
             ->get();
 
-        dd($services);
-
         return view('dashboard.services.index', compact('services'));
     }
 

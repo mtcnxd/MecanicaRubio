@@ -80,7 +80,7 @@ const table = new DataTable('#services',
     pageLength: 10,
     order: [3, 'asc'],
     ajax: {
-        url: "{{ route('getDataTableServices') }}",
+        url: "/api/getDataTableServices",
         data: function(data) {
             data.startDate = startDate.value;
             data.endDate   = endDate.value;
