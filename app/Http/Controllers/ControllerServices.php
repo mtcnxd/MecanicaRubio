@@ -106,20 +106,27 @@ class ControllerServices extends Controller
         return to_route('services.index')->with('message', 'Guardado con exito');
     }
 
-    public function downloadPDF()
+    public function downloadPDF(Request $request)
     {
-        $service = DB::table('services')->where('id', 9)->first();
+        $service = DB::table('services')->where('id', $request->serviceid)->first();
+        $items   = DB::table('services_items')->where('service_id', $request->serviceid)->get();
         $client  = DB::table('clients')->where('id', $service->client_id)->first();
         $auto    = DB::table('autos')->where('id', $service->car_id)->first();
-        $items   = DB::table('services_items')->where('service_id', 9)->get();
+
+        $path = public_path('images/mainlogo.png');
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $image = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($image);
+        // \Config::set('dompdf.enable_remote', true);
 
         $data = [
             "service" => $service,
             "client"  => $client,
             "auto"    => $auto,
-            "items"   => $items
+            "items"   => $items,
+            "image"   => $base64
         ];
-        
+
         $pdf = PDF::loadView('dashboard.services.create_invoice', $data);
         
         return $pdf->download('invoice.pdf');

@@ -101,6 +101,6 @@ Route::post('removeItemExpense', [
     ControllerAjax::class, 'removeItemExpense'
 ])->name('removeItemExpense');
 
-Route::get('downloadPDF', [
+Route::post('downloadPDF', [
     ControllerServices::class, 'downloadPDF'
 ])->name('downloadPDF');

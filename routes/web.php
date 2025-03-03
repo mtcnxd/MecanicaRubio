@@ -25,12 +25,12 @@ use Carbon\Carbon;
 |
 */
 
-/*
+
 Route::get('/print', function () {
-    $service = DB::table('services')->where('id', 9)->first();
+    $service = DB::table('services')->where('id', 1)->first();
+    $items   = DB::table('services_items')->where('service_id', 1)->get();
     $client  = DB::table('clients')->where('id', $service->client_id)->first();
     $auto    = DB::table('autos')->where('id', $service->car_id)->first();
-    $items   = DB::table('services_items')->where('service_id', 9)->get();
     
     $data = [
         "service" => $service,
@@ -41,7 +41,7 @@ Route::get('/print', function () {
         
     return view('dashboard.services.create_invoice', compact('client','service','items','auto'));
 });
-*/
+
 
 Route::get('/', function(){
     return to_route("login");

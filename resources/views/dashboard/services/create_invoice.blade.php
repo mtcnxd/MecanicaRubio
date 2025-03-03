@@ -12,18 +12,18 @@
     </style>
 </head>
 <body>
-    <img src="/images/mainlogo.png">
-
+    <img src="{{ $image }}" width="200px">
+    <p>&nbsp;</p>
     <div class="row" style="background-color: #efefef; padding: 5px">
-        <h4>Datos del vehiculo</h4>
+        <h4>Order de Servicio</h4>
         <table width="100%">
             <tr>
                 <td width="75%"><b>Cliente:</b> {{ $client->name }}</td>
-                <td><b>Fecha:</b>{{ Carbon\Carbon::now()->format('d/m/Y') }}</td>
+                <td><b>Fecha: </b>{{ Carbon\Carbon::now()->format('d/m/Y') }}</td>
             </tr>
             <tr>
                 <td width="75%"><b>Automovil:</b> {{ $auto->brand }} {{ $auto->model }} {{ $auto->year }}</td>
-                <td><b>Servicio: </b>{{ $service->id }}</td>
+                <td><b>Servicio: </b>{{ "#".$service->id }}</td>
             </tr>
         </table>
     </div>

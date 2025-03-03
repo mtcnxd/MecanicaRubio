@@ -182,7 +182,7 @@
                         Facturar
                     </a>
                     -->
-                    <a href="#" class="btn btn-secondary" onclick="downloadPDF()">
+                    <a href="#" class="btn btn-secondary" onclick="downloadPDF(1)">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>                    
@@ -347,14 +347,19 @@ function showMessageAlert(message){
     });
 }
 
-function downloadPDF(){
+function downloadPDF(serviceid){
     $.ajax({
         url: '/api/downloadPDF',
-        method:'GET',
+        method:'POST',
+        data:{
+            serviceid:serviceid
+        },
         xhrFields: {
             responseType: 'blob' // Recibir respuesta como un Blob
         },
         success: function (response){
+            console.log(response)
+
             const blob = new Blob([response], { type: 'application/pdf' });
             const url = window.URL.createObjectURL(blob);
 
