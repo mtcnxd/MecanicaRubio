@@ -117,7 +117,6 @@ class ControllerServices extends Controller
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $image = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($image);
-        // \Config::set('dompdf.enable_remote', true);
 
         $data = [
             "service" => $service,
@@ -161,7 +160,7 @@ class ControllerServices extends Controller
         ]);        
     }
 
-    public function sendMail()
+    public function sendMail($serviceid)
     {
         $service = DB::table('services')
         ->join('clients', 'services.client_id', 'clients.id')

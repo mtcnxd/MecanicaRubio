@@ -72,9 +72,9 @@
                     </div>    
                     <div class="col-md-3">
                         @if (isset($service->due_date))
-                            <input type="text" class="form-control" name="client" value="{{ date('d-m-Y', strtotime($service->due_date)) }}" disabled>
+                            <input type="date" class="form-control" name="client" value="{{ date('Y-m-d', strtotime($service->due_date)) }}" disabled>
                         @else 
-                            <input type="text" class="form-control" name="client" disabled>
+                            <input type="date" class="form-control" name="client" disabled>
                         @endif
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                         Facturar
                     </a>
                     -->
-                    <a href="#" class="btn btn-secondary" onclick="downloadPDF(1)">
+                    <a href="#" class="btn btn-secondary" onclick="downloadPDF({{ $service->id }})">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>                    

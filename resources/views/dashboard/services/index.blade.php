@@ -59,12 +59,12 @@
                 <tr>
                     <td>
                         <a href="{{ route('services.show', $service->id) }}">
-                            {{ Str::limit($service->fault, 30) }}
+                            {{ Str::limit($service->fault, 35) }}
                         </a>
                     </td>
                     <td>{{ $service->name }}</td>
                     <td>{{ $service->brand }} {{ $service->model }}</td>
-                    <td>{{ $service->created_at }}</td>
+                    <td>{{ Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
                     <td>{{ $service->status }}</td>
                     <td class="text-end">{{ "$".number_format($service->total, 2) }}</td>
                     <td></td>

@@ -73,7 +73,7 @@ Route::middleware(['auth'])->group( function ()
 
     Route::post('profile', [ControllerEmployees::class, 'profileUpdate'])->name('profileUpdate');
 
-    Route::get('emailInvoice/{serviceid}', [ControllerServices::class, 'sendMail'])->name('sendMail');    
+    Route::get('emailInvoice/{serviceid}', [ControllerServices::class, 'sendMail'])->name('sendMail');
 
     Route::get('reports/autos', [ControllerAutos::class, 'report'])->name('reports.autos');
     
