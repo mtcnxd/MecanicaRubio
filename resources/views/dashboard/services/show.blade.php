@@ -274,6 +274,18 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+$("#labour").on('change', function(){
+    if ($(this).prop('checked')) {
+        $("#amount").attr('disabled','disabled');
+        $("#item").attr('disabled','disabled');
+        $("#supplier").attr('disabled','disabled');
+    } else {
+        $("#amount").removeAttr('disabled');
+        $("#item").removeAttr('disabled');
+        $("#supplier").removeAttr('disabled');
+    }
+});
+
 $("#addItemInvoice").on('click', function(event){
     var service  = $("#service").val();
     var amount   = $("#amount").val();
