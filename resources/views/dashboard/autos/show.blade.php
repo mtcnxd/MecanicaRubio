@@ -9,7 +9,7 @@
     </div>
     <div class="window-body bg-white">
         <label class="window-body-form">Información del cliente</label>
-        <form action="" method="POST" class="border pt-5 pb-4">
+        <form action="" method="POST" class="border pt-5 pb-4 mb-4">
             <div class="row">
                 <div class="col-md-6" style="padding-right: 40px;">
                     <div class="row">
@@ -100,57 +100,87 @@
                     
                     <div class="row mt-3">
                         <div class="col-md-3 pt-2 text-end">
-                            Comentarios
+                            Serie (VIM)
                         </div>
                         <div class="col-md-9">
-                            <textarea class="form-control" rows="4" name="comments" disabled>{{ isset($client) ? $client->comments : '' }}</textarea>
+                            <input type="text" name="comments" id="comments" class="form-control" value="{{ isset($client) ? $client->serie : '' }}" disabled>
                         </div>
                     </div>
                 </div>                
             </div>
-            <hr>
-            <div class="col-md-12 p-4 pb-2" style="padding-right: 40px; padding-left:40px">
-                <table class="table table-hover" id="table-items">
-                    <thead>
-                        <th>Automovil</th>
-                        <th>Servicio/Fallo</th>
-                        <th>Fecha</th>
-                        <th>Status</th>
-                        <th class="text-end">Total</th>
-                    </thead>
-                    <tbody>
-                        @foreach ($services as $service)
-                            <tr>
-                                <td>{{ $service->brand }} {{ $service->model }}</td>
-                                <td>
-                                    <a href="{{ route('services.show', $service->id) }}">{{ Str::limit($service->fault, 80) }}</a>
-                                </td>
-                                <td>{{ \Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
-                                <td>
-                                    <span class="badge text-bg-success">{{ $service->status }}</span>
-                                </td>
-                                <td class="text-end">{{  '$'.number_format($service->total, 2) }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
+        </form>
+        <label class="window-body-form">Información del Automovil</label>
+        <form method="POST" class="border pt-5 pb-4">
             <div class="row">
-                <div class="col-md-6 mt-3" style="padding-left: 40px;">
-                    <x-feathericon-clipboard class="table-icon" style="margin-top:-4px;"/>
-                    @if (count($services) > 1)
-                        Se encontraron {{ count($services) }} registros.
-                    @else 
-                        Se encontro {{ count($services) }} registro.
-                    @endif
+                <div class="row col-md-6">
+                    <div class="col-md-3 pt-2 text-end">
+                        Marca
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="comments" id="comments" class="form-control" value="{{ isset($client) ? $client->brand : '' }}" disabled>
+                    </div>
                 </div>
-                <div class="col-md-6 mt-3 text-end" style="padding-right: 40px;">
-                    <a href="{{ route('autos.index') }}" class="btn btn-sm btn-success">Atras</a>
-                    <a href="{{ route('finance', $client->id) }}" class="btn btn-sm btn-success">Mas Información</a>
+
+                <div class="row col-md-6">
+                    <div class="col-md-3 pt-2 text-end">
+                        Modelo
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="comments" id="comments" class="form-control" value="{{ isset($client) ? $client->model : '' }}" disabled>
+                    </div>
+                </div>
+
+                <div class="row col-md-6 mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Serie (VIM)
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="comments" id="comments" class="form-control" value="{{ isset($client) ? $client->serie : '' }}" disabled>
+                    </div>
                 </div>
             </div>
         </form>
+        <div class="col-md-12 p-4 pb-2" style="padding-right: 40px; padding-left:40px">
+            <table class="table table-hover" id="table-items">
+                <thead>
+                    <th>Automovil</th>
+                    <th>Servicio/Fallo</th>
+                    <th>Fecha</th>
+                    <th>Status</th>
+                    <th class="text-end">Total</th>
+                </thead>
+                <tbody>
+                    @foreach ($services as $service)
+                        <tr>
+                            <td>{{ $service->brand }} {{ $service->model }}</td>
+                            <td>
+                                <a href="{{ route('services.show', $service->id) }}">{{ Str::limit($service->fault, 80) }}</a>
+                            </td>
+                            <td>{{ \Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
+                            <td>
+                                <span class="badge text-bg-success">{{ $service->status }}</span>
+                            </td>
+                            <td class="text-end">{{  '$'.number_format($service->total, 2) }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mt-3" style="padding-left: 40px;">
+                <x-feathericon-clipboard class="table-icon" style="margin-top:-4px;"/>
+                @if (count($services) > 1)
+                    Se encontraron {{ count($services) }} registros.
+                @else 
+                    Se encontro {{ count($services) }} registro.
+                @endif
+            </div>
+            <div class="col-md-6 mt-3 text-end" style="padding-right: 40px;">
+                <a href="{{ route('autos.index') }}" class="btn btn-sm btn-success">Atras</a>
+                <a href="{{ route('finance', $client->id) }}" class="btn btn-sm btn-success">Mas Información</a>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

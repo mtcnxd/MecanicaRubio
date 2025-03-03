@@ -76,6 +76,8 @@ Route::middleware(['auth'])->group( function ()
     Route::get('emailInvoice/{serviceid}', [ControllerServices::class, 'sendMail'])->name('sendMail');
 
     Route::get('reports/autos', [ControllerAutos::class, 'report'])->name('reports.autos');
+
+    Route::get('reports/employees', [ControllerEmployees::class, 'report'])->name('reports.employees');
     
     Route::get('finance/{client}', [FinanceController::class, 'show'])->name('finance');
 

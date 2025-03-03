@@ -140,4 +140,13 @@ class ControllerEmployees extends Controller
             "data"    => $employee
         ]);
     }
+
+    public function report()
+    {
+        $employees = DB::table('employees')
+            ->join('users', 'employees.user_id', 'users.id')
+            ->get();
+
+        return view('dashboard.employees.reports', compact('employees'));
+    }
 }

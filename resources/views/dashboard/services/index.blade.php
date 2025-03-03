@@ -51,7 +51,6 @@
                     <th>Fecha servicio</th>
                     <th>Estatus</th>
                     <th class="text-end">Total</th>
-                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,9 +64,14 @@
                     <td>{{ $service->name }}</td>
                     <td>{{ $service->brand }} {{ $service->model }}</td>
                     <td>{{ Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
-                    <td>{{ $service->status }}</td>
+                    <td>
+                        @if ($service->status == 'Pendiente')
+                            <span class="badge text-bg-warning">{{ $service->status }}</span>
+                        @else
+                            <span>{{ $service->status }}</span>
+                        @endif
+                    </td>
                     <td class="text-end">{{ "$".number_format($service->total, 2) }}</td>
-                    <td></td>
                 </tr>
                 @endforeach
             </tbody>
@@ -83,7 +87,6 @@
 @section('js')
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script>
-    /*
 const startDate   = document.querySelector("#startDate");
 const endDate     = document.querySelector("#endDate");
 const status      = document.querySelector("#status");
@@ -92,11 +95,12 @@ const applyFilter = document.querySelector('#applyFilter');
 const table = new DataTable('#services', 
 {
     processing: true,
-    serverSide: true,
+    serverSide: false,
     searching: false,
     lengthChange:false,
     pageLength: 10,
     order: [3, 'asc'],
+    /*
     ajax: {
         url: "/api/getDataTableServices",
         data: function(data) {
@@ -105,6 +109,7 @@ const table = new DataTable('#services',
             data.status    = status.value;
         }
     },
+    */
     columns:[
         {
             data:'fault',
@@ -128,6 +133,5 @@ const table = new DataTable('#services',
 applyFilter.addEventListener('click', function(){
     table.draw();
 }); 
-*/
 </script>
 @endsection

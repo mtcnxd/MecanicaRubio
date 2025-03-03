@@ -58,6 +58,8 @@ class ControllerAutos extends Controller
             ->where('autos.id', $id)
             ->first();
 
+        // dd($client);
+
         $services = DB::table('autos')
             ->join('services', 'services.car_id', 'autos.id')
             ->where('autos.id', $id)
@@ -93,6 +95,7 @@ class ControllerAutos extends Controller
             "model"    => $request->model,
             "year"     => $request->year,
             "plate"    => $request->plate,
+            "serie"    => $request->serie,
             "comments" => $request->comments,
         ]);
 
@@ -185,6 +188,7 @@ class ControllerAutos extends Controller
         $statistics = DB::table('autos')
             ->select(DB::raw('count(*) as count, brand'))
             ->groupBy('brand')
+            ->orderBy('count')
             ->get();
     
         return view('dashboard.autos.reports', compact('statistics'));

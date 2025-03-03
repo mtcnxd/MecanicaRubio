@@ -98,6 +98,9 @@ class ControllerAjax extends Controller
         return json_encode($event);
     }
 
+    /*
+    Pending for serverSide
+
     public function getDataTableServices(Request $request)
     {
         $serviceData = DB::table('services_view')
@@ -139,6 +142,7 @@ class ControllerAjax extends Controller
             ->rawColumns(['fault','status'])
             ->make(true);
     }
+    */
 
     public function getDataTableExpenses(Request $request)
     {

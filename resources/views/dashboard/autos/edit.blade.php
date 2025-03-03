@@ -63,7 +63,18 @@
                             </span>
                         </div>
                     </div>    
-                </div>        
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        VIM
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <input type="text" name="serie" id="serie" class="form-control" value="{{ isset($auto->serie) ? $auto->serie : '' }}">
+                        </div>
+                    </div>    
+                </div>
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">

@@ -87,7 +87,7 @@
 								</li>
 							</ul>
 						</li>
-						<li><a class="a-item" href="#">Empleados</a></li>
+						<li><a class="a-item" href="{{ route('reports.employees') }}">Empleados</a></li>
 					</ul>
 				</li>
 			</ul>
