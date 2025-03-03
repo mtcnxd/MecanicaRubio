@@ -57,12 +57,16 @@
             <tbody>
                 @foreach ($services as $service)
                 <tr>
-                    <td> <a href="{{ route('services.show', $service->id) }}">{{ $service->fault }}</a></td>
+                    <td>
+                        <a href="{{ route('services.show', $service->id) }}">
+                            {{ Str::limit($service->fault, 30) }}
+                        </a>
+                    </td>
                     <td>{{ $service->name }}</td>
                     <td>{{ $service->brand }} {{ $service->model }}</td>
                     <td>{{ $service->created_at }}</td>
                     <td>{{ $service->status }}</td>
-                    <td>{{ $service->total }}</td>
+                    <td class="text-end">{{ "$".number_format($service->total, 2) }}</td>
                     <td></td>
                 </tr>
                 @endforeach

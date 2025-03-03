@@ -137,7 +137,9 @@
                             <tbody>
                                 @foreach ($services as $service)
                                 <tr>
-                                    <td>{{ $service->brand }} {{ $service->model }}</td>
+                                    <td>
+                                        <a href="{{ route('autos.show', $service->car_id) }}">{{ $service->brand }} {{ $service->model }}</a>
+                                    </td>
                                     <td>{{ $service->year }}</td>
                                     <td>{{ $service->fault }}</td>
                                     <td>

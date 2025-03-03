@@ -50,7 +50,7 @@ class ControllerServices extends Controller
         $serviceId = DB::table('services')->insertGetId([
             "client_id"  => $request->client,
             "car_id"     => $request->car,
-            "odometer"   => $request->odometer,
+            "odometer"   => (isset($request->odometer)) ? str_replace([' ', ','], '', $request->odometer) : null,
             "fault"      => $request->fault,
             "comments"   => $request->comments,
             "created_at" => Carbon::now(),

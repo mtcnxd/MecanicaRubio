@@ -28,7 +28,7 @@
                         Ingreso
                     </div>    
                     <div class="col-md-3">
-                        <input type="text" class="form-control" name="entry" value="{{ date('d-m-Y', strtotime($service->created_at)) }}">
+                        <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->created_at)) }}">
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         Días transcurridos
