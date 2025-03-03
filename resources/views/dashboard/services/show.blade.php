@@ -349,7 +349,7 @@ function showMessageAlert(message){
 
 function downloadPDF(serviceid){
     $.ajax({
-        url: '/api/downloadPDF',
+        url: '/public/api/downloadPDF',
         method:'POST',
         data:{
             serviceid:serviceid

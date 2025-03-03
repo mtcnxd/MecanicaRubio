@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mi PDF</title>
+    <title>Invoice</title>
     <style>
         body { font-family: Arial, sans-serif; font-size: 13px; }
         h1 { color: #4CAF50; }
@@ -12,10 +12,24 @@
     </style>
 </head>
 <body>
-    <img src="{{ $image }}" width="200px">
-    <p>&nbsp;</p>
-    <div class="row" style="background-color: #efefef; padding: 5px">
-        <h4>Order de Servicio</h4>
+    <div style="display:flex; height:130px;">
+        <div style="float:left; width:50%">
+            <img src="{{ $image }}" width="220px">
+        </div>    
+        <div style="float:left; text-align:center;">
+            <pre style="font-size: 14px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
+                INGENIERIA MECANICA RUBIO.
+                C. 2D 268E, entre 65-G y 65-F
+                Col. Francisco Villa Oriente. 
+                C.P.: 97370 Mérida, Yuc.
+            </pre>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div style="background-color: #efefef; padding: 10px">
+        <h4 style="margin-top: 0px;">Order de Servicio</h4>
         <table width="100%">
             <tr>
                 <td width="75%"><b>Cliente:</b> {{ $client->name }}</td>
@@ -28,22 +42,22 @@
         </table>
     </div>
 
-    <div class="row">
+    <div style="background-color: #ffffff; padding: 10px">
         <h4>Servicio/Fallo reportado:</h4> 
         {{ $service->fault }}
     </div>
     
     <p>
-        A continuación se detalla la lista de materiales y mano de obra del servicio requerido:
+        Lista de materiales y mano de obra del servicio:
     </p>
 
     <hr>
     <table width="100%">
         <thead>
-            <td>Cant</td>
-            <td>Descripción</td>
-            <td class="text-end">P.Unitario</td>
-            <td class="text-end">Importe</td>
+            <td><b>Cant</b></td>
+            <td><b>Descripción</b></td>
+            <td class="text-end"><b>P.Unitario</b></td>
+            <td class="text-end"><b>Importe</b></td>
         </thead>
         <tbody>
             @php

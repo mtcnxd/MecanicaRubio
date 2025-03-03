@@ -119,13 +119,13 @@
     <hr class="mb-5" style="color: var(--orange-800);">
 
     <div class="row">
-        <div class="row col-md-3">
+        <div class="row col-md-4">
             <div class="col">
                 <a class="btn btn-sm btn-outline-success" href="{{ route('balance') }}">
-                    Estado financiero del mes
+                    Conciliacion mes actual
                 </a>
                 <a class="btn btn-sm btn-outline-success">
-                    Cierre de mes
+                    Cierre balance de resultados
                 </a>
             </div>
         </div>
