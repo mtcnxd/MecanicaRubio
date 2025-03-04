@@ -174,7 +174,7 @@ $("#employee").on('change', function(){
     var employee = $(this).val();
 
     $.ajax({
-        url: "/public/api/loadEmployee",
+        url: "{{ route('loadEmployee') }}",
         method: 'POST',
         data: {
             employee: employee
@@ -196,7 +196,7 @@ addConcept.addEventListener('click', function(btn){
 
 $('#closePopup').click(function() {
     $.ajax({
-        url: "/api/addConcept",
+        url: "{{ route('addConcept') }}",
         method: 'POST',
         data: {
             concept: $("#concept").val(),
