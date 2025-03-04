@@ -100,10 +100,10 @@
                     
                     <div class="row mt-3">
                         <div class="col-md-3 pt-2 text-end">
-                            Serie (VIM)
+                            Comentarios
                         </div>
                         <div class="col-md-9">
-                            <input type="text" name="comments" id="comments" class="form-control" value="{{ isset($client) ? $client->serie : '' }}" disabled>
+                            <textarea class="form-control" disabled>{{ isset($client) ? $client->comments : '' }}</textarea>
                         </div>
                     </div>
                 </div>                
@@ -132,7 +132,7 @@
 
                 <div class="row col-md-6 mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        Serie (VIM)
+                        Serie (VIN)
                     </div>
                     <div class="col-md-9">
                         <input type="text" name="comments" id="comments" class="form-control" value="{{ isset($client) ? $client->serie : '' }}" disabled>

@@ -67,7 +67,7 @@
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        VIM
+                        VIN
                     </div>
                     <div class="col-md-9">
                         <div class="input-group">
