@@ -60,7 +60,7 @@
                     </div>
                     <div class="col-md-3">
                         <div class="input-group">
-                        <input type="text" class="form-control" name="odometer" value="{{ number_format($service->odometer,0,',') }}">
+                        <input type="text" class="form-control" name="odometer" value="{{ $service->odometer }}">
                             <span class="input-group-text">Km</span>
                         </div>
                     </div>

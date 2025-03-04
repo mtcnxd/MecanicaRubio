@@ -56,6 +56,16 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($expenses as $expense)
+                    <tr>
+                        <td>{{ $expense->name }}</td>
+                        <td>{{ $expense->description }}</td>
+                        <td>{{ $expense->status }}</td>
+                        <td>{{ $expense->created_at }}</td>
+                        <td>{{ $expense->amount }}</td>
+                        <td>{{ $expense->amount }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 

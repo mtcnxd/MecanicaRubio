@@ -11,11 +11,11 @@ class ControllerExpenses extends Controller
 {
     public function index()
     {
-        $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
-        $endDate   = Carbon::now()->format('Y-m-d');
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate   = Carbon::now();
 
         $expenses = DB::table('expenses')
-            ->whereBetween('created_at', [$startDate, Carbon::now()])
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
         return view('dashboard.expenses.index', [
@@ -25,20 +25,13 @@ class ControllerExpenses extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('dashboard.expenses.create', [
-            "expenses"  => array(),
-            "employees" => User::orderBy('name')->get(),
-        ]);
+        $employees = User::orderBy('name')->get();
+
+        return view('dashboard.expenses.create', compact('employees'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         if($request->hasFile('attach')){
