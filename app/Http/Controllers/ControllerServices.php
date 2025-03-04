@@ -106,7 +106,7 @@ class ControllerServices extends Controller
         return to_route('services.index')->with('message', 'Guardado con exito');
     }
 
-    public function downloadPDF(Request $request)
+    public function createServicePDF(Request $request)
     {
         $service = DB::table('services')->where('id', $request->serviceid)->first();
         $items   = DB::table('services_items')->where('service_id', $request->serviceid)->get();

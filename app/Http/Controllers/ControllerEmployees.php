@@ -141,11 +141,28 @@ class ControllerEmployees extends Controller
         ]);
     }
 
-    public function report()
+    public function report(Request $request)
     {
         $employees = DB::table('employees')
             ->join('users', 'employees.user_id', 'users.id')
+            ->orderBy('users.name')
             ->get();
+
+        if ($request->employee)
+        {
+            $results = DB::table('employees')
+                ->join('salaries','employees.id','salaries.user_id')
+                ->join('salaries_details', 'salaries.id', 'salaries_details.salary_id')
+                ->where('employees.id', $request->employee)
+                ->get();
+
+            $employeeInfo = DB::table('employees')
+                ->join('users', 'employees.user_id', 'users.id')
+                ->where('employees.user_id', $request->employee)
+                ->first();
+
+            return view('dashboard.employees.reports', compact('employees','results', 'employeeInfo'));
+        }
 
         return view('dashboard.employees.reports', compact('employees'));
     }

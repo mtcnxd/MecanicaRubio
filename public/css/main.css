@@ -5,6 +5,10 @@
     font-size: 11px;
 }
 
+.fs-8 {
+    font-size: 12px;
+}
+
 * {
     box-sizing: border-box;
 }

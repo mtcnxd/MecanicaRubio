@@ -61,8 +61,11 @@ class ControllerExpenses extends Controller
         return to_route('expenses.index');
     }
 
-    public function loadBalance()
+    public function report()
     {
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate   = Carbon::now();
+
         $services = DB::table('services')
             ->join('services_items','services.id','services_items.service_id')
             ->join('autos','services.car_id', 'autos.id')
@@ -72,12 +75,13 @@ class ControllerExpenses extends Controller
 
         $salaries = DB::table('salaries')
             ->where('status', 'Pagado')
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
         $expenses = DB::table('expenses')
             ->where('status','Pagado')
             ->get();
 
-        return view('dashboard.expenses.balance', compact('services', 'salaries', 'expenses'));
+        return view('dashboard.reports.balance', compact('services', 'salaries', 'expenses'));
     }
 }

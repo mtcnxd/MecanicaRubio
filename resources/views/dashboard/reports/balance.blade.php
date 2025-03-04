@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="shadow-sm main-content">
+<div class="shadow-sm main-content mb-4">
     <table class="table border">
         <thead>
             <thead>
@@ -61,5 +61,26 @@
         </tbody>
     </table>
 </div>
+
+<div class="main-content">
+    <div class="row col-md-4">
+        <div class="col">
+            <a class="btn btn-sm btn-outline-success" id="closeFiscalMonth">
+                Cierre balance de resultados
+            </a>
+        </div>
+    </div>
+</div>
 @endsection
 
+
+@section('js')
+    <script>
+        const btnClose = document.getElementById('closeFiscalMonth');
+
+        btnClose.addEventListener('click', (btn) => {
+            btn.preventDefault();
+            confirm('Estas seguro de querer cerrar el balance de resultados del mes actual');
+        })
+    </script>
+@endsection

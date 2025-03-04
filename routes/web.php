@@ -26,23 +26,6 @@ use Carbon\Carbon;
 */
 
 
-Route::get('/print', function () {
-    $service = DB::table('services')->where('id', 1)->first();
-    $items   = DB::table('services_items')->where('service_id', 1)->get();
-    $client  = DB::table('clients')->where('id', $service->client_id)->first();
-    $auto    = DB::table('autos')->where('id', $service->car_id)->first();
-    
-    $data = [
-        "service" => $service,
-        "client"  => $client,
-        "auto"    => $auto,
-        "items"   => $items
-        ];
-        
-    return view('dashboard.services.create_invoice', compact('client','service','items','auto'));
-});
-
-
 Route::get('/', function(){
     return to_route("login");
 });
@@ -75,11 +58,16 @@ Route::middleware(['auth'])->group( function ()
 
     Route::get('emailInvoice/{serviceid}', [ControllerServices::class, 'sendMail'])->name('sendMail');
 
-    Route::get('reports/autos', [ControllerAutos::class, 'report'])->name('reports.autos');
-
+    # Reports
+    Route::get('reports/employees/{userid}', [ControllerEmployees::class, 'report'])->name('reports.employees');
+    
     Route::get('reports/employees', [ControllerEmployees::class, 'report'])->name('reports.employees');
+
+    Route::get('reports/balance', [ControllerExpenses::class, 'report'])->name('reports.balance');
+    
+    Route::get('reports/autos', [ControllerAutos::class, 'report'])->name('reports.autos');
     
     Route::get('finance/{client}', [FinanceController::class, 'show'])->name('finance');
 
-    Route::get('dashboard/balance', [ControllerExpenses::class, 'loadBalance'])->name('balance');
+
 });

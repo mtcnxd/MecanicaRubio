@@ -31,7 +31,7 @@ Route::post('deleteUser', [
 
 Route::post('loadEmployee', [
     ControllerEmployees::class, 'loadEmployee'
-])->name('loadEmployee');
+])->name('employees/load');
 
 Route::post('createBrand', [
     ControllerAutos::class, 'createBrand'
@@ -53,14 +53,6 @@ Route::post('addConcept', [
     ControllerPayroll::class, 'addConcept'
 ])->name('addConcept');
 
-Route::post('searchPostcode', [
-    ControllerAjax::class, 'searchPostcode'
-])->name('searchPostcode');
-
-Route::post('carsByClient', [
-    ControllerAjax::class, 'carsByClient'
-])->name('carsByClient');
-
 Route::post('deleteClient', [
     ControllerClients::class, 'destroy'
 ])->name('deleteClient');
@@ -68,6 +60,18 @@ Route::post('deleteClient', [
 Route::post('getClientsList', [
     ControllerClients::class, 'getClientsList'
 ])->name('getClientsList');
+
+Route::post('createServicePDF', [
+    ControllerServices::class, 'createServicePDF'
+])->name('services.createServicePDF');
+
+Route::post('searchPostcode', [
+    ControllerAjax::class, 'searchPostcode'
+])->name('searchPostcode');
+
+Route::post('carsByClient', [
+    ControllerAjax::class, 'carsByClient'
+])->name('carsByClient');
 
 Route::post('createItemInvoice', [
     ControllerAjax::class, 'createItemInvoice'
@@ -104,7 +108,3 @@ Route::post('getImageAttached', [
 Route::post('removeItemExpense', [
     ControllerAjax::class, 'removeItemExpense'
 ])->name('removeItemExpense');
-
-Route::post('downloadPDF', [
-    ControllerServices::class, 'downloadPDF'
-])->name('downloadPDF');

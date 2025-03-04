@@ -121,11 +121,8 @@
     <div class="row">
         <div class="row col-md-4">
             <div class="col">
-                <a class="btn btn-sm btn-outline-success" href="{{ route('balance') }}">
+                <a class="btn btn-sm btn-outline-success" href="{{ route('reports.balance') }}">
                     Conciliacion mes actual
-                </a>
-                <a class="btn btn-sm btn-outline-success">
-                    Cierre balance de resultados
                 </a>
             </div>
         </div>

@@ -37,9 +37,6 @@ class ControllerPayroll extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $details = null;
@@ -57,9 +54,6 @@ class ControllerPayroll extends Controller
         return view('dashboard.payrolls.create', compact('employees', 'details'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $insert = DB::table('salaries')->insert([
@@ -76,9 +70,6 @@ class ControllerPayroll extends Controller
         return to_route('payroll.index')->with('message', 'El registro se guardo correctamente');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $salary = DB::table('salaries')
@@ -93,25 +84,16 @@ class ControllerPayroll extends Controller
         return view('dashboard.payrolls.show', compact('salary','details'));  
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //
