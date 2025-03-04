@@ -22,7 +22,7 @@
                                 <span class="input-group-text">
                                     <a href="#">Editar</a>
                                 </span>
-                              </div>
+                            </div>
                         </div>
                     </div>
     
@@ -117,7 +117,12 @@
                         Marca
                     </div>
                     <div class="col-md-9">
-                        <input type="text" name="comments" id="comments" class="form-control" value="{{ isset($client) ? $client->brand : '' }}" disabled>
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="{{ isset($client) ? $client->brand : '' }}" disabled>
+                            <span class="input-group-text">
+                                <a href="#">Editar</a>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -126,7 +131,22 @@
                         Modelo
                     </div>
                     <div class="col-md-9">
-                        <input type="text" name="comments" id="comments" class="form-control" value="{{ isset($client) ? $client->model : '' }}" disabled>
+                        <input type="text" class="form-control" value="{{ isset($client) ? $client->model : '' }}" disabled>
+                    </div>
+                </div>
+
+                <div class="row col-md-6 mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Año
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" value="{{ isset($client) ? $client->year : '' }}" disabled>
+                    </div>
+                    <div class="col-md-3 pt-2 text-end">
+                        Placa
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" value="{{ isset($client) ? $client->plate : '' }}" disabled>
                     </div>
                 </div>
 
@@ -135,7 +155,7 @@
                         Serie (VIN)
                     </div>
                     <div class="col-md-9">
-                        <input type="text" name="comments" id="comments" class="form-control" value="{{ isset($client) ? $client->serie : '' }}" disabled>
+                        <input type="text" class="form-control" value="{{ isset($client) ? $client->serie : '' }}" disabled>
                     </div>
                 </div>
             </div>
@@ -143,7 +163,6 @@
         <div class="col-md-12 p-4 pb-2" style="padding-right: 40px; padding-left:40px">
             <table class="table table-hover" id="table-items">
                 <thead>
-                    <th>Automovil</th>
                     <th>Servicio/Fallo</th>
                     <th>Fecha</th>
                     <th>Status</th>
@@ -152,7 +171,6 @@
                 <tbody>
                     @foreach ($services as $service)
                         <tr>
-                            <td>{{ $service->brand }} {{ $service->model }}</td>
                             <td>
                                 <a href="{{ route('services.show', $service->id) }}">{{ Str::limit($service->fault, 80) }}</a>
                             </td>

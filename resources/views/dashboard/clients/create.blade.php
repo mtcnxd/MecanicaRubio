@@ -19,7 +19,10 @@
                         Nombre
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="name" required>
+                        <input type="text" class="form-control" name="name" id="name" required>
+                        <ul id="resultClientsList" style="display: none;" class="float-suggestions">
+                            <li>Results</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -140,7 +143,7 @@
                     </div>
                     <div class="col-md-9">
                         <input type="text" class="form-control" id="textPostalCode">
-                        <ul id="resultList">
+                        <ul id="resultPostalList" style="display: none;" class="float-suggestions">
                             <li>Results</li>
                         </ul>
                     </div>
@@ -171,6 +174,30 @@
                 showMessageAlert(response);
             }
         });
+    });
+
+    $('#name').on('keyup', function(){
+        let name = $("#name").val();
+
+        if (name.length >= 5){
+            console.log(name);
+
+            $.ajax({
+                url: "/api/getClientsList",
+                method: "POST",
+                data: {name},
+                success:function (response){
+                    console.log(response);
+                    $("#resultClientsList").empty();
+                    $("#resultClientsList").show();
+                    response.data.forEach( (client) => {
+                        $("#resultClientsList").append("<li>"+ client.name +"</li>");
+                    })
+                }
+            })
+
+        }
+
     });
 
     $("#postcode").on('keyup', function() {
@@ -209,10 +236,10 @@
                 },
                 success: function(response){
                     const postalCodes = JSON.parse(response);
-                    $("#resultList").empty();
-                    $("#resultList").show();
+                    $("#resultPostalList").empty();
+                    $("#resultPostalList").show();
                     $.each(postalCodes, function(index, pc){
-                        $("#resultList").append("<li onClick='selectItem("+ pc.postalcode +")'>" + pc.postalcode +" - "+ pc.address + "</a></li>");
+                        $("#resultPostalList").append("<li onClick='selectItem("+ pc.postalcode +")'>" + pc.postalcode +" - "+ pc.address + "</a></li>");
                     })
                 }
             });

@@ -65,6 +65,10 @@ Route::post('deleteClient', [
     ControllerClients::class, 'destroy'
 ])->name('deleteClient');
 
+Route::post('getClientsList', [
+    ControllerClients::class, 'getClientsList'
+])->name('getClientsList');
+
 Route::post('createItemInvoice', [
     ControllerAjax::class, 'createItemInvoice'
 ])->name('createItemInvoice');

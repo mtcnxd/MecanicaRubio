@@ -54,10 +54,10 @@
                             Fecha inicio
                         </div>
                         <div class="col-md-4">
-                            <input type="date" class="form-control" name="date" value="{{ $self->created_at->format('Y-m-d') }}" disabled>
+                            <input type="date" class="form-control" name="date" value="{{ isset($self->created_at) ? $self->created_at->format('Y-m-d') : '' }}" disabled>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" value="{{ $self->created_at->diffInMonths() }} meses" disabled>
+                            <input type="text" class="form-control" value="{{ isset($self->created_at) ? $self->created_at->diffInMonths() : '-' }} meses" disabled>
                         </div>
                     </div>
 

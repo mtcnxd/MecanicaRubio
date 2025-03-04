@@ -66,9 +66,6 @@ class ControllerClients extends Controller
         return to_route('clients.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $services = DB::table('autos')
@@ -84,9 +81,6 @@ class ControllerClients extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         return view('dashboard.clients.edit', [
@@ -94,9 +88,6 @@ class ControllerClients extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         DB::table('clients')->where('id', $id)->update([
@@ -123,6 +114,19 @@ class ControllerClients extends Controller
 
         return Response()->json([
             'message' => 'El cliente se elimino correctamente'
+        ]);
+    }
+
+    public function getClientsList(Request $request)
+    {
+        $data = DB::table('clients')
+            ->select('id','name')
+            ->where('name', 'like', '%'.$request->name.'%')
+            ->get();
+
+        return Response()->json([
+            "success" => true,
+            "data"    => $data
         ]);
     }
 }

@@ -140,3 +140,17 @@ a:hover {
 .widget-simple-body::-webkit-scrollbar-thumb {
     background: #ccc;
 }
+
+.float-suggestions {
+    position: absolute;
+    list-style: none;
+    border: solid 1px #ddd;
+    border-radius: 0 0 5px 5px;
+    background-color: #efefef;
+    padding-left: 0px;
+}
+
+.float-suggestions > * {
+    padding: 5px 5px;
+    margin: 0 10px;
+}

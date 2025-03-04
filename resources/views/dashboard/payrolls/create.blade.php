@@ -174,7 +174,7 @@ $("#employee").on('change', function(){
     var employee = $(this).val();
 
     $.ajax({
-        url: "/api/loadEmployee",
+        url: "{{".route ('api/loadEmployee') ."}}",
         method: 'POST',
         data: {
             employee: employee

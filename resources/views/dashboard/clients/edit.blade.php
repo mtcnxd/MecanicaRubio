@@ -148,7 +148,7 @@
                     </div>
                     <div class="col-md-9">
                         <input type="text" class="form-control" id="textPostalCode">
-                        <ul id="resultList">
+                        <ul id="resultList" style="display: none;" class="float-suggestions">
                             <li>Results</li>
                         </ul>
                     </div>
