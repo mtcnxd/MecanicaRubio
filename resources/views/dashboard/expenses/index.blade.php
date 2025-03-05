@@ -45,30 +45,38 @@
         <table class="table table-hover table-borderless" id="expenses" style="width:100%;">
             <thead>
                 <tr>
-                    <th width="400px">Egreso</th>
+                    <th width="300px">Egreso</th>
                     <th width="400px">Descripción</th>
                     <th>Estatus</th>
                     <th>Fecha</th>
-                    <th>Cantidad / Precio</th>
                     <th class="text-end">Total</th>
-                    <th width="20px">&nbsp;</th>
-                    <th width="20px">&nbsp;</th>
+                    <th width="105px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($expenses as $expense)
                     <tr>
-                        <td>{{ $expense->name }}</td>
+                        <td>
+                            <a href="{{ route('expenses.edit', $expense->id) }}">{{ $expense->name }}</a>
+                        </td>
                         <td>{{ $expense->description }}</td>
                         <td>{{ $expense->status }}</td>
-                        <td>{{ $expense->created_at }}</td>
-                        <td>{{ $expense->amount }}</td>
-                        <td>{{ $expense->amount }}</td>
+                        <td>{{ Carbon\Carbon::parse($expense->created_at)->format('d-m-Y') }}</td>
+                        <td class="text-end">{{ "$".number_format($expense->amount * $expense->price, 2) }}</td>
+                        <td>
+                            <button class="btn attach" data-bs-target="#attached" data-bs-toggle="modal" id="{{ $expense->id }}" onclick="getImageAttached(this.id)">
+                                <x-feathericon-paperclip class="table-icon" style="margin: -2px 5px 0 0"/>
+                            </button>
+                            <button class="btn" id="{{ $expense->id }}" onclick="removeItemExpense(this.id)">
+                                <x-feathericon-trash-2 class="table-icon" style="margin: -2px 5px 0 0"/>
+                            </button>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
 
+        <!--
         <div class="row mt-3">
             <div class="col-md-3">
                 <input type="button" value="Marcar como pagado" class="btn btn-sm btn-outline-success" id="markAsPaid">
@@ -79,6 +87,7 @@
                 <span id="result" class="fw-bold"></span>
             </div>
         </div>
+        -->
     </div>
 </div>
 @endsection
@@ -155,75 +164,14 @@ $("#markAsPaid").on('click', function(){
 
 const table = new DataTable('#expenses', {
     processing: true,
-    serverSide: true,
+    serverSide: false,
     searching: false,
     lengthChange:false,
     pageLength: 10,
     order: [3, 'asc'],
-    ajax: {
-        url: "{{ route('getDataTableExpenses') }}",
-        data: function(data) {
-            data.startDate = startDate.value;
-            data.endDate   = endDate.value;
-        }
-    },
-    columns:[
-        {
-            data:'name',
-            orderable: false,
-            render:function(row, type, data){
-                return '<input type="checkbox" id="'+ data.id +'" class="form-check-input" style="margin-right:10px" data-bs-amount="'+ data.total +'"></input>' + 
-                '<a href="'+ data.id +'">' + row + '</a>'
-            }
-        },{
-            data:'description',
-            orderable: false
-        },{
-            data:'status',
-            render: function(row){
-                var style = (row == 'Pendiente') ? 'bg-warning' : 'bg-success';
-                return '<span class="badge '+ style +'">' + row + '</span>';
-            }
-        },{
-            data:'created_at'
-        },{
-            data:'price',
-            className: 'text-end',
-            orderable: false
-        },{
-            data:'total',
-            className: 'text-end',
-            orderable: false,
-            render: function (row){
-                return numeral(row).format('$0,0.00');
-            }
-        },{
-            data:'attach',
-            orderable: false,
-            render: function(row, type, data){
-                if (data.attach){
-                    return '<button class="btn attach" data-bs-target="#attached" data-bs-toggle="modal" id="'+ data.id +'" onclick="getImageAttached(this.id)">'+
-                                '<x-feathericon-paperclip class="table-icon" style="margin: -2px 5px 0 0"/>'+
-                           '</button>';           
-                }
-                else {
-                    return '';
-                }   
-            }
-        },{
-            data: 'delete',
-            orderable: false,
-            render: function(row, type, data){
-                return '<button class="btn" id="'+ data.id +'" onclick="removeItemExpense(this.id)">'+
-                            '<x-feathericon-trash-2 class="table-icon" style="margin: -2px 5px 0 0"/>'+
-                       '</button>';
-            }
-        }
-    ]
-});
-
-applyFilter.addEventListener('click', function(){
-    table.draw();
+    columnDefs: [{
+        orderable: false, targets: [1,3,4,5]
+    }]
 });
 
 function removeItemExpense(buttonPressed){
@@ -261,7 +209,7 @@ function getImageAttached(buttonPressed){
             id:buttonPressed
         },
         success:function(response){
-            let image = '/storage/' + response.attach;
+            let image = '/public/uploads/expenses/' + response.attach;
             $("#modal-image").attr('src', image);
         }
     });
