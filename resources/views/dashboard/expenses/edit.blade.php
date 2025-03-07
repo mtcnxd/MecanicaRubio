@@ -65,15 +65,17 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="row col-md-6">
-                        <div class="card p-2">
-                            <img src="/public/uploads/expenses/{{ $expense->attach }}" width="auto">
+            @if ($expense->attach)
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="row col-md-6">
+                            <div class="card p-2">
+                                <img src="/public/uploads/expenses/{{ $expense->attach }}" width="auto">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 </div>
