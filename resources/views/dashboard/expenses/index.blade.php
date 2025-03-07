@@ -64,14 +64,14 @@
                         <td>{{ Carbon\Carbon::parse($expense->created_at)->format('d-m-Y') }}</td>
                         <td class="text-end">{{ "$".number_format($expense->amount * $expense->price, 2) }}</td>
                         <td>
+                            <button class="btn" id="{{ $expense->id }}" onclick="removeItemExpense(this.id)">
+                                <x-feathericon-trash-2 class="table-icon" style="margin: -2px 5px 0 0"/>
+                            </button>
                             @if ($expense->attach)
                                 <button class="btn attach" data-bs-target="#attached" data-bs-toggle="modal" id="{{ $expense->id }}" onclick="getImageAttached(this.id)">
                                     <x-feathericon-paperclip class="table-icon" style="margin: -2px 5px 0 0"/>
                                 </button>
                             @endif
-                            <button class="btn" id="{{ $expense->id }}" onclick="removeItemExpense(this.id)">
-                                <x-feathericon-trash-2 class="table-icon" style="margin: -2px 5px 0 0"/>
-                            </button>
                         </td>
                     </tr>
                 @endforeach
