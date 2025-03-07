@@ -50,19 +50,11 @@ class ControllerExpenses extends Controller
             $request->attach->move(public_path('uploads/expenses'), $newFilename);
 
             DB::table('expenses')->where('id', $id)->update([
-                #'name'        => $request->name,
-                #'description' => $request->description,
-                #'status'      => $request->status,
-                #'amount'      => $request->amount,
-                #'price'       => $request->price,
-                #'responsible' => $request->responsible,
-                'attach'      => isset($newFilename) ? $newFilename : '',
-                #'created_at'  => Carbon::now(),
-                #'updated_at'  => Carbon::now(),
+                "attach" => isset($newFilename) ? $newFilename : ''
             ]);
-            
-            return to_route('expenses.index')->with('message', 'Egreso actualizado correctaamente');
         }
+
+        return to_route('expenses.index')->with('message', 'Egreso actualizado correctaamente');
     }
 
     public function store(Request $request)
