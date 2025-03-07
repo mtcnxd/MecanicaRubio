@@ -40,23 +40,24 @@
                                 <strong class="p-0 fs-6">Status: </strong> {{ $expense->status }}
                             </div>
                         </div>
-
+                        <hr>
                         <form action="{{ route('expenses.update', $expense->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
 
-                            <div class="row">
-                                <div class="row m-0 p-2 col">
-                                    <input type="file" class="form-control" name="attach">
-                                </div>
+                            <div class="col-md-12">
+                                <input type="file" class="form-control" name="attach">
                             </div>
 
-                            <div class="row mt-2">
-                                <div class="row m-0 p-2 col-md-6">
-                                    <button type="submit" class="btn btn-sm btn-success">
-                                        <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                                        Guardar
-                                    </button>
+                            <div class="col-md-12">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <div class="col-md-6 mt-3 text-end">
+                                        <a href="{{ route('expenses.index') }}" class="btn btn-sm btn-secondary">Atras</a>
+                                        <button type="submit" class="btn btn-sm btn-success">
+                                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                                            Guardar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -67,7 +68,7 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="row col-md-6">
-                        <div class="card">
+                        <div class="card p-2">
                             <img src="/public/uploads/expenses/{{ $expense->attach }}" width="auto">
                         </div>
                     </div>
