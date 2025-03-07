@@ -21,7 +21,7 @@
             <tr>
                 <td></td>
                 <td><strong>Servicio</strong> {{ $service->brand }} {{ $service->model }}</td>
-                <td>{{ $service->created_at }}</td>
+                <td>{{ $service->due_date }}</td>
                 <td class="text-end">{{ "$".number_format($service->price, 2) }}</td>
                 <td></td>
             </tr>
@@ -62,11 +62,24 @@
     </table>
 </div>
 
+<div class="main-content mb-0">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header fs-6">
+                <strong>Saldo restante</strong>
+            </div>
+            <div class="card-body">
+                {{ "$".number_format($services->sum('price') - $outgoing, 2) }}
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="main-content">
     <div class="row col-md-4">
         <div class="col">
             <a class="btn btn-sm btn-outline-success" id="closeFiscalMonth">
-                Cierre balance de resultados
+                Conciliar mes actual
             </a>
         </div>
     </div>
@@ -80,7 +93,7 @@
 
         btnClose.addEventListener('click', (btn) => {
             btn.preventDefault();
-            confirm('Estas seguro de querer cerrar el balance de resultados del mes actual');
+            confirm('Estas seguro de querer conciliar mes actual');
         })
     </script>
 @endsection

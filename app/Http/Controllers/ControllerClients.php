@@ -59,7 +59,7 @@ class ControllerClients extends Controller
         ]);
 
         Helpers::sendTelegram(
-            sprintf("Customer created: <b>%s</b> ID: %s", $request->name, $customerId)
+            sprintf("<b>New client created:</b> %s", $request->name)
         );
 
         session()->flash('message', 'El cliente se guardó correctamente');

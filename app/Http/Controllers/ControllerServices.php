@@ -58,7 +58,7 @@ class ControllerServices extends Controller
         ]);
 
         Helpers::sendTelegram(
-            sprintf("Service created: %s Reported fail: %s", $serviceId, $request->fault)
+            sprintf("<b>New service created:</b> %s", $request->fault)
         );
 
         return to_route('services.index')->with('message', 'Los datos se guardaron con exito');
@@ -102,6 +102,12 @@ class ControllerServices extends Controller
             'due_date' => ($request->status == 'Entregado') ? Carbon::now() : null,
             'created_at' => Carbon::parse($request->entry)
         ]);
+
+        if ($request->status == 'Entregado'){
+            Helpers::sendTelegram(
+                sprintf("<b>New job submission:</b> Service #%s Total: $%s", $id, $request->total)
+            );
+        }
 
         return to_route('services.index')->with('message', 'Guardado con exito');
     }

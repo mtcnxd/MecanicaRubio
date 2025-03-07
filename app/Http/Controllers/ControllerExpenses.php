@@ -34,7 +34,11 @@ class ControllerExpenses extends Controller
 
     public function edit(string $id)
     {
-        $expense = DB::table('expenses')->where('id', $id)->first();
+        $expense = DB::table('expenses')
+            ->select('expenses.*', 'users.name', DB::raw('expenses.name as concept'))
+            ->join('users', 'expenses.responsible','users.id')
+            ->where('expenses.id', $id)
+            ->first();
 
         return view('dashboard.expenses.edit', compact('expense'));
     }
@@ -79,6 +83,10 @@ class ControllerExpenses extends Controller
             'created_at'  => Carbon::now(),
             'updated_at'  => Carbon::now(),
         ]);
+
+        Helpers::sendTelegram(
+            sprintf("<b>New expense created:</b> %s Total: %s", $request->name, $request->price)
+        );
 
         return to_route('expenses.index');
     }

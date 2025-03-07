@@ -122,7 +122,7 @@
         <div class="row col-md-4">
             <div class="col">
                 <a class="btn btn-sm btn-outline-success" href="{{ route('reports.balance') }}">
-                    Conciliacion mes actual
+                    Balance de resultados
                 </a>
             </div>
         </div>
