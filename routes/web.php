@@ -1,16 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ControllerClients;
-use App\Http\Controllers\ControllerAutos;
-use App\Http\Controllers\ControllerServices;
-use App\Http\Controllers\ControllerExpenses;
-use App\Http\Controllers\ControllerCalendar;
-use App\Http\Controllers\ControllerPayroll;
-use App\Http\Controllers\ControllerEmployees;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Dashboard\FinanceController;
-use App\Http\Controllers\Dashboard\ConfigController;
+use App\Http\Controllers\Clients;
+use App\Http\Controllers\Cars;
+use App\Http\Controllers\Services;
+use App\Http\Controllers\Expenses;
+use App\Http\Controllers\Payroll;
+use App\Http\Controllers\Employees;
+use App\Http\Controllers\Auth\Login;
+use App\Http\Controllers\Dashboard\Finance;
+use App\Http\Controllers\Dashboard\Setting;
+use App\Http\Controllers\Calendar;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailInvoice;
 use Carbon\Carbon;
@@ -31,47 +31,47 @@ Route::get('/', function(){
     return to_route("login");
 });
 
-Route::get('login', [LoginController::class, 'showLogin'])->name('login');
-Route::post('login', [LoginController::class, 'login']);
-Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('login', [Login::class, 'showLogin'])->name('login');
+Route::post('login', [Login::class, 'login']);
+Route::post('logout', [Login::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group( function ()
 {
-    Route::resource('clients', ControllerClients::class);
+    Route::resource('clients', Clients::class);
 
-    Route::resource('autos', ControllerAutos::class);
+    Route::resource('autos', Cars::class);
 
-    Route::resource('services', ControllerServices::class);
+    Route::resource('services', Services::class);
 
-    Route::resource('expenses', ControllerExpenses::class);
+    Route::resource('expenses', Expenses::class);
 
-    Route::resource('payroll', ControllerPayroll::class);
+    Route::resource('payroll', Payroll::class);
 
-    Route::resource('employees', ControllerEmployees::class);
+    Route::resource('employees', Employees::class);
 
-    Route::get('dashboard', [ControllerServices::class, 'dashboard'])->name('dashboard');    
+    Route::get('dashboard', [Services::class, 'dashboard'])->name('dashboard');    
 
-    Route::get('calendar', [ControllerCalendar::class, 'index'])->name('calendar.index');
+    Route::get('calendar', [Calendar::class, 'index'])->name('calendar.index');
 
-    Route::get('profile', [ControllerEmployees::class, 'profileIndex'])->name('profile');
+    Route::get('profile', [Employees::class, 'profileIndex'])->name('profile');
 
-    Route::get('emailInvoice/{serviceid}', [ControllerServices::class, 'sendMail'])->name('sendMail');
+    Route::get('emailInvoice/{serviceid}', [Services::class, 'sendMail'])->name('sendMail');
 
-    Route::post('profile', [ControllerEmployees::class, 'profileUpdate'])->name('profileUpdate');
+    Route::post('profile', [Employees::class, 'profileUpdate'])->name('profileUpdate');
 
-    Route::get('configuration', [ConfigController::class, 'index'])->name('config.index');
+    Route::get('configuration', [Setting::class, 'index'])->name('config.index');
 
-    Route::post('configuration', [ConfigController::class, 'store'])->name('config.store');
+    Route::post('configuration', [Setting::class, 'store'])->name('config.store');
 
     # Reports
-    Route::get('reports/employees/{userid}', [ControllerEmployees::class, 'report'])->name('reports.employees');
+    Route::get('reports/employees/{userid}', [Employees::class, 'report'])->name('reports.employees');
     
-    Route::get('reports/employees', [ControllerEmployees::class, 'report'])->name('reports.employees');
+    Route::get('reports/employees', [Employees::class, 'report'])->name('reports.employees');
 
-    Route::get('reports/balance', [ControllerExpenses::class, 'report'])->name('reports.balance');
+    Route::get('reports/balance', [Expenses::class, 'report'])->name('reports.balance');
     
-    Route::get('reports/autos', [ControllerAutos::class, 'report'])->name('reports.autos');
+    Route::get('reports/autos', [Cars::class, 'report'])->name('reports.autos');
     
-    Route::get('finance/{client}', [FinanceController::class, 'show'])->name('finance');
+    Route::get('finance/{client}', [Finance::class, 'show'])->name('finance');
 
 });

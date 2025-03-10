@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Exception;
 use DB;
 
-class ControllerClients extends Controller
+class Clients extends Controller
 {
     /**
      * Display a listing of the resource.

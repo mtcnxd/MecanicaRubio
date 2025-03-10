@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 
-class ControllerCharts extends Controller
+class Charts extends Controller
 {
     static function getServicesChart()
     {

@@ -3,11 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
-use App\Http\Controllers\ControllerServices;
-use App\Http\Controllers\ControllerClients;
-use App\Http\Controllers\ControllerEmployees;
-use App\Http\Controllers\ControllerAutos;
-use App\Http\Controllers\ControllerPayroll;
+use App\Http\Controllers\Services;
+use App\Http\Controllers\Clients;
+use App\Http\Controllers\Employees;
+use App\Http\Controllers\Cars;
+use App\Http\Controllers\Payroll;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,43 +26,43 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 Route::post('deleteUser', [
-    ControllerEmployees::class, 'destroy'
+    Employees::class, 'destroy'
 ])->name('deleteUser');
 
 Route::post('loadEmployee', [
-    ControllerEmployees::class, 'loadEmployee'
+    Employees::class, 'loadEmployee'
 ])->name('employees/load');
 
 Route::post('createBrand', [
-    ControllerAutos::class, 'createBrand'
+    Cars::class, 'createBrand'
 ])->name('createBrand');
 
 Route::post('createModel', [
-    ControllerAutos::class, 'createModel'
+    Cars::class, 'createModel'
 ])->name('createModel');
 
 Route::post('loadModels', [
-    ControllerAutos::class, 'loadModels'
+    Cars::class, 'loadModels'
 ])->name('loadModels');
 
 Route::post('manageSalaries', [
-    ControllerPayroll::class, 'manageSalaries'
+    Payroll::class, 'manageSalaries'
 ])->name('manageSalaries');
 
 Route::post('addConcept', [
-    ControllerPayroll::class, 'addConcept'
+    Payroll::class, 'addConcept'
 ])->name('addConcept');
 
 Route::post('deleteClient', [
-    ControllerClients::class, 'destroy'
+    Clients::class, 'destroy'
 ])->name('deleteClient');
 
 Route::post('getClientsList', [
-    ControllerClients::class, 'getClientsList'
+    Clients::class, 'getClientsList'
 ])->name('getClientsList');
 
 Route::post('createServicePDF', [
-    ControllerServices::class, 'createServicePDF'
+    Services::class, 'createServicePDF'
 ])->name('services.createServicePDF');
 
 Route::post('searchPostcode', [

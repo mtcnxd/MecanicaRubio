@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 
-class LoginController extends Controller
+class Login extends Controller
 {
     public function showLogin()
     {

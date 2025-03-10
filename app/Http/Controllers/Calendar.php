@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Whatsapp\Whatsapp;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 
-class ControllerCalendar extends Controller
+class Calendar extends Controller
 {
     public function index()
     {
@@ -32,6 +33,15 @@ class ControllerCalendar extends Controller
             'events'       => $events,
             'month'        => $months[$month - 1],
         ]);
+    }
+
+    public function testingNotifications()
+    {
+        /*
+        $template = Whatsapp::createServiceTemplate($params);
+        $response = Whatsapp::send($template);
+        $response->json()['messages'][0]['message_status'];
+        */
     }
 
     protected function getFirstDay($month)

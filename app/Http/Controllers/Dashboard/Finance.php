@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 
-class FinanceController extends Controller
+class Finance extends Controller
 {
     public function show($client)
     {

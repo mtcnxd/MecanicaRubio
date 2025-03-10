@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \DB;
 
-class ConfigController extends Controller
+class Setting extends Controller
 {   
     public function index()
     {

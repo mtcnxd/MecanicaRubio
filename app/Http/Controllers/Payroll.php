@@ -7,7 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use DB;
 
-class ControllerPayroll extends Controller
+class Payroll extends Controller
 {
     public function index(Request $request)
     {

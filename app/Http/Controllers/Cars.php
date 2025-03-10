@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 
-class ControllerAutos extends Controller
+class Cars extends Controller
 {
     public function index()
     {

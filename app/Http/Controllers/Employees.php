@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Exception;
 use DB;
 
-class ControllerEmployees extends Controller
+class Employees extends Controller
 {
     public function index()
     {

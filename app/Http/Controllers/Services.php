@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Whatsapp\Whatsapp;
-use App\Http\Controllers\ControllerCharts;
+use App\Http\Controllers\Charts;
 use App\Http\Controllers\Helpers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -11,7 +10,7 @@ use Exception;
 use PDF;
 use DB;
 
-class ControllerServices extends Controller
+class Services extends Controller
 {
     public function index()
     {
@@ -29,12 +28,6 @@ class ControllerServices extends Controller
                 "car"       => "BMW 330i",
                 "date"      => "15 de marzo"
             ];
-
-            /*
-            $template = Whatsapp::createServiceTemplate($params);
-            $response = Whatsapp::send($template);
-            $response->json()['messages'][0]['message_status'];
-            */
 
         } catch(Exception $err){
             session()->flash('message', $err->getMessage());
@@ -172,8 +165,8 @@ class ControllerServices extends Controller
             'services' => $services,
             'expenses' => $expenses,
             'salaries' => $salaries,
-            'servicesChart' => ControllerCharts::getServicesChart(),
-            'incomesChart'  => ControllerCharts::getIncomeChart(),
+            'servicesChart' => Charts::getServicesChart(),
+            'incomesChart'  => Charts::getIncomeChart(),
         ]);        
     }
 
