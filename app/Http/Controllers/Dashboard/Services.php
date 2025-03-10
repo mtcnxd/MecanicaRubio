@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Charts;
+use App\Http\Controllers\Notifications\Telegram;
+use App\Http\Controllers\Dashboard\Charts;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Helpers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -61,7 +63,7 @@ class Services extends Controller
             "updated_at" => Carbon::now(),
         ]);
 
-        Helpers::sendTelegram(
+        Telegram::send(
             sprintf("<b>New service created:</b> %s", $request->fault)
         );
 
@@ -108,7 +110,7 @@ class Services extends Controller
         ]);
 
         if ($request->status == 'Entregado'){
-            Helpers::sendTelegram(
+            Telegram::send(
                 sprintf("<b>New job submission:</b> Service #%s Total: $%s", $id, $request->total)
             );
         }

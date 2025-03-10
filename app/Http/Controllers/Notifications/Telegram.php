@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Notifications;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Client\Response;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Exception;
-use DB;
+use \Http;
+use \DB;
 
-class Helpers extends Controller
+class Telegram extends Controller
 {
-    static function sendTelegram(string $text)
+    static function send(string $text)
     {
         $token = DB::table('configurations')->where('name','telegram_api')->first()->value;
         
@@ -21,12 +20,5 @@ class Helpers extends Controller
             "text" 	     => $text,
             "parse_mode" => "HTML"
         ));
-    }
-
-    static function logger(array $parameters)
-    {
-        DB::table('logger')->insert([
-            "client_id" => $parameters['client_id']
-        ]);
     }
 }

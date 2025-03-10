@@ -20,7 +20,7 @@
             </div>
             <div class="window-body bg-white shadow-sm">
                 <label class="window-body-form">Editar perfil</label>
-                <form action="{{ route('profile') }}" method="POST" class="border pt-5 pb-4">
+                <form action="{{ route('profile.update') }}" method="POST" class="border pt-5 pb-4">
                     @csrf
                     @method('POST')
                     <div class="row">
@@ -78,7 +78,7 @@
                             &nbsp;
                         </div>
                         <div class="col-md-8 mt-3 text-end">
-                            <a href="{{ route('profile') }}" class="btn btn-secondary">Cancelar</a>
+                            <a href="{{ route('profile.index') }}" class="btn btn-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-success">
                                 <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                                 Guardar

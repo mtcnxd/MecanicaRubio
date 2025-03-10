@@ -27,7 +27,7 @@
             @foreach ($autos as $auto)
                 <tr>
                     <td>
-                        <a href="{{ route('autos.show', $auto->id) }}">
+                        <a href="{{ route('cars.show', $auto->id) }}">
                             <span class="table-icon-round">{{ Str::limit($auto->brand,1, null) }}</span>
                             {{ $auto->brand }} {{ $auto->model }}
                         </a>
@@ -41,7 +41,7 @@
                     <td>{{ $auto->plate }}</td>
                     <td>{{ $auto->year }}</td>
                     <td class="text-end">
-                        <a href="{{ route('autos.edit', $auto->id) }}">
+                        <a href="{{ route('cars.edit', $auto->id) }}">
                             <x-feathericon-edit class="table-icon"/>
                         </a>
                     </td>

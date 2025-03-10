@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -116,7 +116,7 @@ class Employees extends Controller
     public function profileUpdate(Request $request)
     {
         if ($request->password != $request->repeat){
-            return to_route('profile')->with('message', 'Las contraseñas introducidas no coinciden');
+            return to_route('profile.index')->with('message', 'Las contraseñas introducidas no coinciden');
         }
 
         $result = DB::table('users')->where('id', $request->id)->update([
@@ -125,7 +125,7 @@ class Employees extends Controller
             "password" => Hash::make($request->password)
         ]);
 
-        return to_route('profile')->with('message', 'Los datos se actualizaron correctamente');
+        return to_route('profile.index')->with('message', 'Los datos se actualizaron correctamente');
     }
 
     public function loadEmployee(Request $request)
@@ -151,9 +151,11 @@ class Employees extends Controller
         if ($request->employee)
         {
             $results = DB::table('employees')
+                ->select('concept', 'start_date', 'end_date', 'amount')
                 ->join('salaries','employees.id','salaries.user_id')
                 ->join('salaries_details', 'salaries.id', 'salaries_details.salary_id')
                 ->where('employees.id', $request->employee)
+                ->where('salaries_details.concept','Caja de Ahorro')
                 ->get();
 
             $employeeInfo = DB::table('employees')

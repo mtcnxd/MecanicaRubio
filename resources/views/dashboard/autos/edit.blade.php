@@ -102,7 +102,7 @@
             </div>
             
             <div class="col-md-6 mt-3 text-end">
-                <a href="{{ route('autos.index') }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route('cars.index') }}" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-success">
                     <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                     Guardar

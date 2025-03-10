@@ -9,10 +9,8 @@ use App\Http\Controllers\Controller;
 
 class Login extends Controller
 {
-    public function showLogin()
+    public function index()
     {
-        // dd(Hash::make('nodoubt'));
-
         return view('dashboard.login');
     }
 

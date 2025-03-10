@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Notifications\Telegram;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
@@ -76,7 +78,7 @@ class Expenses extends Controller
             'updated_at'  => Carbon::now(),
         ]);
 
-        Helpers::sendTelegram(
+        Telegram::send(
             sprintf("<b>New expense created:</b> %s Total: $%s", $request->name, $request->price)
         );
 

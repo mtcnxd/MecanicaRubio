@@ -16,10 +16,10 @@
 					</ul>
 				</li>
 				<li>
-					<a class="a-item" href="{{ route('autos.index') }}">Automoviles</a>
+					<a class="a-item" href="{{ route('cars.index') }}">Automoviles</a>
 					<ul class="submenu">
-						<li><a class="a-item" href="{{ route('autos.create') }}">Crear nuevo</a></li>
-						<li><a class="a-item" href="{{ route('autos.index') }}">Buscar</a></li>
+						<li><a class="a-item" href="{{ route('cars.create') }}">Crear nuevo</a></li>
+						<li><a class="a-item" href="{{ route('cars.index') }}">Buscar</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -50,7 +50,7 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-				<li><a class="a-item" href="{{ route('dashboard') }}">Resumen</a></li>
+				<li><a class="a-item" href="{{ route('dashboard.index') }}">Resumen</a></li>
 				<li>
 					<a class="a-item" href="{{ route('payroll.index') }}">Nominas</a>
 					<ul class="submenu">
@@ -112,7 +112,7 @@
 						<li><a class="a-item" href="{{ route('employees.index') }}">Buscar</a></li>
 					</ul>
 				</li>
-				<li><a class="a-item" href="{{ route('config.index') }}">Configuración</a></li>
+				<li><a class="a-item" href="{{ route('setting.index') }}">Configuración</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -127,7 +127,7 @@
 			</a>
 			<ul class="menu-dropdown">
 				<li>
-					<a class="a-item" href="{{ route('profile') }}">Perfil</a>
+					<a class="a-item" href="{{ route('profile.index') }}">Perfil</a>
 				</li>
 				<li>
 					<form action="{{ route('logout') }}" method="POST">

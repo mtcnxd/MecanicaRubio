@@ -1,17 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Clients;
-use App\Http\Controllers\Cars;
-use App\Http\Controllers\Services;
-use App\Http\Controllers\Expenses;
-use App\Http\Controllers\Payroll;
-use App\Http\Controllers\Employees;
-use App\Http\Controllers\Auth\Login;
+use App\Http\Controllers\Dashboard\Cars;
+use App\Http\Controllers\Dashboard\Clients;
+use App\Http\Controllers\Dashboard\Services;
+use App\Http\Controllers\Dashboard\Expenses;
+use App\Http\Controllers\Dashboard\Payroll;
+use App\Http\Controllers\Dashboard\Employees;
+use App\Http\Controllers\Dashboard\Calendar;
 use App\Http\Controllers\Dashboard\Finance;
-use App\Http\Controllers\Dashboard\Setting;
-use App\Http\Controllers\Calendar;
+use App\Http\Controllers\Dashboard\Settings;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Auth\Login;
 use App\Mail\EmailInvoice;
 use Carbon\Carbon;
 
@@ -26,12 +26,11 @@ use Carbon\Carbon;
 |
 */
 
-
 Route::get('/', function(){
     return to_route("login");
 });
 
-Route::get('login', [Login::class, 'showLogin'])->name('login');
+Route::get('login', [Login::class, 'index'])->name('login');
 Route::post('login', [Login::class, 'login']);
 Route::post('logout', [Login::class, 'logout'])->name('logout');
 
@@ -39,7 +38,7 @@ Route::middleware(['auth'])->group( function ()
 {
     Route::resource('clients', Clients::class);
 
-    Route::resource('autos', Cars::class);
+    Route::resource('cars', Cars::class);
 
     Route::resource('services', Services::class);
 
@@ -49,19 +48,19 @@ Route::middleware(['auth'])->group( function ()
 
     Route::resource('employees', Employees::class);
 
-    Route::get('dashboard', [Services::class, 'dashboard'])->name('dashboard');    
-
     Route::get('calendar', [Calendar::class, 'index'])->name('calendar.index');
 
-    Route::get('profile', [Employees::class, 'profileIndex'])->name('profile');
+    Route::get('dashboard', [Services::class, 'dashboard'])->name('dashboard.index');
+
+    Route::get('profile', [Employees::class, 'profileIndex'])->name('profile.index');
+
+    Route::post('profile', [Employees::class, 'profileUpdate'])->name('profile.update');
+
+    Route::get('setting', [Settings::class, 'index'])->name('setting.index');
+
+    Route::post('setting', [Settings::class, 'update'])->name('setting.update');
 
     Route::get('emailInvoice/{serviceid}', [Services::class, 'sendMail'])->name('sendMail');
-
-    Route::post('profile', [Employees::class, 'profileUpdate'])->name('profileUpdate');
-
-    Route::get('configuration', [Setting::class, 'index'])->name('config.index');
-
-    Route::post('configuration', [Setting::class, 'store'])->name('config.store');
 
     # Reports
     Route::get('reports/employees/{userid}', [Employees::class, 'report'])->name('reports.employees');

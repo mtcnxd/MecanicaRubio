@@ -20,7 +20,7 @@
             </div>
             <div class="window-body bg-white shadow-sm">
                 <label class="window-body-form">Configuración de APIs</label>
-                <form action="{{ route('config.store') }}" method="POST" class="border pt-5 pb-4">
+                <form action="{{ route('setting.update') }}" method="POST" class="border pt-5 pb-4">
                     @csrf
                     @method('POST')
                     @foreach ($configs as $config)
@@ -47,7 +47,6 @@
                             &nbsp;
                         </div>
                         <div class="col-md-8 mt-3 text-end">
-                            <a href="{{ route('profile') }}" class="btn btn-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-success">
                                 <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                                 Guardar

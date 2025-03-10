@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Notifications\Telegram;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -58,8 +59,8 @@ class Clients extends Controller
             'updated_at' => Carbon::now(),
         ]);
 
-        Helpers::sendTelegram(
-            sprintf("<b>New client created:</b> %s Phone: %s", $request->name, $request->phone)
+        Telegram::send(
+            sprintf("<b>New client created:</b> %s <b>Phone:</b> %s", $request->name, $request->phone)
         );
 
         session()->flash('message', 'El cliente se guardó correctamente');

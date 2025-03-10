@@ -35,26 +35,31 @@
                 <div class="card -p2">
                     <div class="card-body">
                         <div class="row m-0 p-2">
-                            <div class="row col-md-6">
-                                <strong class="p-0 fs-8">EMPLEADO: </strong> {{ $employeeInfo->name }}
+                            <div class="col-md-6">
+                                <strong class="p-0 fs-8">EMPLEADO: </strong>
+                                <input type="text" class="form-control" value="{{ $employeeInfo->name }}" disabled>
                             </div>
-                            <div class="row col-md-6">
-                                <strong class="p-0 fs-8">CORREO: </strong> {{ $employeeInfo->email }}
-                            </div>
-                        </div>
-
-                        <div class="row m-0 p-2">
-                            <div class="row col-md-6">
-                                <strong class="p-0 fs-8">PUESTO: </strong> {{ $employeeInfo->depto }}
-                            </div>
-                            <div class="row col-md-6">
-                                <strong class="p-0 fs-8">ANTIGUEDAD: </strong> {{ Carbon\Carbon::parse($employeeInfo->created_at)->format('d-m-Y') }}
+                            <div class="col-md-6">
+                                <strong class="p-0 fs-8">CORREO: </strong>
+                                <input type="text" class="form-control" value="{{ $employeeInfo->email }}" disabled>
                             </div>
                         </div>
 
                         <div class="row m-0 p-2">
-                            <div class="row col-md-6">
-                                <strong class="p-0 fs-8">CAJA DE AHORRO: </strong> {{ "$".number_format(abs($results->sum('amount')),2) }}
+                            <div class="col-md-6">
+                                <strong class="p-0 fs-8">PUESTO: </strong>
+                                <input type="text" class="form-control" value="{{ $employeeInfo->depto }}" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <strong class="p-0 fs-8">ANTIGUEDAD: </strong>
+                                <input type="text" class="form-control" value="{{ Carbon\Carbon::parse($employeeInfo->created_at)->format('d-m-Y') }}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row m-0 p-2">
+                            <div class="col-md-6">
+                                <strong class="p-0 fs-8">CAJA DE AHORRO: </strong>
+                                <input type="text" class="form-control" value="{{ "$".number_format(abs($results->sum('amount')),2) }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -67,11 +72,27 @@
                 <p class="text-uppercase fs-8">Desglose de aportaciones a Caja de Ahorro</p>
                 <table class="table table-hover">
                     <tbody>
-                        @foreach ($results as $result)
+                        <tr>
+                            <th>#</th>
+                            <th>Concepto</th>
+                            <th class="text-center">Semana de pago</th>
+                            <th class="text-end">Importe</th>
+                        </tr>
+                        @foreach ($results as $row => $result)
                             <tr>
+                                <td>{{ $row +1 }}</td>
                                 <td>{{ $result->concept }}</td>
-                                <td>{{ $result->end_date }}</td>
-                                <td class="text-end">{{ "$".number_format(abs($result->amount), 2) }}</td>
+                                <td class="text-center">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="badge text-bg-warning">{{ $result->start_date }}</span>
+                                        </div>
+                                        <div class="col">
+                                            <span class="badge text-bg-warning">{{ $result->end_date }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">{{ "$".number_format($result->amount, 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

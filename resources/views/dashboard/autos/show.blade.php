@@ -195,7 +195,7 @@
                 @endif
             </div>
             <div class="col-md-6 mt-3 text-end" style="padding-right: 40px;">
-                <a href="{{ route('autos.index') }}" class="btn btn-sm btn-success">Atras</a>
+                <a href="{{ route('cars.index') }}" class="btn btn-sm btn-success">Atras</a>
                 <a href="{{ route('finance', $client->id) }}" class="btn btn-sm btn-success">Mas Información</a>
             </div>
         </div>

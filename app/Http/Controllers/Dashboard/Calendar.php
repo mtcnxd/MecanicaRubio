@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Whatsapp\Whatsapp;
+use App\Http\Controllers\Notifications\Whatsapp;
+use App\Http\Controllers\Notifications\Telegram;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
@@ -24,6 +26,8 @@ class Calendar extends Controller
             $date = Carbon::parse(date('Y-m-').$i);
             $events[] = DB::table('calendar')->where('date', $date)->first();
         }
+
+        // Whatsapp::send();
 
         return view('dashboard.services.calendar', [
             'weekStartsIn' => $this->getFirstDay($month),

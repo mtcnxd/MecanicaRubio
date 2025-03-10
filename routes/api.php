@@ -3,11 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
-use App\Http\Controllers\Services;
-use App\Http\Controllers\Clients;
-use App\Http\Controllers\Employees;
-use App\Http\Controllers\Cars;
-use App\Http\Controllers\Payroll;
+use App\Http\Controllers\Dashboard\Services;
+use App\Http\Controllers\Dashboard\Clients;
+use App\Http\Controllers\Dashboard\Employees;
+use App\Http\Controllers\Dashboard\Cars;
+use App\Http\Controllers\Dashboard\Payroll;
 
 /*
 |--------------------------------------------------------------------------

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
@@ -74,11 +75,11 @@ class Payroll extends Controller
     {
         $salary = DB::table('salaries')
             ->join('users', 'salaries.user_id', 'users.id')
-            ->where('salaries.id', 1)
+            ->where('salaries.id', $id)
             ->first();
 
         $details = DB::table('salaries_details')
-            ->where('salary_id', 1)
+            ->where('salary_id', $id)
             ->get();
 
         return view('dashboard.payrolls.show', compact('salary','details'));  

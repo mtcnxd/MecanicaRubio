@@ -6,25 +6,25 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \DB;
 
-class Setting extends Controller
+class Settings extends Controller
 {   
     public function index()
     {
-        $configs = DB::table('configurations')->get();
+        $configs = DB::table('setting')->get();
 
         return view('dashboard.admin.configuration', compact('configs'));
     }
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
         foreach ($request->all() as $key => $value) {
             if ($key != '_token' and $key != '_method'){
-                DB::table('configurations')->where('name', $key)->update([
+                DB::table('setting')->where('name', $key)->update([
                     "value" => $value
                 ]);
             }
         }
 
-        return to_route('config.index')->with('message', 'La configuracion a sido guardada con exito');
+        return to_route('setting.index')->with('message', 'La configuracion a sido guardada con exito');
     }
 }
