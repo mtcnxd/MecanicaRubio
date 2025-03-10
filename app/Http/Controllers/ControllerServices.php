@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Whatsapp\Whatsapp;
 use App\Http\Controllers\ControllerCharts;
 use App\Http\Controllers\Helpers;
 use Illuminate\Http\Request;
@@ -20,6 +21,25 @@ class ControllerServices extends Controller
             ->join('clients', 'services.client_id', 'clients.id')
             ->get();
 
+
+        try {
+            $params = [
+                "recipient" => "+529991210261",
+                "customer"  => "Marcos Tzuc Cen",
+                "car"       => "BMW 330i",
+                "date"      => "15 de marzo"
+            ];
+
+            /*
+            $template = Whatsapp::createServiceTemplate($params);
+            $response = Whatsapp::send($template);
+            $response->json()['messages'][0]['message_status'];
+            */
+
+        } catch(Exception $err){
+            session()->flash('message', $err->getMessage());
+        }
+
         return view('dashboard.services.index', compact('services'));
     }
 
@@ -28,15 +48,6 @@ class ControllerServices extends Controller
      */
     public function create()
     {
-        /*
-        try {
-            Helpers::sendWhatsapp();
-        } catch(Exception $err){
-            session()->flash('title','Error message');
-            session()->flash('message', $err->getMessage());
-        }
-        */
-
         return view('dashboard.services.create', [
             'clients' => DB::table('clients')->where('status','Activo')->orderBy('name')->get()
         ]);
@@ -144,7 +155,7 @@ class ControllerServices extends Controller
             ->join('services_items','services_view.id','services_items.service_id')
             ->where('services_items.labour', true)
             ->where('services_view.status', 'Entregado')
-            ->whereBetween('created_at', [Carbon::now()->format('Y-m-01'), Carbon::now()])
+            ->whereBetween('services_view.due_date', [Carbon::now()->format('Y-m-01'), Carbon::now()])
             ->groupBy('services_view.car')
             ->get();
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\ControllerPayroll;
 use App\Http\Controllers\ControllerEmployees;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\FinanceController;
+use App\Http\Controllers\Dashboard\ConfigController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailInvoice;
 use Carbon\Carbon;
@@ -54,9 +55,13 @@ Route::middleware(['auth'])->group( function ()
 
     Route::get('profile', [ControllerEmployees::class, 'profileIndex'])->name('profile');
 
+    Route::get('emailInvoice/{serviceid}', [ControllerServices::class, 'sendMail'])->name('sendMail');
+
     Route::post('profile', [ControllerEmployees::class, 'profileUpdate'])->name('profileUpdate');
 
-    Route::get('emailInvoice/{serviceid}', [ControllerServices::class, 'sendMail'])->name('sendMail');
+    Route::get('configuration', [ConfigController::class, 'index'])->name('config.index');
+
+    Route::post('configuration', [ConfigController::class, 'store'])->name('config.store');
 
     # Reports
     Route::get('reports/employees/{userid}', [ControllerEmployees::class, 'report'])->name('reports.employees');
@@ -68,6 +73,5 @@ Route::middleware(['auth'])->group( function ()
     Route::get('reports/autos', [ControllerAutos::class, 'report'])->name('reports.autos');
     
     Route::get('finance/{client}', [FinanceController::class, 'show'])->name('finance');
-
 
 });

@@ -112,7 +112,7 @@
 						<li><a class="a-item" href="{{ route('employees.index') }}">Buscar</a></li>
 					</ul>
 				</li>
-				<li><a class="a-item" href="#">Configuración</a></li>
+				<li><a class="a-item" href="{{ route('config.index') }}">Configuración</a></li>
 			</ul>
 		</li>
 	</ul>
