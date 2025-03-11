@@ -28,9 +28,10 @@ class Calendar extends Controller
             "car"    => 'BMW 320i',
             "date"   => '10 marzo 2025'
         ];
-
-        /*
+        
         $template = Whatsapp::createServiceTemplate($params);
+        
+        /*
         $response = Whatsapp::send($template);
         $response->json()['messages'][0]['message_status'];
         */

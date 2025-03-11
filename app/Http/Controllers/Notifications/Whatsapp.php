@@ -22,8 +22,8 @@ class Whatsapp extends Controller
 
         $response = Http::withToken($token)->post($url, $template);
 
-        if($response->getStatusCode()){
-            throw new Exception("Error Processing Request:" .$response);
+        if (!$response->successful()){
+            session()->flash('message',$response->json()['error']['message']);
         }
 
         return $response;

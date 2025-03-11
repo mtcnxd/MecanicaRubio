@@ -56,9 +56,11 @@ Route::middleware(['auth'])->group( function ()
 
     Route::post('profile', [Employees::class, 'profileUpdate'])->name('profile.update');
 
-    Route::get('setting', [Settings::class, 'index'])->name('setting.index');
+    Route::get('settings', [Settings::class, 'index'])->name('setting.index');
 
-    Route::post('setting', [Settings::class, 'update'])->name('setting.update');
+    Route::post('settings', [Settings::class, 'update'])->name('setting.update');
+
+    Route::post('settings/create', [Settings::class, 'store'])->name('setting.store');
 
     Route::get('emailInvoice/{serviceid}', [Services::class, 'sendMail'])->name('sendMail');
 

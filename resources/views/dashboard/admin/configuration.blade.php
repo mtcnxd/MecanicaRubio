@@ -20,13 +20,44 @@
             </div>
             <div class="window-body bg-white shadow-sm">
                 <label class="window-body-form">Configuración de APIs</label>
+                <form action="{{ route('setting.store') }}" method="POST" class="border pt-5 pb-4">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-3 pt-2 text-end">
+                            Clave
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="name" value="">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-3 pt-2 text-end">
+                            Valor
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="value">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-8 mt-3 text-end">
+                            <button type="submit" class="btn btn-success">
+                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
                 <form action="{{ route('setting.update') }}" method="POST" class="border pt-5 pb-4">
                     @csrf
                     @method('POST')
                     @foreach ($configs as $config)
                         <div class="row mt-3">
                             <div class="col-md-3 pt-2 text-end">
-                                Nombre
+                                Clave
                             </div>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" name="name[]" value="{{ $config->name }}" disabled>
@@ -34,7 +65,7 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-3 pt-2 text-end">
-                                Token
+                                Valor
                             </div>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" name="{{ $config->name }}" value="{{ $config->value }}">

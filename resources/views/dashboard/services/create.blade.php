@@ -60,6 +60,26 @@
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
+                        Servicio
+                    </div>
+                    <div class="col-md-9 pt-2">
+                        <label class="me-3">
+                            <input type="radio" value="fault" name="type" id="type" checked>
+                            Fallo
+                        </label>
+                        <label class="me-3">
+                            <input type="radio" value="minor" name="type" id="type">
+                            Menor
+                        </label>
+                        <label>
+                            <input type="radio" value="major" name="type" id="type">
+                            Mayor
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
                         Comentarios
                     </div>
                     <div class="col-md-9">

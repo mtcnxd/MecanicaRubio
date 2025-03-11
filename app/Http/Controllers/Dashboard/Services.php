@@ -43,9 +43,9 @@ class Services extends Controller
      */
     public function create()
     {
-        return view('dashboard.services.create', [
-            'clients' => DB::table('clients')->where('status','Activo')->orderBy('name')->get()
-        ]);
+        $clients = DB::table('clients')->where('status','Activo')->orderBy('name')->get();
+
+        return view('dashboard.services.create', compact('clients'));
     }
 
     /**
@@ -54,13 +54,14 @@ class Services extends Controller
     public function store(Request $request)
     {
         $serviceId = DB::table('services')->insertGetId([
-            "client_id"  => $request->client,
-            "car_id"     => $request->car,
-            "odometer"   => (isset($request->odometer)) ? str_replace([' ', ','], '', $request->odometer) : null,
-            "fault"      => $request->fault,
-            "comments"   => $request->comments,
-            "created_at" => Carbon::now(),
-            "updated_at" => Carbon::now(),
+            "client_id"    => $request->client,
+            "car_id"       => $request->car,
+            "odometer"     => (isset($request->odometer)) ? str_replace([' ', ','], '', $request->odometer) : null,
+            "fault"        => $request->fault,
+            "service_type" => $request->type,
+            "comments"     => $request->comments,
+            "created_at"   => Carbon::now(),
+            "updated_at"   => Carbon::now(),
         ]);
 
         Telegram::send(

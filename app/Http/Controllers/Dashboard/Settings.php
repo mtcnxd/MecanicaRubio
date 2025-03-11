@@ -27,4 +27,14 @@ class Settings extends Controller
 
         return to_route('setting.index')->with('message', 'La configuracion a sido guardada con exito');
     }
+
+    public function store(Request $request)
+    {
+        DB::table('settings')->insert([
+            "name"  => $request->name,
+            "value" => $request->value
+        ]);
+
+        return to_route('setting.index')->with('message', 'Nuevo elemento de configuracion creado');
+    }
 }
