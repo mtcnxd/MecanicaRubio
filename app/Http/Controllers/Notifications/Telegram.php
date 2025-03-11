@@ -11,7 +11,7 @@ class Telegram extends Controller
 {
     static function send(string $text)
     {
-        $token = DB::table('configurations')->where('name','telegram_api')->first()->value;
+        $token = DB::table('settings')->where('name','telegram_api')->first()->value;
         
         $url   = 'https://api.telegram.org/'. $token .'/sendMessage';
         
