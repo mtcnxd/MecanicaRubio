@@ -91,11 +91,16 @@ class ControllerAjax extends Controller
     public function loadEvent(Request $request)
     {
         $event = DB::table('calendar')
+            ->select('calendar.*', 'clients.name','clients.phone', 'autos.brand', 'autos.model')
             ->join('clients', 'calendar.client_id', 'clients.id')
+            ->join('autos', 'calendar.car_id', 'autos.id')
             ->where('calendar.id', $request->id)
             ->first();
 
-        return json_encode($event);
+        return Response()->json([
+            "success" => true,
+            "data"    => $event
+        ]);
     }
 
     /*

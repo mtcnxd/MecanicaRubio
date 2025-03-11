@@ -5,18 +5,21 @@
 @section('content')
 <div class="calendar shadow-sm">
     <div class="window-title-bar calendar-title-bar">
-        <x-feathericon-calendar class="window-title-icon"/>
+        <h4 class="text-center">
+            <x-feathericon-calendar class="window-title-icon" style="margin-top: -3px;"/>
+            {{ $calendar->monthName() }}
+        </h4>
     </div>
 
 	<div class="calendar-title pb-0">
-		@foreach ($daysOfWeek as $dayName)
+		@foreach ($calendar->weekDays() as $name)
 		<div class="day title">
-			{{ $dayName }}	
+			{{ $name }}	
 		</div>
 		@endforeach
 	</div>
 	<div class="calendar-body">
-        @for ($i = 0; $i < $weekStartsIn; $i++)
+        @for ($i = 0; $i < $calendar->startDay(); $i++)
             <div class="day date empty">
                 <div style="display: grid;">
                     <span class="day-label" style="visibility: hidden">0</span>
@@ -24,8 +27,8 @@
             </div>
         @endfor
 
-		@foreach ($events as $key => $event)
-			<div class="day date {{ ($key + 1 == $currentDate) ? 'active' : '' }}">
+		@foreach ($calendar->getEvents() as $key => $event)
+			<div class="day date {{ ($key + 1 == $calendar->currentDay()) ? 'active' : '' }}">
 				<div style="display: grid;">
 					<span class="day-label">{{ $key + 1 }}</span>
 					@if (isset($event->event))
@@ -73,6 +76,14 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
+                        Auto
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" id="car" disabled>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
                         Teléfono
                     </div>
                     <div class="col-md-9">
@@ -105,11 +116,11 @@ $(".event").on('click', function(){
         method: 'POST',
         data: {id},
         success: function(response){
-            const object = JSON.parse(response);
-            $("#event").val(object.event);
-            $("#description").val(object.description);
-            $("#client").val(object.name);
-            $("#phone").val(object.phone);
+            $("#event").val(response.data.event);
+            $("#description").val(response.data.description);
+            $("#client").val(response.data.name);
+            $("#car").val(response.data.brand + ' ' + response.data.model);
+            $("#phone").val(response.data.phone);
         }
     });
 })

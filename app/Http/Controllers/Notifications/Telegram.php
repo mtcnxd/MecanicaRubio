@@ -13,12 +13,16 @@ class Telegram extends Controller
     {
         $token = DB::table('settings')->where('name','telegram_api')->first()->value;
         
-        $url   = 'https://api.telegram.org/'. $token .'/sendMessage';
+        $url = 'https://api.telegram.org/'. $token .'/sendMessage';
         
-        return Http::post($url, array(
-            "chat_id"    => '-4785746771',
+        $response = Http::post($url, array(
+            "chat_id"    => '-1002434117829',
             "text" 	     => $text,
             "parse_mode" => "HTML"
         ));
+
+        if ($response->getStatusCode() == 400){
+            throw new \Exception("Error Processing Request: ". $response['description']);
+        }
     }
 }
