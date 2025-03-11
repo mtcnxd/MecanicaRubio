@@ -14,7 +14,7 @@ class Whatsapp extends Controller
     {
         $url   = 'https://graph.facebook.com/v21.0/590821560777074/messages';
 
-        $token = DB::table('configurations')->where('name','whatsapp_api')->first()->value;
+        $token = DB::table('settings')->where('name','whatsapp_api')->first()->value;
         
         if (is_null($template)){
             $template = self::helloWorld();
