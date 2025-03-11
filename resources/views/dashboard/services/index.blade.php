@@ -65,11 +65,16 @@
                     <td>{{ $service->brand }} {{ $service->model }}</td>
                     <td>{{ Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
                     <td>
-                        @if ($service->status == 'Pendiente')
+                        @switch($service->status)
+                        @case('Entregado')
+                            <span class="badge text-bg-success">{{ $service->status }}</span>
+                            @break
+                        @case('Pendiente')
                             <span class="badge text-bg-warning">{{ $service->status }}</span>
-                        @else
-                            <span>{{ $service->status }}</span>
-                        @endif
+                            @break
+                        @default
+                            <span class="badge text-bg-secondary">{{ $service->status }}</span>
+                        @endswitch
                     </td>
                     <td class="text-end">{{ "$".number_format($service->total, 2) }}</td>
                 </tr>

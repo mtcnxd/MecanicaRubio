@@ -10,7 +10,7 @@ class Settings extends Controller
 {   
     public function index()
     {
-        $configs = DB::table('setting')->get();
+        $configs = DB::table('settings')->get();
 
         return view('dashboard.admin.configuration', compact('configs'));
     }
@@ -19,7 +19,7 @@ class Settings extends Controller
     {
         foreach ($request->all() as $key => $value) {
             if ($key != '_token' and $key != '_method'){
-                DB::table('setting')->where('name', $key)->update([
+                DB::table('settings')->where('name', $key)->update([
                     "value" => $value
                 ]);
             }

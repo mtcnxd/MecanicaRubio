@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\Clients;
 use App\Http\Controllers\Dashboard\Employees;
 use App\Http\Controllers\Dashboard\Cars;
 use App\Http\Controllers\Dashboard\Payroll;
+use App\Http\Controllers\Dashboard\Finance;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,10 @@ Route::post('getClientsList', [
 Route::post('createServicePDF', [
     Services::class, 'createServicePDF'
 ])->name('services.createServicePDF');
+
+Route::post('closeMontlyBalance', [
+    Finance::class, 'closeMontlyBalance'
+])->name('finance.closeMontlyBalance');
 
 Route::post('searchPostcode', [
     ControllerAjax::class, 'searchPostcode'

@@ -185,9 +185,15 @@
                     <a href="#" class="btn btn-secondary" onclick="downloadPDF({{ $service->id }})">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
-                    </a>                    
+                    </a>
+                    <!-- 
                     <a href="{{ route('sendMail', $service->id) }}" class="btn btn-secondary">
                         <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
+                        Enviar
+                    </a>
+                    -->
+                    <a href="{{ route('sendMail', $service->id) }}" class="btn btn-secondary">
+                        <x-feathericon-message-circle class="table-icon" style="margin: -2px 5px 2px"/>
                         Enviar
                     </a>
                     <button type="submit" class="btn btn-success">

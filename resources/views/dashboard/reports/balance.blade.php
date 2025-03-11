@@ -55,7 +55,9 @@
                     <td></td>
                     <td></td>
                     <td class="text-end fw-bold">{{ "$".number_format($services->sum('price'), 2) }}</td>
+                    <input type="hidden" id="income" value="{{ $services->sum('price') }}">
                     <td class="text-end fw-bold">{{ "$".number_format($outgoing, 2) }}</td>
+                    <input type="hidden" id="expenses" value="{{ $outgoing }}">
                 </tr>
             </tfoot>
         </tbody>
@@ -81,6 +83,7 @@
             <a class="btn btn-sm btn-outline-success" id="closeFiscalMonth">
                 Conciliar mes actual
             </a>
+            <img src="{{ asset('image.gif') }}" width="20px" height="20px" style="display:none;" class="ms-2" id="loader">
         </div>
     </div>
 </div>
@@ -93,7 +96,30 @@
 
         btnClose.addEventListener('click', (btn) => {
             btn.preventDefault();
-            confirm('Estas seguro de querer conciliar mes actual');
+            let income   = document.getElementById('income').value;
+            let expenses = document.getElementById('expenses').value;
+
+            if (
+                confirm('¿Confirmas que deseas conciliar el mes actual?')
+            ){
+                $("#loader").show();
+
+                $.ajax({
+                    url: "{{ route('finance.closeMontlyBalance') }}",
+                    method: 'POST',
+                    data: {
+                        income:income,
+                        expenses:expenses
+                    },
+                    success: function(response){
+                        console.log(response);
+                    }
+                })
+                .then(() => {
+                    $("#loader").hide();
+                });
+            }
+
         })
     </script>
 @endsection

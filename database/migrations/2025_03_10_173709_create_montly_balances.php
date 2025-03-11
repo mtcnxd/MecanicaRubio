@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->double('income');
             $table->double('expenses');
-            $table->date('close_date');
+            $table->timestamp('close_date');
             $table->text('comments')->nullable();
-            $table->timestamps();
         });
     }
 
