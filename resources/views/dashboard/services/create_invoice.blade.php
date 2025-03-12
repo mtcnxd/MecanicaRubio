@@ -18,7 +18,7 @@
         </div>    
         <div style="float:left; text-align:center;">
             <pre style="font-size: 14px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
-                INGENIERIA MECANICA RUBIO.
+                INGENIERIA MECANICA RUBIO
                 C. 2D 268E, entre 65-G y 65-F
                 Col. Francisco Villa Oriente. 
                 C.P.: 97370 Mérida, Yuc.
@@ -28,28 +28,26 @@
     <br>
     <hr>
     <br>
-    <div style="background-color: #efefef; padding: 10px">
-        <h4 style="margin-top: 0px;">Order de Servicio</h4>
+    <div style="background-color: #efefef; padding: 10px; border:solid 1px #888;">
+        <h4 style="margin-top: 0px;">ORDEN DE SERVICIO</h4>
         <table width="100%">
             <tr>
-                <td width="75%"><b>Cliente:</b> {{ $client->name }}</td>
-                <td><b>Fecha: </b>{{ Carbon\Carbon::now()->format('d/m/Y') }}</td>
+                <td width="75%"><b style="font-size:12px">CLIENTE:</b> {{ $client->name }}</td>
+                <td><b style="font-size:12px">FECHA: </b>{{ Carbon\Carbon::now()->format('d/m/Y') }}</td>
             </tr>
             <tr>
-                <td width="75%"><b>Automovil:</b> {{ $auto->brand }} {{ $auto->model }} {{ $auto->year }}</td>
-                <td><b>Servicio: </b>{{ "#".$service->id }}</td>
+                <td width="75%"><b style="font-size:12px">AUTOMOVIL:</b> {{ $auto->brand }} {{ $auto->model }} {{ $auto->year }}</td>
+                <td><b style="font-size:12px">SERVICIO: </b>{{ "#".$service->id }}</td>
             </tr>
         </table>
     </div>
 
-    <div style="background-color: #ffffff; padding: 10px">
-        <h4>Servicio/Fallo reportado:</h4> 
-        {{ $service->fault }}
+    <div style="background-color: #efefef; padding: 10px; border:solid 1px #888; margin-top: 10px; padding-bottom: 0px; padding-top: 0px;">
+        <h4 class="padding-top: 0px">SERVICIO / FALLO REPORTADO</h4> 
+        <pre style="font-size: 14px; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{ $service->fault }}</pre>
     </div>
     
-    <p>
-        Lista de materiales y mano de obra del servicio:
-    </p>
+    <p> LISTA DE MATERIALES Y MANO DE OBRA REQUERIDOS PARA EL SERVICIO:</p>
 
     <hr>
     <table width="100%">

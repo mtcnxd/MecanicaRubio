@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Notifications\Telegram;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -38,6 +39,7 @@ class Cars extends Controller
         DB::table('autos')->insert([
             "brand"      => $request->brand,
             "model"      => $request->model,
+            "serie"      => $request->serie,
             "year"       => $request->year,
             "plate"      => $request->plate,
             "client_id"  => $request->client,
@@ -45,6 +47,10 @@ class Cars extends Controller
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now()
         ]);
+
+        Telegram::send(
+            sprintf("<b>New car created:</b> %s <b>Model:</b> %s", $request->brand, $request->model)
+        );
 
         return to_route('cars.index')->with('message', 'Los datos se guardaron correctamente');
     }

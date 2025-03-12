@@ -93,10 +93,10 @@
             <canvas id="services"></canvas>
         </div>
 
-        <div class="col-md-3 mb-4">
+        <div class="col-md-4 mb-4">
             <div class="widget-simple">
                 <div class="widget-simple-head">
-                    <span class="pt-1">Lista servicios entregados</span>
+                    <span class="pt-1">Lista autos entregados</span>
                     <x-feathericon-tool class="window-title-icon"/>
                 </div>
                 <div class="widget-simple-body" style="max-height:180px; overflow-y:overlay;">
@@ -105,6 +105,7 @@
                             <tr>
                                 <td>{{ $row +1 }}</td>
                                 <td>{{ $service->car }}</td>
+                                <td>{{ Carbon\Carbon::parse($service->due_date)->format('d-m-Y') }}</td>
                                 <td class="text-end">
                                     <x-feathericon-check-circle class="table-icon"/>
                                 </td>

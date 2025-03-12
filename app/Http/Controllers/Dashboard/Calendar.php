@@ -16,20 +16,20 @@ class Calendar extends Controller
     {
         $calendar = CalendarModel::getCalendar();
 
-        Whatsapp::send();
-
         return view('dashboard.services.calendar', compact('calendar'));
     }
 
     public function sendNotification()
     {
         $params = [
-            "client" => 'Marcos Tzuc',
-            "car"    => 'BMW 320i',
-            "date"   => '10 marzo 2025'
+            "recipient" => "+529991210261",
+            "customer"  => "Marcos Tzuc Cen",
+            "car"       => "BMW 330i",
+            "date"      => "15 de marzo"
         ];
         
         $template = Whatsapp::createServiceTemplate($params);
+        $response = Whatsapp::send();
         
         /*
         $response = Whatsapp::send($template);

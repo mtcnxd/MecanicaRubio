@@ -18,7 +18,7 @@
                     <th>Automovil</th>
                     <th>Cliente</th>
                     <th>Comentario</th>
-                    <th>Placa</th>
+                    <th>VIN</th>
                     <th>Año</th>
                     <th class="text-end">&nbsp;</th>
                 </tr>
@@ -38,7 +38,7 @@
                         </a>
                     </td>
                     <td>{{ $auto->comments }}</td>
-                    <td>{{ $auto->plate }}</td>
+                    <td>{{ $auto->serie }}</td>
                     <td>{{ $auto->year }}</td>
                     <td class="text-end">
                         <a href="{{ route('cars.edit', $auto->id) }}">

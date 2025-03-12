@@ -25,7 +25,7 @@
 
                 <div class="row col-md-6">
                     <div class="col-md-3 pt-2 text-end">
-                        Ingreso
+                        Entrada
                     </div>    
                     <div class="col-md-3">
                         <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->created_at)) }}">
@@ -68,7 +68,7 @@
 
                 <div class="row col-md-6 mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        Entrega
+                        Salida
                     </div>    
                     <div class="col-md-3">
                         @if (isset($service->due_date))

@@ -46,7 +46,18 @@
                             </span>
                         </div>
                     </div>    
-                </div>        
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        VIN
+                    </div>
+                    <div class="col-md-9">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="serie" placeholder="Vehicle Identification Number">
+                        </div>
+                    </div>    
+                </div>
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">

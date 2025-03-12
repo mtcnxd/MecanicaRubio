@@ -45,11 +45,12 @@
         <table class="table table-hover table-borderless" id="services" style="width:100%;">
             <thead>
                 <tr>
-                    <th width="400px">Servicio/Fallo</th>
-                    <th width="400px">Cliente</th>
+                    <th width="350px">Servicio/Fallo</th>
+                    <th width="270px">Cliente</th>
                     <th>Automovil</th>
-                    <th>Fecha servicio</th>
-                    <th>Estatus</th>
+                    <th>Entrada</th>
+                    <th class="text-center" width="130px">Salida</th>
+                    <th class="text-center" width="130px">Estatus</th>
                     <th class="text-end">Total</th>
                 </tr>
             </thead>
@@ -64,6 +65,7 @@
                     <td>{{ $service->name }}</td>
                     <td>{{ $service->brand }} {{ $service->model }}</td>
                     <td>{{ Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
+                    <td>{{ isset($service->due_date) ? Carbon\Carbon::parse($service->due_date)->format('d-m-Y') : null }}</td>
                     <td>
                         @switch($service->status)
                         @case('Entregado')
@@ -100,15 +102,16 @@ const applyFilter = document.querySelector('#applyFilter');
 const table = new DataTable('#services', 
 {
     processing: true,
-    serverSide: false,
+    // serverSide: true,
     searching: false,
     lengthChange:false,
-    pageLength: 10,
+    pageLength: 20,
     order: [3, 'asc'],
     /*
     ajax: {
-        url: "/api/getDataTableServices",
+        url: "{{ route('getDataTableServices') }}",
         data: function(data) {
+            console.log(data);
             data.startDate = startDate.value;
             data.endDate   = endDate.value;
             data.status    = status.value;
@@ -125,6 +128,8 @@ const table = new DataTable('#services',
             data:'car'
         },{
             data:'created_at'
+        },{
+            data:'due_date'
         },{
             data:'status'
         },{

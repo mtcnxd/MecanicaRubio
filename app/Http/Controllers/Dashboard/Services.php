@@ -22,19 +22,6 @@ class Services extends Controller
             ->join('clients', 'services.client_id', 'clients.id')
             ->get();
 
-
-        try {
-            $params = [
-                "recipient" => "+529991210261",
-                "customer"  => "Marcos Tzuc Cen",
-                "car"       => "BMW 330i",
-                "date"      => "15 de marzo"
-            ];
-
-        } catch(Exception $err){
-            session()->flash('message', $err->getMessage());
-        }
-
         return view('dashboard.services.index', compact('services'));
     }
 
@@ -101,12 +88,20 @@ class Services extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $currentData = DB::table('services')->where('id', $id)->first();
+
+        if ($currentData->status == 'Entregado'){
+            $dueDate = $currentData->due_date;
+        } else {
+            $dueDate = Carbon::now();
+        }
+
         DB::table('services')->where('id', $id)->update([
             'total'    => $request->total,
             'notes'    => $request->notes,
             'status'   => $request->status,
             'odometer' => $request->odometer,
-            'due_date' => ($request->status == 'Entregado') ? Carbon::now() : null,
+            'due_date' => ($request->status == 'Entregado') ? $dueDate : null,
             'created_at' => Carbon::parse($request->entry)
         ]);
 
@@ -147,12 +142,13 @@ class Services extends Controller
     public function dashboard()
     {
         $services = DB::table('services_view')
-            ->select(DB::raw('sum(price) as price, car'))
+            ->select(DB::raw('sum(price) as price, car, due_date'))
             ->join('services_items','services_view.id','services_items.service_id')
             ->where('services_items.labour', true)
             ->where('services_view.status', 'Entregado')
             ->whereBetween('services_view.due_date', [Carbon::now()->format('Y-m-01'), Carbon::now()])
-            ->groupBy('services_view.car')
+            ->groupBy('services_view.car','due_date')
+            ->orderBy('services_view.due_date')
             ->get();
 
         $expenses = DB::table('expenses')
@@ -164,7 +160,7 @@ class Services extends Controller
             ->whereBetween('created_at', [Carbon::now()->format('Y-m-01'), Carbon::now()])
             ->get();
 
-        return view('dashboard.index',[
+        return view('dashboard.dashboard',[
             'services' => $services,
             'expenses' => $expenses,
             'salaries' => $salaries,

@@ -103,9 +103,8 @@ class ControllerAjax extends Controller
         ]);
     }
 
-    /*
-    Pending for serverSide
-
+    
+    // Pending for serverSide
     public function getDataTableServices(Request $request)
     {
         $serviceData = DB::table('services_view')
@@ -130,6 +129,9 @@ class ControllerAjax extends Controller
             ->addColumn('created_at', function($service){
                 return Carbon::parse($service->created_at)->format('d-m-Y');
             })
+            ->addColumn('due_date', function($service){
+                return Carbon::parse($service->due_date)->format('d-m-Y');
+            })
             ->addColumn('status', function($service){
                 if ($service->status == 'Finalizado' || $service->status == 'Entregado'){
                     return '<span class="badge text-bg-success">'. $service->status .'</span>';
@@ -147,7 +149,6 @@ class ControllerAjax extends Controller
             ->rawColumns(['fault','status'])
             ->make(true);
     }
-    */
 
     public function getDataTableExpenses(Request $request)
     {
