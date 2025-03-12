@@ -9,7 +9,7 @@
     </div>
     <div class="window-body bg-white">
         <label class="window-body-form">Editar automovil</label>
-        <form action="{{ route('autos.update', $auto->id) }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('cars.update', $auto->id) }}" method="POST" class="border pt-5 pb-4">
             @csrf
             @method('PUT')
             <div class="col-md-6">                

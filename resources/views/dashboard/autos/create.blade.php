@@ -9,7 +9,7 @@
     </div>
     <div class="window-body bg-white">
         <label class="window-body-form">Registrar nuevo automovil</label>
-        <form action="{{ route('autos.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('cars.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf
             @method('POST')
             <div class="col-md-6">                
