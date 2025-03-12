@@ -100,7 +100,7 @@ class Cars extends Controller
             "comments" => $request->comments,
         ]);
 
-        return to_route('autos.index')->with('message', 'Los datos se guardaron correctamente');
+        return to_route('cars.index')->with('message', 'Los datos se guardaron correctamente');
     }
 
     /**
