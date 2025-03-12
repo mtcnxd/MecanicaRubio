@@ -46,7 +46,7 @@ class Cars extends Controller
             "updated_at" => Carbon::now()
         ]);
 
-        return to_route('autos.index')->with('message', 'Los datos se guardaron correctamente');
+        return to_route('cars.index')->with('message', 'Los datos se guardaron correctamente');
     }
 
     /**
