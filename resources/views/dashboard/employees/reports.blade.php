@@ -1,7 +1,7 @@
 @extends('includes.body')
 
 @section('menu')
-@include('includes.menu')
+    @include('includes.menu')
 @endsection
 
 @section('content')

@@ -1,9 +1,11 @@
 @extends('includes.body')
 
-@extends('includes.menu')
+@section('menu')
+    @include('includes.menu')
+@endsection
 
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content">
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>

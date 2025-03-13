@@ -1,6 +1,8 @@
 @extends('includes.body')
 
-@extends('includes.menu')
+@section('menu')
+    @include('includes.menu')
+@endsection
 
 @section('content')
 <div class="shadow-sm main-content">
@@ -163,8 +165,9 @@
                         <table class="table table-hover" id="table-items">
                             <thead>
                                 <th>Automovil</th>
+                                <th>VIN <span class="text-muted"> (Vehicle Identification Number)</span></th>
                                 <th>Matrícula</th>
-                                <th class="text-end">Modelo/Año</th>
+                                <th class="text-end">Año</th>
                             </thead>
                             <tbody>
                                 @foreach ($cars as $car)
@@ -173,6 +176,7 @@
                                         <x-feathericon-arrow-right-circle class="table-icon" style="margin: 0 5px 2px"/>
                                         <a href="{{ route('cars.show', $car->id) }}">{{ $car->brand }} {{ $car->model }}</a>
                                     </td>
+                                    <td>{{ $car->serie }}</td>
                                     <td>{{ $car->plate }}</td>
                                     <td class="text-end">{{ $car->year }}</td>
                                 </tr>

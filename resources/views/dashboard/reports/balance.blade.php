@@ -65,13 +65,40 @@
 </div>
 
 <div class="main-content mb-0">
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-header fs-6">
-                <strong>Saldo restante</strong>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header fs-6">
+                    <strong>Saldo anterior</strong>
+                </div>
+                <div class="card-body">
+                    {{ "$".number_format($lastBalance->income, 2) }}
+                </div>
             </div>
-            <div class="card-body">
-                {{ "$".number_format($services->sum('price') - $outgoing, 2) }}
+        </div>
+    
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header fs-6">
+                    <strong>Saldo actual <span class="fs-8 text-muted">(Ingresos-Egresos)</span></strong>
+                </div>
+                <div class="card-body">
+                    @php
+                        $currentBalance = $services->sum('price') - $outgoing;
+                    @endphp
+                    {{ "$".number_format($currentBalance, 2) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header fs-6">
+                    <strong>Saldo nuevo</strong>
+                </div>
+                <div class="card-body">
+                    {{ "$".number_format($lastBalance->income + $currentBalance, 2) }}
+                </div>
             </div>
         </div>
     </div>

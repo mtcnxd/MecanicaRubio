@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CalendarModel;
 use Carbon\Carbon;
+use Exception;
 use DB;
 
 class Calendar extends Controller
@@ -15,6 +16,15 @@ class Calendar extends Controller
     public function index()
     {
         $calendar = CalendarModel::getCalendar();
+
+        // session()->flash('success', "Hola mundo" );
+
+        try {
+            self::sendNotification();
+
+        } catch (Exception $err){
+            session()->flash('warning', $err->getMessage() );
+        }
 
         return view('dashboard.services.calendar', compact('calendar'));
     }
@@ -27,13 +37,10 @@ class Calendar extends Controller
             "car"       => "BMW 330i",
             "date"      => "15 de marzo"
         ];
+
+        # $response = Whatsapp::send($template);
         
         $template = Whatsapp::createServiceTemplate($params);
-        $response = Whatsapp::send();
-        
-        /*
-        $response = Whatsapp::send($template);
-        $response->json()['messages'][0]['message_status'];
-        */
+        Whatsapp::send();
     }
 }

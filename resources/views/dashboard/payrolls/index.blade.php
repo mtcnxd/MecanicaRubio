@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content">
     <div class="window-title-bar">
         <h6 class="window-title-text">Listado de nominas</h6>
         <x-feathericon-dollar-sign class="window-title-icon"/>

@@ -1,11 +1,12 @@
 @extends('includes.body')
 
-@extends('includes.menu')
+@section('menu')
+    @include('includes.menu')
+@endsection
 
 @section('content')
-<div class="calendar shadow-sm">
+<div class="calendar">
     @include('includes.div_warning')
-
     <div class="window-title-bar calendar-title-bar">
         <h4 class="text-center">
             <x-feathericon-calendar class="window-title-icon" style="margin-top: -3px;"/>
@@ -13,14 +14,14 @@
         </h4>
     </div>
 
-	<div class="calendar-title pb-0">
-		@foreach ($calendar->weekDays() as $name)
-		<div class="day title">
-			{{ $name }}	
-		</div>
-		@endforeach
-	</div>
-	<div class="calendar-body">
+    <div class="calendar-title pb-0">
+        @foreach ($calendar->weekDays() as $name)
+        <div class="day title">
+            {{ $name }}	
+        </div>
+        @endforeach
+    </div>
+    <div class="calendar-body">
         @for ($i = 0; $i < $calendar->startDay(); $i++)
             <div class="day date empty">
                 <div style="display: grid;">
@@ -29,17 +30,17 @@
             </div>
         @endfor
 
-		@foreach ($calendar->getEvents() as $key => $event)
-			<div class="day date {{ ($key + 1 == $calendar->currentDay()) ? 'active' : '' }}">
-				<div style="display: grid;">
-					<span class="day-label">{{ $key + 1 }}</span>
-					@if (isset($event->event))
-						<a href="#" id="{{ $event->id }}" class='event' data-bs-toggle="modal" data-bs-target="#eventDetails">{{ $event->event }}</a>	
-					@endif
-				</div>
-			</div>
-		@endforeach
-	</div>
+        @foreach ($calendar->getEvents() as $key => $event)
+            <div class="day date {{ ($key + 1 == $calendar->currentDay()) ? 'active' : '' }}">
+                <div style="display: grid;">
+                    <span class="day-label">{{ $key + 1 }}</span>
+                    @if (isset($event->event))
+                        <a href="#" id="{{ $event->id }}" class='event' data-bs-toggle="modal" data-bs-target="#eventDetails">{{ $event->event }}</a>	
+                    @endif
+                </div>
+            </div>
+        @endforeach
+    </div>
 </div>
 @endsection
 

@@ -40,7 +40,7 @@ class Clients extends Controller
         $contactExists = DB::table('clients')->where('phone', $request->phone)->first();
 
         if ($contactExists){
-            session()->flash('message', 'El número de teléfono ya esta registrado');
+            session()->flash('warning', 'El número de teléfono ya esta registrado');
             return to_route('clients.index');
         }
 
@@ -63,7 +63,7 @@ class Clients extends Controller
             sprintf("<b>New client created:</b> %s <b>Phone:</b> %s", $request->name, $request->phone)
         );
 
-        session()->flash('message', 'El cliente se guardó correctamente');
+        session()->flash('success', 'El cliente se guardó correctamente');
         return to_route('clients.index');
     }
 

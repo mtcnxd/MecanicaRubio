@@ -1,7 +1,6 @@
 .calendar {
     max-width: 75%;
     margin: 5rem auto;
-    background-color: #fff;
 }
 
 .calendar-title-bar {
@@ -28,6 +27,7 @@
     width: 100%;
     display: inline-table;
     border: solid 2px var(--red-400);
+    background-color: #fff;
 }
 
 .calendar .day {

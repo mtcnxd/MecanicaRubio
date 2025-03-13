@@ -106,6 +106,10 @@ class Expenses extends Controller
             ->where('status','Pagado')
             ->get();
 
-        return view('dashboard.reports.balance', compact('services', 'salaries', 'expenses'));
+        $lastBalance = DB::table('montly_balances')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        return view('dashboard.reports.balance', compact('services', 'salaries', 'expenses', 'lastBalance'));
     }
 }

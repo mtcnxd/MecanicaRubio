@@ -15,13 +15,12 @@ class Finance extends Controller
             ->where('client_id', $client)
             ->get();
 
-        $resumen = DB::table('services')
-            ->select('status', DB::raw('count(*) as count'), DB::raw('sum(total) as total'))
-            ->where('client_id', $client)
-            ->groupBy('status')
+        $items = DB::table('services')
+            ->join('services_items', 'services.id', 'services_items.service_id')
+            ->where('services.client_id', $client)
             ->get();
 
-        return view('dashboard.clients.finance', compact('services', 'resumen'));
+        return view('dashboard.clients.finance', compact('services', 'items'));
     }
 
     public function closeMontlyBalance(Request $request)

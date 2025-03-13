@@ -5,13 +5,13 @@
 @endsection
 
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content">
+    @include('includes.div_warning')
     <div class="window-title-bar">
         <h6 class="window-title-text">Buscar Empleado</h6>
         <x-feathericon-tool class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        @include('includes.div_warning')
         <table class="table table-hover table-borderless" id="services">
             <thead>
                 <tr>

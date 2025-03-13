@@ -23,7 +23,7 @@ class Whatsapp extends Controller
         $response = Http::withToken($token)->post($url, $template);
 
         if (!$response->successful()){
-            session()->flash('message',$response->json()['error']['message']);
+            session()->flash('warning', $response->json()['error']['message']);
         }
 
         return $response;

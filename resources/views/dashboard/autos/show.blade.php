@@ -1,6 +1,8 @@
 @extends('includes.body')
 
-@extends('includes.menu')
+@section('menu')
+    @include('includes.menu')
+@endsection
 
 @section('content')
 <div class="shadow-sm main-content">
@@ -163,8 +165,9 @@
         <div class="col-md-12 p-4 pb-2" style="padding-right: 40px; padding-left:40px">
             <table class="table table-hover" id="table-items">
                 <thead>
-                    <th>Servicio/Fallo</th>
-                    <th>Fecha</th>
+                    <th>Servicio / Falla</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
                     <th>Status</th>
                     <th class="text-end">Total</th>
                 </thead>
@@ -175,6 +178,7 @@
                                 <a href="{{ route('services.show', $service->id) }}">{{ Str::limit($service->fault, 80) }}</a>
                             </td>
                             <td>{{ \Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($service->due_date)->format('d-m-Y') }}</td>
                             <td>
                                 <span class="badge text-bg-success">{{ $service->status }}</span>
                             </td>
