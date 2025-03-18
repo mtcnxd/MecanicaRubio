@@ -231,7 +231,8 @@
                         Descripción
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" id="item">
+                        <input type="text" class="form-control" id="item" autocomplete="off">
+                        <ul id="resultListItems" style="display:none; z-index:10;" class="float-suggestions"></ul>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -294,6 +295,23 @@ $("#labour").on('change', function(){
     }
 });
 
+$("#item").on('keyup', function(){
+    if (this.value.length >= 5){
+        $.ajax({
+            url: "{{ route('services.getServiceItems') }}",
+            method: "POST",
+            data: {text:this.value},
+            success:function (response){
+                $("#resultListItems").empty();
+                $("#resultListItems").show();
+                response.data.forEach( (item) => {
+                    $("#resultListItems").append("<li onClick='selectItem(this)'>"+ item.item +"</li>");
+                })
+            }
+        });
+    }
+});
+
 $("#addItemInvoice").on('click', function(event){
     var service  = $("#service").val();
     var amount   = $("#amount").val();
@@ -303,7 +321,6 @@ $("#addItemInvoice").on('click', function(event){
     var labour   = $("#labour").prop('checked');
 
     if (item.length < 3 && !labour) {
-        console.log("Debe escribir una descripcion");
         $("#item").focus();
         return;
     }
@@ -330,20 +347,23 @@ $("#addItemInvoice").on('click', function(event){
 
 $(".removeItem").on('click', function (event){
     event.preventDefault();
-    const service = $("#service").val();
-    const item = this.id;
-    
     $.ajax({
         url:"{{ route('removeItemInvoice') }}",
         method:'POST',
         data: {
-            item:item
+            item:this.id
         },
         success:function(response){
             showMessageAlert(response);
         }
     });
 });
+
+function selectItem(element){
+    let input = document.getElementById('item');
+    input.value = element.textContent;
+    $("#resultListItems").hide();
+}
 
 function showMessageAlert(message){
     Swal.fire({

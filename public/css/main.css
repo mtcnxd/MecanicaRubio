@@ -150,11 +150,15 @@ a:hover {
     list-style: none;
     border: solid 1px #ddd;
     border-radius: 0 0 5px 5px;
-    background-color: #efefef;
+    background-color: #fafafaee;
     padding-left: 0px;
+    cursor: default;
 }
 
 .float-suggestions > * {
-    padding: 5px 5px;
-    margin: 0 10px;
+    padding: 5px 5px 5px 10px
+}
+
+.float-suggestions > li:hover {
+    background-color: var(--amber-100);
 }

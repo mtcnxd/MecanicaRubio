@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Helpers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use DataTables;
 use Exception;
+use Str;
 use PDF;
 use DB;
 
@@ -16,28 +18,29 @@ class Services extends Controller
 {
     public function index()
     {
+        /*
         $services = DB::table('services')
             ->select('services.*', 'autos.brand', 'autos.model', 'clients.name')
             ->join('autos', 'services.car_id', 'autos.id')
             ->join('clients', 'services.client_id', 'clients.id')
             ->get();
+        */
+
+        $services = array();
 
         return view('dashboard.services.index', compact('services'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $clients = DB::table('clients')->where('status','Activo')->orderBy('name')->get();
+        $clients = DB::table('clients')
+            ->where('status','Activo')
+            ->orderBy('name')
+            ->get();
 
         return view('dashboard.services.create', compact('clients'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $serviceId = DB::table('services')->insertGetId([
@@ -52,15 +55,12 @@ class Services extends Controller
         ]);
 
         Telegram::send(
-            sprintf("<b>New service created:</b> %s", $request->fault)
+            sprintf("<b>New service created:</b> #%s <b>Fault:</b> %s", $serviceId, $request->fault)
         );
 
         return to_route('services.index')->with('message', 'Los datos se guardaron con exito');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $service = DB::table('services')
@@ -75,17 +75,11 @@ class Services extends Controller
         return view('dashboard.services.show', compact('service','items'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $currentData = DB::table('services')->where('id', $id)->first();
@@ -185,5 +179,69 @@ class Services extends Controller
         );
         
         return to_route('services.show', $serviceid);
+    }
+
+    public function getServiceItems(Request $request)
+    {
+        $results = DB::table('services_items')
+            ->select('item')
+            ->where('item', 'like', '%'.$request->text.'%')
+            ->groupBy('item')
+            ->orderBy('item')
+            ->get();
+
+        return Response()->json([
+            "success" => true,
+            "data"    => $results
+        ]);
+    }
+
+    public function getDataTableServices(Request $request)
+    {
+        $serviceData = DB::table('services_view')
+            ->get();
+
+        if($request->startDate && $request->endDate){
+            $serviceData = DB::table('services_view')
+                ->whereBetween('created_at', [$request->startDate, $request->endDate])
+                ->get();
+        }
+
+        if ($request->status != 'Todos'){
+            $serviceData = DB::table('services_view')
+                ->where('status', $request->status)
+                ->get();
+        }
+
+        return DataTables::of($serviceData)
+            ->addColumn('fault', function($service){
+                return '<a href="'. route("services.show", $service->id) .'">'. Str::limit($service->fault, 40) ."</a>";
+            })
+            ->addColumn('created_at', function($service){
+                return Carbon::parse($service->created_at)->format('d-m-Y');
+            })
+            ->addColumn('due_date', function($service){
+                if ($service->due_date == null){
+                    return null;
+                }
+
+                return Carbon::parse($service->due_date)->format('d-m-Y');
+            })
+            ->addColumn('status', function($service){
+                if ($service->status == 'Entregado'){
+                    return '<span class="badge text-bg-success">'. $service->status .'</span>';
+                }
+                else if ($service->status == 'Cancelado' || $service->status == 'Esperando refaccion') {
+                    return '<span class="badge text-bg-secondary">'. $service->status .'</span>';
+                }
+                else {
+                    return '<span class="badge text-bg-warning">'. $service->status .'</span>';
+                }
+            })
+            ->addColumn('total', function($service){
+                return '$'.number_format($service->total, 2);
+            })
+            ->rawColumns(['fault','status'])
+            ->make(true);
     }
 }

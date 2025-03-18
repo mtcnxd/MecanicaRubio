@@ -113,34 +113,21 @@
 $(document).ready(function() {
     $("#select-client").select2();
 
-    const select_cars = $("#car");
+    const selectCars = $("#car");
     $("#select-client").on('change', function(){
-        const client = this.value
-
         $.ajax({
-            url: "{{ route('carsByClient') }}",
+            url: "{{ route('cars.searchByClient') }}",
             method: 'POST',
-            data: {
-                client
-            },
+            data: {client: this.value},
             success:function(response){
-                const object = JSON.parse(response);
-                select_cars.empty();
-                object.forEach(car => {
-                    select_cars.append('<option value="'+ car.id +'">'+ car.brand +' '+ car.model +'</option>');
+                selectCars.empty();
+                response.data.forEach(car => {
+                    selectCars.append('<option value="'+ car.id +'">'+ car.brand +' '+ car.model +' '+ car.year +'</option>');
                 });
             }
         });
     });
 
 });
-
-function showMessageAlert(){
-    Swal.fire({
-        text: 'Los datos se guardaron correctamente',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-    })
-}
 </script>    
 @endsection

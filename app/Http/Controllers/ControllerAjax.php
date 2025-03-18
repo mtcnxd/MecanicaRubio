@@ -11,22 +11,6 @@ use DB;
 
 class ControllerAjax extends Controller
 {
-    public function searchPostcode(Request $request)
-    {
-        $result = DB::table('postalcodes')
-            ->where('postalcode', $request->postcode)
-            ->orderBy('address')
-            ->get();
-
-        return json_encode($result);
-    }
-
-    public function carsByClient(Request $request)
-    {
-        $autos = DB::table('autos')->where('client_id', $request->client)->orderBy('brand')->get();
-        return json_encode($autos);
-    }
-
     public function createItemInvoice(Request $request)
     {
         $labour = false;
@@ -78,16 +62,6 @@ class ControllerAjax extends Controller
         return 'Eliminado correctamente';
     }
 
-    public function searchPostalCode(Request $request)
-    {
-        $addresses = DB::table('postalcodes')
-            ->where('address','LIKE', "%".$request->address."%")
-            ->limit(15)
-            ->get();
-
-        return json_encode($addresses);
-    }
-
     public function loadEvent(Request $request)
     {
         $event = DB::table('calendar')
@@ -103,54 +77,6 @@ class ControllerAjax extends Controller
         ]);
     }
 
-    public function getDataTableServices(Request $request)
-    {
-        $serviceData = DB::table('services_view')
-            ->get();
-
-        if($request->startDate && $request->endDate){
-            $serviceData = DB::table('services_view')
-                ->whereBetween('created_at', [$request->startDate, $request->endDate])
-                ->get();
-        }
-
-        if ($request->status != 'Todos'){
-            $serviceData = DB::table('services_view')
-                ->where('status', $request->status)
-                ->get();
-        }
-
-        return DataTables::of($serviceData)
-            ->addColumn('fault', function($service){
-                return '<a href="'. route("services.show", $service->id) .'">'. Str::limit($service->fault, 40) ."</a>";
-            })
-            ->addColumn('created_at', function($service){
-                return Carbon::parse($service->created_at)->format('d-m-Y');
-            })
-            ->addColumn('due_date', function($service){
-                if ($service->due_date == null){
-                    return null;
-                }
-
-                return Carbon::parse($service->due_date)->format('d-m-Y');
-            })
-            ->addColumn('status', function($service){
-                if ($service->status == 'Entregado'){
-                    return '<span class="badge text-bg-success">'. $service->status .'</span>';
-                }
-                else if ($service->status == 'Cancelado' || $service->status == 'Esperando refaccion') {
-                    return '<span class="badge text-bg-secondary">'. $service->status .'</span>';
-                }
-                else {
-                    return '<span class="badge text-bg-warning">'. $service->status .'</span>';
-                }
-            })
-            ->addColumn('total', function($service){
-                return '$'.number_format($service->total, 2);
-            })
-            ->rawColumns(['fault','status'])
-            ->make(true);
-    }
 
     public function getDataTableExpenses(Request $request)
     {

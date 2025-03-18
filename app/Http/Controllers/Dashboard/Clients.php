@@ -130,4 +130,30 @@ class Clients extends Controller
             "data"    => $data
         ]);
     }
+
+    public function searchByPostcode(Request $request)
+    {
+        $result = DB::table('postalcodes')
+            ->where('postalcode', $request->postcode)
+            ->orderBy('address')
+            ->get();
+
+        return Response()->json([
+            "success" => true,
+            "data"    => $result
+        ]);
+    }
+
+    public function searchByAddress(Request $request)
+    {
+        $addresses = DB::table('postalcodes')
+            ->where('address','LIKE', "%".$request->address."%")
+            ->limit(15)
+            ->get();
+
+        return response()->json([
+            "success" => true,
+            "data"    => $addresses
+        ]);
+    }
 }

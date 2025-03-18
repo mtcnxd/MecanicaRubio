@@ -188,7 +188,20 @@ class Cars extends Controller
         } catch (Exception $e){
             return $e->getMessage();
         }
-    }    
+    }
+
+    public function searchByClient(Request $request)
+    {
+        $cars = DB::table('autos')
+            ->where('client_id', $request->client)
+            ->orderBy('brand')
+            ->get();
+        
+        return response()->json([
+            "success" => true,
+            "data"    => $cars
+        ]);
+    }
 
     public function report()
     {

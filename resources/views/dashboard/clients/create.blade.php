@@ -23,10 +23,8 @@
                         Nombre
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="name" id="name" required>
-                        <ul id="resultClientsList" style="display: none;" class="float-suggestions">
-                            <li>Results</li>
-                        </ul>
+                        <input type="text" class="form-control" name="name" id="name" required autocomplete="off">
+                        <ul id="resultClientsList" style="display: none;" class="float-suggestions"></ul>
                     </div>
                 </div>
 
@@ -146,10 +144,8 @@
                         Colonia
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" id="textPostalCode">
-                        <ul id="resultPostalList" style="display: none;" class="float-suggestions">
-                            <li>Results</li>
-                        </ul>
+                        <input type="text" class="form-control" id="textPostalCode" autocomplete="off">
+                        <ul id="resultPostalList" style="display: none;" class="float-suggestions"></ul>
                     </div>
                 </div>
             </div>
@@ -165,6 +161,49 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    $('#name').on('keyup', function(){
+        if (this.value.length >= 5){
+            $.ajax({
+                url: "{{ route('clients.getClientsList') }}",
+                method: "POST",
+                data: {name:this.value},
+                success:function (response){
+                    console.log(response);
+                    $("#resultClientsList").empty();
+                    $("#resultClientsList").show();
+                    response.data.forEach( (client) => {
+                        $("#resultClientsList").append("<li>"+ client.name +"</li>");
+                    })
+                }
+            })
+        }
+    });
+
+    $("#postcode").on('focus', function(){
+        ajaxRequest(this);
+    })
+
+    $("#postcode").on('keyup', function() {
+        ajaxRequest(this);
+    });
+
+    $("#textPostalCode").on('keyup', function(){
+        if (this.value.length > 3) {
+            $.ajax({
+                url:"{{ route('clients.searchByAddress') }}",
+                method: 'POST',
+                data:{ address:this.value },
+                success: function(response){
+                    $("#resultPostalList").empty();
+                    $("#resultPostalList").show();
+                    response.data.forEach(function(pc){
+                        $("#resultPostalList").append("<li onClick='selectItem("+ pc.postalcode +")'>" + pc.postalcode +" - "+ pc.address + "</a></li>");
+                    })
+                }
+            });
+        }
+    });
+
     $("#deleteClient").on('click', function(btn){
         var client = $(this).data('bsClient');
 
@@ -180,75 +219,28 @@
         });
     });
 
-    $('#name').on('keyup', function(){
-        let name = $("#name").val();
-
-        if (name.length >= 5){
-            console.log(name);
-
+    function ajaxRequest(element){
+        if (element.value.length >= 4){
             $.ajax({
-                url: "/api/getClientsList",
-                method: "POST",
-                data: {name},
-                success:function (response){
-                    console.log(response);
-                    $("#resultClientsList").empty();
-                    $("#resultClientsList").show();
-                    response.data.forEach( (client) => {
-                        $("#resultClientsList").append("<li>"+ client.name +"</li>");
-                    })
-                }
-            })
-
-        }
-
-    });
-
-    $("#postcode").on('keyup', function() {
-        var postcode = this.value;
-
-        if (postcode.length >= 4){
-            $.ajax({
-                url: "{{ route('searchPostcode') }}",
+                url: "{{ route('clients.searchByPostcode') }}",
                 method: 'POST',
                 data: {
-                    postcode:postcode
+                    postcode:element.value
                 },
                 success: function(response){
                     $("#address").empty();
-                    const object = JSON.parse(response);
 
-                    object.forEach(element => {
+                    console.log(response);
+
+                    response.data.forEach(element => {
                         $("#address").append('<option>' + element.address + '</option>');
                         $("#city").val(element.city);
                         $("#state").val(element.state);
                     });
-
                 }
             });
         }
-    });
-
-    $("#textPostalCode").on('keyup', function(){
-        var address = this.value;
-        if (address.length > 3) {
-            $.ajax({
-                url:"{{ route('searchPostalCode') }}",
-                method: 'POST',
-                data:{
-                    address:address
-                },
-                success: function(response){
-                    const postalCodes = JSON.parse(response);
-                    $("#resultPostalList").empty();
-                    $("#resultPostalList").show();
-                    $.each(postalCodes, function(index, pc){
-                        $("#resultPostalList").append("<li onClick='selectItem("+ pc.postalcode +")'>" + pc.postalcode +" - "+ pc.address + "</a></li>");
-                    })
-                }
-            });
-        }
-    });
+    }
 
     function selectItem(postalcode){
         $("#searchModal").modal('hide');

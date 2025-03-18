@@ -46,6 +46,10 @@ Route::post('loadModels', [
     Cars::class, 'loadModels'
 ])->name('loadModels');
 
+Route::post('searchByClient', [
+    Cars::class, 'searchByClient'
+])->name('cars.searchByClient');
+
 Route::post('manageSalaries', [
     Payroll::class, 'manageSalaries'
 ])->name('manageSalaries');
@@ -60,23 +64,31 @@ Route::post('deleteClient', [
 
 Route::post('getClientsList', [
     Clients::class, 'getClientsList'
-])->name('getClientsList');
+])->name('clients.getClientsList');
+
+Route::post('searchByPostcode', [
+    Clients::class, 'searchByPostcode'
+])->name('clients.searchByPostcode');
+
+Route::post('searchByAddress', [
+    Clients::class, 'searchByAddress'
+])->name('clients.searchByAddress');
+
+Route::get('getDataTableServices', [
+    Services::class, 'getDataTableServices'
+])->name('getDataTableServices');
 
 Route::post('createServicePDF', [
     Services::class, 'createServicePDF'
 ])->name('services.createServicePDF');
 
+Route::post('getServiceItems', [
+    Services::class, 'getServiceItems'
+])->name('services.getServiceItems');
+
 Route::post('closeMontlyBalance', [
     Finance::class, 'closeMontlyBalance'
 ])->name('finance.closeMontlyBalance');
-
-Route::post('searchPostcode', [
-    ControllerAjax::class, 'searchPostcode'
-])->name('searchPostcode');
-
-Route::post('carsByClient', [
-    ControllerAjax::class, 'carsByClient'
-])->name('carsByClient');
 
 Route::post('createItemInvoice', [
     ControllerAjax::class, 'createItemInvoice'
@@ -86,17 +98,9 @@ Route::post('removeItemInvoice', [
     ControllerAjax::class, 'removeItemInvoice'
 ])->name('removeItemInvoice');
 
-Route::post('searchPostalCode', [
-    ControllerAjax::class, 'searchPostalCode'
-])->name('searchPostalCode');
-
 Route::post('loadEvent', [
     ControllerAjax::class, 'loadEvent'
 ])->name('loadEvent');
-
-Route::get('getDataTableServices', [
-    ControllerAjax::class, 'getDataTableServices'
-])->name('getDataTableServices');
 
 Route::get('getDataTableExpenses', [
     ControllerAjax::class, 'getDataTableExpenses'
