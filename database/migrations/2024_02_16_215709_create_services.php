@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('client_id');
             $table->integer('car_id');
             $table->integer('odometer')->nullable();
+            $table->string('service_type')->nullable();
             $table->text('fault');
             $table->text('comments')->nullable();
             $table->string('status')->default('Pendiente');

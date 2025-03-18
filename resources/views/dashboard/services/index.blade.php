@@ -102,22 +102,19 @@ const applyFilter = document.querySelector('#applyFilter');
 const table = new DataTable('#services', 
 {
     processing: true,
-    // serverSide: true,
+    serverSide: true,
     searching: false,
     lengthChange:false,
-    pageLength: 20,
-    order: [3, 'asc'],
-    /*
+    pageLength: 15,
+    order: [4, 'asc'],
     ajax: {
         url: "{{ route('getDataTableServices') }}",
         data: function(data) {
-            console.log(data);
             data.startDate = startDate.value;
             data.endDate   = endDate.value;
             data.status    = status.value;
         }
     },
-    */
     columns:[
         {
             data:'fault',

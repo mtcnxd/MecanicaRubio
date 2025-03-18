@@ -103,8 +103,6 @@ class ControllerAjax extends Controller
         ]);
     }
 
-    
-    // Pending for serverSide
     public function getDataTableServices(Request $request)
     {
         $serviceData = DB::table('services_view')
@@ -130,13 +128,17 @@ class ControllerAjax extends Controller
                 return Carbon::parse($service->created_at)->format('d-m-Y');
             })
             ->addColumn('due_date', function($service){
+                if ($service->due_date == null){
+                    return null;
+                }
+
                 return Carbon::parse($service->due_date)->format('d-m-Y');
             })
             ->addColumn('status', function($service){
-                if ($service->status == 'Finalizado' || $service->status == 'Entregado'){
+                if ($service->status == 'Entregado'){
                     return '<span class="badge text-bg-success">'. $service->status .'</span>';
                 }
-                else if ($service->status == 'Cancelado') {
+                else if ($service->status == 'Cancelado' || $service->status == 'Esperando refaccion') {
                     return '<span class="badge text-bg-secondary">'. $service->status .'</span>';
                 }
                 else {

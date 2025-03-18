@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('model');
             $table->string('year')->nullable();
             $table->string('plate')->nullable();
+            $table->string('serie')->nullable();
             $table->integer('client_id')->nullable();
             $table->text('comments')->nullable();
             $table->enum('status',['Activo','Eliminado'])->default('Activo');
