@@ -16,12 +16,12 @@
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-2">
                 <label class="fw-bold">Inicio</label>
-                <input type="date" class="form-control" value="{{ $startDate }}" id="startDate">
+                <input type="date" class="form-control" value="{{ \Carbon\Carbon::now()->subMonth(3)->format('Y-m-d') }}" id="startDate">
             </div>
 
             <div class="col-md-2">
                 <label class="fw-bold">Final</label>
-                <input type="date" class="form-control" value="{{ $endDate }}" id="endDate">
+                <input type="date" class="form-control" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="endDate">
             </div>
 
             <div class="col-md-2">
@@ -130,18 +130,7 @@ const endDate     = document.querySelector("#endDate");
 const responsible = document.querySelector("#responsible");
 const applyFilter = document.querySelector('#applyFilter');
 
-$("#sumAsTotal").on('click', function(){
-    var total = 0.0;
-    var checkboxGroup = $('input[type="checkbox"]');
-    
-    checkboxGroup.each(function() {
-    if ($(this).prop('checked')) {
-            total = total + parseFloat( $(this).data('bs-amount') );
-        }
-    });
-    $("#result").text("TOTAL: " + numeral(total).format('$0,0.00') );
-});
-
+/*
 $("#markAsPaid").on('click', function(){
     var checkboxGroup = $('input[type="checkbox"]');
     var checkboxResult = [];
@@ -153,7 +142,6 @@ $("#markAsPaid").on('click', function(){
     });
 
     $.ajax({
-        url: "{{ route('markExpensesAsPaid') }}",
         method: 'POST',
         data: {
             checkboxResult:checkboxResult
@@ -163,6 +151,7 @@ $("#markAsPaid").on('click', function(){
         }
     });
 });
+*/
 
 const table = new DataTable('#expenses', {
     processing: true,
@@ -178,7 +167,7 @@ const table = new DataTable('#expenses', {
 
 function removeItemExpense(buttonPressed){
     $.ajax({
-        url:"{{ route('removeItemExpense') }}",
+        url:"{{ route('expenses.deleteItem') }}",
         method: 'POST',
         data: {
             id:buttonPressed
@@ -187,19 +176,8 @@ function removeItemExpense(buttonPressed){
             let image = '/storage/' + response.attach;
             $("#modal-image").attr('src', image);
         }
-    });
-}
-
-function removeItemExpense(buttonPressed){
-    $.ajax({
-        url:"{{ route('removeItemExpense') }}",
-        method: 'POST',
-        data: {
-            id:buttonPressed
-        },
-        success:function(response){
-            showMessageAlert(response);
-        }
+    }).then ((response) => {
+        showMessageAlert(response.message);
     });
 }
 

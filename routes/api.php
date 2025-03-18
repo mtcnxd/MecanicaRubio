@@ -9,6 +9,8 @@ use App\Http\Controllers\Dashboard\Employees;
 use App\Http\Controllers\Dashboard\Cars;
 use App\Http\Controllers\Dashboard\Payroll;
 use App\Http\Controllers\Dashboard\Finance;
+use App\Http\Controllers\Dashboard\Expenses;
+use App\Http\Controllers\Dashboard\Calendar;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +92,14 @@ Route::post('closeMontlyBalance', [
     Finance::class, 'closeMontlyBalance'
 ])->name('finance.closeMontlyBalance');
 
+Route::post('deleteItem', [
+    Expenses::class, 'deleteItem'
+])->name('expenses.deleteItem');
+
+Route::post('getEvent', [
+    Calendar::class, 'getEvent'
+])->name('calendar.getEvent');
+
 Route::post('createItemInvoice', [
     ControllerAjax::class, 'createItemInvoice'
 ])->name('createItemInvoice');
@@ -98,22 +108,6 @@ Route::post('removeItemInvoice', [
     ControllerAjax::class, 'removeItemInvoice'
 ])->name('removeItemInvoice');
 
-Route::post('loadEvent', [
-    ControllerAjax::class, 'loadEvent'
-])->name('loadEvent');
-
-Route::get('getDataTableExpenses', [
-    ControllerAjax::class, 'getDataTableExpenses'
-])->name('getDataTableExpenses');
-
-Route::post('markExpensesAsPaid', [
-    ControllerAjax::class, 'markExpensesAsPaid'
-])->name('markExpensesAsPaid');
-
 Route::post('getImageAttached', [
     ControllerAjax::class, 'getImageAttached'
 ])->name('getImageAttached');
-
-Route::post('removeItemExpense', [
-    ControllerAjax::class, 'removeItemExpense'
-])->name('removeItemExpense');

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('event');
             $table->text('description');
             $table->integer('client_id');
+            $table->integer('car_id');
             $table->date('date');
             $table->timestamps();
         });

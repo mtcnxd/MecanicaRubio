@@ -122,7 +122,7 @@ $(document).ready(function() {
             success:function(response){
                 selectCars.empty();
                 response.data.forEach(car => {
-                    selectCars.append('<option value="'+ car.id +'">'+ car.brand +' '+ car.model +' '+ car.year +'</option>');
+                    selectCars.append('<option value="'+ car.id +'">'+ car.brand +' '+ car.model +' ['+ car.year +']</option>');
                 });
             }
         });

@@ -20,11 +20,7 @@ class Expenses extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
-        return view('dashboard.expenses.index', [
-            'expenses'  => $expenses,
-            'startDate' => $startDate,
-            'endDate'   => $endDate,
-        ]);
+        return view('dashboard.expenses.index', compact('expenses'));
     }
 
     public function create()
@@ -83,6 +79,18 @@ class Expenses extends Controller
         );
 
         return to_route('expenses.index');
+    }
+
+    public function deleteItem(Request $request)
+    {
+        DB::table('expenses')
+            ->where('id', $request->id)
+            ->delete();
+
+        return response()->json([
+            "success" => true,
+            "message" => 'Eliminado correctamente'
+        ]);
     }
 
     public function report()

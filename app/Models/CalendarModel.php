@@ -25,7 +25,7 @@ class CalendarModel extends Model
 
     static function getEvents() : array
     {
-        for($i = 1; $i<= date('t'); $i++) {
+        for($i = 0; $i<= date('t') -1; $i++) {
             $createdDate = Carbon::parse(date('Y-m-').$i);
             $events[$i]  = CalendarModel::where('date', $createdDate)->first();
         }

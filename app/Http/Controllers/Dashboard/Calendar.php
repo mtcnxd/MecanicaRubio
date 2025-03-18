@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\CalendarModel;
 use Carbon\Carbon;
 use Exception;
-use DB;
+use \DB;
 
 class Calendar extends Controller
 {
@@ -42,5 +42,20 @@ class Calendar extends Controller
         
         $template = Whatsapp::createServiceTemplate($params);
         Whatsapp::send();
+    }
+
+    public function getEvent(Request $request)
+    {
+        $event = DB::table('calendar')
+            ->select('calendar.*', 'clients.name','clients.phone', 'autos.brand', 'autos.model')
+            ->join('clients', 'calendar.client_id', 'clients.id')
+            ->join('autos', 'calendar.car_id', 'autos.id')
+            ->where('calendar.id', $request->id)
+            ->first();
+
+        return response()->json([
+            "success" => true,
+            "data"    => $event
+        ]);
     }
 }

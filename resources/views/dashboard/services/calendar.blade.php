@@ -112,13 +112,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 $(".event").on('click', function(){
-    const id = this.id;
-
     $.ajax({
-        url: '{{ route('loadEvent') }}',
+        url: "{{ route('calendar.getEvent') }}",
         method: 'POST',
-        data: {id},
+        data: { id:this.id },
         success: function(response){
+            console.log(response);
+
             $("#event").val(response.data.event);
             $("#description").val(response.data.description);
             $("#client").val(response.data.name);
