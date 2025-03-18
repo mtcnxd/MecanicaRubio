@@ -16,11 +16,11 @@
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-2">
                 <label for="startDate" class="fw-bold">Inicio</label>
-                <input type="date" class="form-control" id="startDate" value="{{ date('Y-m-01') }}">
+                <input type="date" class="form-control" id="startDate" value="{{ \Carbon\Carbon::now()->subMonths(3)->format('Y-m-d') }}">
             </div>
             <div class="col-md-2">
                 <label for="endDate" class="fw-bold">Final</label>
-                <input type="date" class="form-control" id="endDate" value="{{ Carbon\Carbon::now()->addDay()->format('Y-m-d') }}">
+                <input type="date" class="form-control" id="endDate" value="{{ \Carbon\Carbon::now()->addDay()->format('Y-m-d') }}">
             </div>
             <div class="col-md-2">
                 <label for="endDate" class="fw-bold">Estatus</label>
