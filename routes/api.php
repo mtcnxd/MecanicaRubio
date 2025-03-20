@@ -34,7 +34,7 @@ Route::post('deleteUser', [
 
 Route::post('loadEmployee', [
     Employees::class, 'loadEmployee'
-])->name('employees/load');
+])->name('employees.load');
 
 Route::post('createBrand', [
     Cars::class, 'createBrand'
@@ -56,9 +56,13 @@ Route::post('manageSalaries', [
     Payroll::class, 'manageSalaries'
 ])->name('manageSalaries');
 
-Route::post('addConcept', [
-    Payroll::class, 'addConcept'
-])->name('addConcept');
+Route::post('addItem', [
+    Payroll::class, 'addItem'
+])->name('payroll.addItem');
+
+Route::post('removeItem', [
+    Payroll::class, 'removeItem'
+])->name('payroll.removeItem');
 
 Route::post('deleteClient', [
     Clients::class, 'destroy'

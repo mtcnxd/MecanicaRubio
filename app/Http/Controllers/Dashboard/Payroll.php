@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use DB;
 
 class Payroll extends Controller
@@ -85,21 +86,6 @@ class Payroll extends Controller
         return view('dashboard.payrolls.show', compact('salary','details'));  
     }
 
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
-        //
-    }
-
     public function manageSalaries(Request $request)
     {
         switch ($request->action){
@@ -123,13 +109,13 @@ class Payroll extends Controller
                 break;
         }
 
-        return Response()->json([
+        return response()->json([
             'status' => true,
             'message' => $response
         ]);
     }
     
-    public function addConcept(Request $request)
+    public function addItem(Request $request)
     {   
         $id = DB::table('salaries')->max('id') +1;
 
@@ -140,9 +126,19 @@ class Payroll extends Controller
             'number'    => ""
         ]);
 
-        return Response()->json([
+        return response()->json([
             'status'  => true,
             'message' => $request->all()
+        ]);
+    }
+
+    public function removeItem(Request $request)
+    {       
+        DB::table('salaries_details')->where('id', $request->itemId)->delete();
+
+        return response()->json([
+            "success" => true,
+            "request" => $request->all()
         ]);
     }
 }

@@ -59,6 +59,7 @@
                             <option>Aguinaldo</option>
                             <option>Finiquito</option>
                             <option>Liquidacion</option>
+                            <option>Otras percepciones</option>
                         </select>
                     </div>
                     <div class="col-md-5">
@@ -151,6 +152,7 @@
                 <option>Prestamo de nomina</option>
                 <option>Hora Extra</option>
                 <option>Bono adicional</option>
+                <option>Prima Vacacional</option>
             </optgroup>
             <optgroup label="Descuentos">
                 <option>Descuento</option>
@@ -162,11 +164,12 @@
         <label for="amount">Importe</label>
         <input type="text" class="form-control" id="amount" name="amount">
     </div>
-    <hr>
-    <button class="btn btn-sm btn-secondary" id="closePopup">Agregar</button>
+    <div class="row mt-3">
+        <button class="col btn btn-secondary m-1" onclick="closePopup()">Cancelar</button>
+        <button class="col btn btn-success m-1" id="acceptPopup">Agregar</button>
+    </div>
 </div>
 <div id="overlay"></div>
-
 @endsection
 
 @section('js')
@@ -176,11 +179,9 @@ $("#employee").on('change', function(){
     var employee = $(this).val();
 
     $.ajax({
-        url: "{{ route('employees/load') }}",
+        url: "{{ route('employees.load') }}",
         method: 'POST',
-        data: {
-            employee: employee
-        },
+        data: {employee: employee},
         success: function(response){
             $("#salary").val(response.data.salary);
             $("#email").val(response.data.email);
@@ -196,9 +197,25 @@ addConcept.addEventListener('click', function(btn){
     $('#overlay').fadeIn();
 });
 
-$('#closePopup').click(function() {
+$(".removeItem").on('click', function(btn) {
+    let itemId = this.id;
+
     $.ajax({
-        url: "{{ route('addConcept') }}",
+        url: "{{ route('payroll.removeItem') }}",
+        data: {itemId:itemId},
+        method:'POST',
+        success: function (response) {
+            console.log(response)
+        }
+    })
+    .then(() => {
+        history.go();
+    });
+});
+
+$('#acceptPopup').click(function() {
+    $.ajax({
+        url: "{{ route('payroll.addItem') }}",
         method: 'POST',
         data: {
             concept: $("#concept").val(),
@@ -212,15 +229,17 @@ $('#closePopup').click(function() {
         history.go();
     });
 
-    $('#popup').fadeOut(); // Oculta el popup
-    $('#overlay').fadeOut(); // Oculta el fondo oscuro
+    closePopup();
 });
-
 
 $('#overlay').click(function() {
-    $('#popup').fadeOut(); // Oculta el popup
-    $('#overlay').fadeOut(); // Oculta el fondo oscuro
+    closePopup();
 });
+
+function closePopup(){
+    $('#popup').fadeOut();
+    $('#overlay').fadeOut();
+}
 </script>
 @endsection
 

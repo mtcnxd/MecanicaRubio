@@ -49,10 +49,11 @@
         <table class="table table-hover table-borderless" id="expenses" style="width:100%;">
             <thead>
                 <tr>
-                    <th width="75px">Folio</th>
-                    <th width="400px">Empleado</th>
+                    <th width="50px">Folio</th>
+                    <th width="350px">Empleado</th>
+                    <th width="250px">Tipo</th>
                     <th width="300px">Periodo</th>
-                    <th width="300px">Elaborado</th>
+                    <th width="200px">Elaborado</th>
                     <th>Estatus</th>
                     <th class="text-end">Total</th>
                     <th width="30px">&nbsp;</th>
@@ -69,7 +70,10 @@
                         </a>
                     </td>
                     <td>
-                        {{ Carbon\Carbon::parse($salary->start_date)->format('d-m-Y') }} / {{ Carbon\Carbon::parse($salary->end_date)->format('d-m-Y') }}
+                        {{ $salary->type }}
+                    </td>
+                    <td>
+                        {{ Carbon\Carbon::parse($salary->start_date)->format('d-m-Y') }} | {{ Carbon\Carbon::parse($salary->end_date)->format('d-m-Y') }}
                     </td>
                     <td>
                         {{ Carbon\Carbon::parse($salary->created_at)->format('d-m-Y') }}
@@ -88,14 +92,16 @@
                     <td class="text-end">{{ "$".number_format($salary->total, 2) }}</td>
                     <td>
                         <div class="dropdown">
+                            @if ($salary->status != 'Pagado')
                             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" style="margin-top:-3px;">
                                 <x-feathericon-more-vertical style="height:20px;"/>
                             </button>
                             <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#" data-action="pay" data-id="{{ $salary->id }}">Pagar</a></li>
-                              <li><a class="dropdown-item" href="#" data-action="cancell" data-id="{{ $salary->id }}">Cancelar</a></li>
-                              <li><a class="dropdown-item" href="#" data-action="delete" data-id="{{ $salary->id }}">Eliminar</a></li>
+                                <li><a class="dropdown-item" href="#" data-action="pay" data-id="{{ $salary->id }}">Pagar</a></li>
+                                <li><a class="dropdown-item" href="#" data-action="cancell" data-id="{{ $salary->id }}">Cancelar</a></li>
+                                <li><a class="dropdown-item" href="#" data-action="delete" data-id="{{ $salary->id }}">Eliminar</a></li>
                             </ul>
+                            @endif
                         </div>
                     </td>
                 </tr>
