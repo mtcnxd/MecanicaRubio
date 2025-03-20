@@ -101,7 +101,7 @@ class Services extends Controller
 
         if ($request->status == 'Entregado'){
             Telegram::send(
-                sprintf("<b>New job submission:</b> Service #%s <b>Total:</b> $%s", $id, $request->total)
+                sprintf("<b>New job submission:</b> #%s <b>Total:</b> $%s", $id, $request->total)
             );
         }
 

@@ -20,9 +20,6 @@ class Cars extends Controller
         return view ('dashboard.autos.index', compact('autos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $brands  = DB::table('brands')->orderBy('brand')->get();
@@ -31,9 +28,6 @@ class Cars extends Controller
         return view('dashboard.autos.create', compact('brands','clients'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         DB::table('autos')->insert([
@@ -55,17 +49,12 @@ class Cars extends Controller
         return to_route('cars.index')->with('message', 'Los datos se guardaron correctamente');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $client = DB::table('autos')
             ->join('clients','autos.client_id', 'clients.id')
             ->where('autos.id', $id)
             ->first();
-
-        // dd($client);
 
         $services = DB::table('autos')
             ->join('services', 'services.car_id', 'autos.id')
@@ -75,9 +64,6 @@ class Cars extends Controller
         return view('dashboard.autos.show', compact('services','client'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $brands  = array();
@@ -92,9 +78,6 @@ class Cars extends Controller
         return view('dashboard.autos.edit', compact('brands','clients','auto'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         DB::table('autos')->where('id', $id)->update([
@@ -107,14 +90,6 @@ class Cars extends Controller
         ]);
 
         return to_route('cars.index')->with('message', 'Los datos se guardaron correctamente');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function createBrand(Request $request)
@@ -205,12 +180,19 @@ class Cars extends Controller
 
     public function report()
     {
-        $statistics = DB::table('autos')
+        $brands = DB::table('autos')
             ->select(DB::raw('count(*) as count, brand'))
             ->groupBy('brand')
-            ->orderBy('count')
+            ->orderBy('count', 'desc')
+            ->get();
+
+        $items = DB::table('services_items')
+            ->select('item', DB::raw('count(*) as count'))
+            ->whereNotIn('item',['Servicio (mano de obra)'])
+            ->groupBy('item') 
+            ->orderBy('count', 'desc')
             ->get();
     
-        return view('dashboard.autos.reports', compact('statistics'));
+        return view('dashboard.reports.autos', compact('brands', 'items'));
     }
 }
