@@ -130,8 +130,8 @@
                     <div class="tab-pane fade show active" id="home-tab-pane" aria-labelledby="home-tab">
                         <table class="table table-hover" id="table-items">
                             <thead>
-                                <th>Automovil</th>
-                                <th>Modelo/Año</th>
+                                <th width="300px">Automovil</th>
+                                <th>Año</th>
                                 <th>Servicio/Fallo</th>
                                 <th>Status</th>
                                 <th class="text-center">Fecha servicio</th>
@@ -164,10 +164,10 @@
                     <div class="tab-pane fade" id="profile-tab-pane" aria-labelledby="profile-tab">
                         <table class="table table-hover" id="table-items">
                             <thead>
-                                <th>Automovil</th>
+                                <th width="300px">Automovil</th>
+                                <th>Año</th>
                                 <th>VIN <span class="text-muted"> (Vehicle Identification Number)</span></th>
                                 <th>Matrícula</th>
-                                <th class="text-end">Año</th>
                             </thead>
                             <tbody>
                                 @foreach ($cars as $car)
@@ -176,9 +176,9 @@
                                         <x-feathericon-arrow-right-circle class="table-icon" style="margin: 0 5px 2px"/>
                                         <a href="{{ route('cars.show', $car->id) }}">{{ $car->brand }} {{ $car->model }}</a>
                                     </td>
+                                    <td>{{ $car->year }}</td>
                                     <td>{{ $car->serie }}</td>
                                     <td>{{ $car->plate }}</td>
-                                    <td class="text-end">{{ $car->year }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

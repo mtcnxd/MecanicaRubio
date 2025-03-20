@@ -6,10 +6,10 @@
 
 @section('content')
 <div class="shadow-sm main-content mb-4">
-    <table class="table border">
+    <table class="table border table-hover">
         <thead>
             <thead>
-                <th>#</th>
+                <th width="40px">#</th>
                 <th>Concepto</th>
                 <th>Fecha</th>
                 <th class="text-end">Ingresos</th>
@@ -17,9 +17,12 @@
             </thead>
         </thead>
         <tbody>
+            @php
+                $count = 1;
+            @endphp
             @foreach ($services as $service)
             <tr>
-                <td></td>
+                <td>{{ $count++ }}</td>
                 <td><strong>Servicio</strong> {{ $service->brand }} {{ $service->model }}</td>
                 <td>{{ $service->due_date }}</td>
                 <td class="text-end">{{ "$".number_format($service->price, 2) }}</td>
@@ -28,7 +31,7 @@
             @endforeach
             @foreach ($salaries as $salary)
             <tr>
-                <td></td>
+                <td>{{ $count++ }}</td>
                 <td><strong>{{ $salary->type }}</strong> {{ $salary->start_date }} - {{ $salary->end_date }}</td>
                 <td>{{ $salary->created_at }}</td>
                 <td></td>
@@ -37,7 +40,7 @@
             @endforeach
             @foreach ($expenses as $expense)
             <tr>
-                <td></td>
+                <td>{{ $count++ }}</td>
                 <td><strong>Egreso</strong> {{ $expense->name }}</td>
                 <td>{{ $expense->created_at }}</td>
                 <td></td>
@@ -107,7 +110,11 @@
 <div class="main-content">
     <div class="row col-md-4">
         <div class="col">
-            <a class="btn btn-sm btn-outline-success" id="closeFiscalMonth">
+            <a class="btn btn-sm btn-outline-success" id="print">
+                Imprimir
+            </a>
+
+            <a class="btn btn-sm btn-outline-success" id="closeMonth">
                 Conciliar mes actual
             </a>
             <img src="{{ asset('image.gif') }}" width="20px" height="20px" style="display:none;" class="ms-2" id="loader">
@@ -119,7 +126,7 @@
 
 @section('js')
     <script>
-        const btnClose = document.getElementById('closeFiscalMonth');
+        const btnClose = document.getElementById('closeMonth');
 
         btnClose.addEventListener('click', (btn) => {
             btn.preventDefault();
@@ -127,12 +134,11 @@
             let expenses = document.getElementById('expenses').value;
 
             if (
-                confirm('¿Confirmas que deseas conciliar el mes actual?')
+                confirm('¿Confirmas que deseas cerrar el mes actual?')
             ){
                 $("#loader").show();
-
                 $.ajax({
-                    url: "{{ route('finance.closeMontlyBalance') }}",
+                    url: "{{ route('finance.closeMonth') }}",
                     method: 'POST',
                     data: {
                         income:income,

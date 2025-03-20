@@ -88,9 +88,9 @@ Route::post('getServiceItems', [
     Services::class, 'getServiceItems'
 ])->name('services.getServiceItems');
 
-Route::post('closeMontlyBalance', [
-    Finance::class, 'closeMontlyBalance'
-])->name('finance.closeMontlyBalance');
+Route::post('closeMonth', [
+    Finance::class, 'closeMonth'
+])->name('finance.closeMonth');
 
 Route::post('deleteItem', [
     Expenses::class, 'deleteItem'

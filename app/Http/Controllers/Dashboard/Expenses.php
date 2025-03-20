@@ -75,7 +75,7 @@ class Expenses extends Controller
         ]);
 
         Telegram::send(
-            sprintf("<b>New expense created:</b> %s Total: $%s", $request->name, $request->price)
+            sprintf("<b>New expense created:</b> %s <b>Total:</b> $%s", $request->name, $request->price)
         );
 
         return to_route('expenses.index');

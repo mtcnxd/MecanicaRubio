@@ -23,7 +23,7 @@ class Finance extends Controller
         return view('dashboard.clients.finance', compact('services', 'items'));
     }
 
-    public function closeMontlyBalance(Request $request)
+    public function closeMonth(Request $request)
     {
         DB::table('montly_balances')->insert([
             "income"     => $request->income,
