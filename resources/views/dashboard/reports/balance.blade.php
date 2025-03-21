@@ -110,7 +110,7 @@
 <div class="main-content">
     <div class="row col-md-4">
         <div class="col">
-            <a class="btn btn-sm btn-outline-success" id="print">
+            <a class="btn btn-sm btn-outline-success" id="print" onclick="downloadPDF()">
                 Imprimir
             </a>
 
@@ -125,34 +125,57 @@
 
 
 @section('js')
-    <script>
-        const btnClose = document.getElementById('closeMonth');
+<script>
+const btnClose = document.getElementById('closeMonth');
 
-        btnClose.addEventListener('click', (btn) => {
-            btn.preventDefault();
-            let income   = document.getElementById('income').value;
-            let expenses = document.getElementById('expenses').value;
+btnClose.addEventListener('click', (btn) => {
+    btn.preventDefault();
+    let income   = document.getElementById('income').value;
+    let expenses = document.getElementById('expenses').value;
 
-            if (
-                confirm('¿Confirmas que deseas cerrar el mes actual?')
-            ){
-                $("#loader").show();
-                $.ajax({
-                    url: "{{ route('finance.closeMonth') }}",
-                    method: 'POST',
-                    data: {
-                        income:income,
-                        expenses:expenses
-                    },
-                    success: function(response){
-                        console.log(response);
-                    }
-                })
-                .then(() => {
-                    $("#loader").hide();
-                });
+    if (
+        confirm('¿Confirmas que deseas cerrar el mes actual?')
+    ){
+        $("#loader").show();
+        $.ajax({
+            url: "{{ route('finance.closeMonth') }}",
+            method: 'POST',
+            data: {
+                income:income,
+                expenses:expenses
+            },
+            success: function(response){
+                console.log(response);
             }
-
         })
-    </script>
+        .then(() => {
+            $("#loader").hide();
+        });
+    }
+
+});
+
+function downloadPDF(){
+    $.ajax({
+        url: "{{ route('finance.createBalancePDF') }}",
+        method:'POST',
+        data:{},
+        xhrFields: {
+            responseType: 'blob' // Recibir respuesta como un Blob
+        },
+        success: function (response){
+            const blob = new Blob([response], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'balance.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        },
+    });
+}
+</script>
 @endsection

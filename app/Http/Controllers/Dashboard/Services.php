@@ -117,7 +117,7 @@ class Services extends Controller
             "image"   => $base64
         ];
 
-        $pdf = PDF::loadView('dashboard.services.create_invoice', $data);
+        $pdf = PDF::loadView('dashboard.templates.pdf_invoice', $data);
         
         return $pdf->download('invoice.pdf');
     }

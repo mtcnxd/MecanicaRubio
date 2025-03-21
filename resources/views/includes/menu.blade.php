@@ -50,7 +50,6 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-				<li><a class="a-item" href="{{ route('dashboard.index') }}">Resumen</a></li>
 				<li>
 					<a class="a-item" href="{{ route('payroll.index') }}">Nominas</a>
 					<ul class="submenu">
@@ -75,6 +74,7 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
+				<li><a class="a-item" href="{{ route('dashboard.index') }}">Resumen</a></li>
 				<li>
 					<a class="a-item" href="#">Reportes</a>
 					<ul class="submenu">

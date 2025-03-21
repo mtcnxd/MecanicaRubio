@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \Carbon\Carbon;
 use \DB;
+use PDF;
 
 class Finance extends Controller
 {
@@ -39,5 +40,25 @@ class Finance extends Controller
             "messsage" => 'El balance del mes actual a sido cerrado correctamente',
             "data"     => $request->all()
         ]);
+    }
+
+    public function createBalancePDF(Request $request)
+    {
+        $rows = DB::table('montly_balance_view')->get();
+
+        $path = public_path('images/mainlogo.png');
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $image = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($image);
+
+        $data = [
+            "services" => array(),
+            "image"    => $base64,
+            "rows"     => $rows,
+        ];
+
+        $pdf = PDF::loadView('dashboard.templates.pdf_balance', $data);
+        
+        return $pdf->download('balance.pdf');
     }
 }
