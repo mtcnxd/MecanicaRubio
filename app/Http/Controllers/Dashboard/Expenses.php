@@ -103,6 +103,7 @@ class Expenses extends Controller
             ->join('autos','services.car_id', 'autos.id')
             ->where('labour', true)
             ->where('services.status','Entregado')
+            ->whereBetween('due_date', [$startDate, $endDate])
             ->get();
 
         $salaries = DB::table('salaries')
@@ -112,6 +113,7 @@ class Expenses extends Controller
 
         $expenses = DB::table('expenses')
             ->where('status','Pagado')
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
         $lastBalance = DB::table('montly_balances')

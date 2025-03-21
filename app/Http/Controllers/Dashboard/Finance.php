@@ -44,7 +44,9 @@ class Finance extends Controller
 
     public function createBalancePDF(Request $request)
     {
-        $rows = DB::table('montly_balance_view')->get();
+        $rows = DB::table('montly_balance_view')
+            ->orderBy('date')
+            ->get();
 
         $path = public_path('images/mainlogo.png');
         $type = pathinfo($path, PATHINFO_EXTENSION);
