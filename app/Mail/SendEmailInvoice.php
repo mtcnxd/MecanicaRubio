@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class EmailInvoice extends Mailable
+class SendEmailInvoice extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -25,7 +25,7 @@ class EmailInvoice extends Mailable
 
     public function build()
     {
-        return $this->view('email.templateInvoice')->with([
+        return $this->view('emailsTemplate.sendInvoice')->with([
             'service' => $this->service,
             'items'   => $this->items,
         ]);
@@ -37,8 +37,8 @@ class EmailInvoice extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address("j-ar-8@hotmail.com"),
-            subject: 'Ing. Mecanica Rubio',
+            from: new Address("mtc.nxd@gmail.com"),
+            subject: 'Ingenieria Mecanica Rubio',
         );
     }
 
@@ -48,7 +48,7 @@ class EmailInvoice extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.templateInvoice',
+            view: 'emailsTemplates.sendInvoice',
         );
     }
 

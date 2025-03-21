@@ -33,20 +33,10 @@
                         <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->created_at)) }}">
                     </div>
                     <div class="col-md-3 pt-2 text-end">
-                        Días transcurridos
+                        ID
                     </div>    
                     <div class="col-md-3">
-                        @if ($service->status == 'Entregado')
-                            @php
-                            $elapsed = Carbon\Carbon::parse($service->created_at)->diffInDays(Carbon\Carbon::parse($service->due_date));
-                            @endphp
-                            <input type="text" class="form-control" name="client" value="{{ $elapsed }}" disabled>
-                        @else
-                            @php
-                            $elapsed = Carbon\Carbon::parse($service->created_at)->diffInDays(Carbon\Carbon::now());
-                            @endphp
-                            <input type="text" class="form-control {{($elapsed >= 4) ? 'is-invalid' : '' }}" name="client" value="{{ $elapsed }}" disabled>
-                        @endif
+                        <input type="text" class="form-control" name="client" value="{{ "#".$service->id }}" disabled>
                     </div>
                 </div>
 
@@ -77,6 +67,22 @@
                             <input type="date" class="form-control" name="client" value="{{ date('Y-m-d', strtotime($service->due_date)) }}" disabled>
                         @else 
                             <input type="date" class="form-control" name="client" disabled>
+                        @endif
+                    </div>
+                    <div class="col-md-3 pt-2 text-end">
+                        Días transcurridos
+                    </div>    
+                    <div class="col-md-3">
+                        @if ($service->status == 'Entregado')
+                            @php
+                            $elapsed = Carbon\Carbon::parse($service->created_at)->diffInDays(Carbon\Carbon::parse($service->due_date));
+                            @endphp
+                            <input type="text" class="form-control" name="client" value="{{ $elapsed }}" disabled>
+                        @else
+                            @php
+                            $elapsed = Carbon\Carbon::parse($service->created_at)->diffInDays(Carbon\Carbon::now());
+                            @endphp
+                            <input type="text" class="form-control {{($elapsed >= 4) ? 'is-invalid' : '' }}" name="client" value="{{ $elapsed }}" disabled>
                         @endif
                     </div>
                 </div>
@@ -178,24 +184,18 @@
             <div class="row">
                 <div class="col-md-12 text-end mt-3 pe-5">
                     <a href="{{ route('services.index') }}" class="btn btn-secondary">Atras</a>
-                    <!-- 
-                    <a href="#" class="btn btn-secondary">
-                        <x-feathericon-file-text class="table-icon" style="margin: -2px 5px 2px"/>
-                        Facturar
-                    </a>
-                    -->
                     <a href="#" class="btn btn-secondary" onclick="downloadPDF({{ $service->id }})">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
                     <!-- 
-                    <a href="{{ route('sendMail', $service->id) }}" class="btn btn-secondary">
+                    <a href="{{ route('sendEmailInvoice', $service->id) }}" class="btn btn-secondary">
                         <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
                         Enviar
                     </a>
                     -->
-                    <a href="{{ route('sendMail', $service->id) }}" class="btn btn-secondary">
-                        <x-feathericon-message-circle class="table-icon" style="margin: -2px 5px 2px"/>
+                    <a href="{{ route('sendEmailInvoice', $service->id) }}" class="btn btn-secondary">
+                        <x-feathericon-share-2 class="table-icon" style="margin: -2px 5px 2px"/>
                         Enviar
                     </a>
                     <button type="submit" class="btn btn-success">

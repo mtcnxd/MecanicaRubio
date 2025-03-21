@@ -7,9 +7,11 @@ use App\Http\Controllers\Dashboard\Charts;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Helpers;
 use Illuminate\Http\Request;
+use App\Mail\SendEmailInvoice;
 use Carbon\Carbon;
 use DataTables;
 use Exception;
+use Mail;
 use Str;
 use PDF;
 use DB;
@@ -18,14 +20,6 @@ class Services extends Controller
 {
     public function index()
     {
-        /*
-        $services = DB::table('services')
-            ->select('services.*', 'autos.brand', 'autos.model', 'clients.name')
-            ->join('autos', 'services.car_id', 'autos.id')
-            ->join('clients', 'services.client_id', 'clients.id')
-            ->get();
-        */
-
         $services = array();
 
         return view('dashboard.services.index', compact('services'));
@@ -73,11 +67,6 @@ class Services extends Controller
         $items = DB::table('services_items')->where('service_id', $id)->get();
 
         return view('dashboard.services.show', compact('service','items'));
-    }
-
-    public function edit(string $id)
-    {
-        //
     }
 
     public function update(Request $request, string $id)
@@ -163,22 +152,25 @@ class Services extends Controller
         ]);        
     }
 
-    public function sendMail($serviceid)
+    public function sendEmailInvoice($id)
     {
         $service = DB::table('services')
-        ->join('clients', 'services.client_id', 'clients.id')
-        ->where('services.id', $serviceid)
-        ->first();
+            ->join('clients', 'services.client_id', 'clients.id')
+            ->where('services.id', $id)
+            ->first();
 
         $items = DB::table('services_items')
-            ->where('service_id', $serviceid)
+            ->where('service_id', $id)
             ->get();
 
-        $mailResponse = Mail::to($service->email)->send(
-            new emailInvoice($service, $items)
+
+        $response = Mail::to('mtc.nxd@gmail.com')->send(
+            new SendEmailInvoice($service, $items)
         );
+
+        dd($response);
         
-        return to_route('services.show', $serviceid);
+        return to_route('services.show', $id);
     }
 
     public function getServiceItems(Request $request)
@@ -214,6 +206,9 @@ class Services extends Controller
         }
 
         return DataTables::of($serviceData)
+            ->addColumn('id', function($service){
+                return $service->id;
+            })
             ->addColumn('fault', function($service){
                 return '<a href="'. route("services.show", $service->id) .'">'. Str::limit($service->fault, 40) ."</a>";
             })

@@ -67,15 +67,15 @@
                     <div class="col-md-9 pt-2">
                         <label class="me-3">
                             <input type="radio" value="fault" name="type" id="type" checked>
-                            Fallo
+                            Fallo/Reparación
                         </label>
                         <label class="me-3">
                             <input type="radio" value="minor" name="type" id="type">
-                            Menor
+                            Servicio Menor
                         </label>
                         <label>
                             <input type="radio" value="major" name="type" id="type">
-                            Mayor
+                            Servicio Mayor
                         </label>
                     </div>
                 </div>

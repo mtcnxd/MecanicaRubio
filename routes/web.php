@@ -12,7 +12,6 @@ use App\Http\Controllers\Dashboard\Finance;
 use App\Http\Controllers\Dashboard\Settings;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Auth\Login;
-use App\Mail\EmailInvoice;
 use Carbon\Carbon;
 
 /*
@@ -62,7 +61,7 @@ Route::middleware(['auth'])->group( function ()
 
     Route::post('settings/create', [Settings::class, 'store'])->name('setting.store');
 
-    Route::get('emailInvoice/{serviceid}', [Services::class, 'sendMail'])->name('sendMail');
+    Route::get('sendEmailInvoice/{service}', [Services::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
 
     # Reports
     Route::get('reports/employees/{userid}', [Employees::class, 'report'])->name('reports.employees');

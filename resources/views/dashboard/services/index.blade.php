@@ -45,8 +45,9 @@
         <table class="table table-hover table-borderless" id="services" style="width:100%;">
             <thead>
                 <tr>
+                    <th width="35px">ID</th>
                     <th width="350px">Servicio/Fallo</th>
-                    <th width="270px">Cliente</th>
+                    <th width="250px">Cliente</th>
                     <th>Automovil</th>
                     <th>Entrada</th>
                     <th class="text-center" width="130px">Salida</th>
@@ -117,6 +118,9 @@ const table = new DataTable('#services',
     },
     columns:[
         {
+            data:'id',
+            orderable: true
+        },{
             data:'fault',
             orderable: false
         },{
