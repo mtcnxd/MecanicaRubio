@@ -98,28 +98,15 @@ class Expenses extends Controller
         $startDate = Carbon::now()->startOfMonth();
         $endDate   = Carbon::now();
 
-        $services = DB::table('services')
-            ->join('services_items','services.id','services_items.service_id')
-            ->join('autos','services.car_id', 'autos.id')
-            ->where('labour', true)
-            ->where('services.status','Entregado')
-            ->whereBetween('due_date', [$startDate, $endDate])
+        $rows = DB::table('montly_balance_view')
+            ->whereBetween('date', [$startDate, $endDate])
+            ->orderBy('date')
             ->get();
 
-        $salaries = DB::table('salaries')
-            ->where('status', 'Pagado')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->get();
+        $last = DB::table('montly_balances')->latest()->first();
 
-        $expenses = DB::table('expenses')
-            ->where('status','Pagado')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->get();
+        // dd($rows->sum('cash_in'));
 
-        $lastBalance = DB::table('montly_balances')
-            ->orderBy('id', 'desc')
-            ->first();
-
-        return view('dashboard.reports.balance', compact('services', 'salaries', 'expenses', 'lastBalance'));
+        return view('dashboard.reports.balance', compact('rows','last'));
     }
 }
