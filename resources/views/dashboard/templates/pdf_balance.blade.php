@@ -37,21 +37,13 @@
             <td class="text-end"><b>EGRESO</b></td>
         </thead>
         <tbody>
-            @php
-                $sumCashIn  = 0;
-                $sumCashOut = 0;
-            @endphp
             @foreach ($rows as $key => $row)
-                @php
-                    $sumCashIn  = $sumCashIn + (float) $row->cash_in;
-                    $sumCashOut = $sumCashOut + (float) $row->cash_out;
-                @endphp
                 <tr style="height: 35px;">
                     <td>{{ $key = $key +1 }}</td>
                     <td><strong>{{ $row->type }}</strong> {{ $row->concept }}</td>
                     <td>{{ Carbon\Carbon::parse($row->date)->format('d-m-Y') }}</td>
-                    <td class="text-end">{{ "$".number_format( (float) $row->cash_in, 2) }}</td>
-                    <td class="text-end">{{ "$".number_format( (float) $row->cash_out, 2) }}</td>
+                    <td class="text-end">{{ "$".number_format($row->cash_in, 2) }}</td>
+                    <td class="text-end">{{ "$".number_format($row->cash_out, 2) }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -60,8 +52,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="text-end">{{ "$".number_format( $sumCashIn, 2) }}</td>
-                <td class="text-end">{{ "$".number_format( $sumCashOut, 2) }}</td>
+                <td class="text-end">{{ "$".number_format( $rows->sum('cash_in'), 2) }}</td>
+                <td class="text-end">{{ "$".number_format( $rows->sum('cash_out'), 2) }}</td>
             </tr>
         </tfoot>
     </table>
@@ -89,13 +81,17 @@
                     {{ Carbon\Carbon::now() }}
                 </td>
                 <td>
-                    {{ "$".number_format($sumCashIn, 2) }}
+                    {{ "$".number_format($rows->sum('cash_in'), 2) }}
                 </td>
                 <td>
-                    {{ "$".number_format($sumCashOut, 2) }}
+                    {{ "$".number_format($rows->sum('cash_out'), 2) }}
                 </td>
                 <td>
-                    {{ "$".number_format($sumCashIn - $sumCashOut, 2) }}
+                    @php
+                        $balance = 0;
+                        $balance = $rows->sum('cash_in') - $rows->sum('cash_out');
+                    @endphp
+                    {{ "$".number_format($balance, 2) }}
                 </td>
             </tr>
         </table>

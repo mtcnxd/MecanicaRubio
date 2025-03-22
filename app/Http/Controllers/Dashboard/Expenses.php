@@ -105,8 +105,6 @@ class Expenses extends Controller
 
         $last = DB::table('montly_balances')->latest()->first();
 
-        // dd($rows->sum('cash_in'));
-
         return view('dashboard.reports.balance', compact('rows','last'));
     }
 }

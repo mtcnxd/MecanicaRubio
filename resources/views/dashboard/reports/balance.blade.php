@@ -17,21 +17,13 @@
             </thead>
         </thead>
         <tbody>
-            @php
-                $sumCashIn  = 0;
-                $sumCashOut = 0;
-            @endphp
             @foreach ($rows as $key => $row)
-                @php
-                    $sumCashIn  = $sumCashIn + (float) $row->cash_in;
-                    $sumCashOut = $sumCashOut + (float) $row->cash_out;
-                @endphp
                 <tr>
                     <td>{{ $key = $key +1 }}</td>
                     <td><strong>{{ $row->type }}</strong> {{ $row->concept }}</td>
                     <td>{{ Carbon\Carbon::parse($row->date)->format('d-m-Y') }}</td>
-                    <td class="text-end">{{ "$".number_format( (float) $row->cash_in, 2) }}</td>
-                    <td class="text-end">{{ "$".number_format( (float) $row->cash_out, 2) }}</td>
+                    <td class="text-end">{{ "$".number_format($row->cash_in, 2) }}</td>
+                    <td class="text-end">{{ "$".number_format($row->cash_out, 2) }}</td>
                 </tr>
             @endforeach
             <tfoot>
@@ -39,10 +31,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td class="text-end fw-bold">{{ "$".number_format($sumCashIn, 2) }}</td>
-                    <input type="hidden" id="income" value="{{ $sumCashIn }}">
-                    <td class="text-end fw-bold">{{ "$".number_format($sumCashOut, 2) }}</td>
-                    <input type="hidden" id="expenses" value="{{ $sumCashOut }}">
+                    <td class="text-end fw-bold">{{ "$".number_format($rows->sum('cash_in'), 2) }}</td>
+                    <td class="text-end fw-bold">{{ "$".number_format($rows->sum('cash_out'), 2) }}</td>
+                    <input type="hidden" id="income" value="{{ $rows->sum('cash_in') }}">
+                    <input type="hidden" id="expenses" value="{{ $rows->sum('cash_out') }}">
                 </tr>
             </tfoot>
         </tbody>
@@ -68,7 +60,11 @@
                     <strong>Saldo actual <span class="fs-8 text-muted">(Ingresos-Egresos)</span></strong>
                 </div>
                 <div class="card-body">
-                    {{ "$".number_format($sumCashIn - $sumCashOut, 2) }}
+                    @php
+                        $balance = 0;
+                        $balance = $rows->sum('cash_in') - $rows->sum('cash_out');
+                    @endphp
+                    {{ "$".number_format($balance, 2) }}
                 </div>
             </div>
         </div>
@@ -79,7 +75,7 @@
                     <strong>Saldo nuevo</strong>
                 </div>
                 <div class="card-body">
-                    {{ "$".number_format(($last->income + $sumCashIn - $sumCashOut), 2) }}
+                    {{ "$".number_format($last->income + $balance, 2) }}
                 </div>
             </div>
         </div>
