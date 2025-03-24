@@ -42,20 +42,24 @@
             </div>
         </div>
         
-        <table class="table table-hover table-borderless" id="expenses" style="width:100%;">
+        <table class="table table-hover table-borderless mb-4" id="expenses" style="width:100%;">
             <thead>
                 <tr>
+                    <th width="40px">ID</th>
                     <th width="300px">Egreso</th>
-                    <th width="400px">Descripción</th>
-                    <th>Estatus</th>
-                    <th>Fecha</th>
-                    <th class="text-end">Total</th>
+                    <th width="500px">Descripción</th>
+                    <th width="100px">Estatus</th>
+                    <th width="100px">Fecha</th>
+                    <th width="100px" class="text-end">Total</th>
                     <th width="105px">&nbsp;</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($expenses as $expense)
                     <tr>
+                        <td>
+                            {{ $expense->id }}
+                        </td>
                         <td>
                             <a href="{{ route('expenses.edit', $expense->id) }}">{{ $expense->name }}</a>
                         </td>
@@ -161,7 +165,7 @@ const table = new DataTable('#expenses', {
     pageLength: 10,
     order: [3, 'asc'],
     columnDefs: [{
-        orderable: false, targets: [1,3,4,5]
+        orderable: false, targets: [0, 2, 5, 6]
     }]
 });
 

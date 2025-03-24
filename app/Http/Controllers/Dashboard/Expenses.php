@@ -13,11 +13,12 @@ class Expenses extends Controller
 {
     public function index()
     {
-        $startDate = Carbon::now()->startOfMonth();
+        $startDate = Carbon::now()->subDays(45);
         $endDate   = Carbon::now();
 
         $expenses = DB::table('expenses')
             ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('dashboard.expenses.index', compact('expenses'));

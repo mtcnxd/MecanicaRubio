@@ -162,3 +162,9 @@ a:hover {
 .float-suggestions > li:hover {
     background-color: var(--amber-100);
 }
+
+.dataTables_paginate .paginate_button {
+    border-radius: 25px    !important;
+    border: solid 1px #555;
+    background-color: #555555;
+}

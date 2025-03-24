@@ -12,7 +12,7 @@
         <x-feathericon-truck class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <table class="table table-hover table-borderless" id="autos">
+        <table class="table table-hover table-borderless mb-4" id="autos">
             <thead>
                 <tr>
                     <th>Automovil</th>

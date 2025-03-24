@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <table class="table table-hover table-borderless" id="services" style="width:100%;">
+        <table class="table table-hover table-borderless mb-4" id="services" style="width:100%;">
             <thead>
                 <tr>
                     <th width="35px">ID</th>

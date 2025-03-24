@@ -12,7 +12,7 @@
         <x-feathericon-user-plus class="window-title-icon"/>
     </div>
     <div class="window-body bg-white">
-        <table class="table table-hover table-borderless" id="clients">
+        <table class="table table-hover table-borderless mb-4" id="clients">
             <thead>
                 <tr>
                     <th>Nombre</th>

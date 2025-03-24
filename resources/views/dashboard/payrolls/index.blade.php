@@ -46,10 +46,10 @@
             </div>
         </form>
         
-        <table class="table table-hover table-borderless" id="expenses" style="width:100%;">
+        <table class="table table-hover table-borderless mb-4" id="expenses" style="width:100%;">
             <thead>
                 <tr>
-                    <th width="50px">Folio</th>
+                    <th width="40px">ID</th>
                     <th width="350px">Empleado</th>
                     <th width="250px">Tipo</th>
                     <th width="300px">Periodo</th>
