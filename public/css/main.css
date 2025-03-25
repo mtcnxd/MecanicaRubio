@@ -168,3 +168,11 @@ a:hover {
     border: solid 1px #555;
     background-color: #555555;
 }
+
+.dataTables_filter {
+    margin-bottom: 20px !important;
+}
+
+#services_filter {
+    display: none;
+}

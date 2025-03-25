@@ -34,11 +34,15 @@
                     <option>Entregado</option>
                 </select>
             </div>
-            <div class="col-md-2 mt-4">
+            <div class="col-md-4 mt-4">
                 <button class="btn btn-success" id="applyFilter">
                     <x-feathericon-search class="table-icon" style="margin: -2px 5px 2px"/>
                     Buscar
                 </button>
+            </div>
+            <div class="col-md-2">
+                <label for="searchBox" class="fw-bold">Automovil</label>
+                <input type="text" class="form-control" id="searchBox">
             </div>
         </div>
 
@@ -104,7 +108,7 @@ const table = new DataTable('#services',
 {
     processing: true,
     serverSide: true,
-    searching: false,
+    searching: true,
     lengthChange:false,
     pageLength: 15,
     order: [5, 'asc'],
@@ -140,6 +144,10 @@ const table = new DataTable('#services',
         }
     ]
 });
+
+$("#searchBox").on('keyup', function(){
+    table.columns(3).search(this.value).draw();
+})
 
 applyFilter.addEventListener('click', function(){
     table.draw();
