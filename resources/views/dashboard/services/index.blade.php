@@ -69,8 +69,8 @@
                     </td>
                     <td>{{ $service->name }}</td>
                     <td>{{ $service->brand }} {{ $service->model }}</td>
-                    <td>{{ Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
-                    <td>{{ isset($service->due_date) ? Carbon\Carbon::parse($service->due_date)->format('d-m-Y') : null }}</td>
+                    <td>{{ Carbon\Carbon::parse($service->entry_date)->format('d-m-Y') }}</td>
+                    <td>{{ isset($service->finished_date) ? Carbon\Carbon::parse($service->finished_date)->format('d-m-Y') : null }}</td>
                     <td>
                         @switch($service->status)
                         @case('Entregado')
@@ -132,9 +132,9 @@ const table = new DataTable('#services',
         },{
             data:'car'
         },{
-            data:'created_at'
+            data:'entry_date'
         },{
-            data:'due_date'
+            data:'finished_date'
         },{
             data:'status'
         },{

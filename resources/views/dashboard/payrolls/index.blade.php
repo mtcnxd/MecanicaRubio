@@ -53,7 +53,7 @@
                     <th width="350px">Empleado</th>
                     <th width="250px">Tipo</th>
                     <th width="300px">Periodo</th>
-                    <th width="200px">Elaborado</th>
+                    <th width="200px">Fecha de pago</th>
                     <th>Estatus</th>
                     <th class="text-end">Total</th>
                     <th width="30px">&nbsp;</th>
@@ -76,7 +76,7 @@
                         {{ Carbon\Carbon::parse($salary->start_date)->format('d-m-Y') }} | {{ Carbon\Carbon::parse($salary->end_date)->format('d-m-Y') }}
                     </td>
                     <td>
-                        {{ Carbon\Carbon::parse($salary->created_at)->format('d-m-Y') }}
+                        {{ Carbon\Carbon::parse($salary->paid_date)->format('d-m-Y') }}
                     </td>
                     <td>
                         @if ($salary->status == 'Pagado')
