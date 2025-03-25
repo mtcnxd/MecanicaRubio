@@ -197,7 +197,7 @@ class Services extends Controller
 
         if($request->startDate && $request->endDate){
             $serviceData = DB::table('services_view')
-                ->whereBetween('created_at', [$request->startDate, $request->endDate])
+                ->whereBetween('entry_date', [$request->startDate, $request->endDate])
                 ->get();
         }
 
@@ -214,15 +214,15 @@ class Services extends Controller
             ->addColumn('fault', function($service){
                 return '<a href="'. route("services.show", $service->id) .'">'. Str::limit($service->fault, 40) ."</a>";
             })
-            ->addColumn('created_at', function($service){
-                return Carbon::parse($service->created_at)->format('d-m-Y');
+            ->addColumn('entry_date', function($service){
+                return Carbon::parse($service->entry_date)->format('d-m-Y');
             })
-            ->addColumn('due_date', function($service){
-                if ($service->due_date == null){
+            ->addColumn('finished_date', function($service){
+                if ($service->finished_date == null){
                     return null;
                 }
 
-                return Carbon::parse($service->due_date)->format('d-m-Y');
+                return Carbon::parse($service->finished_date)->format('d-m-Y');
             })
             ->addColumn('status', function($service){
                 if ($service->status == 'Entregado'){
