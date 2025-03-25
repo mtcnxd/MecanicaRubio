@@ -107,7 +107,7 @@ const table = new DataTable('#services',
     searching: false,
     lengthChange:false,
     pageLength: 15,
-    order: [4, 'asc'],
+    order: [5, 'asc'],
     ajax: {
         url: "{{ route('getDataTableServices') }}",
         data: function(data) {
