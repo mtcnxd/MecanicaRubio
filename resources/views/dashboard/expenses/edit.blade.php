@@ -11,7 +11,7 @@
     </div>
 
     <div class="window-body bg-white">
-        <h4 class="ps-2 text-uppercase fs-6">Detalles del movimiento</h4>
+        <h4 class="ps-2 text-uppercase fs-6">Detalles del Egreso</h4>
         <div class="row mt-3">
             <div class="col-md-6">
                 <div class="card">
@@ -58,7 +58,10 @@
                             @method('PATCH')
 
                             <div class="row m-0 p-2">
-                                <div class="col-md-12">
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control" name="expense_date" value="{{ $expense->expense_date }}">
+                                </div>
+                                <div class="col-md-8">
                                     <input type="file" class="form-control" name="attach">
                                 </div>
                             </div>
@@ -66,8 +69,8 @@
                             <div class="row m-0">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <div class="col-md-6 mt-3 text-end">
-                                        <a href="{{ route('expenses.index') }}" class="btn btn-sm btn-secondary">Atras</a>
-                                        <button type="submit" class="btn btn-sm btn-success">
+                                        <a href="{{ route('expenses.index') }}" class="btn btn-secondary">Atras</a>
+                                        <button type="submit" class="btn btn-success">
                                             <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                                             Guardar
                                         </button>

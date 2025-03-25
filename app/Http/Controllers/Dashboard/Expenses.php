@@ -42,21 +42,6 @@ class Expenses extends Controller
         return view('dashboard.expenses.edit', compact('expense'));
     }
 
-    public function update(Request $request, string $id)
-    {
-        if($request->hasFile('attach')){
-            $newFilename = time() .'.'. $request->attach->extension();
-            $request->attach->move(public_path('uploads/expenses'), $newFilename);
-
-            DB::table('expenses')->where('id', $id)->update([
-                "attach"     => isset($newFilename) ? $newFilename : '',
-                "updated_at" => Carbon::now()
-            ]);
-        }
-
-        return to_route('expenses.index')->with('message', 'Egreso actualizado correctaamente');
-    }
-
     public function store(Request $request)
     {
         if($request->hasFile('attach')){
@@ -82,6 +67,29 @@ class Expenses extends Controller
         );
 
         return to_route('expenses.index');
+    }
+
+    public function update(Request $request, string $id)
+    {
+        if($request->hasFile('attach')){
+            $newFilename = time() .'.'. $request->attach->extension();
+            $request->attach->move(public_path('uploads/expenses'), $newFilename);
+
+            DB::table('expenses')->where('id', $id)->update([
+                "attach"       => isset($newFilename) ? $newFilename : '',
+                "expense_date" => $request->expense_date,
+                "updated_at"   => Carbon::now()
+            ]);
+
+            return to_route('expenses.index')->with('message', 'Egreso actualizado correctaamente');
+        }
+
+        DB::table('expenses')->where('id', $id)->update([
+            "expense_date" => $request->expense_date,
+            "updated_at"   => Carbon::now()
+        ]);
+
+        return to_route('expenses.index')->with('message', 'Egreso actualizado correctaamente');
     }
 
     public function deleteItem(Request $request)

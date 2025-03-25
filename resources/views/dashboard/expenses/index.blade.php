@@ -46,7 +46,7 @@
             <thead>
                 <tr>
                     <th width="40px">ID</th>
-                    <th width="300px">Egreso</th>
+                    <th width="250px">Egreso</th>
                     <th width="500px">Descripción</th>
                     <th width="100px">Estatus</th>
                     <th width="100px">Fecha</th>
@@ -63,8 +63,10 @@
                         <td>
                             <a href="{{ route('expenses.edit', $expense->id) }}">{{ $expense->name }}</a>
                         </td>
-                        <td>{{ $expense->description }}</td>
-                        <td>{{ $expense->status }}</td>
+                        <td>{{ Str::limit($expense->description, 60) }}</td>
+                        <td>
+                            <span class="badge text-bg-success">{{ $expense->status }}</span>
+                        </td>
                         <td>{{ Carbon\Carbon::parse($expense->expense_date)->format('d-m-Y') }}</td>
                         <td class="text-end">{{ "$".number_format($expense->amount * $expense->price, 2) }}</td>
                         <td>
