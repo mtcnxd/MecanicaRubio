@@ -30,7 +30,7 @@
                         Entrada
                     </div>    
                     <div class="col-md-3">
-                        <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->created_at)) }}">
+                        <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->entry_date)) }}">
                     </div>
                     <div class="col-md-3 pt-2 text-end">
                         ID
