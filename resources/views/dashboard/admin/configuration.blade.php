@@ -21,8 +21,8 @@
                 <x-feathericon-tool class="window-title-icon"/>
             </div>
             <div class="window-body bg-white shadow-sm">
-                <label class="window-body-form">Configuración de APIs</label>
-                <form action="{{ route('setting.store') }}" method="POST" class="border pt-5 pb-4">
+                <label class="window-body-form">Nuevo indice de configuración</label>
+                <form action="{{ route('setting.store') }}" method="POST" class="border pt-5 pb-4 mb-4">
                     @csrf
                     <div class="row">
                         <div class="col-md-3 pt-2 text-end">
@@ -53,6 +53,7 @@
                     </div>
                 </form>
 
+                <label class="window-body-form">Editar indice de configuración</label>
                 <form action="{{ route('setting.update') }}" method="POST" class="border pt-5 pb-4">
                     @csrf
                     @method('POST')
@@ -82,7 +83,7 @@
                         <div class="col-md-8 mt-3 text-end">
                             <button type="submit" class="btn btn-success">
                                 <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                                Guardar
+                                Editar
                             </button>
                         </div>
                     </div>

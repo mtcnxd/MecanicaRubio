@@ -16,7 +16,7 @@
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-2">
                 <label class="fw-bold">Inicio</label>
-                <input type="date" class="form-control" value="{{ \Carbon\Carbon::now()->subMonth(3)->format('Y-m-d') }}" id="startDate">
+                <input type="date" class="form-control" value="{{ \Carbon\Carbon::now()->subDays(45)->format('Y-m-d') }}" id="startDate">
             </div>
 
             <div class="col-md-2">
@@ -163,7 +163,7 @@ const table = new DataTable('#expenses', {
     searching: false,
     lengthChange:false,
     pageLength: 10,
-    order: [3, 'asc'],
+    order: [4, 'desc'],
     columnDefs: [{
         orderable: false, targets: [0, 2, 5, 6]
     }]
