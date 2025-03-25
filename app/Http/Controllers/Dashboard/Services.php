@@ -208,8 +208,8 @@ class Services extends Controller
         }
 
         return DataTables::of($serviceData)
-            ->addColumn('id', function($service){
-                return $service->id;
+            ->addColumn('service_id', function($service){
+                return $service->service_id;
             })
             ->addColumn('fault', function($service){
                 return '<a href="'. route("services.show", $service->id) .'">'. Str::limit($service->fault, 40) ."</a>";

@@ -122,7 +122,7 @@ const table = new DataTable('#services',
     },
     columns:[
         {
-            data:'id',
+            data:'service_id',
             orderable: true
         },{
             data:'fault',
