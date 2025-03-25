@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('calendar', function (Blueprint $table) {
             $table->id();
-            $table->string('event');
+            $table->string('name');
             $table->text('description');
             $table->integer('client_id');
             $table->integer('car_id');
-            $table->date('date');
+            $table->date('event_date');
             $table->timestamps();
         });
     }

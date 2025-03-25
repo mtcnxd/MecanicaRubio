@@ -21,7 +21,7 @@
                     <th>Correo</th>
                     <th>Empleado</th>
                     <th>Usuario</th>
-                    <th>Fecha de alta</th>
+                    <th>Fecha de inicio</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -34,7 +34,7 @@
                     <td>{{ $employee->email }}</td>
                     <td>{{ $employee->status }}</td>
                     <td>{{ $employee->user_status }}</td>
-                    <td>{{ $employee->created_at }}</td>
+                    <td>{{ \Carbon\Carbon::parse($employee->start_date)->format('d-m-Y') }}</td>
                     <td>
                         <a href="{{ route('employees.edit', $employee->id) }}">
                             <x-feathericon-edit class="table-icon"/>

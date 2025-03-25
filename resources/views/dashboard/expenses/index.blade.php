@@ -65,7 +65,7 @@
                         </td>
                         <td>{{ $expense->description }}</td>
                         <td>{{ $expense->status }}</td>
-                        <td>{{ Carbon\Carbon::parse($expense->created_at)->format('d-m-Y') }}</td>
+                        <td>{{ Carbon\Carbon::parse($expense->expense_date)->format('d-m-Y') }}</td>
                         <td class="text-end">{{ "$".number_format($expense->amount * $expense->price, 2) }}</td>
                         <td>
                             <button class="btn" id="{{ $expense->id }}" onclick="removeItemExpense(this.id)">
