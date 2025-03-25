@@ -15,15 +15,15 @@ class Charts extends Controller
         $endDate = Carbon::now();
 
         $data = DB::select(
-            'select count(*) as services, date(created_at) as created_at
-            from services_view group by date(created_at)
-            order by date(created_at) asc;'
+            'select count(*) as services, entry_date
+            from services_view group by entry_date
+            order by entry_date asc;'
         );
 
         $values = array();
         $labels = array();
         foreach($data as $value){
-            $labels[] = Carbon::parse($value->created_at)->format('d-m-Y');
+            $labels[] = Carbon::parse($value->entry_date)->format('d-m-Y');
             $values[] = $value->services;
         }
 
@@ -39,9 +39,9 @@ class Charts extends Controller
         $values = array();
 
         $data   = DB::select(
-            "select date_format(due_date,'%m') as month, sum(price) as price
+            "select date_format(finished_date,'%m') as month, sum(price) as price
             from services a join services_items b on a.id = b.service_id
-            where labour = true and a.status = 'Entregado' group by date_format(due_date,'%m');"
+            where labour = true and a.status = 'Entregado' group by date_format(finished_date,'%m');"
         );
 
         $months = [

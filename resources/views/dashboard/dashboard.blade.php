@@ -105,7 +105,7 @@
                             <tr>
                                 <td>{{ $row +1 }}</td>
                                 <td>{{ $service->car }}</td>
-                                <td>{{ Carbon\Carbon::parse($service->due_date)->format('d-m-Y') }}</td>
+                                <td>{{ Carbon\Carbon::parse($service->finished_date)->format('d-m-Y') }}</td>
                                 <td class="text-end">
                                     <x-feathericon-check-circle class="table-icon"/>
                                 </td>
