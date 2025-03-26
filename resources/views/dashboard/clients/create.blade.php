@@ -62,7 +62,7 @@
                             <span class="input-group-text">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#searchModal">Buscar</a>
                             </span>
-                          </div>
+                        </div>
                     </div>
                 </div>
 

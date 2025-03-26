@@ -13,29 +13,20 @@ class Payroll extends Controller
 {
     public function index(Request $request)
     {
-        $employee  = null;
-        $startDate = Carbon::now()->format('Y-m-01');
+        $startDate = Carbon::now()->startofMonth()->format('Y-m-d');
         $endDate   = Carbon::now()->addDay()->format('Y-m-d');
 
         $salaryData = DB::table('salaries')
             ->select('salaries.*', 'users.name')
             ->join('users', 'salaries.user_id','users.id')
             ->whereBetween('salaries.created_at', [$startDate, $endDate])
+            ->orderBy('salaries.created_at', 'desc')
             ->get();
-
-        if(isset($request->employee)){
-            $employee   = $request->employee_id;
-            $salaryData = DB::table('salaries')
-            ->join('users', 'employees.userid','users.id')
-            ->where('salaries.employee', $employee_id)
-            ->get();
-        }
 
         return view('dashboard.payrolls.index', [
             "startDate"  => $startDate,
             "endDate"    => $endDate,
-            "salaryData" => $salaryData,
-            "employee"   => $employee,
+            "salaryData" => $salaryData
         ]);
     }
 
@@ -91,14 +82,17 @@ class Payroll extends Controller
         switch ($request->action){
             case 'pay':
                 DB::table('salaries')->where('id', $request->id)->update([
-                    'status' => 'Pagado'
+                    "status"     => 'Pagado',
+                    "paid_date"  => Carbon::now(),
+                    "updated_at" => Carbon::now()
                 ]);
                 $response = "El pago se realizo correctamente";
                 break;
 
                 case 'cancell':
                 DB::table('salaries')->where('id', $request->id)->update([
-                    'status' => 'Cancelado'
+                    'status' => 'Cancelado',
+                    "updated_at" => Carbon::now()
                 ]);
                 $response = "El movimiento se cancelo correctamente";
                 break;

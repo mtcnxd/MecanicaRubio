@@ -73,10 +73,16 @@
                         {{ $salary->type }}
                     </td>
                     <td>
-                        {{ Carbon\Carbon::parse($salary->start_date)->format('d-m-Y') }} | {{ Carbon\Carbon::parse($salary->end_date)->format('d-m-Y') }}
+                        <span class="badge text-bg-secondary">
+                            {{ Carbon\Carbon::parse($salary->start_date)->format('d-m-Y') }}
+                        </span>
+                        |
+                        <span class="badge text-bg-secondary">
+                            {{ Carbon\Carbon::parse($salary->end_date)->format('d-m-Y') }}
+                        </span>
                     </td>
                     <td>
-                        {{ Carbon\Carbon::parse($salary->paid_date)->format('d-m-Y') }}
+                        {{ isset($salary->paid_date) ? Carbon\Carbon::parse($salary->paid_date)->format('d-m-Y') : null }}
                     </td>
                     <td>
                         @if ($salary->status == 'Pagado')

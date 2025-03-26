@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('deleteUser', [
     Employees::class, 'destroy'
-])->name('deleteUser');
+])->name('employees.deleteUser');
 
 Route::post('loadEmployee', [
     Employees::class, 'loadEmployee'
@@ -91,6 +91,10 @@ Route::post('createServicePDF', [
 Route::post('getServiceItems', [
     Services::class, 'getServiceItems'
 ])->name('services.getServiceItems');
+
+Route::post('getItemInformation', [
+    Services::class, 'getItemInformation'
+])->name('services.getItemInformation');
 
 Route::post('closeMonth', [
     Finance::class, 'closeMonth'

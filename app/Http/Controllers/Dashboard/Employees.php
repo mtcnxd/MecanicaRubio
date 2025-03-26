@@ -96,7 +96,9 @@ class Employees extends Controller
 
     public function destroy(Request $request)
     {
-        DB::table('users')->where('id', $request->user)->delete();
+        DB::table('users')->where('id', $request->user)->update([
+            "status" => 'Inactivo'
+        ]);
 
         sleep(random_int(1,3));
 
@@ -154,11 +156,13 @@ class Employees extends Controller
         if ($request->employee)
         {
             $results = DB::table('employees')
-                ->select('concept', 'start_date', 'end_date', 'amount')
+                ->select('concept','type','salaries.id','salaries.start_date','salaries.end_date','salaries.paid_date','amount')
                 ->join('salaries','employees.id','salaries.user_id')
                 ->join('salaries_details', 'salaries.id', 'salaries_details.salary_id')
                 ->where('employees.id', $request->employee)
+                ->where('salaries.status','Pagado')
                 ->where('salaries_details.concept','Caja de Ahorro')
+                ->orderBy('salaries.paid_date')
                 ->get();
 
             $employeeInfo = DB::table('employees')

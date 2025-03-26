@@ -22,7 +22,7 @@
                     <td>{{ $key = $key +1 }}</td>
                     <td><strong>{{ $row->type }}</strong> {{ $row->concept }}</td>
                     <td>{{ Carbon\Carbon::parse($row->date)->format('d-m-Y') }}</td>
-                    <td class="text-end">{{ "$".number_format($row->cash_in, 2) }}</td>
+                    <td class="text-end">{{ "$".number_format($row->cash_in, 2) }}</td>    
                     <td class="text-end">{{ "$".number_format($row->cash_out, 2) }}</td>
                 </tr>
             @endforeach

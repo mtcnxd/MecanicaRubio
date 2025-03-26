@@ -51,6 +51,12 @@
                     <div class="col-md-3">
                         <input type="text" name="" id="" class="form-control" value="{{ $salary->type }}" disabled>
                     </div>
+                    <div class="col-md-3 pt-2 text-end">
+                        Fecha de dispersión
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="" id="" class="form-control" value="{{ $salary->paid_date }}" disabled>
+                    </div>
                 </div>
 
                 <div class="row col-md-6 mt-3">
@@ -60,7 +66,7 @@
                     <div class="col-md-4">
                         <input type="date" name="start_date" class="form-control" value="{{ $salary->start_date }}" disabled>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <input type="date" name="end_date" class="form-control" value="{{ $salary->end_date }}" disabled>
                     </div>
                 </div>
@@ -110,7 +116,7 @@
 
             <div class="row">
                 <div class="col-md-12 text-end mt-3 pe-5">
-                    <a href="{{ route('payroll.index') }}" class="btn btn-secondary">Cancelar</a>
+                    <a href="{{ route('payroll.index') }}" class="btn btn-secondary">Atras</a>
                     <a href="#" onclick="print()" class="btn btn-secondary">
                         Imprimir
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>

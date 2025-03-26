@@ -183,21 +183,25 @@
         });
     });
 
-    $("#postcode").on('keyup', function() {
-        var postcode = this.value;
+    $("#postcode").on('focus', function(){
+        ajaxRequest(this);
+    })
 
-        if (postcode.length >= 4){
+    $("#postcode").on('keyup', function() {
+        ajaxRequest(this);
+    });    
+
+    function ajaxRequest(element) {
+        if (element.value.length >= 4){
             $.ajax({
-                url: "{{ route('searchPostcode') }}",
+                url: "{{ route('clients.searchByPostcode') }}",
                 method: 'POST',
                 data: {
-                    postcode:postcode
+                    postcode:element.value
                 },
                 success: function(response){
                     $("#address").empty();
-                    const object = JSON.parse(response);
-
-                    object.forEach(element => {
+                    response.data.forEach(element => {
                         $("#address").append('<option>' + element.address + '</option>');
                         $("#city").val(element.city);
                         $("#state").val(element.state);
@@ -206,22 +210,20 @@
                 }
             });
         }
-    });
+    }
 
     $("#textPostalCode").on('keyup', function(){
-        var address = this.value;
-        if (address.length > 3) {
+        if (this.value.length > 3) {
             $.ajax({
-                url:"{{ route('searchPostalCode') }}",
+                url:"{{ route('clients.searchByAddress') }}",
                 method: 'POST',
                 data:{
-                    address:address
+                    address:this.value
                 },
                 success: function(response){
-                    const postalCodes = JSON.parse(response);
                     $("#resultList").empty();
                     $("#resultList").show();
-                    $.each(postalCodes, function(index, pc){
+                    response.data.forEach((pc) => {
                         $("#resultList").append("<li onClick='selectItem("+ pc.postalcode +")'>" + pc.postalcode +" - "+ pc.address + "</a></li>");
                     })
                 }

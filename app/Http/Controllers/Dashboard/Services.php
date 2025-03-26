@@ -170,7 +170,7 @@ class Services extends Controller
             new SendEmailInvoice($service, $items)
         );
 
-        dd($response);
+        // dd($response);
         
         return to_route('services.show', $id);
     }
@@ -190,14 +190,27 @@ class Services extends Controller
         ]);
     }
 
-    public function getDataTableServices(Request $request)
+    public function getItemInformation(Request $request)
     {
-        $serviceData = DB::table('services_view')
+        $data = DB::table('services_items')
+            ->select('brand','model','supplier','services_items.price')
+            ->join('services','services_items.service_id','services.id')
+            ->join('autos','services.car_id', 'autos.id')
+            ->where('item', $request->item)
             ->get();
 
+        return response()->json([
+            "success" => true,
+            "data"    => $data
+        ]);
+    }
+
+    public function getDataTableServices(Request $request)
+    {
         if($request->startDate && $request->endDate){
             $serviceData = DB::table('services_view')
                 ->whereBetween('entry_date', [$request->startDate, $request->endDate])
+                ->limit(75)
                 ->get();
         }
 

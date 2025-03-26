@@ -74,23 +74,22 @@
                     <tbody>
                         <tr>
                             <th>#</th>
+                            <th>Movimiento</th>
                             <th>Concepto</th>
+                            <th class="text-center">Fecha de pago</th>
                             <th class="text-center">Semana de pago</th>
                             <th class="text-end">Importe</th>
                         </tr>
                         @foreach ($results as $row => $result)
                             <tr>
                                 <td>{{ $row +1 }}</td>
+                                <td>{{ $result->type }} #{{ $result->id }}</td>
                                 <td>{{ $result->concept }}</td>
+                                <td class="text-center">{{ Carbon\Carbon::parse($result->paid_date)->format('d-m-Y') }}</td>
                                 <td class="text-center">
-                                    <div class="row">
-                                        <div class="col">
-                                            <span class="badge text-bg-warning">{{ $result->start_date }}</span>
-                                        </div>
-                                        <div class="col">
-                                            <span class="badge text-bg-warning">{{ $result->end_date }}</span>
-                                        </div>
-                                    </div>
+                                    <span class="badge text-bg-warning">{{ $result->start_date }}</span>
+                                    |
+                                    <span class="badge text-bg-warning">{{ $result->end_date }}</span>
                                 </td>
                                 <td class="text-end">{{ "$".number_format($result->amount, 2) }}</td>
                             </tr>

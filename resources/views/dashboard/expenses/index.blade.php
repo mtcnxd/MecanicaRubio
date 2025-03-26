@@ -179,8 +179,7 @@ function removeItemExpense(buttonPressed){
             id:buttonPressed
         },
         success:function(response){
-            let image = '/storage/' + response.attach;
-            $("#modal-image").attr('src', image);
+            console.log('remove image');
         }
     }).then ((response) => {
         showMessageAlert(response.message);

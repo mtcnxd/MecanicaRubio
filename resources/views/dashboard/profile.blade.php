@@ -39,7 +39,12 @@
                             Teléfono
                         </div>
                         <div class="col-md-8">
-                            <input type="number" class="form-control" name="phone" value="{{ $self->phone }}">
+                            <div class="input-group">
+                                <input type="number" class="form-control" name="phone" value="{{ $self->phone }}">
+                                <span class="input-group-text">
+                                    <x-feathericon-smartphone class="table-icon" style="margin: -2px 5px 2px"/>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -47,7 +52,12 @@
                             Correo
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="email" value="{{ $self->email }}" disabled>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="email" value="{{ $self->email }}" disabled>
+                                <span class="input-group-text">
+                                    <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     
@@ -68,10 +78,10 @@
                             Contraseña
                         </div>
                         <div class="col-md-4">
-                            <input type="password" class="form-control" name="password" required>
+                            <input type="password" class="form-control" name="password" required placeholder="Cambiar contraseña">
                         </div>
                         <div class="col-md-4">
-                            <input type="password" class="form-control" name="repeat" required>
+                            <input type="password" class="form-control" name="repeat" required placeholder="Repetir contraseña">
                         </div>
                     </div>
 
@@ -80,7 +90,7 @@
                             &nbsp;
                         </div>
                         <div class="col-md-8 mt-3 text-end">
-                            <a href="{{ route('profile.index') }}" class="btn btn-secondary">Cancelar</a>
+                            <a href="{{ route('employees.index') }}" class="btn btn-secondary">Atras</a>
                             <button type="submit" class="btn btn-success">
                                 <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                                 Guardar

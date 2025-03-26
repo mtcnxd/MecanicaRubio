@@ -20,10 +20,10 @@
                     <div class="col-md-2 pt-2 text-end">
                         Nombre
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <input type="text" class="form-control" value="{{ $employee->id }}" disabled>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <input type="text" class="form-control" name="name" value="{{ $employee->name }}">
                     </div>
                 </div>
@@ -121,15 +121,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col mb-0 mt-0 m-4 border">
+            
+            <div class="col mb-0 mt-0 m-4 border rounded">
                 <div class="row">
                     <div class="col-md-6 pt-2">
-                        <strong>Fecha de inicio:</strong> {{ $extra->format('d-m-Y') }}
+                        <strong>Fecha de inicio:</strong> 
+                        <input type="date" value="{{ $extra->format('Y-m-d') }}" class="form-control" disabled>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 pt-2">
-                        <strong>Antiguedad:</strong> {{ $extra->diffInMonths() }} meses
+                    <div class="col-md-6 pt-2 mt-3">
+                        <strong>Antiguedad:</strong>
+                        <input type="text" value="{{ $extra->diffInMonths() }} meses" class="form-control" disabled>
                     </div>
                 </div>
             </div>
@@ -140,8 +143,12 @@
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <div class="col-md-6 mt-3 text-end">
                         <img src="{{ asset('image.gif') }}" width="20px" height="20px" id="loader" style="margin-right: 20px; display:none;">
-                        <a href="#" id="btn-delete" class="btn btn-secondary">Eliminar</a>
-                        <a href="{{ route('employees.index') }}" class="btn btn-secondary">Cancelar</a>
+                        <a href="{{ route('employees.index') }}" class="btn btn-secondary">Atras</a>
+                        <button type="button" class="btn btn-danger" id="btn-delete">
+                            <x-feathericon-trash-2 class="table-icon" style="margin: -2px 5px 2px"/>
+                            Eliminar
+                        </button>
+
                         <button type="submit" class="btn btn-success">
                             <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                             Guardar
@@ -166,16 +173,13 @@
 
         $.ajax({
             type: "POST",
-            url:  "/api/deleteUser",
+            url:  "{{ route('employees.deleteUser') }}",
             data: {
                 user: {{ $employee->id }}
             },
             success: function (response) {
                 console.log(response);
                 showMessageAlert('success', response.message);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.table(jqXHR)
             }
         }).then(() => {
             $("#loader").hide();
