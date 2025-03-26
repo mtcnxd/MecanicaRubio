@@ -44,11 +44,10 @@ class Finance extends Controller
 
     public function createBalancePDF(Request $request)
     {
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate   = Carbon::now();
+        $latest = DB::table('montly_balances')->latest()->first();
 
         $rows = DB::table('montly_balance_view')
-            ->whereBetween('date', [$startDate, $endDate])
+            ->whereBetween('date', [$latest->close_date, Carbon::now()])
             ->orderBy('date')
             ->get();
 

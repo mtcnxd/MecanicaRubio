@@ -131,7 +131,7 @@ class Services extends Controller
             ->join('services_items','services_view.service_id','services_items.service_id')
             ->where('services_items.labour', true)
             ->where('services_view.status', 'Entregado')
-            ->whereBetween('services_view.finished_date', [Carbon::now()->format('Y-m-01'), Carbon::now()])
+            ->whereBetween('services_view.finished_date', [Carbon::now()->startOfMonth(), Carbon::now()])
             ->groupBy('services_view.car','finished_date')
             ->orderBy('services_view.finished_date')
             ->get();
@@ -142,7 +142,7 @@ class Services extends Controller
 
         $salaries = DB::table('salaries')
             ->where('status','Pagado')
-            ->whereBetween('paid_date', [Carbon::now()->format('Y-m-01'), Carbon::now()])
+            ->whereBetween('paid_date', [Carbon::now()->startOfMonth(), Carbon::now()])
             ->get();
 
         return view('dashboard.dashboard',[
@@ -165,12 +165,9 @@ class Services extends Controller
             ->where('service_id', $id)
             ->get();
 
-
         $response = Mail::to('mtc.nxd@gmail.com')->send(
             new SendEmailInvoice($service, $items)
         );
-
-        // dd($response);
         
         return to_route('services.show', $id);
     }

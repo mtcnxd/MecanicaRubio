@@ -49,7 +49,7 @@
                     <strong>Saldo anterior</strong>
                 </div>
                 <div class="card-body">
-                    {{ "$".number_format($last->income, 2) }}
+                    {{ "$".number_format($latest->income, 2) }}
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
                     <strong>Saldo nuevo</strong>
                 </div>
                 <div class="card-body">
-                    {{ "$".number_format($last->income + $balance, 2) }}
+                    {{ "$".number_format($latest->income + $balance, 2) }}
                 </div>
             </div>
         </div>

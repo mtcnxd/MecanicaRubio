@@ -166,6 +166,7 @@
             <table class="table table-hover" id="table-items">
                 <thead>
                     <th>Servicio / Falla</th>
+                    <th>Tipo de servicio</th>
                     <th>Entrada</th>
                     <th>Salida</th>
                     <th>Status</th>
@@ -177,10 +178,15 @@
                             <td>
                                 <a href="{{ route('services.show', $service->id) }}">{{ Str::limit($service->fault, 80) }}</a>
                             </td>
-                            <td>{{ \Carbon\Carbon::parse($service->created_at)->format('d-m-Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($service->due_date)->format('d-m-Y') }}</td>
+                            <td>{{ $service->service_type }}</td>
+                            <td>{{ Carbon\Carbon::parse($service->entry_date)->format('d-m-Y') }}</td>
+                            <td>{{ isset($service->finished_date) ? Carbon\Carbon::parse($service->finished_date)->format('d-m-Y') : '' }}</td>
                             <td>
-                                <span class="badge text-bg-success">{{ $service->status }}</span>
+                                @if ($service->status == 'Finalizado')
+                                    <span class="badge text-bg-success">{{ $service->status }}</span>    
+                                @else
+                                    <span class="badge text-bg-warning">{{ $service->status }}</span>
+                                @endif
                             </td>
                             <td class="text-end">{{  '$'.number_format($service->total, 2) }}</td>
                         </tr>

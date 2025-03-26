@@ -106,16 +106,13 @@ class Expenses extends Controller
 
     public function report()
     {
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate   = Carbon::now();
+        $latest = DB::table('montly_balances')->latest()->first();
 
         $rows = DB::table('montly_balance_view')
-            ->whereBetween('date', [$startDate, $endDate])
+            ->whereBetween('date', [$latest->close_date, Carbon::now()])
             ->orderBy('date')
             ->get();
 
-        $last = DB::table('montly_balances')->latest()->first();
-
-        return view('dashboard.reports.balance', compact('rows','last'));
+        return view('dashboard.reports.balance', compact('rows','latest'));
     }
 }
