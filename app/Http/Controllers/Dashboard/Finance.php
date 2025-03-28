@@ -30,7 +30,8 @@ class Finance extends Controller
             "income"     => $request->income,
             "expenses"   => $request->expenses,
             "close_date" => Carbon::now(),
-            "comments"   => 'Comentarios del cierre de mes'
+            "comments"   => 'Comentarios del cierre de mes',
+            "created_at" => Carbon::now()
         ]);
 
         sleep(5);
@@ -47,7 +48,7 @@ class Finance extends Controller
         $latest = DB::table('montly_balances')->latest()->first();
 
         $rows = DB::table('montly_balance_view')
-            ->whereBetween('date', [$latest->close_date, Carbon::now()])
+            ->whereBetween('date', [Carbon::parse($latest->close_date), Carbon::now()])
             ->orderBy('date')
             ->get();
 

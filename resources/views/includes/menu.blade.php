@@ -90,6 +90,7 @@
 						<li><a class="a-item" href="{{ route('reports.employees') }}">Empleados</a></li>
 					</ul>
 				</li>
+				<li><a class="a-item" href="{{ route('reports.balance') }}">Cierre de mes</a></li>
 			</ul>
 		</li>
 		<li>

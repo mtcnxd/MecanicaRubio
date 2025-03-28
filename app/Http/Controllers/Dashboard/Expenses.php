@@ -109,7 +109,7 @@ class Expenses extends Controller
         $latest = DB::table('montly_balances')->latest()->first();
 
         $rows = DB::table('montly_balance_view')
-            ->whereBetween('date', [$latest->close_date, Carbon::now()])
+            ->whereBetween('date', [Carbon::parse($latest->close_date), Carbon::now()])
             ->orderBy('date')
             ->get();
 

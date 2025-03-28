@@ -12,15 +12,15 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 $results = DB::table('services_calendar_view')
-	->where('days_after','>', 20)
+	->where('days_after','>', 30)
 	->get();
 
 foreach($results as $row){
-	$service_date = Carbon::now()->addDays(3);
+	$newService = Carbon::parse($row->finished_date)->addDays(180);
 
 	$exists = DB::table('calendar')
 		->where('car_id', $row->car_id)
-		->where('date', $service_date->format('Y-m-d'))
+		->where('date', $newService->format('Y-m-d'))
 		->first();
 		
 	if (!$exists){
@@ -29,7 +29,7 @@ foreach($results as $row){
 			"description" => 'Mantenimiento: '. $row->car,
 			"client_id"	  => $row->client_id,
 			"car_id"	  => $row->car_id,
-			"date"		  => $service_date,
+			"date"		  => $newService,
 			"status"	  => 'Pendiente',
 			"notified"	  => 1,
 			"created_at"  => Carbon::now(),
