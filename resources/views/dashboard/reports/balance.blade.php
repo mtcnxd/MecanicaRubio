@@ -49,7 +49,7 @@
                     <strong>Saldo anterior</strong>
                 </div>
                 <div class="card-body">
-                    {{ "$".number_format($balance, 2) }}
+                    {{ "$".number_format($latestBalance, 2) }}
                 </div>
             </div>
         </div>
@@ -61,10 +61,10 @@
                 </div>
                 <div class="card-body">
                     @php
-                        $balance = 0;
-                        $balance = $rows->sum('cash_in') - $rows->sum('cash_out');
+                        $currentBalance = 0;
+                        $currentBalance = $rows->sum('cash_in') - $rows->sum('cash_out');
                     @endphp
-                    {{ "$".number_format($balance, 2) }}
+                    {{ "$".number_format($currentBalance, 2) }}
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
                     <strong>Saldo nuevo</strong>
                 </div>
                 <div class="card-body">
-                    {{ "$".number_format($balance, 2) }}
+                    {{ "$".number_format($latestBalance + $currentBalance, 2) }}
                 </div>
             </div>
         </div>

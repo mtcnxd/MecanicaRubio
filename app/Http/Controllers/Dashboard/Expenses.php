@@ -117,11 +117,11 @@ class Expenses extends Controller
             ->get();
 
         if ($latest[0]->balance){
-            $balance = $latest[0]->balance;
+            $latestBalance = $latest[0]->balance;
         } else {
-            $balance = $latest->sum('income') - $latest[1]->expenses;
+            $latestBalance = $latest->sum('income') - $latest[1]->expenses;
         }
 
-        return view('dashboard.reports.balance', compact('rows','latest', 'balance'));
+        return view('dashboard.reports.balance', compact('rows','latest', 'latestBalance'));
     }
 }
