@@ -49,7 +49,7 @@
                     <strong>Saldo anterior</strong>
                 </div>
                 <div class="card-body">
-                    {{ "$".number_format($latest->income, 2) }}
+                    {{ "$".number_format(($latest->income - $latest->expenses ), 2) }}
                 </div>
             </div>
         </div>

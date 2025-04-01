@@ -83,19 +83,6 @@
                 @endforeach
             </tbody>
         </table>
-
-        <!--
-        <div class="row mt-3">
-            <div class="col-md-3">
-                <input type="button" value="Marcar como pagado" class="btn btn-sm btn-outline-success" id="markAsPaid">
-                <input type="button" value="Sumar seleccionados" class="btn btn-sm btn-outline-success" id="sumAsTotal">
-            </div>
-            
-            <div class="col">
-                <span id="result" class="fw-bold"></span>
-            </div>
-        </div>
-        -->
     </div>
 </div>
 @endsection
@@ -136,29 +123,6 @@ const endDate     = document.querySelector("#endDate");
 const responsible = document.querySelector("#responsible");
 const applyFilter = document.querySelector('#applyFilter');
 
-/*
-$("#markAsPaid").on('click', function(){
-    var checkboxGroup = $('input[type="checkbox"]');
-    var checkboxResult = [];
-
-    checkboxGroup.each(function() {
-        if ($(this).prop('checked')) {
-            checkboxResult.push( $(this).attr('id') );
-        }
-    });
-
-    $.ajax({
-        method: 'POST',
-        data: {
-            checkboxResult:checkboxResult
-        },
-        success: function(response){
-            showMessageAlert(response);
-        }
-    });
-});
-*/
-
 const table = new DataTable('#expenses', {
     processing: true,
     serverSide: false,
@@ -172,18 +136,20 @@ const table = new DataTable('#expenses', {
 });
 
 function removeItemExpense(buttonPressed){
-    $.ajax({
-        url:"{{ route('expenses.deleteItem') }}",
-        method: 'POST',
-        data: {
-            id:buttonPressed
-        },
-        success:function(response){
-            console.log('remove image');
-        }
-    }).then ((response) => {
-        showMessageAlert(response.message);
-    });
+    if (confirm('¿Confirma querer eliminar el registro?')){
+        $.ajax({
+            url:"{{ route('expenses.deleteItem') }}",
+            method: 'POST',
+            data: {
+                id:buttonPressed
+            },
+            success:function(response){
+                console.log('remove image');
+            }
+        }).then ((response) => {
+            showMessageAlert(response.message);
+        });
+    }
 }
 
 function getImageAttached(buttonPressed){
