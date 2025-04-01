@@ -75,7 +75,7 @@ class Services extends Controller
         $currentData = DB::table('services')->where('id', $id)->first();
 
         if ($currentData->status == 'Entregado'){
-            $finishedDate = $currentData->finished_date;
+            $finishedDate = isset($currentData->finished_date) ? $currentData->finished_date : Carbon::now();
         } else {
             $finishedDate = Carbon::now();
         }
