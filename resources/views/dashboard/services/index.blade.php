@@ -50,7 +50,7 @@
             <thead>
                 <tr>
                     <th width="35px">ID</th>
-                    <th width="350px">Servicio/Fallo</th>
+                    <th width="340px">Servicio/Fallo</th>
                     <th width="250px">Cliente</th>
                     <th>Automovil</th>
                     <th>Entrada</th>
@@ -64,7 +64,7 @@
                 <tr>
                     <td>
                         <a href="{{ route('services.show', $service->id) }}">
-                            {{ Str::limit($service->fault, 35) }}
+                            {{ Str::limit($service->fault, 32) }}
                         </a>
                     </td>
                     <td>{{ $service->name }}</td>

@@ -222,7 +222,7 @@ class Services extends Controller
                 return $service->service_id;
             })
             ->addColumn('fault', function($service){
-                return '<a href="'. route("services.show", $service->service_id) .'">'. Str::limit($service->fault, 40) ."</a>";
+                return '<a href="'. route("services.show", $service->service_id) .'">'. Str::limit($service->fault, 32) ."</a>";
             })
             ->addColumn('entry_date', function($service){
                 return Carbon::parse($service->entry_date)->format('d-m-Y');
