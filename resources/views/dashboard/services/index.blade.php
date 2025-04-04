@@ -49,13 +49,13 @@
         <table class="table table-hover table-borderless mb-4" id="services" style="width:100%;">
             <thead>
                 <tr>
-                    <th width="35px">ID</th>
-                    <th width="340px">Servicio/Fallo</th>
+                    <th width="30px">ID</th>
+                    <th width="330px">Servicio/Fallo</th>
                     <th width="250px">Cliente</th>
                     <th>Automovil</th>
                     <th>Entrada</th>
-                    <th class="text-center" width="130px">Salida</th>
-                    <th class="text-center" width="130px">Estatus</th>
+                    <th class="text-center" width="120px">Salida</th>
+                    <th class="text-center" width="120px">Estatus</th>
                     <th class="text-end">Total</th>
                 </tr>
             </thead>
