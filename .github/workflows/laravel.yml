@@ -19,4 +19,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./  # Ruta de los archivos en el repositorio
-          server-dir: /  # Ruta de destino en el servidor
+          server-dir: /public_html  # Ruta de destino en el servidor
