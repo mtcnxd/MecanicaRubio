@@ -16,7 +16,7 @@
                     <input type="submit" class="btn btn-secondary btn-sm" value="Entrar" id="submit">
                 </div>
                 <div class="text-center mt-3" style="min-height:26px">
-                    <img src="{{ asset('image.gif') }}" width="20px" height="20px" style="display:none;" class="mb-3" id="loader">
+                    <img src="{{ asset('images/image.gif') }}" width="20px" height="20px" style="display:none;" class="mb-3" id="loader">
                 </div>
             </form>
 

@@ -29,8 +29,8 @@ Route::get('/', function(){
     return view('content');
 });
 
-Route::get('admin/login', [Login::class, 'index'])->name('login');
-Route::post('admin/login', [Login::class, 'login']);
+Route::get('admin', [Login::class, 'index'])->name('login');
+Route::post('admin', [Login::class, 'login']);
 Route::post('admin/logout', [Login::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group( function ()
