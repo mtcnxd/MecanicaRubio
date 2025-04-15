@@ -1,0 +1,11 @@
+.logo {
+    background-color: black;
+}
+
+.slogan {
+    position: absolute;
+    top: 50%;
+    left: 30% ;
+    right: 25% ;
+    color: #fff;
+}
