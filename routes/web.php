@@ -26,52 +26,52 @@ use Carbon\Carbon;
 */
 
 Route::get('/', function(){
-    return to_route("login");
+    return view('content');
 });
 
-Route::get('login', [Login::class, 'index'])->name('login');
-Route::post('login', [Login::class, 'login']);
-Route::post('logout', [Login::class, 'logout'])->name('logout');
+Route::get('admin/login', [Login::class, 'index'])->name('login');
+Route::post('admin/login', [Login::class, 'login']);
+Route::post('admin/logout', [Login::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group( function ()
 {
-    Route::resource('clients', Clients::class);
+    Route::resource('admin/clients', Clients::class);
 
-    Route::resource('cars', Cars::class);
+    Route::resource('admin/cars', Cars::class);
 
-    Route::resource('services', Services::class);
+    Route::resource('admin/services', Services::class);
 
-    Route::resource('expenses', Expenses::class);
+    Route::resource('admin/expenses', Expenses::class);
 
-    Route::resource('payroll', Payroll::class);
+    Route::resource('admin/payroll', Payroll::class);
 
-    Route::resource('employees', Employees::class);
+    Route::resource('admin/employees', Employees::class);
 
-    Route::get('calendar', [Calendar::class, 'index'])->name('calendar.index');
+    Route::get('admin/calendar', [Calendar::class, 'index'])->name('calendar.index');
 
-    Route::get('dashboard', [Services::class, 'dashboard'])->name('dashboard.index');
+    Route::get('admin/dashboard', [Services::class, 'dashboard'])->name('dashboard.index');
 
-    Route::get('profile', [Employees::class, 'profileIndex'])->name('profile.index');
+    Route::get('admin/profile', [Employees::class, 'profileIndex'])->name('profile.index');
 
-    Route::post('profile', [Employees::class, 'profileUpdate'])->name('profile.update');
+    Route::post('admin/profile', [Employees::class, 'profileUpdate'])->name('profile.update');
 
-    Route::get('settings', [Settings::class, 'index'])->name('setting.index');
+    Route::get('admin/settings', [Settings::class, 'index'])->name('setting.index');
 
-    Route::post('settings', [Settings::class, 'update'])->name('setting.update');
+    Route::post('admin/settings', [Settings::class, 'update'])->name('setting.update');
 
-    Route::post('settings/create', [Settings::class, 'store'])->name('setting.store');
+    Route::post('admin/settings/create', [Settings::class, 'store'])->name('setting.store');
 
-    Route::get('sendEmailInvoice/{service}', [Services::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
+    Route::get('admin/sendEmailInvoice/{service}', [Services::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
 
     # Reports
-    Route::get('reports/employees/{userid}', [Employees::class, 'report'])->name('reports.employees');
+    Route::get('admin/reports/employees/{userid}', [Employees::class, 'report'])->name('reports.employees');
     
-    Route::get('reports/employees', [Employees::class, 'report'])->name('reports.employees');
+    Route::get('admin/reports/employees', [Employees::class, 'report'])->name('reports.employees');
 
-    Route::get('reports/balance', [Expenses::class, 'report'])->name('reports.balance');
+    Route::get('admin/reports/balance', [Expenses::class, 'report'])->name('reports.balance');
     
-    Route::get('reports/autos', [Cars::class, 'report'])->name('reports.autos');
+    Route::get('admin/reports/autos', [Cars::class, 'report'])->name('reports.autos');
     
-    Route::get('finance/{client}', [Finance::class, 'show'])->name('finance');
+    Route::get('admin/finance/{client}', [Finance::class, 'show'])->name('finance');
 
 });
