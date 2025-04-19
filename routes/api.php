@@ -112,6 +112,10 @@ Route::post('getEvent', [
     Calendar::class, 'getEvent'
 ])->name('calendar.getEvent');
 
+Route::post('arduinoPost', [
+    Calendar::class, 'arduinoPost'
+]);
+
 Route::post('createItemInvoice', [
     ControllerAjax::class, 'createItemInvoice'
 ])->name('createItemInvoice');
