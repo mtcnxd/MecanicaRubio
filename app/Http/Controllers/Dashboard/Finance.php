@@ -30,7 +30,7 @@ class Finance extends Controller
             DB::table('montly_balances')->insert([
                 "income"     => $request->income,
                 "expenses"   => $request->expenses,
-                "balance"    => 
+                "balance"    => $request->balance,
                 "close_date" => Carbon::now(),
                 "comments"   => 'Comentarios del cierre de mes',
                 "created_at" => Carbon::now()

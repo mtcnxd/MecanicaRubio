@@ -108,6 +108,7 @@ btnClose.addEventListener('click', (btn) => {
     btn.preventDefault();
     let income   = document.getElementById('income').value;
     let expenses = document.getElementById('expenses').value;
+    let balance  = document.getElementById('balance').value;
 
     if (
         confirm('¿Confirmas que deseas cerrar el mes actual?')
@@ -118,7 +119,8 @@ btnClose.addEventListener('click', (btn) => {
             method: 'POST',
             data: {
                 income:income,
-                expenses:expenses
+                expenses:expenses,
+                balance:balance
             },
             success: function(response){
                 console.log(response);
