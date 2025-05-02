@@ -26,13 +26,17 @@ class Finance extends Controller
 
     public function closeMonth(Request $request)
     {
-        DB::table('montly_balances')->insert([
-            "income"     => $request->income,
-            "expenses"   => $request->expenses,
-            "close_date" => Carbon::now(),
-            "comments"   => 'Comentarios del cierre de mes',
-            "created_at" => Carbon::now()
-        ]);
+        try {
+            DB::table('montly_balances')->insert([
+                "income"     => $request->income,
+                "expenses"   => $request->expenses,
+                "close_date" => Carbon::now(),
+                "comments"   => 'Comentarios del cierre de mes',
+                "created_at" => Carbon::now()
+            ]);
+        } catch (Exception $err){
+            dd($err->getMessage());
+        }
 
         sleep(5);
 

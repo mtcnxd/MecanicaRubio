@@ -92,7 +92,7 @@
             <a class="btn btn-sm btn-outline-success" id="closeMonth">
                 Conciliar mes actual
             </a>
-            <img src="{{ asset('image.gif') }}" width="20px" height="20px" style="display:none;" class="ms-2" id="loader">
+            <img src="{{ asset('/images/image.gif') }}" width="20px" height="20px" style="display:none;" class="ms-2" id="loader">
         </div>
     </div>
 </div>
@@ -121,6 +121,9 @@ btnClose.addEventListener('click', (btn) => {
             },
             success: function(response){
                 console.log(response);
+            },
+            error:function(error){
+                console.log(error);
             }
         })
         .then(() => {
