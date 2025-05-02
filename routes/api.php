@@ -98,7 +98,7 @@ Route::post('getItemInformation', [
 
 Route::post('closeMonth', [
     Finance::class, 'closeMonth'
-])->name('finance.closeMonth');
+]);
 
 Route::post('createBalancePDF', [
     Finance::class, 'createBalancePDF'

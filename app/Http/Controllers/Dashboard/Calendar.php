@@ -60,17 +60,19 @@ class Calendar extends Controller
     }
 
     public function arduinoPost(Request $request)
-    {
+    {   
         /*
         DB::table('arduino')->insert([
             'data'       => $request->data,
             'created_at' => Carbon::now()
         ]);
         */
-
+        
         return response()->json([
             "success" => true,
-            "message" => "Success"
+            "message" => "Success",
+            "data"    => $request->json('data')
         ]);
+        
     }
 }

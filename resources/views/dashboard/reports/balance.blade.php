@@ -11,7 +11,7 @@
             <thead>
                 <th width="40px">#</th>
                 <th>Concepto</th>
-                <th>Salida</th>
+                <th>Fecha</th>
                 <th class="text-end">Ingresos</th>
                 <th class="text-end">Egresos</th>
             </thead>
