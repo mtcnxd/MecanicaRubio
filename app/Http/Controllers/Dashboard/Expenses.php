@@ -120,7 +120,7 @@ class Expenses extends Controller
             ->orderBy('date')
             ->get();
 
-        if ($latest[0]->balance){
+        if ($latest[0]){
             $latestBalance = $latest[0]->balance;
         } else {
             $latestBalance = $latest->sum('income') - $latest[1]->expenses;
