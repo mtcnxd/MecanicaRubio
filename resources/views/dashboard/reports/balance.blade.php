@@ -76,6 +76,7 @@
                 </div>
                 <div class="card-body">
                     {{ "$".number_format($latestBalance + $currentBalance, 2) }}
+                    <input type="hidden" id="balance" value="{{ number_format($latestBalance + $currentBalance, 2) }}">
                 </div>
             </div>
         </div>
