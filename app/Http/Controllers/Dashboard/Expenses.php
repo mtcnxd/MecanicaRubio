@@ -62,9 +62,13 @@ class Expenses extends Controller
             'updated_at'   => Carbon::now()
         ]);
 
-        Telegram::send(
-            sprintf("<b>New expense created:</b> %s <b>Total:</b> $%s", $request->name, $request->price)
-        );
+        try {
+            Telegram::send(
+                sprintf("<b>New expense created:</b> %s <b>Total:</b> $%s", $request->name, $request->price)
+            );
+        } catch (Exception $err){
+
+		}
 
         return to_route('expenses.index');
     }

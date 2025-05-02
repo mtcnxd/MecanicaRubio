@@ -49,9 +49,13 @@ class Services extends Controller
             "updated_at"   => Carbon::now(),
         ]);
 
-        Telegram::send(
-            sprintf("<b>New service created:</b> #%s <b>Fault:</b> %s", $serviceId, $request->fault)
-        );
+        try {
+            Telegram::send(
+                sprintf("<b>New service created:</b> #%s <b>Fault:</b> %s", $serviceId, $request->fault)
+            );
+        } catch (Exception $err){
+
+		}
 
         return to_route('services.index')->with('message', 'Los datos se guardaron con exito');
     }

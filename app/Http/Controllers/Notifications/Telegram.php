@@ -15,19 +15,14 @@ class Telegram extends Controller
         
         $url = 'https://api.telegram.org/'. $token .'/sendMessage';
         
-        try {
-            $response = Http::post($url, array(
-                "chat_id"    => '-1002434117829',
-                "text" 	     => $text,
-                "parse_mode" => "HTML"
-            ));
+        $response = Http::post($url, array(
+            "chat_id"    => '-1002434117829',
+            "text" 	     => $text,
+            "parse_mode" => "HTML"
+        ));
 
-            if ($response->getStatusCode() == 400){
-                throw new \Exception("Error Processing Request: ". $response['description']);
-            }
-
-        } catch(Exception $err) {
-            
+        if ($response->getStatusCode() == 400){
+            throw new \Exception("Error Processing Request: ". $response['description']);
         }
     }
 }

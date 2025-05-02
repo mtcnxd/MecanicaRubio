@@ -36,9 +36,13 @@ foreach($results as $row){
 			"updated_at"  => Carbon::now()
 		]);
 		
-		Telegram::send(
-			sprintf ("<b>New service programmed:</b> %s <b>Client:</b> %s <b>Car:</b> %s", $service_date->format('d-m-Y'), $row->name, $row->car)
-		);
+		try {
+			Telegram::send(
+				sprintf ("<b>New service programmed:</b> %s <b>Client:</b> %s <b>Car:</b> %s", $service_date->format('d-m-Y'), $row->name, $row->car)
+			);
+		} catch (Exception $err){
+
+		}
 
 		continue;
 	}

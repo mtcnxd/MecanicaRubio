@@ -42,9 +42,13 @@ class Cars extends Controller
             "updated_at" => Carbon::now()
         ]);
 
-        Telegram::send(
-            sprintf("<b>New car created:</b> %s <b>Model:</b> %s", $request->brand, $request->model)
-        );
+        try {
+            Telegram::send(
+                sprintf("<b>New car created:</b> %s <b>Model:</b> %s", $request->brand, $request->model)
+            );
+        } catch (Exception $err){
+
+		}
 
         return to_route('cars.index')->with('message', 'Los datos se guardaron correctamente');
     }

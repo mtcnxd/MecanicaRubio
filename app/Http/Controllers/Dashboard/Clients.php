@@ -59,9 +59,13 @@ class Clients extends Controller
             'updated_at' => Carbon::now(),
         ]);
 
-        Telegram::send(
-            sprintf("<b>New client created:</b> %s <b>Phone:</b> %s", $request->name, $request->phone)
-        );
+        try {
+            Telegram::send(
+                sprintf("<b>New client created:</b> %s <b>Phone:</b> %s", $request->name, $request->phone)
+            );
+        } catch (Exception $err){
+
+		}
 
         session()->flash('success', 'El cliente se guardó correctamente');
         return to_route('clients.index');
