@@ -91,9 +91,13 @@ class Services extends Controller
         ]);
 
         if ($request->status == 'Entregado'){
-            Telegram::send(
-                sprintf("<b>New job submission:</b> #%s <b>Total:</b> $%s", $id, $request->total)
-            );
+            try {
+                Telegram::send(
+                    sprintf("<b>New job submission:</b> #%s <b>Total:</b> $%s", $id, $request->total)
+                );
+            } catch (Exception $err) {
+                var_dump($err->getMessage());
+            }
         }
 
         return to_route('services.index')->with('message', 'Guardado con exito');
