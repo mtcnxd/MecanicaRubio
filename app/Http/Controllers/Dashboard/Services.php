@@ -49,12 +49,19 @@ class Services extends Controller
             "updated_at"   => Carbon::now(),
         ]);
 
+        $servicesDetails = DB::table('services')
+            ->join('autos','services.car_id','autos.id')
+            ->where('services.id', $serviceId)
+            ->first();
+
+        $carName = $servicesDetails->brand ." ". $servicesDetails->model ." ". $servicesDetails->year ;
+
         try {
             Telegram::send(
-                sprintf("<b>New service created:</b> #%s <b>Fault:</b> %s", $serviceId, $request->fault)
+                sprintf("<b>New service created:</b> #%s - %s <b>Fault:</b> %s", $serviceId, $carName , $request->fault)
             );
         } catch (Exception $err){
-            session()->flash('warning', 'Error: '. $err->getMessage());
+            session()->flash('warning', 'ERROR: '. $err->getMessage());
 		}
 
         return to_route('services.index')->with('message', 'Los datos se guardaron con exito');

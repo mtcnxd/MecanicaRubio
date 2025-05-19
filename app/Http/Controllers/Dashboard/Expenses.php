@@ -18,7 +18,7 @@ class Expenses extends Controller
 
         $expenses = DB::table('expenses')
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         return view('dashboard.expenses.index', compact('expenses'));

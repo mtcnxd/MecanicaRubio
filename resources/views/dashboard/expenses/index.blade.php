@@ -124,14 +124,13 @@ const responsible = document.querySelector("#responsible");
 const applyFilter = document.querySelector('#applyFilter');
 
 const table = new DataTable('#expenses', {
-    processing: true,
-    serverSide: false,
     searching: false,
     lengthChange:false,
     pageLength: 10,
-    order: [4, 'desc'],
+    order: [0, 'desc'],
     columnDefs: [{
-        orderable: false, targets: [0, 2, 5, 6]
+        orderable: false, 
+        targets: [0, 2, 5, 6]
     }]
 });
 
