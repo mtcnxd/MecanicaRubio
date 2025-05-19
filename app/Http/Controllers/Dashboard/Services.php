@@ -54,7 +54,7 @@ class Services extends Controller
                 sprintf("<b>New service created:</b> #%s <b>Fault:</b> %s", $serviceId, $request->fault)
             );
         } catch (Exception $err){
-
+            session()->flash('warning', 'Error: '. $err->getMessage());
 		}
 
         return to_route('services.index')->with('message', 'Los datos se guardaron con exito');
@@ -97,10 +97,10 @@ class Services extends Controller
         if ($request->status == 'Entregado'){
             try {
                 Telegram::send(
-                    sprintf("<b>New job submission:</b> #%s <b>Total:</b> $%s", $id, $request->total)
+                    sprintf("<b>Service completed:</b> #%s - %s <b>Total:</b> $%s", $id, $currentData->fault, number_format($request->total,2))
                 );
             } catch (Exception $err) {
-                var_dump($err->getMessage());
+                session()->flash('warning', 'ERROR: '. $err->getMessage());
             }
         }
 

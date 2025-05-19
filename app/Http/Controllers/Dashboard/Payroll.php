@@ -13,7 +13,7 @@ class Payroll extends Controller
 {
     public function index(Request $request)
     {
-        $startDate = Carbon::now()->startofMonth()->format('Y-m-d');
+        $startDate = Carbon::now()->subMonths(2)->startofMonth()->format('Y-m-d');
         $endDate   = Carbon::now()->addDay()->format('Y-m-d');
 
         $salaryData = DB::table('salaries')

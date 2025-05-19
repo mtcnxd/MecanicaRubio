@@ -11,9 +11,6 @@ use DB;
 
 class Clients extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $clients = DB::table('clients')->where('status', 'Activo')->get();
@@ -24,17 +21,11 @@ class Clients extends Controller
         );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('dashboard.clients.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $contactExists = DB::table('clients')->where('phone', $request->phone)->first();
@@ -64,7 +55,7 @@ class Clients extends Controller
                 sprintf("<b>New client created:</b> %s <b>Phone:</b> %s", $request->name, $request->phone)
             );
         } catch (Exception $err){
-
+            session()->flash('warning', 'ERROR: '. $err->getMessage());
 		}
 
         session()->flash('success', 'El cliente se guardó correctamente');
