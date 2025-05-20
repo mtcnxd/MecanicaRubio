@@ -9,3 +9,28 @@
     right: 25% ;
     color: #fff;
 }
+
+.div_menu {
+    background-color: black;
+    height: 50px;
+}
+
+.main_menu > li {
+    list-style: none;
+    display: inline;
+}
+
+.btn_menu {
+    padding: 15px 40px;
+}
+
+.main_menu a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.main_menu a:hover {
+    color: #000;
+    background-color: rgba(174, 174, 192, 0.8);
+    border-radius: 5px;
+}

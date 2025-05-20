@@ -67,7 +67,7 @@ class Expenses extends Controller
                 sprintf("<b>New expense created:</b> %s <b>Total:</b> $%s", $request->name, $request->price)
             );
         } catch (Exception $err){
-
+            session()->flash('warning', 'ERROR: '. $err->getMessage());
 		}
 
         return to_route('expenses.index');

@@ -41,7 +41,7 @@ foreach($results as $row){
 				sprintf ("<b>New service programmed:</b> %s <b>Client:</b> %s <b>Car:</b> %s", $service_date->format('d-m-Y'), $row->name, $row->car)
 			);
 		} catch (Exception $err){
-
+			session()->flash('warning', 'ERROR: '. $err->getMessage());
 		}
 
 		continue;

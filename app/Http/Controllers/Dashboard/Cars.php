@@ -47,7 +47,7 @@ class Cars extends Controller
                 sprintf("<b>New car created:</b> %s <b>Model:</b> %s", $request->brand, $request->model)
             );
         } catch (Exception $err){
-
+            session()->flash('warning', 'ERROR: '. $err->getMessage());
 		}
 
         return to_route('cars.index')->with('message', 'Los datos se guardaron correctamente');
