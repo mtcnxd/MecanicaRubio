@@ -47,6 +47,8 @@ Route::middleware(['auth'])->group( function ()
 
     Route::resource('admin/employees', Employees::class);
 
+    Route::get('admin/quote', [Services::class, 'createQuote'])->name('quote.create');
+
     Route::get('admin/calendar', [Calendar::class, 'index'])->name('calendar.index');
 
     Route::get('admin/dashboard', [Services::class, 'dashboard'])->name('dashboard.index');

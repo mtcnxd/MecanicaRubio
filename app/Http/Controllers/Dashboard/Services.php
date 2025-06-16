@@ -70,7 +70,7 @@ class Services extends Controller
     public function show(string $id)
     {
         $service = DB::table('services')
-            ->select('services.*','autos.brand','autos.model','clients.name')
+            ->select('services.*','autos.brand','autos.model','autos.year','clients.name')
             ->join('autos', 'services.car_id', 'autos.id')
             ->join('clients', 'services.client_id', 'clients.id')
             ->where('services.id', $id)
@@ -215,6 +215,11 @@ class Services extends Controller
             "success" => true,
             "data"    => $data
         ]);
+    }
+
+    public function createQuote(Request $request)
+    {
+        return view('dashboard.services.quote');
     }
 
     public function getDataTableServices(Request $request)
