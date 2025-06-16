@@ -44,10 +44,10 @@
                     <div class="col-md-3 pt-2 text-end">
                         Automovil
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <input type="text" class="form-control" id="car" name="car" value="{{ $service->brand }} {{ $service->model }} - {{ $service->year }}" disabled>
                     </div>
-                    <div class="col-md-3 pt-2 text-end">
+                    <div class="col-md-2 pt-2 text-end">
                         Odometro
                     </div>
                     <div class="col-md-3">

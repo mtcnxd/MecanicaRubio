@@ -219,7 +219,14 @@ class Services extends Controller
 
     public function createQuote(Request $request)
     {
-        return view('dashboard.services.quote');
+        $client = null;
+        $genericClientId = DB::table('settings')->where('name','genericClient')->first()->value;
+        
+        if (isset($genericClientId)){
+            $client = DB::table('clients')->where('id', $genericClientId)->first();
+        }
+
+        return view('dashboard.services.quote', compact('client'));
     }
 
     public function getDataTableServices(Request $request)

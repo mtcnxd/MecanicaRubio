@@ -20,7 +20,7 @@
                         Cliente
                     </div>    
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="client" value="">
+                        <input type="text" class="form-control" name="client" value="{{ isset($client) ? $client->name : 'Not configured' }}">
                         <input type="hidden" value="" id="service">
                     </div>
                 </div>
@@ -86,7 +86,7 @@
             <div class="row">
                 <div class="col-md-12 text-end mt-3 pe-5">
                     <a href="{{ route('services.index') }}" class="btn btn-secondary">Atras</a>
-                    <a href="#" class="btn btn-secondary">
+                    <a href="#" class="btn btn-secondary" onclick="downloadPDF(1)">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
@@ -94,10 +94,12 @@
                         <x-feathericon-share-2 class="table-icon" style="margin: -2px 5px 2px"/>
                         Enviar
                     </a>
+                    <!--
                     <button type="submit" class="btn btn-success">
                         <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                         Guardar
                     </button>
+                    -->
                 </div>
             </div>
         </form>
