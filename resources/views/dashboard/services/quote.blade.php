@@ -176,3 +176,26 @@
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
+
+@section('js')
+<script>
+    $("#item").on('keyup', function(){
+        if (this.value.length >= 5){
+            $.ajax({
+                url: "{{ route('services.getServiceItems') }}",
+                method: "POST",
+                data: {text:this.value},
+                success:function (response){                    
+                    console.log(response);
+
+                    $("#resultListItems").empty();
+                    $("#resultListItems").show();
+                    response.data.forEach( (item) => {
+                        $("#resultListItems").append("<li onClick='selectItem(this)'>"+ item.item +"</li>");
+                    })
+                }
+            });
+        }
+    });
+</script>
+@endsection
