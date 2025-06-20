@@ -186,8 +186,6 @@
                 method: "POST",
                 data: {text:this.value},
                 success:function (response){                    
-                    console.log(response);
-
                     $("#resultListItems").empty();
                     $("#resultListItems").show();
                     response.data.forEach( (item) => {
@@ -197,5 +195,59 @@
             });
         }
     });
+
+    $("#addItemInvoice").on('click', function(event){
+        var service  = $("#service").val();
+        var amount   = $("#amount").val();
+        var item     = $("#item").val();
+        var supplier = $("#supplier").val();
+        var price    = $("#price").val();
+        var labour   = $("#labour").prop('checked');
+
+        if (item.length < 3 && !labour) {
+            $("#item").focus();
+            return;
+        }
+
+        $.ajax({
+            url:"{{ route('createItemInvoice') }}",
+            method:'POST',
+            data: {
+                service:service,
+                amount:amount,
+                item:item,
+                supplier:supplier,
+                price:price,
+                labour:labour
+            },
+            success:function(response){
+                if (response.success){
+                    $("#createItem").modal('hide');
+                    location.reload();
+                }
+            }
+        });
+    });
+
+    $(".removeItem").on('click', function (event){
+        event.preventDefault();
+        $.ajax({
+            url:"{{ route('removeItemInvoice') }}",
+            method:'POST',
+            data: {
+                item:this.id
+            },
+            success:function(response){
+                showMessageAlert(response);
+            }
+        });
+    });
+
+    function selectItem(element){
+        let input = document.getElementById('item');
+        input.value = element.textContent;
+        $("#resultListItems").hide();
+    }    
+    
 </script>
 @endsection

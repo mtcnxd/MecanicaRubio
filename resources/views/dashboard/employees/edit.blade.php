@@ -173,7 +173,7 @@
 
         $.ajax({
             type: "POST",
-            url:  "{{ route('employees.deleteUser') }}",
+            url:  "{{ route('employees.delete') }}",
             data: {
                 user: {{ $employee->id }}
             },

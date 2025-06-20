@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\Payroll;
 use App\Http\Controllers\Dashboard\Finance;
 use App\Http\Controllers\Dashboard\Expenses;
 use App\Http\Controllers\Dashboard\Calendar;
+use App\Http\Controllers\API\Clients as ApiClients;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,102 +29,59 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 */
 
-Route::post('deleteUser', [
-    Employees::class, 'destroy'
-])->name('employees.deleteUser');
+Route::group(['prefix' => 'employees'], function () {
+    Route::post('load', [Employees::class, 'loadEmployee'])->name('employees.load'); 
 
-Route::post('loadEmployee', [
-    Employees::class, 'loadEmployee'
-])->name('employees.load');
+    Route::post('delete', [Employees::class, 'destroy'])->name('employees.delete');
+});
 
-Route::post('createBrand', [
-    Cars::class, 'createBrand'
-])->name('createBrand');
+Route::group(['prefix' => 'cars'], function () {
+    Route::post('createBrand', [Cars::class, 'createBrand'])->name('createBrand');
 
-Route::post('createModel', [
-    Cars::class, 'createModel'
-])->name('createModel');
+    Route::post('createModel', [Cars::class, 'createModel'])->name('createModel');
 
-Route::post('loadModels', [
-    Cars::class, 'loadModels'
-])->name('loadModels');
+    Route::post('loadModels', [Cars::class, 'loadModels'])->name('loadModels');
 
-Route::post('searchByClient', [
-    Cars::class, 'searchByClient'
-])->name('cars.searchByClient');
+    Route::post('searchByClient', [Cars::class, 'searchByClient'])->name('cars.searchByClient'); 
+});
 
-Route::post('manageSalaries', [
-    Payroll::class, 'manageSalaries'
-])->name('manageSalaries');
+Route::post('manageSalaries', [Payroll::class, 'manageSalaries'])->name('manageSalaries');
 
-Route::post('addItem', [
-    Payroll::class, 'addItem'
-])->name('payroll.addItem');
+Route::post('addItem', [Payroll::class, 'addItem'])->name('payroll.addItem');
 
-Route::post('removeItem', [
-    Payroll::class, 'removeItem'
-])->name('payroll.removeItem');
+Route::post('removeItem', [Payroll::class, 'removeItem'])->name('payroll.removeItem');
 
-Route::post('deleteClient', [
-    Clients::class, 'destroy'
-])->name('deleteClient');
+Route::controller(Clients::class)->group(function () {
+    Route::post('deleteClient', 'destroy')->name('clients.deleteClient');
+    
+    Route::post('getClientsList', 'getClientsList')->name('clients.getClientsList');
+    
+    Route::post('searchByPostcode', 'searchByPostcode')->name('clients.searchByPostcode');
+    
+    Route::post('searchByAddress', 'searchByAddress')->name('clients.searchByAddress');    
+});
 
-Route::post('getClientsList', [
-    Clients::class, 'getClientsList'
-])->name('clients.getClientsList');
+// Services
+Route::post('getServiceItems', [Services::class, 'getServiceItems'])->name('services.getServiceItems');
 
-Route::post('searchByPostcode', [
-    Clients::class, 'searchByPostcode'
-])->name('clients.searchByPostcode');
+Route::get('getDataTableServices', [Services::class, 'getDataTableServices'])->name('getDataTableServices');
 
-Route::post('searchByAddress', [
-    Clients::class, 'searchByAddress'
-])->name('clients.searchByAddress');
+Route::post('createServicePDF', [Services::class, 'createServicePDF'])->name('services.createServicePDF');
 
-Route::get('getDataTableServices', [
-    Services::class, 'getDataTableServices'
-])->name('getDataTableServices');
+Route::post('getItemInformation', [Services::class, 'getItemInformation'])->name('services.getItemInformation');
 
-Route::post('createServicePDF', [
-    Services::class, 'createServicePDF'
-])->name('services.createServicePDF');
+Route::post('closeMonth', [Finance::class, 'closeMonth'])->name('finance.closeMonth');
 
-Route::post('getServiceItems', [
-    Services::class, 'getServiceItems'
-])->name('services.getServiceItems');
+Route::post('createBalancePDF', [Finance::class, 'createBalancePDF'])->name('finance.createBalancePDF');
 
-Route::post('getItemInformation', [
-    Services::class, 'getItemInformation'
-])->name('services.getItemInformation');
+Route::post('deleteItem', [Expenses::class, 'deleteItem'])->name('expenses.deleteItem');
 
-Route::post('closeMonth', [
-    Finance::class, 'closeMonth'
-])->name('finance.closeMonth');
+Route::post('getEvent', [Calendar::class, 'getEvent'])->name('calendar.getEvent');
 
-Route::post('createBalancePDF', [
-    Finance::class, 'createBalancePDF'
-])->name('finance.createBalancePDF');
+Route::post('createItemInvoice', [ControllerAjax::class, 'createItemInvoice'])->name('createItemInvoice');
 
-Route::post('deleteItem', [
-    Expenses::class, 'deleteItem'
-])->name('expenses.deleteItem');
+Route::post('getImageAttached', [ControllerAjax::class, 'getImageAttached'])->name('getImageAttached');
 
-Route::post('getEvent', [
-    Calendar::class, 'getEvent'
-])->name('calendar.getEvent');
+Route::post('createItemQuote', [ControllerAjax::class, 'createItemQuote'])->name('createItemQuote'); 
 
-Route::post('arduinoPost', [
-    Calendar::class, 'arduinoPost'
-]);
-
-Route::post('createItemInvoice', [
-    ControllerAjax::class, 'createItemInvoice'
-])->name('createItemInvoice');
-
-Route::post('removeItemInvoice', [
-    ControllerAjax::class, 'removeItemInvoice'
-])->name('removeItemInvoice');
-
-Route::post('getImageAttached', [
-    ControllerAjax::class, 'getImageAttached'
-])->name('getImageAttached');
+Route::post('removeItemInvoice', [ControllerAjax::class, 'removeItemInvoice'])->name('removeItemInvoice');
