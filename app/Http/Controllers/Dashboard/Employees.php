@@ -113,8 +113,6 @@ class Employees extends Controller
     {
         $self = User::find(Auth::user()->id);
 
-        // dd($self);
-
         return view('dashboard.profile', compact('self'));
     }
 

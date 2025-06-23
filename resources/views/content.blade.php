@@ -17,7 +17,7 @@
                 <a href="#" class="btn_menu">Quienes somos</a>
             </li>            
             <li>
-                <a href="#" class="btn_menu">Mis servicios</a>
+                <a href="{{ route('login') }}" class="btn_menu">Mis servicios</a>
             </li>
         </ul>
     </div>

@@ -6,12 +6,27 @@ use App\Http\Controllers\Notifications\Telegram;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Http\Controllers\CarsController;
 use DB;
 
 class Cars extends Controller
 {
+    public function prueba(CarsController $mycar)
+    {
+
+    }
+
     public function index()
     {
+        $auto = CarsController::getCar(2);
+
+        dd($auto);
+
+
+
+
+
+
         $autos = DB::table('clients')
             ->join('autos', 'autos.client_id', 'clients.id')
             ->where('clients.status','Activo')

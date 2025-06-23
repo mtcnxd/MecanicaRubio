@@ -208,7 +208,7 @@
         var client = $(this).data('bsClient');
 
         $.ajax({
-            url: "{{ route('deleteClient') }}",
+            url: "{{ route('clients.deleteClient') }}",
             method: 'POST',
             data: {
                 client:client
