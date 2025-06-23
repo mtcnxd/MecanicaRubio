@@ -18,9 +18,9 @@ class Cars extends Controller
 
     public function index()
     {
-        $auto = CarsController::getCar(2);
+        // $auto = CarsController::getCar(2);
 
-        dd($auto);
+        // dd($auto);
 
 
 
