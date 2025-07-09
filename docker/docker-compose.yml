@@ -1,0 +1,12 @@
+services:
+    mysql:
+        image: mysql
+#        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_ROOT_USER=root
+            - MYSQL_ROOT_PASSWORD=password
+            - MYSQL_DATABASE=mecani21_mecanica
+        volumes:
+            - ./data:/var/lib/mysql

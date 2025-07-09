@@ -25,7 +25,6 @@ use Carbon\Carbon;
 |
 */
 
-
 Route::get('/', function(){
     return view('content');
 });
@@ -33,7 +32,6 @@ Route::get('/', function(){
 Route::get('admin', [Login::class, 'index'])->name('login');
 Route::post('admin', [Login::class, 'login']);
 Route::post('admin/logout', [Login::class, 'logout'])->name('logout');
-
 
 Route::group(['prefix' => 'client'], function(){
     // Customer routes
