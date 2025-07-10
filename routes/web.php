@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Dashboard\Cars;
 use App\Http\Controllers\Dashboard\Clients;
 use App\Http\Controllers\Dashboard\Services;
@@ -10,7 +12,6 @@ use App\Http\Controllers\Dashboard\Employees;
 use App\Http\Controllers\Dashboard\Calendar;
 use App\Http\Controllers\Dashboard\Finance;
 use App\Http\Controllers\Dashboard\Settings;
-use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Auth\Login;
 use Carbon\Carbon;
 
@@ -24,6 +25,16 @@ use Carbon\Carbon;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+ 
+Route::get('/auth/callback', function () {
+    $user = Socialite::driver('google')->user();
+});
+
 
 Route::get('/', function(){
     return view('content');
