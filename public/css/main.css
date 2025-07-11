@@ -2,7 +2,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
 
 .fs-7 {
-    font-size: 11px;
+    font-size: 14px;
 }
 
 .fs-8 {
@@ -175,4 +175,12 @@ a:hover {
 
 #services_filter {
     display: none;
+}
+
+.btn-white {
+    background-color: #dedede;
+}
+
+.btn-white:hover {
+    background-color: #cdcdcd;
 }

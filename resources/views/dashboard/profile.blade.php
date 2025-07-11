@@ -22,9 +22,16 @@
             </div>
             <div class="window-body bg-white shadow-sm">
                 <label class="window-body-form">Editar perfil</label>
-                <form action="{{ route('profile.update') }}" method="POST" class="border pt-5 pb-4">
+                <form action="{{ route('profile.update') }}" method="POST" class="border pt-4 pb-4">
                     @csrf
                     @method('POST')
+
+                    @isset($self->avatar)
+                        <div class="text-center mb-3">
+                            <img src="{{ $self->avatar }}" width="86px" height="86px" class="rounded-pill border border-4">
+                        </div>
+                    @endisset
+
                     <div class="row">
                         <div class="col-md-3 pt-2 text-end">
                             Nombre

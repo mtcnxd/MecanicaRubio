@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Helpers;
 use Illuminate\Http\Request;
 use App\Mail\SendEmailInvoice;
+use App\Models\Clients;
 use Carbon\Carbon;
 use DataTables;
 use Exception;
@@ -21,8 +22,9 @@ class Services extends Controller
     public function index()
     {
         $services = array();
+        $clients  = Clients::orderBy('name')->get();
 
-        return view('dashboard.services.index', compact('services'));
+        return view('dashboard.services.index', compact('services', 'clients'));
     }
 
     public function create()
@@ -231,20 +233,19 @@ class Services extends Controller
 
     public function getDataTableServices(Request $request)
     {
-        if($request->startDate && $request->endDate){
-            $serviceData = DB::table('services_view')
-                ->whereBetween('entry_date', [$request->startDate, $request->endDate])
-                ->limit(75)
-                ->get();
+        $servicesQuery = DB::table('services_view');
+
+        if ($request->client != 'Todos') {
+            $servicesQuery->where('client_id', [$request->client]);
         }
 
-        if ($request->status != 'Todos'){
-            $serviceData = DB::table('services_view')
-                ->where('status', $request->status)
-                ->get();
+        if ($request->status != 'Todos') {
+            $servicesQuery->where('status', $request->status);
         }
+        
+        $servicesQuery->orderBy('status', 'desc')->get();
 
-        return DataTables::of($serviceData)
+        return DataTables::of($servicesQuery)
             ->addColumn('service_id', function($service){
                 return $service->service_id;
             })

@@ -30,7 +30,7 @@ use App\Models\User;
 // Login and registration routes
 Route::get('/auth/redirect', function () {
     return Socialite::driver('google')->redirect();
-});
+})->name('google-redirect');
  
 Route::get('/auth/callback', function () {
     try {
@@ -59,7 +59,7 @@ Route::get('/auth/callback', function () {
 Route::get('admin', [Login::class, 'index'])->name('login');
 Route::post('admin', [Login::class, 'login']);
 Route::post('admin/logout', [Login::class, 'logout'])->name('logout');
-// Login and registration routes
+
 
 Route::get('/', function(){
     return view('content');

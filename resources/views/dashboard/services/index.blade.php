@@ -14,15 +14,16 @@
         @include('includes.div_warning')
 
         <div class="row m-1 mb-3 pb-3" id="filters">
-            <div class="col-md-2">
-                <label for="startDate" class="fw-bold">Inicio</label>
-                <input type="date" class="form-control" id="startDate" value="{{ \Carbon\Carbon::now()->subMonths(3)->format('Y-m-d') }}">
+            <div class="col-md-3">
+                <label for="endDate" class="fw-bold">Cliente</label>
+                <select class="form-select" id="client">
+                    <option>Todos</option>
+                    @foreach ($clients as $client)
+                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                    @endforeach
+                </select>
             </div>
-            <div class="col-md-2">
-                <label for="endDate" class="fw-bold">Final</label>
-                <input type="date" class="form-control" id="endDate" value="{{ \Carbon\Carbon::now()->addDay()->format('Y-m-d') }}">
-            </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label for="endDate" class="fw-bold">Estatus</label>
                 <select class="form-select" id="status">
                     <option>Todos</option>
@@ -37,7 +38,7 @@
             <div class="col-md-4 mt-4">
                 <button class="btn btn-success" id="applyFilter">
                     <x-feathericon-search class="table-icon" style="margin: -2px 5px 2px"/>
-                    Buscar
+                    Filtrar
                 </button>
             </div>
             <div class="col-md-2">
@@ -54,8 +55,8 @@
                     <th width="250px">Cliente</th>
                     <th>Automovil</th>
                     <th>Entrada</th>
-                    <th class="text-center" width="120px">Salida</th>
-                    <th class="text-center" width="120px">Estatus</th>
+                    <th width="100px" class="text-center">Salida</th>
+                    <th width="100px" class="text-center">Estatus</th>
                     <th class="text-end">Total</th>
                 </tr>
             </thead>
@@ -94,13 +95,17 @@
 
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script>
-const startDate   = document.querySelector("#startDate");
-const endDate     = document.querySelector("#endDate");
+
+$('#client').select2();
+
+const client      = document.querySelector("#client");
 const status      = document.querySelector("#status");
 const applyFilter = document.querySelector('#applyFilter');
 
@@ -115,9 +120,8 @@ const table = new DataTable('#services',
     ajax: {
         url: "{{ route('getDataTableServices') }}",
         data: function(data) {
-            data.startDate = startDate.value;
-            data.endDate   = endDate.value;
-            data.status    = status.value;
+            data.client = client.value;
+            data.status = status.value;
         }
     },
     columns:[
