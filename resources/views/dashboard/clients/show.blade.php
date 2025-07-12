@@ -9,7 +9,7 @@
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
-    <div class="window-body bg-white">
+    <div class="window-body p-4 bg-white">
         <label class="window-body-form">Información del cliente</label>
         <form action="" method="POST" class="border pt-5 pb-4">
             <div class="row">

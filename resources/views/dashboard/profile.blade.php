@@ -20,7 +20,7 @@
                 <h6 class="window-title-text">Datos personales</h6>
                 <x-feathericon-tool class="window-title-icon"/>
             </div>
-            <div class="window-body bg-white shadow-sm">
+            <div class="window-body bg-white p-4">
                 <label class="window-body-form">Editar perfil</label>
                 <form action="{{ route('profile.update') }}" method="POST" class="border pt-4 pb-4">
                     @csrf

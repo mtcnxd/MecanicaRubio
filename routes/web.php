@@ -1,20 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Mail;
-use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\Dashboard\Cars;
-use App\Http\Controllers\Dashboard\Clients;
-use App\Http\Controllers\Dashboard\Services;
-use App\Http\Controllers\Dashboard\Expenses;
-use App\Http\Controllers\Dashboard\Payroll;
-use App\Http\Controllers\Dashboard\Employees;
-use App\Http\Controllers\Dashboard\Calendar;
-use App\Http\Controllers\Dashboard\Finance;
-use App\Http\Controllers\Dashboard\Settings;
-use App\Http\Controllers\Auth\Login;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Http\Controllers\Auth\Login;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\Cars;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Dashboard\Clients;
+use App\Http\Controllers\Dashboard\Finance;
+use App\Http\Controllers\Dashboard\Payroll;
+use App\Http\Controllers\Dashboard\Calendar;
+use App\Http\Controllers\Dashboard\Expenses;
+use App\Http\Controllers\Dashboard\Services;
+use App\Http\Controllers\Dashboard\Settings;
+use App\Http\Controllers\Dashboard\Employees;
+use App\Http\Controllers\Dashboard\QuotesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,9 +80,9 @@ Route::middleware(['auth'])->group( function ()
                 Route::resource('cars', Cars::class);
                 Route::resource('expenses', Expenses::class);
                 Route::resource('payroll', Payroll::class);
-                Route::resource('employees', Employees::class);        
+                Route::resource('employees', Employees::class);
+                Route::resource('quotes', QuotesController::class);
 
-                Route::get('quote', [Services::class, 'createQuote'])->name('quote.create');
                 Route::get('calendar', [Calendar::class, 'index'])->name('calendar.index');
                 Route::get('dashboard', [Services::class, 'dashboard'])->name('dashboard.index');
                 Route::get('profile', [Employees::class, 'profileIndex'])->name('profile.index');

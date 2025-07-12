@@ -88,7 +88,6 @@ a:hover {
 }
 
 .window-body {
-    padding: 20px;
     border: solid 2px var(--blue-gray-100);
 }
 
@@ -183,4 +182,8 @@ a:hover {
 
 .btn-white:hover {
     background-color: #cdcdcd;
+}
+
+.table > thead {
+    background-color: var(--blue-gray-50);
 }

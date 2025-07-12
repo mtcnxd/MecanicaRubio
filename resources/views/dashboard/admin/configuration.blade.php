@@ -20,7 +20,7 @@
                 <h6 class="window-title-text">API's</h6>
                 <x-feathericon-tool class="window-title-icon"/>
             </div>
-            <div class="window-body bg-white shadow-sm">
+            <div class="window-body p-4 bg-white">
                 <label class="window-body-form">Nuevo indice de configuración</label>
                 <form action="{{ route('setting.store') }}" method="POST" class="border pt-5 pb-4 mb-4">
                     @csrf

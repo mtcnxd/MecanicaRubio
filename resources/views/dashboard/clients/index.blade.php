@@ -11,7 +11,7 @@
         <h6 class="window-title-text">Buscar cliente</h6>
         <x-feathericon-user-plus class="window-title-icon"/>
     </div>
-    <div class="window-body bg-white">
+    <div class="window-body pt-3 pb-3 bg-white">
         <table class="table table-hover table-borderless mb-4" id="clients">
             <thead>
                 <tr>

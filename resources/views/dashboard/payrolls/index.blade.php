@@ -10,7 +10,7 @@
         <h6 class="window-title-text">Listado de nominas</h6>
         <x-feathericon-dollar-sign class="window-title-icon"/>
     </div>
-    <div class="window-body bg-white">
+    <div class="window-body pt-3 pb-3 bg-white">
         @include('includes.div_warning')
         <form action="{{ route('payroll.index') }}" method="POST">
             @csrf

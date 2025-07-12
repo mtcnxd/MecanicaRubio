@@ -9,11 +9,10 @@
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
-    <div class="window-body bg-white">
+    <div class="window-body p-4 bg-white">
         <label class="window-body-form">Servicio</label>
-        <form action="" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('quotes.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf
-            @method('PATCH')
             <div class="row">
                 <div class="row col-md-6">
                     <div class="col-md-3 pt-2 text-end">
@@ -30,7 +29,12 @@
                         Automovil
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" id="car" name="car" value="">
+                        <input type="text" class="form-select" id="car" name="car">
+                        <ul id="resultListItems" class="float-suggestions" style="display:none; z-index:10;">
+                            @foreach ($cars as $car)
+                                <li>{{ $car->brand }} {{ $car->model }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
 
@@ -90,16 +94,10 @@
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
-                    <a href="" class="btn btn-secondary">
+                    <button type="submit" class="btn btn-secondary">
                         <x-feathericon-share-2 class="table-icon" style="margin: -2px 5px 2px"/>
-                        Enviar
-                    </a>
-                    <!--
-                    <button type="submit" class="btn btn-success">
-                        <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                         Guardar
                     </button>
-                    -->
                 </div>
             </div>
         </form>
@@ -179,6 +177,23 @@
 
 @section('js')
 <script>
+    $("#car").on('keyup', function(){
+        if (this.value.length >= 3){
+            $.ajax({
+                url: "{{ route('services.getServiceItems') }}",
+                method: "POST",
+                data: {text:this.value},
+                success:function (response){                    
+                    $("#resultListItems").empty();
+                    $("#resultListItems").show();
+                    response.data.forEach( (item) => {
+                        $("#resultListItems").append("<li onClick='selectItem(this)'>"+ item.item +"</li>");
+                    })
+                }
+            });
+        }
+    });
+
     $("#item").on('keyup', function(){
         if (this.value.length >= 5){
             $.ajax({

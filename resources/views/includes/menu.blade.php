@@ -35,9 +35,10 @@
 				<li>
 					<a class="a-item" href="{{ route('services.index') }}">Servicios</a>
 					<ul class="submenu">
-						<li><a class="a-item" href="{{ route('quote.create') }}">Cotización</a></li>
-						<li><a class="a-item" href="{{ route('services.create') }}">Servicio</a></li>
-						<li><a class="a-item" href="{{ route('services.index') }}">Buscar</a></li>
+						<li><a class="a-item" href="{{ route('quotes.create') }}">Nueva Cotización</a></li>
+						<li><a class="a-item" href="{{ route('quotes.index') }}">Lista de cotizaciones</a></li>
+						<li><a class="a-item" href="{{ route('services.create') }}">Nuevo Servicio</a></li>
+						<li><a class="a-item" href="{{ route('services.index') }}">Lista de servicios</a></li>
 					</ul>
 				</li>
 				<li><a class="a-item" href="{{ route('calendar.index') }}">Calendario</a></li>
