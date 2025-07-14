@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use Exception;
 use DB;
 
-class Employees extends Controller
+class EmployeesController extends Controller
 {
     public function index()
     {
@@ -25,7 +25,9 @@ class Employees extends Controller
 
     public function create()
     {
-        return view('dashboard.employees.create');
+        $users = User::all();
+
+        return view('dashboard.employees.create', compact('users'));
     }
 
     public function store(Request $request)
@@ -62,6 +64,18 @@ class Employees extends Controller
 
         return to_route('employees.index')
             ->with('message', 'Los datos se guardaron correctamente');
+    }
+
+    public function show(string $id)
+    {
+        $employee = DB::table('employees')
+            ->join('users','employees.user_id','users.id')
+            ->where('employees.user_id', $id)
+            ->first();
+
+        $extra = Carbon::parse($employee->created_at);
+        
+        return view('dashboard.employees.show', compact('employee','extra'));
     }
 
     public function edit(Request $request, string $id)
@@ -168,9 +182,9 @@ class Employees extends Controller
                 ->where('employees.user_id', $request->employee)
                 ->first();
 
-            return view('dashboard.employees.reports', compact('employees','results', 'employeeInfo'));
+            return view('dashboard.reports.employees', compact('employees','results', 'employeeInfo'));
         }
 
-        return view('dashboard.employees.reports', compact('employees'));
+        return view('dashboard.reports.employees', compact('employees'));
     }
 }

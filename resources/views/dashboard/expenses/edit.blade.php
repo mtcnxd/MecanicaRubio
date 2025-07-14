@@ -10,7 +10,7 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
 
-    <div class="window-body bg-white">
+    <div class="window-body p-4 bg-white">
         <h4 class="ps-2 text-uppercase fs-6">Detalles del Egreso</h4>
         <div class="row mt-3">
             <div class="col-md-6">

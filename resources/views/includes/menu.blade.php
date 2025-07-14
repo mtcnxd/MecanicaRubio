@@ -103,11 +103,13 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-				<!--
 				<li>
-					<a class="a-item" href="{{ route('clients.index') }}">Clientes</a>
+					<a class="a-item" href="{{ route('users.index') }}">Usuarios</a>
+					<ul class="submenu">
+						<li><a class="a-item" href="{{ route('users.create') }}">Crear nuevo</a></li>
+						<li><a class="a-item" href="{{ route('users.index') }}">Buscar</a></li>
+					</ul>
 				</li>
-				-->
 				<li>
 					<a class="a-item" href="{{ route('employees.index') }}">Empleados</a>
 					<ul class="submenu">

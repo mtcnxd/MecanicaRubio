@@ -15,7 +15,8 @@ use App\Http\Controllers\Dashboard\Calendar;
 use App\Http\Controllers\Dashboard\Expenses;
 use App\Http\Controllers\Dashboard\Services;
 use App\Http\Controllers\Dashboard\Settings;
-use App\Http\Controllers\Dashboard\Employees;
+use App\Http\Controllers\Dashboard\EmployeesController;
+use App\Http\Controllers\Dashboard\UsersController;
 use App\Http\Controllers\Dashboard\QuotesController;
 
 /*
@@ -80,16 +81,17 @@ Route::middleware(['auth'])->group( function ()
                 Route::resource('cars', Cars::class);
                 Route::resource('expenses', Expenses::class);
                 Route::resource('payroll', Payroll::class);
-                Route::resource('employees', Employees::class);
+                Route::resource('employees', EmployeesController::class);
                 Route::resource('quotes', QuotesController::class);
+                Route::resource('users', UsersController::class);
 
                 Route::get('calendar', [Calendar::class, 'index'])->name('calendar.index');
                 Route::get('dashboard', [Services::class, 'dashboard'])->name('dashboard.index');
-                Route::get('profile', [Employees::class, 'profileIndex'])->name('profile.index');
+                Route::get('profile', [EmployeesController::class, 'profileIndex'])->name('profile.index');
 
                 # Reports
-                Route::get('reports/employees/{userid}', [Employees::class, 'report'])->name('reports.employees');
-                Route::get('reports/employees', [Employees::class, 'report'])->name('reports.employees');
+                Route::get('reports/employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
+                Route::get('reports/employees', [EmployeesController::class, 'report'])->name('reports.employees');
                 Route::get('reports/balance', [Expenses::class, 'report'])->name('reports.balance');
                 Route::get('reports/autos', [Cars::class, 'report'])->name('reports.autos');
                 Route::get('finance/{client}', [Finance::class, 'show'])->name('finance');
@@ -97,7 +99,7 @@ Route::middleware(['auth'])->group( function ()
         );
 
 
-        Route::post('admin/profile', [Employees::class, 'profileUpdate'])->name('profile.update');
+        Route::post('admin/profile', [EmployeesController::class, 'profileUpdate'])->name('profile.update');
 
         Route::get('admin/settings', [Settings::class, 'index'])->name('setting.index');
 

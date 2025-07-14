@@ -10,68 +10,56 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body p-4 bg-white">
-        <label class="window-body-form">Crear nuevo empleado</label>
-        <form action="{{ route('employees.store') }}" method="POST" class="border pt-5 pb-4">
+        <label class="window-body-form">Crear nuevo usuario</label>
+        <form action="{{ route('users.store') }}" method="POST" class="border pt-5 pb-4">
         @method('POST')
         @csrf
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-3 pt-2 text-end">
-                        Usuario
+                        Nombre
                     </div>
                     <div class="col-md-9">
-                        <select class="form-select" name="name">
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-                        </select>
+                        <input type="text" class="form-control" name="name" required>
                     </div>
                 </div>
 
                 <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Correo
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="email" required>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-3 pt-2 text-end">
+                        Teléfono
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control" name="phone" required>
+                    </div>
                     <div class="col-md-3 pt-2 text-end">
                         RFC
                     </div>
                     <div class="col-md-3">
                         <input type="text" class="form-control" name="rfc">
                     </div>
-                    <div class="col-md-3 pt-2 text-end">
-                        NSS
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="rfc">
-                    </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        Salario
+                        Rol
                     </div>
                     <div class="col-md-3">
-                        <input type="number" class="form-control" name="salary" required>
-                    </div>
-                    <div class="col-md-3 pt-2 text-end">
-                        Periodo
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-select" name="periodicity">
-                            <option value="Semanal">Semanal</option>
-                            <option value="Quincenal">Quincenal</option>
-                            <option value="Mensual">Mensual</option>
-                            <option value="Comisionista">Comisionista</option>
-                            <option value="Sin definir">Sin definir</option>
+                        <select class="form-select" name="status">
+                            <option value="admin">Administrador</option>
+                            <option value="client">Cliente</option>
+                            <option value="user">Usuario</option>
                         </select>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Hora extra
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="extra">
-                    </div>
+                    </div>                    
                     <div class="col-md-3 pt-2 text-end">
                         Estatus
                     </div>
@@ -83,21 +71,18 @@
                     </div>
                 </div>
 
+                <!--
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
-                        Puesto
+                        Crear usuario
                     </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="level">
-                    </div>
-                    <div class="col-md-3 pt-2 text-end">
-                        Departamento
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="depto">
+                    <div class="col-md-3 pt-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" name="create">
+                        </div>
                     </div>
                 </div>
-
+                -->
                 <div class="row mt-3">
                     <div class="col-md-3 pt-2 text-end">
                         Comentarios

@@ -21,6 +21,7 @@ class Services extends Controller
 {
     public function index()
     {
+        // Services comes from Datatable
         $services = array();
         $clients  = Clients::orderBy('name')->get();
 
@@ -56,11 +57,13 @@ class Services extends Controller
             ->where('services.id', $serviceId)
             ->first();
 
-        $carName = $servicesDetails->brand ." ". $servicesDetails->model ." ". $servicesDetails->year ;
-
         try {
             Telegram::send(
-                sprintf("<b>New service created:</b> #%s - %s <b>Fault:</b> %s", $serviceId, $carName , $request->fault)
+                sprintf("<b>New service created:</b> #%s - %s \n\r<b>Fault:</b> %s", 
+                    $serviceId, 
+                    $servicesDetails->brand ." ". $servicesDetails->model, 
+                    $request->fault
+                )
             );
         } catch (Exception $err){
             session()->flash('warning', 'ERROR: '. $err->getMessage());
@@ -85,7 +88,10 @@ class Services extends Controller
 
     public function update(Request $request, string $id)
     {
-        $currentData = DB::table('services')->where('id', $id)->first();
+        $currentData = DB::table('services')
+            ->join('autos', 'services.car_id', 'autos.id')
+            ->where('services.id', $id)
+            ->first();
 
         if ($currentData->status == 'Entregado'){
             $finishedDate = isset($currentData->finished_date) ? $currentData->finished_date : Carbon::now();
@@ -106,7 +112,12 @@ class Services extends Controller
         if ($request->status == 'Entregado'){
             try {
                 Telegram::send(
-                    sprintf("<b>Service completed:</b> #%s - %s <b>Total:</b> $%s", $id, $currentData->fault, number_format($request->total,2))
+                    sprintf("<b>Service completed:</b> #%s - %s \n\r<b>Fault:</b> %s \n\r<b>Total:</b> $%s", 
+                        $id,
+                        $currentData->brand ." ". $currentData->model,
+                        $currentData->fault, 
+                        number_format($request->total,2)
+                    )
                 );
             } catch (Exception $err) {
                 session()->flash('warning', 'ERROR: '. $err->getMessage());

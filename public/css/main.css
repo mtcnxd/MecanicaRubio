@@ -186,4 +186,6 @@ a:hover {
 
 .table > thead {
     background-color: var(--blue-gray-50);
+    text-transform: uppercase;
+    font-size: small;
 }
