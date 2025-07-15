@@ -28,9 +28,7 @@
             @endforeach
             <tfoot>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td colspan="3"></td>
                     <td class="text-end fw-bold">{{ "$".number_format($rows->sum('cash_in'), 2) }}</td>
                     <td class="text-end fw-bold">{{ "$".number_format($rows->sum('cash_out'), 2) }}</td>
                     <input type="hidden" id="income" value="{{ $rows->sum('cash_in') }}">

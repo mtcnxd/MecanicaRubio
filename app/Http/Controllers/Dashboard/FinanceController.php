@@ -82,6 +82,7 @@ class FinanceController extends Controller
             ->where('services_items.labour', true)
             ->where('services.status', 'Entregado')
             ->select('services.id', 'brand','model','services.finished_date','services_items.price')
+            ->orderBy('services.finished_date')
             ->get();
 
         return view('dashboard.reports.services', compact('list'));

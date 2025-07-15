@@ -106,7 +106,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12 mt-4 mb-4 border-top border-bottom bg-body-tertiary" style="height: 300px; overflow-y: scroll">
+            <div class="col-md-12 mt-4 mb-4 border-top border-bottom bg-body-tertiary" style="height: 350px; overflow-y: scroll">
                 <table class="table table-hover table-borderless dataTable no-footer">
                     <thead>
                         <th width="30px">#</th>
@@ -138,15 +138,13 @@
                     </tbody>
                     <tfoot class="border-top">
                         <tr>
-                            <td></td>
-                            <td>
+                            <td colspan="3">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#createItem" id="addItem">
                                     Agregar
                                     <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
                                 </a>
                             </td>
-                            <td></td>
-                            <td class="text-end">
+                            <td class="text-end fw-bold">
                                 {{ '$'.number_format($total_invoice, 2) }}
                                 <input type="hidden" name="total" value="{{ $total_invoice }}">
                             </td>
