@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Notifications\Telegram;
-use App\Http\Controllers\Dashboard\Charts;
+use App\Http\Controllers\Dashboard\ChartsController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Helpers;
 use Illuminate\Http\Request;
@@ -177,8 +177,8 @@ class Services extends Controller
             'services' => $services,
             'expenses' => $expenses,
             'salaries' => $salaries,
-            'servicesChart' => Charts::getServicesChart(),
-            'incomesChart'  => Charts::getIncomeChart(),
+            'servicesChart' => ChartsController::getServicesChart(),
+            'incomesChart'  => ChartsController::getIncomeChart(),
         ]);        
     }
 
