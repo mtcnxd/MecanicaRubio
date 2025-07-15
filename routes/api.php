@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
 use App\Http\Controllers\Dashboard\Clients;
-use App\Http\Controllers\Dashboard\Finance;
+use App\Http\Controllers\Dashboard\FinanceController;
 use App\Http\Controllers\Dashboard\Payroll;
 use App\Http\Controllers\Dashboard\Calendar;
 use App\Http\Controllers\Dashboard\Expenses;
@@ -73,9 +73,9 @@ Route::post('createServicePDF', [Services::class, 'createServicePDF'])->name('se
 
 Route::post('getItemInformation', [Services::class, 'getItemInformation'])->name('services.getItemInformation');
 
-Route::post('closeMonth', [Finance::class, 'closeMonth'])->name('finance.closeMonth');
+Route::post('closeMonth', [FinanceController::class, 'closeMonth'])->name('finance.closeMonth');
 
-Route::post('createBalancePDF', [Finance::class, 'createBalancePDF'])->name('finance.createBalancePDF');
+Route::post('createBalancePDF', [FinanceController::class, 'createBalancePDF'])->name('finance.createBalancePDF');
 
 Route::post('deleteItem', [Expenses::class, 'deleteItem'])->name('expenses.deleteItem');
 

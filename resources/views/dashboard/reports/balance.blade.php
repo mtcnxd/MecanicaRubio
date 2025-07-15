@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="shadow-sm main-content mb-4">
+<div class="main-content mb-4">
     <table class="table border table-hover">
         <thead>
             <thead>

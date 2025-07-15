@@ -8,7 +8,7 @@ use \Carbon\Carbon;
 use \DB;
 use PDF;
 
-class Finance extends Controller
+class FinanceController extends Controller
 {
     public function show($client)
     {
@@ -71,5 +71,19 @@ class Finance extends Controller
         $pdf = PDF::loadView('dashboard.templates.pdf_balance', $data);
         
         return $pdf->download('balance.pdf');
+    }
+
+    public function listOfIngress()
+    {
+        $list = DB::table('services')
+            ->join('autos', 'services.car_id','autos.id')
+            ->join('services_items','services.id','services_items.service_id')
+            ->where('finished_date','>', Carbon::now()->startOfMonth())
+            ->where('services_items.labour', true)
+            ->where('services.status', 'Entregado')
+            ->select('services.id', 'brand','model','services.finished_date','services_items.price')
+            ->get();
+
+        return view('dashboard.reports.services', compact('list'));
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Dashboard\CarsController;
 use App\Http\Controllers\Dashboard\Clients;
-use App\Http\Controllers\Dashboard\Finance;
+use App\Http\Controllers\Dashboard\FinanceController;
 use App\Http\Controllers\Dashboard\Payroll;
 use App\Http\Controllers\Dashboard\Calendar;
 use App\Http\Controllers\Dashboard\Expenses;
@@ -94,7 +94,12 @@ Route::middleware(['auth'])->group( function ()
                 Route::get('reports/employees', [EmployeesController::class, 'report'])->name('reports.employees');
                 Route::get('reports/balance', [Expenses::class, 'report'])->name('reports.balance');
                 Route::get('reports/autos', [CarsController::class, 'report'])->name('reports.autos');
-                Route::get('finance/{client}', [Finance::class, 'show'])->name('finance');
+
+                Route::group(['controller' => FinanceController::class, 'prefix' => 'finance'], function() {
+                    Route::get('ingress', 'listOfIngress')->name('finance.listOfIngress');
+                    Route::get('/{client}', 'show')->name('finance');
+                });
+
             }
         );
 

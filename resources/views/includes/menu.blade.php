@@ -53,6 +53,9 @@
 			</a>
 			<ul class="menu-dropdown">
 				<li>
+					<a class="a-item" href="{{ route('finance.listOfIngress') }}">Ingresos</a>
+				</li>
+				<li>
 					<a class="a-item" href="{{ route('payroll.index') }}">Nominas</a>
 					<ul class="submenu">
 						<li><a class="a-item" href="{{ route('payroll.create') }}">Crear nuevo</a></li>
