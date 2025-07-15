@@ -5,7 +5,7 @@
         <div class="border pt-5 pb-5 p-4 shadow" style="width: 22rem; background-color: var(--gray-200)">
             <h3 class="text-center fw-bold mb-4">Bienvenido</h3>
 
-            <p class="fs-7">Tambien puede iniciar sesion con su cuenta de Google</p>
+            <p class="fs-7">Si lo prefieres, puedes iniciar sesion con tu cuenta de Google.</p>
 
             <hr>
             <form action="{{ route('login') }}" method="POST" id="showLoader">

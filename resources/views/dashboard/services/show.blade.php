@@ -212,7 +212,37 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="amount">Cantidad</label>
+                        <input type="text" class="form-control" id="amount">
+                    </div>
+                    <div class="col-md-5">
+                        <label for="item">Descripción</label>
+                        <input type="text" class="form-control" id="item" autocomplete="off">
+                        <ul id="resultListItems" style="display:none; z-index:10;" class="float-suggestions"></ul>
+                    </div>        
+                    <div class="col-md-3">
+                        <label for="supplier">Proveedor</label>
+                        <input type="text" class="form-control" id="supplier">
+                    </div>                    
+                    <div class="col-md-2">
+                        <label for="price">Precio</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="price">
+                        </div>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <input class="form-check-input" type="checkbox" id="labour">
+                        <label class="form-check-label" for="labour">
+                            Mano de obra
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -244,7 +274,7 @@ $("#labour").on('change', function(){
 });
 
 $("#item").on('keyup', function(){
-    if (this.value.length >= 5){
+    if (this.value.length >= 3){
         $.ajax({
             url: "{{ route('services.getServiceItems') }}",
             method: "POST",
