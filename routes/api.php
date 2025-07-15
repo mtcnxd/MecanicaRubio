@@ -3,15 +3,16 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
-use App\Http\Controllers\Dashboard\Services;
 use App\Http\Controllers\Dashboard\Clients;
-use App\Http\Controllers\Dashboard\Employees;
-use App\Http\Controllers\Dashboard\Cars;
-use App\Http\Controllers\Dashboard\Payroll;
 use App\Http\Controllers\Dashboard\Finance;
-use App\Http\Controllers\Dashboard\Expenses;
+use App\Http\Controllers\Dashboard\Payroll;
 use App\Http\Controllers\Dashboard\Calendar;
+use App\Http\Controllers\Dashboard\Expenses;
+use App\Http\Controllers\Dashboard\Services;
+use App\Http\Controllers\Dashboard\CarsController;
 use App\Http\Controllers\API\Clients as ApiClients;
+use App\Http\Controllers\Dashboard\QuotesController;
+use App\Http\Controllers\Dashboard\EmployeesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,19 +31,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 Route::group(['prefix' => 'employees'], function () {
-    Route::post('load', [Employees::class, 'loadEmployee'])->name('employees.load'); 
+    Route::post('load', [EmployeesController::class, 'loadEmployee'])->name('employees.load'); 
 
-    Route::post('delete', [Employees::class, 'destroy'])->name('employees.delete');
+    Route::post('delete', [EmployeesController::class, 'destroy'])->name('employees.delete');
 });
 
 Route::group(['prefix' => 'cars'], function () {
-    Route::post('createBrand', [Cars::class, 'createBrand'])->name('createBrand');
+    Route::post('createBrand', [CarsController::class, 'createBrand'])->name('createBrand');
 
-    Route::post('createModel', [Cars::class, 'createModel'])->name('createModel');
+    Route::post('createModel', [CarsController::class, 'createModel'])->name('createModel');
 
-    Route::post('loadModels', [Cars::class, 'loadModels'])->name('loadModels');
+    Route::post('loadModels', [CarsController::class, 'loadModels'])->name('loadModels');
 
-    Route::post('searchByClient', [Cars::class, 'searchByClient'])->name('cars.searchByClient'); 
+    Route::post('searchByClient', [CarsController::class, 'searchByClient'])->name('cars.searchByClient'); 
+
+    Route::get('SearchCar', [CarsController::class,'SearchCar'])->name('cars.SearchCar');
 });
 
 Route::post('manageSalaries', [Payroll::class, 'manageSalaries'])->name('manageSalaries');
@@ -82,6 +85,13 @@ Route::post('createItemInvoice', [ControllerAjax::class, 'createItemInvoice'])->
 
 Route::post('getImageAttached', [ControllerAjax::class, 'getImageAttached'])->name('getImageAttached');
 
+Route::post('removeItemInvoice', [ControllerAjax::class, 'removeItemInvoice'])->name('removeItemInvoice');
+
 Route::post('createItemQuote', [ControllerAjax::class, 'createItemQuote'])->name('createItemQuote'); 
 
-Route::post('removeItemInvoice', [ControllerAjax::class, 'removeItemInvoice'])->name('removeItemInvoice');
+
+
+Route::group(['prefix' => 'quotes', 'controller' => QuotesController::class ], function() {
+    Route::post('addItemToList', 'addItemToList')->name('quotes.addItemToList'); 
+    Route::post('remItemFromList', 'remItemFromList')->name('quotes.remItemFromList'); 
+});

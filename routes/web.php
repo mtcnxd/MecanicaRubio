@@ -6,8 +6,8 @@ use App\Http\Controllers\Auth\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\Cars;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Dashboard\CarsController;
 use App\Http\Controllers\Dashboard\Clients;
 use App\Http\Controllers\Dashboard\Finance;
 use App\Http\Controllers\Dashboard\Payroll;
@@ -78,7 +78,7 @@ Route::middleware(['auth'])->group( function ()
             {
                 Route::resource('services', Services::class);
                 Route::resource('clients', Clients::class);
-                Route::resource('cars', Cars::class);
+                Route::resource('cars', CarsController::class);
                 Route::resource('expenses', Expenses::class);
                 Route::resource('payroll', Payroll::class);
                 Route::resource('employees', EmployeesController::class);
@@ -93,7 +93,7 @@ Route::middleware(['auth'])->group( function ()
                 Route::get('reports/employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
                 Route::get('reports/employees', [EmployeesController::class, 'report'])->name('reports.employees');
                 Route::get('reports/balance', [Expenses::class, 'report'])->name('reports.balance');
-                Route::get('reports/autos', [Cars::class, 'report'])->name('reports.autos');
+                Route::get('reports/autos', [CarsController::class, 'report'])->name('reports.autos');
                 Route::get('finance/{client}', [Finance::class, 'show'])->name('finance');
             }
         );

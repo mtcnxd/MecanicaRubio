@@ -2,30 +2,20 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Notifications\Telegram;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use App\Http\Controllers\CarsController;
 use DB;
+use Carbon\Carbon;
+use App\Models\Cars;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Notifications\Telegram;
 
-class Cars extends Controller
+class CarsController extends Controller
 {
-    public function prueba(CarsController $mycar)
-    {
-
-    }
-
     public function index()
     {
         // $auto = CarsController::getCar(2);
 
         // dd($auto);
-
-
-
-
-
 
         $autos = DB::table('clients')
             ->join('autos', 'autos.client_id', 'clients.id')
@@ -148,6 +138,19 @@ class Cars extends Controller
         return response()->json([
             'success' => true,
             'data'    => $models
+        ]);
+    }
+
+    public function SearchCar(Request $request)
+    {
+        $cars = Cars::where(function($query) use ($request) {
+            $query->orWhere('brand','like', '%'.$request->text.'%')
+                  ->orWhere('model','like', '%'.$request->text.'%');
+        });
+
+        return response()->json([
+            "success" => true,
+            "data"    => $cars->get()
         ]);
     }
     

@@ -10,7 +10,7 @@
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body p-4 bg-white">
-        <label class="window-body-form">Servicio</label>
+        <label class="window-body-form">Cotizacion</label>
         <form action="{{ route('quotes.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf
             <div class="row">
@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-md-9">
                         <input type="text" class="form-select" id="car" name="car">
-                        <ul id="resultListItems" class="float-suggestions" style="display:none; z-index:10;">
+                        <ul id="resultListCars" class="float-suggestions" style="display:none; z-index:10;">
                             @foreach ($cars as $car)
                                 <li>{{ $car->brand }} {{ $car->model }}</li>
                             @endforeach
@@ -180,14 +180,16 @@
     $("#car").on('keyup', function(){
         if (this.value.length >= 3){
             $.ajax({
-                url: "{{ route('services.getServiceItems') }}",
-                method: "POST",
+                url: "{{ route('cars.SearchCar') }}",
+                method: "GET",
                 data: {text:this.value},
-                success:function (response){                    
-                    $("#resultListItems").empty();
-                    $("#resultListItems").show();
+                success:function (response){
+                    console.log(response);
+
+                    $("#resultListCars").empty();
+                    $("#resultListCars").show();
                     response.data.forEach( (item) => {
-                        $("#resultListItems").append("<li onClick='selectItem(this)'>"+ item.item +"</li>");
+                        $("#resultListCars").append("<li onClick='selectCar(this)'>"+ item.brand +" "+ item.model +"</li>");
                     })
                 }
             });
@@ -195,7 +197,7 @@
     });
 
     $("#item").on('keyup', function(){
-        if (this.value.length >= 5){
+        if (this.value.length >= 3){
             $.ajax({
                 url: "{{ route('services.getServiceItems') }}",
                 method: "POST",
@@ -262,7 +264,13 @@
         let input = document.getElementById('item');
         input.value = element.textContent;
         $("#resultListItems").hide();
-    }    
+    }
+
+    function selectCar(element){
+        let input = document.getElementById('car');
+        input.value = element.textContent;
+        $("#resultListCars").hide();
+    }
     
 </script>
 @endsection

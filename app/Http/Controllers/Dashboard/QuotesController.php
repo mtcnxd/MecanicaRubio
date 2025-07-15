@@ -63,7 +63,10 @@ class QuotesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $quote = Quotes::find($id);
+        $quoteItems = DB::table('quotes_items')->get();
+
+        return view('dashboard.services.quotes_show', compact('quote', 'quoteItems'));
     }
 
     /**
@@ -89,4 +92,32 @@ class QuotesController extends Controller
     {
         //
     }
+
+    public function addItemToList(Request $request)
+    {
+        DB::table('quotes_items')->insert([
+            "amount" => $request->input('amount'),
+            "item"   => $request->input('item'),
+            "price"  => $request->input('price'),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Objeto agregado correctamente',
+            'data'    => $request->all()
+        ]);
+    }
+
+    public function remItemFromList(Request $request)
+    {
+        DB::table('quotes_items')->where([
+            'id' => $request->input('itemId')
+        ])->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Objeto eliminado correctamente',
+            'data'    => $request->all()
+        ]);
+    }    
 }

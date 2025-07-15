@@ -7,7 +7,7 @@
 @section('content')
 <div class="shadow-sm main-content">
     <div class="window-title-bar">
-        <h6 class="window-title-text">Buscar servicio</h6>
+        <h6 class="window-title-text">Buscar Cotizacion</h6>
         <x-feathericon-tool class="window-title-icon"/>
     </div>
     <div class="window-body pt-4 pb-3 bg-white">
