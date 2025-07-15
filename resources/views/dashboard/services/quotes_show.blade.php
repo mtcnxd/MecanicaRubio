@@ -118,7 +118,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Crear nueva marca</h1>
+                <h1 class="modal-title fs-5">Agregar elemento a cotizacion</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -127,13 +127,11 @@
                         <label for="amount" class="mb-2">Cantidad</label>
                         <input type="text" class="form-control" id="amount">
                     </div>
-
                     <div class="col-md-7">
                         <label for="item" class="mb-2">Descripción</label>
                         <input type="text" class="form-control" id="item" autocomplete="off">
                         <ul id="resultListItems" style="display:none; z-index:10;" class="float-suggestions"></ul>
                     </div>
-                    
                     <div class="col-md-3">
                         <label for="price" class="mb-2">Precio</label>
                         <div class="input-group mb-3">
@@ -142,7 +140,6 @@
                           </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12" class="mb-2">
                         <input class="form-check-input" type="checkbox" id="labour">
@@ -166,10 +163,6 @@
     var price  = document.getElementById('price');    
 
     $("#addItemToList").on('click', function(){
-        console.log(amount.value);
-        console.log(item.value);
-        console.log(price.value);
-
         $.ajax({
             url: "{{ route('quotes.addItemToList') }}",
             method:'POST',
@@ -182,7 +175,7 @@
                 console.log(response);
             }
         }).then(function(){
-            history.go(0);
+            location.reload();
         });
     });
 

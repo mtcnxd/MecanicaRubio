@@ -67,7 +67,19 @@
                         <th width="30px"></th>
                     </thead>
                     <tbody>
-                       
+                        @foreach ($quoteItems as $item)
+                            <tr>
+                                <td>{{ $item->amount }}</td>
+                                <td>{{ $item->item }}</td>
+                                <td class="text-end">{{ '$'.number_format($item->price, 2) }}</td>
+                                <td class="text-end">{{ '$'.number_format($item->amount * $item->price, 2) }}</td>
+                                <td>
+                                    <a href="#" class="removeItemFromList" data-id="{{ $item->id }}">
+                                        <x-feathericon-trash-2 class="table-icon"/>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                     <tfoot class="border-top">
                         <tr>
@@ -105,71 +117,32 @@
 </div>
 @endsection
 
-@section('modal')
-<div class="modal fade" id="createItem" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Crear nueva marca</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Cantidad
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="amount">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Descripción
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="item" autocomplete="off">
-                        <ul id="resultListItems" style="display:none; z-index:10;" class="float-suggestions"></ul>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Proveedor
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="supplier">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Precio
-                    </div>
-                    <div class="col-md-9">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="price">
-                          </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 pt-2">
-                        &nbsp;
-                    </div>
-                    <div class="col-md-9">
-                        <input class="form-check-input" type="checkbox" id="labour">
-                        <label class="form-check-label" for="labour">
-                            Mano de obra
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="addItemInvoice">Agregar</button>
+<x-modal size="modal-lg" acceptButton="addItemInvoice">
+    <div class="row">
+        <div class="col-md-2">
+            <label for="amount" class="mb-2">Cantidad</label>
+            <input type="text" class="form-control" id="amount">
+        </div>
+        <div class="col-md-7">
+            <label for="item" class="mb-2">Descripción</label>
+            <input type="text" class="form-control" id="item" autocomplete="off">
+            <ul id="resultListItems" style="display:none; z-index:10;" class="float-suggestions"></ul>
+        </div>
+        <div class="col-md-3">
+            <label for="price" class="mb-2">Precio</label>
+            <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <input type="number" class="form-control" id="price">
             </div>
         </div>
     </div>
-</div>    
-@endsection
+    <div class="row">
+        <div class="col-md-12" class="mb-2">
+            <input class="form-check-input" type="checkbox" id="labour">
+            <label class="form-check-label" for="labour">Mano de obra</label>
+        </div>
+    </div>
+</x-modal>
 
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -214,32 +187,24 @@
     });
 
     $("#addItemInvoice").on('click', function(event){
-        var service  = $("#service").val();
         var amount   = $("#amount").val();
         var item     = $("#item").val();
-        var supplier = $("#supplier").val();
         var price    = $("#price").val();
         var labour   = $("#labour").prop('checked');
 
-        if (item.length < 3 && !labour) {
-            $("#item").focus();
-            return;
-        }
-
         $.ajax({
-            url:"{{ route('createItemInvoice') }}",
+            url:"{{ route('quotes.addItemToList') }}",
             method:'POST',
             data: {
-                service:service,
+                service:1,
                 amount:amount,
                 item:item,
-                supplier:supplier,
                 price:price,
                 labour:labour
             },
             success:function(response){
+                console.log(response);
                 if (response.success){
-                    $("#createItem").modal('hide');
                     location.reload();
                 }
             }

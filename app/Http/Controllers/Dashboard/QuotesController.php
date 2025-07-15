@@ -36,8 +36,9 @@ class QuotesController extends Controller
         }
 
         $cars = Cars::all();
+        $quoteItems = array();
 
-        return view('dashboard.services.quotes_create', compact('client', 'cars'));
+        return view('dashboard.services.quotes_create', compact('client', 'cars', 'quoteItems'));
     }
 
     /**

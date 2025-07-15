@@ -188,12 +188,6 @@
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
-                    <!-- 
-                    <a href="{{ route('sendEmailInvoice', $service->id) }}" class="btn btn-secondary">
-                        <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
-                        Enviar
-                    </a>
-                    -->
                     <a href="{{ route('sendEmailInvoice', $service->id) }}" class="btn btn-secondary">
                         <x-feathericon-share-2 class="table-icon" style="margin: -2px 5px 2px"/>
                         Enviar
@@ -210,65 +204,19 @@
 @endsection
 
 @section('modal')
-<div class="modal fade" id="createItem" tabindex="-1">
-    <div class="modal-dialog">
+<div class="modal modal-xl fade" id="createItem" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Crear nueva marca</h1>
+                <h1 class="modal-title fs-5">Agregar elemento</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Cantidad
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="amount">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Descripción
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="item" autocomplete="off">
-                        <ul id="resultListItems" style="display:none; z-index:10;" class="float-suggestions"></ul>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Proveedor
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="supplier">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Precio
-                    </div>
-                    <div class="col-md-9">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="price">
-                          </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 pt-2">
-                        &nbsp;
-                    </div>
-                    <div class="col-md-9">
-                        <input class="form-check-input" type="checkbox" id="labour">
-                        <label class="form-check-label" for="labour">
-                            Mano de obra
-                        </label>
-                    </div>
-                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="addItemInvoice">Agregar</button>
+                <button type="button" class="btn btn-success" id="addItemInvoice">Agregar</button>
             </div>
         </div>
     </div>
