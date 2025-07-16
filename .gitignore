@@ -1,5 +1,4 @@
 /docker/data
-/vendor
 /.phpunit.cache
 /node_modules
 /public/build
