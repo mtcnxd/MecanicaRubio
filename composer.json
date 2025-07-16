@@ -7,7 +7,9 @@
     "require": {
         "php": "^8.1",
         "barryvdh/laravel-dompdf": "^3.0",
+        "blade-ui-kit/blade-icons": "^1.8",
         "brunocfalcao/blade-feather-icons": "^3.0",
+        "codeat3/blade-line-awesome-icons": "^1.5",
         "doctrine/dbal": "^3.5.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",

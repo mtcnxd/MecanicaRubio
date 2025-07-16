@@ -19,7 +19,10 @@
 
                 <div class="row mb-3">
                     <div class="col mr-1">
-                        <a href="{{ route('google-redirect') }}" class="btn btn-white btn-sm w-100">Google</a>
+                        <a href="{{ route('google-redirect') }}" class="btn btn-white btn-sm w-100">
+                            <x-lineawesome-google style="width:20px; height 20px;" />
+                            Google
+                        </a>
                     </div>
                     <div class="col ml-1">
                         <input type="submit" class="btn btn-secondary btn-sm w-100" value="Entrar" id="submit">

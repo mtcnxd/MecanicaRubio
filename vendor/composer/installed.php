@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '607baf86dac0ca494cc0190301e128e1fdb43bdc',
+        'reference' => 'b58b3069bd057cf5c14e89b35a8b8b831a6e88d1',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -53,6 +53,15 @@
             'install_path' => __DIR__ . '/../carbonphp/carbon-doctrine-types',
             'aliases' => array(),
             'reference' => '99f76ffa36cce3b70a4a6abce41dba15ca2e84cb',
+            'dev_requirement' => false,
+        ),
+        'codeat3/blade-line-awesome-icons' => array(
+            'pretty_version' => '1.5.0',
+            'version' => '1.5.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../codeat3/blade-line-awesome-icons',
+            'aliases' => array(),
+            'reference' => 'feab507d8b30355040d690180df72f5ddaa4c4b1',
             'dev_requirement' => false,
         ),
         'cordoval/hamcrest-php' => array(
@@ -484,7 +493,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '607baf86dac0ca494cc0190301e128e1fdb43bdc',
+            'reference' => 'b58b3069bd057cf5c14e89b35a8b8b831a6e88d1',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
@@ -925,8 +934,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(
