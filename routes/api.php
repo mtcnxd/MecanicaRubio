@@ -37,13 +37,9 @@ Route::group(['prefix' => 'employees'], function () {
 
 Route::group(['prefix' => 'cars'], function () {
     Route::post('createBrand', [CarsController::class, 'createBrand'])->name('createBrand');
-
     Route::post('createModel', [CarsController::class, 'createModel'])->name('createModel');
-
     Route::post('loadModels', [CarsController::class, 'loadModels'])->name('loadModels');
-
     Route::post('searchByClient', [CarsController::class, 'searchByClient'])->name('cars.searchByClient'); 
-
     Route::get('SearchCar', [CarsController::class,'SearchCar'])->name('cars.SearchCar');
 });
 
@@ -53,24 +49,22 @@ Route::post('addItem', [Payroll::class, 'addItem'])->name('payroll.addItem');
 
 Route::post('removeItem', [Payroll::class, 'removeItem'])->name('payroll.removeItem');
 
+// Clients
 Route::controller(ClientsController::class)->group(function () {
     Route::post('deleteClient', 'destroy')->name('clients.deleteClient');
-    
     Route::post('getClientsList', 'getClientsList')->name('clients.getClientsList');
-    
-    Route::post('searchByPostcode', 'searchByPostcode')->name('clients.searchByPostcode');
-    
+    Route::post('searchByPostcode', 'searchByPostcode')->name('clients.searchByPostcode');    
     Route::post('searchByAddress', 'searchByAddress')->name('clients.searchByAddress');    
 });
 
 // Services
-Route::post('getServiceItems', [ServicesController::class, 'getServiceItems'])->name('services.getServiceItems');
+Route::group(['controller' => ServicesController::class], function(){
+    Route::get('getServiceItems', 'getServiceItems')->name('services.getServiceItems');
+    Route::get('getDataTableServices', 'getDataTableServices')->name('getDataTableServices');
+    Route::post('createServicePDF', 'createServicePDF')->name('services.createServicePDF');
+    Route::post('getItemInformation', 'getItemInformation')->name('services.getItemInformation');
+});
 
-Route::get('getDataTableServices', [ServicesController::class, 'getDataTableServices'])->name('getDataTableServices');
-
-Route::post('createServicePDF', [ServicesController::class, 'createServicePDF'])->name('services.createServicePDF');
-
-Route::post('getItemInformation', [ServicesController::class, 'getItemInformation'])->name('services.getItemInformation');
 
 Route::post('closeMonth', [FinanceController::class, 'closeMonth'])->name('finance.closeMonth');
 

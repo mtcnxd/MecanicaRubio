@@ -11,7 +11,7 @@ class Cars extends Model
 
     protected $table = "autos";
 
-    public function findByBrandOrModel(string $criteria)
+    public function findByCriteria(string $criteria)
     {
         return $this->where(function($query) use ($criteria){
             $query->orWhere('model','like', '%'.$criteria.'%')

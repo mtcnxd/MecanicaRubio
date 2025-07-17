@@ -11,6 +11,7 @@ use DataTables;
 use Carbon\Carbon;
 use App\Models\Clients;
 use App\Models\Services;
+use App\Models\ServiceItems;
 use Illuminate\Http\Request;
 use App\Mail\SendEmailInvoice;
 use App\Http\Controllers\Helpers;
@@ -196,16 +197,9 @@ class ServicesController extends Controller
 
     public function getServiceItems(Request $request)
     {
-        $results = DB::table('services_items')
-            ->select('item')
-            ->where('item', 'like', '%'.$request->text.'%')
-            ->groupBy('item')
-            ->orderBy('item')
-            ->get();
-
         return Response()->json([
             "success" => true,
-            "data"    => $results
+            "data"    => ServiceItems::findByCriteria($request->input('text'))
         ]);
     }
 

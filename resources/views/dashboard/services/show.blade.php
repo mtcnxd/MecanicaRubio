@@ -275,13 +275,15 @@ $("#item").on('keyup', function(){
     if (this.value.length >= 3){
         $.ajax({
             url: "{{ route('services.getServiceItems') }}",
-            method: "POST",
-            data: {text:this.value},
+            method: "GET",
+            data: {
+                text:this.value
+            },
             success:function (response){
                 $("#resultListItems").empty();
                 $("#resultListItems").show();
                 response.data.forEach( (item) => {
-                    $("#resultListItems").append("<li onClick='selectItem(this)'>"+ item.item +"</li>");
+                    $("#resultListItems").append("<li onClick='selectItem(this)'>"+ item +"</li>");
                 })
             }
         });
