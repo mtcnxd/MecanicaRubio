@@ -94,7 +94,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($details as $count => $item)
+                        @foreach ($items as $count => $item)
                         <tr>
                             <td>{{ $count +1 }}</td>
                             <td>{{ $item->concept }}</td>
@@ -117,8 +117,8 @@
                                 </a>
                             </td>
                             <td class="text-end">
-                                {{ '$'.number_format($details->sum('amount'), 2) }}
-                                <input type="hidden" name="total" value="{{ $details->sum('amount') }}" id="total">
+                                {{ '$'.number_format($items->sum('amount'), 2) }}
+                                <input type="hidden" name="total" value="{{ $items->sum('amount') }}" id="total">
                             </td>
                         </tr>
                     </tfoot>
@@ -144,26 +144,30 @@
 
 <div id="popup">
     <div class="row">
-        <label for="concept">Concepto</label>
-        <select name="concept" id="concept" class="form-select">
-            <optgroup label="Prestaciones">
-                <option>Salario</option>
-                <option>Caja de ahorro</option>
-                <option>Prestamo de nomina</option>
-                <option>Hora Extra</option>
-                <option>Bono adicional</option>
-                <option>Prima Vacacional</option>
-            </optgroup>
-            <optgroup label="Descuentos">
-                <option>Descuento</option>
-                <option>Descuento por prestamo</option>
-            </optgroup>
-        </select>
+        <div class="col">
+            <label for="concept">Concepto</label>
+            <select name="concept" id="concept" class="form-select">
+                <optgroup label="Prestaciones">
+                    <option>Salario</option>
+                    <option>Caja de ahorro</option>
+                    <option>Prestamo de nomina</option>
+                    <option>Hora Extra</option>
+                    <option>Bono adicional</option>
+                    <option>Prima Vacacional</option>
+                </optgroup>
+                <optgroup label="Descuentos">
+                    <option>Descuento</option>
+                    <option>Descuento por prestamo</option>
+                </optgroup>
+            </select>
+        </div>
+    
+        <div class="col">
+            <label for="amount">Importe</label>
+            <input type="text" class="form-control" id="amount" name="amount">
+        </div>
     </div>
-    <div class="row mt-3">
-        <label for="amount">Importe</label>
-        <input type="text" class="form-control" id="amount" name="amount">
-    </div>
+    
     <div class="row mt-3">
         <button class="col btn btn-secondary m-1" onclick="closePopup()">Cancelar</button>
         <button class="col btn btn-success m-1" id="acceptPopup">Agregar</button>
@@ -247,6 +251,7 @@ function closePopup(){
 <style>
     #popup {
         display: none; /* Oculta el popup inicialmente */
+        width: 600px !important;
         position: fixed;
         top: 50%;
         left: 50%;

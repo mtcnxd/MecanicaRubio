@@ -9,7 +9,7 @@
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
-    <div class="window-body bg-white">
+    <div class="window-body p-4 bg-white">
         @include('includes.div_warning')
         <label class="window-body-form">Nomina</label>
         <form action="{{ route('payroll.update', 1) }}" method="POST" class="border pt-5 pb-4">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-md-9">
                         <div class="input-group mb-3">
-                            <input type="text" name="" id="" class="form-control" value="{{ $salary->name }}" disabled>
+                            <input type="text" name="" id="" class="form-control" value="{{ $salary->employee->name }}" disabled>
                             <span class="input-group-text" id="basic-addon2">
                                 <x-feathericon-user class="table-icon" style="margin: -2px 5px 2px"/>
                             </span>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-md-9">
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="email" id="email" value="{{ $salary->email }}" disabled>
+                            <input type="text" class="form-control" name="email" id="email" value="{{ $salary->employee->email }}" disabled>
                             <span class="input-group-text" id="basic-addon2">
                                 <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
                             </span>
@@ -55,7 +55,7 @@
                         Fecha de dispersión
                     </div>
                     <div class="col-md-3">
-                        <input type="date" name="" id="" class="form-control" value="{{ $salary->paid_date }}" disabled>
+                        <input type="date" name="" id="" class="form-control" value="{{ \Carbon\Carbon::parse($salary->paid_date)->format('Y-m-d') }}" disabled>
                     </div>
                 </div>
 
@@ -83,7 +83,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($details as $count => $item)
+                        @foreach ($salary->salaryItems as $count => $item)
                         <tr>
                             <td>{{ $count +1 }}</td>
                             <td>{{ $item->concept }}</td>
@@ -106,8 +106,8 @@
                                 </a>
                             </td>
                             <td class="text-end">
-                                {{ '$'.number_format($details->sum('amount'), 2) }}
-                                <input type="hidden" name="total" value="{{ $details->sum('amount') }}" id="total">
+                                {{ '$'.number_format($salary->salaryItems->sum('amount'), 2) }}
+                                <input type="hidden" name="total" value="{{ $salary->salaryItems->sum('amount') }}" id="total">
                             </td>
                         </tr>
                     </tfoot>

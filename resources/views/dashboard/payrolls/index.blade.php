@@ -60,13 +60,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($salaryData as $salary)
+                @foreach ($salaries as $salary)
                 <tr>
                     <td>{{ $salary->id }}</td>
                     <td>
                         <span class="material-symbols-outlined" style="position:relative; top:5px; margin-right:6px;">badge</span>
                         <a href="{{ route('payroll.show', $salary->id) }}">
-                            {{ $salary->name }}
+                            {{ $salary->employee->name }}
                         </a>
                     </td>
                     <td>

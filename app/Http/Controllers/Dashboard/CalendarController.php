@@ -6,16 +6,16 @@ use App\Http\Controllers\Notifications\Whatsapp;
 use App\Http\Controllers\Notifications\Telegram;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\CalendarModel;
+use App\Models\Calendar;
 use Carbon\Carbon;
 use Exception;
 use \DB;
 
-class Calendar extends Controller
+class CalendarController extends Controller
 {
     public function index()
     {
-        $calendar = CalendarModel::getCalendar();
+        $calendar = Calendar::getCalendar();
 
         // session()->flash('success', "Hola mundo" );
 
@@ -57,22 +57,5 @@ class Calendar extends Controller
             "success" => true,
             "data"    => $event
         ]);
-    }
-
-    public function arduinoPost(Request $request)
-    {   
-        /*
-        DB::table('arduino')->insert([
-            'data'       => $request->data,
-            'created_at' => Carbon::now()
-        ]);
-        */
-        
-        return response()->json([
-            "success" => true,
-            "message" => "Success",
-            "data"    => $request->json('data')
-        ]);
-        
     }
 }

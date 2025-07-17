@@ -10,11 +10,11 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Dashboard\CarsController;
 use App\Http\Controllers\Dashboard\ClientsController;
 use App\Http\Controllers\Dashboard\FinanceController;
-use App\Http\Controllers\Dashboard\Payroll;
-use App\Http\Controllers\Dashboard\Calendar;
-use App\Http\Controllers\Dashboard\Expenses;
+use App\Http\Controllers\Dashboard\PayrollController;
+use App\Http\Controllers\Dashboard\CalendarController;
+use App\Http\Controllers\Dashboard\ExpensesController;
 use App\Http\Controllers\Dashboard\ServicesController;
-use App\Http\Controllers\Dashboard\Settings;
+use App\Http\Controllers\Dashboard\SettingsController;
 use App\Http\Controllers\Dashboard\EmployeesController;
 use App\Http\Controllers\Dashboard\UsersController;
 use App\Http\Controllers\Dashboard\QuotesController;
@@ -79,25 +79,26 @@ Route::middleware(['auth'])->group( function ()
                 Route::resource('services', ServicesController::class);
                 Route::resource('clients', ClientsController::class);
                 Route::resource('cars', CarsController::class);
-                Route::resource('expenses', Expenses::class);
-                Route::resource('payroll', Payroll::class);
                 Route::resource('employees', EmployeesController::class);
                 Route::resource('quotes', QuotesController::class);
                 Route::resource('users', UsersController::class);
 
-                Route::get('calendar', [Calendar::class, 'index'])->name('calendar.index');
+                Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
                 Route::get('dashboard', [ServicesController::class, 'dashboard'])->name('dashboard.index');
                 Route::get('profile', [EmployeesController::class, 'profileIndex'])->name('profile.index');
 
                 # Reports
                 Route::get('reports/employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
                 Route::get('reports/employees', [EmployeesController::class, 'report'])->name('reports.employees');
-                Route::get('reports/balance', [Expenses::class, 'report'])->name('reports.balance');
+                Route::get('reports/balance', [ExpensesController::class, 'report'])->name('reports.balance');
                 Route::get('reports/autos', [CarsController::class, 'report'])->name('reports.autos');
 
-                Route::group(['controller' => FinanceController::class, 'prefix' => 'finance'], function() {
-                    Route::get('ingress', 'listOfIngress')->name('finance.listOfIngress');
-                    Route::get('/{client}', 'show')->name('finance');
+                Route::group(['prefix' => 'finance'], function() {
+                    Route::get('/ingress', [FinanceController::class, 'listOfIngress'])->name('finance.listOfIngress');
+                    Route::get('/finance/{client}', [FinanceController::class, 'show'])->name('finance');
+                    
+                    Route::resource('/payroll', PayrollController::class);
+                    Route::resource('/expenses', ExpensesController::class);
                 });
 
             }
@@ -106,11 +107,11 @@ Route::middleware(['auth'])->group( function ()
 
         Route::post('admin/profile', [EmployeesController::class, 'profileUpdate'])->name('profile.update');
 
-        Route::get('admin/settings', [Settings::class, 'index'])->name('setting.index');
+        Route::get('admin/settings', [SettingsController::class, 'index'])->name('setting.index');
 
-        Route::post('admin/settings', [Settings::class, 'update'])->name('setting.update');
+        Route::post('admin/settings', [SettingsController::class, 'update'])->name('setting.update');
 
-        Route::post('admin/settings/create', [Settings::class, 'store'])->name('setting.store');
+        Route::post('admin/settings/create', [SettingsController::class, 'store'])->name('setting.store');
 
         Route::get('admin/sendEmailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
     }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use DB;
 
-class CalendarModel extends Model
+class Calendar extends Model
 {
     use HasFactory;
 
@@ -27,7 +27,7 @@ class CalendarModel extends Model
     {
         for($i = 0; $i<= date('t') -1; $i++) {
             $createdDate = Carbon::parse(date('Y-m-').$i);
-            $events[$i]  = CalendarModel::where('date', $createdDate)->first();
+            $events[$i]  = Calendar::where('date', $createdDate)->first();
         }
 
         return $events;
@@ -80,6 +80,6 @@ class CalendarModel extends Model
 
     static function getCalendar()
     {
-        return new CalendarModel;
+        return new Calendar;
     }
 }

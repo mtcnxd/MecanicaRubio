@@ -9,12 +9,11 @@ use Mail;
 use Exception;
 use DataTables;
 use Carbon\Carbon;
+use App\Mail\SendEmailInvoice;
 use App\Models\Clients;
-use App\Models\Services;
+use App\Models\Service;
 use App\Models\ServiceItems;
 use Illuminate\Http\Request;
-use App\Mail\SendEmailInvoice;
-use App\Http\Controllers\Helpers;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notifications\Telegram;
 use App\Http\Controllers\Dashboard\ChartsController;
@@ -76,8 +75,7 @@ class ServicesController extends Controller
 
     public function show(string $id)
     {
-        $service = Services::find($id);
-
+        $service = Service::find($id);
         return view('dashboard.services.show', compact('service'));
     }
 

@@ -42,7 +42,7 @@ class UsersController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -50,7 +50,7 @@ class UsersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return $id;
     }
 
     /**

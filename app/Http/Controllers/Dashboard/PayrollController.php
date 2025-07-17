@@ -2,49 +2,43 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Carbon\Carbon;
-use Exception;
 use DB;
+use Exception;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Employee;
+use App\Models\Salary;
+use Illuminate\Http\Request;
+use App\Models\SalaryItems;
+use App\Http\Controllers\Controller;
 
-class Payroll extends Controller
+class PayrollController extends Controller
 {
     public function index(Request $request)
     {
         $startDate = Carbon::now()->subMonths(2)->startofMonth()->format('Y-m-d');
         $endDate   = Carbon::now()->addDay()->format('Y-m-d');
 
-        $salaryData = DB::table('salaries')
-            ->select('salaries.*', 'users.name')
-            ->join('users', 'salaries.user_id','users.id')
-            ->whereBetween('salaries.created_at', [$startDate, $endDate])
-            ->orderBy('salaries.created_at', 'desc')
+        $salaries = Salary::whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('dashboard.payrolls.index', [
-            "startDate"  => $startDate,
-            "endDate"    => $endDate,
-            "salaryData" => $salaryData
+            "startDate" => $startDate,
+            "endDate"   => $endDate,
+            "salaries"  => $salaries
         ]);
     }
 
     public function create()
     {
-        $details = null;
-
-        $employees = DB::table('employees')
-            ->join('users', 'employees.user_id', 'users.id')
-            ->get();
-
-        $id = DB::table('salaries')->max('id') + 1;
+        // Current salarie is still not saved
+        $id = Salary::max('id') + 1;
         
-        $details = DB::table('salaries_details')
-            ->where('salary_id', $id)
-            ->get();
+        $employees = User::get();
+        $items     = SalaryItems::where('salary_id', $id)->get();
 
-        return view('dashboard.payrolls.create', compact('employees', 'details'));
+        return view('dashboard.payrolls.create', compact('employees', 'items'));
     }
 
     public function store(Request $request)
@@ -65,16 +59,9 @@ class Payroll extends Controller
 
     public function show(string $id)
     {
-        $salary = DB::table('salaries')
-            ->join('users', 'salaries.user_id', 'users.id')
-            ->where('salaries.id', $id)
-            ->first();
+        $salary = Salary::find($id);
 
-        $details = DB::table('salaries_details')
-            ->where('salary_id', $id)
-            ->get();
-
-        return view('dashboard.payrolls.show', compact('salary','details'));  
+        return view('dashboard.payrolls.show', compact('salary'));  
     }
 
     public function manageSalaries(Request $request)

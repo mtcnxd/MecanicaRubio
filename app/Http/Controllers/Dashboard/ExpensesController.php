@@ -9,7 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use DB;
 
-class Expenses extends Controller
+class ExpensesController extends Controller
 {
     public function index()
     {
