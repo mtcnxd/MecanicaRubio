@@ -20,7 +20,7 @@
                         Cliente
                     </div>    
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="client" value="{{ $service->name }}" disabled>
+                        <input type="text" class="form-control" name="client" value="{{ $service->client->name }}" disabled>
                         <input type="hidden" value="{{ $service->id }}" id="service">
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                         Automovil
                     </div>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" id="car" name="car" value="{{ $service->brand }} {{ $service->model }} - {{ $service->year }}" disabled>
+                        <input type="text" class="form-control" id="car" name="car" value="{{ $service->car->brand }} {{ $service->car->model }} - {{ $service->car->year }}" disabled>
                     </div>
                     <div class="col-md-2 pt-2 text-end">
                         Odometro
@@ -119,7 +119,7 @@
                         @php
                             $total_invoice = 0;
                         @endphp
-                        @foreach ($items as $item)
+                        @foreach ($service->invoiceItems as $item)
                         @php
                             $total_invoice += $item->amount * $item->price;
                         @endphp

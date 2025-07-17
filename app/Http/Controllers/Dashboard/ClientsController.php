@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Notifications\Telegram;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use Exception;
 use DB;
+use Exception;
+use Carbon\Carbon;
+use App\Models\Clients;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Notifications\Telegram;
 
-class Clients extends Controller
+class ClientsController extends Controller
 {
     public function index()
     {
-        $clients = DB::table('clients')->where('status', 'Activo')->get();
+        $clients = Clients::where('status', 'Activo')->get();
 
-        return view (
-            'dashboard.clients.index', 
-            compact('clients')
-        );
+        return view ('dashboard.clients.index', compact('clients'));
     }
 
     public function create()

@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Dashboard\CarsController;
-use App\Http\Controllers\Dashboard\Clients;
+use App\Http\Controllers\Dashboard\ClientsController;
 use App\Http\Controllers\Dashboard\FinanceController;
 use App\Http\Controllers\Dashboard\Payroll;
 use App\Http\Controllers\Dashboard\Calendar;
 use App\Http\Controllers\Dashboard\Expenses;
-use App\Http\Controllers\Dashboard\Services;
+use App\Http\Controllers\Dashboard\ServicesController;
 use App\Http\Controllers\Dashboard\Settings;
 use App\Http\Controllers\Dashboard\EmployeesController;
 use App\Http\Controllers\Dashboard\UsersController;
@@ -76,8 +76,8 @@ Route::middleware(['auth'])->group( function ()
     {
         Route::group(['prefix' => 'admin'], function()
             {
-                Route::resource('services', Services::class);
-                Route::resource('clients', Clients::class);
+                Route::resource('services', ServicesController::class);
+                Route::resource('clients', ClientsController::class);
                 Route::resource('cars', CarsController::class);
                 Route::resource('expenses', Expenses::class);
                 Route::resource('payroll', Payroll::class);
@@ -86,7 +86,7 @@ Route::middleware(['auth'])->group( function ()
                 Route::resource('users', UsersController::class);
 
                 Route::get('calendar', [Calendar::class, 'index'])->name('calendar.index');
-                Route::get('dashboard', [Services::class, 'dashboard'])->name('dashboard.index');
+                Route::get('dashboard', [ServicesController::class, 'dashboard'])->name('dashboard.index');
                 Route::get('profile', [EmployeesController::class, 'profileIndex'])->name('profile.index');
 
                 # Reports
@@ -112,6 +112,6 @@ Route::middleware(['auth'])->group( function ()
 
         Route::post('admin/settings/create', [Settings::class, 'store'])->name('setting.store');
 
-        Route::get('admin/sendEmailInvoice/{service}', [Services::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
+        Route::get('admin/sendEmailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
     }
 );

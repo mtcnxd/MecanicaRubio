@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use DB;
 use Carbon\Carbon;
 use App\Models\Cars;
+use App\Models\Clients;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notifications\Telegram;
@@ -13,16 +14,9 @@ class CarsController extends Controller
 {
     public function index()
     {
-        // $auto = CarsController::getCar(2);
-
-        // dd($auto);
-
-        $autos = DB::table('clients')
-            ->join('autos', 'autos.client_id', 'clients.id')
-            ->where('clients.status','Activo')
-            ->get();
-
-        return view ('dashboard.autos.index', compact('autos'));
+        $cars = Cars::all();
+        
+        return view ('dashboard.autos.index', compact('cars'));
     }
 
     public function create()

@@ -3,14 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
-use App\Http\Controllers\Dashboard\Clients;
+use App\Http\Controllers\Dashboard\ClientsController;
 use App\Http\Controllers\Dashboard\FinanceController;
 use App\Http\Controllers\Dashboard\Payroll;
 use App\Http\Controllers\Dashboard\Calendar;
 use App\Http\Controllers\Dashboard\Expenses;
-use App\Http\Controllers\Dashboard\Services;
+use App\Http\Controllers\Dashboard\ServicesController;
 use App\Http\Controllers\Dashboard\CarsController;
-use App\Http\Controllers\API\Clients as ApiClients;
 use App\Http\Controllers\Dashboard\QuotesController;
 use App\Http\Controllers\Dashboard\EmployeesController;
 
@@ -54,7 +53,7 @@ Route::post('addItem', [Payroll::class, 'addItem'])->name('payroll.addItem');
 
 Route::post('removeItem', [Payroll::class, 'removeItem'])->name('payroll.removeItem');
 
-Route::controller(Clients::class)->group(function () {
+Route::controller(ClientsController::class)->group(function () {
     Route::post('deleteClient', 'destroy')->name('clients.deleteClient');
     
     Route::post('getClientsList', 'getClientsList')->name('clients.getClientsList');
@@ -65,13 +64,13 @@ Route::controller(Clients::class)->group(function () {
 });
 
 // Services
-Route::post('getServiceItems', [Services::class, 'getServiceItems'])->name('services.getServiceItems');
+Route::post('getServiceItems', [ServicesController::class, 'getServiceItems'])->name('services.getServiceItems');
 
-Route::get('getDataTableServices', [Services::class, 'getDataTableServices'])->name('getDataTableServices');
+Route::get('getDataTableServices', [ServicesController::class, 'getDataTableServices'])->name('getDataTableServices');
 
-Route::post('createServicePDF', [Services::class, 'createServicePDF'])->name('services.createServicePDF');
+Route::post('createServicePDF', [ServicesController::class, 'createServicePDF'])->name('services.createServicePDF');
 
-Route::post('getItemInformation', [Services::class, 'getItemInformation'])->name('services.getItemInformation');
+Route::post('getItemInformation', [ServicesController::class, 'getItemInformation'])->name('services.getItemInformation');
 
 Route::post('closeMonth', [FinanceController::class, 'closeMonth'])->name('finance.closeMonth');
 

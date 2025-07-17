@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Notifications\Telegram;
-use App\Http\Controllers\Dashboard\ChartsController;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Helpers;
+use DB;
+use PDF;
+use Str;
+use Mail;
+use Exception;
+use DataTables;
+use Carbon\Carbon;
+use App\Models\Clients;
+use App\Models\Services;
 use Illuminate\Http\Request;
 use App\Mail\SendEmailInvoice;
-use App\Models\Clients;
-use Carbon\Carbon;
-use DataTables;
-use Exception;
-use Mail;
-use Str;
-use PDF;
-use DB;
+use App\Http\Controllers\Helpers;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Notifications\Telegram;
+use App\Http\Controllers\Dashboard\ChartsController;
 
-class Services extends Controller
+class ServicesController extends Controller
 {
     public function index()
     {
-        // Services comes from Datatable
+        // Services comes from Datatable API
         $services = array();
         $clients  = Clients::orderBy('name')->get();
 
@@ -74,16 +75,9 @@ class Services extends Controller
 
     public function show(string $id)
     {
-        $service = DB::table('services')
-            ->select('services.*','autos.brand','autos.model','autos.year','clients.name')
-            ->join('autos', 'services.car_id', 'autos.id')
-            ->join('clients', 'services.client_id', 'clients.id')
-            ->where('services.id', $id)
-            ->first();
+        $service = Services::find($id);
 
-        $items = DB::table('services_items')->where('service_id', $id)->get();
-
-        return view('dashboard.services.show', compact('service','items'));
+        return view('dashboard.services.show', compact('service'));
     }
 
     public function update(Request $request, string $id)
