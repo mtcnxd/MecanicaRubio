@@ -9,12 +9,16 @@ class Salary extends Model
 {
     use HasFactory;
 
-   protected function casts(): array
-    {
-        return [
-            'paid_date' => 'datetime',
-        ];
-    }
+    protected $fillable = [
+        'user_id',
+        'type',
+        'status',
+        'start_date',
+        'end_date',
+        'total',
+        'created_at',
+        'updated_at',
+    ];
 
     public function employee()
     {

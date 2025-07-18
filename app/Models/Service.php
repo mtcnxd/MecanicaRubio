@@ -9,6 +9,20 @@ class Service extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'client_id',
+        'car_id',
+        'fault',
+        'service_type',
+        'entry_date',
+        'finished_date',
+        'comments',
+        'notes',
+        'odometer',
+        'status',
+        'total',
+    ];
+
     public function client()
     {
         return $this->belongsTo(Clients::class, 'client_id');

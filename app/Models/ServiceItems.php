@@ -16,5 +16,5 @@ class ServiceItems extends Model
         return self::where('item','like','%'.$criteria.'%')
             ->groupBy('item')
             ->pluck('item');
-    }    
+    }
 }

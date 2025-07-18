@@ -32,9 +32,9 @@ class PayrollController extends Controller
 
     public function create()
     {
-        // Current salarie is still not saved
+        /* Current salarie is still not saved */
         $id = Salary::max('id') + 1;
-        
+
         $employees = User::get();
         $items     = SalaryItems::where('salary_id', $id)->get();
 
@@ -43,7 +43,7 @@ class PayrollController extends Controller
 
     public function store(Request $request)
     {
-        $insert = DB::table('salaries')->insert([
+        $insert = Salary::insert([
             "user_id"    => $request->employee,
             "type"       => $request->type,
             "status"     => 'Pendiente',
@@ -98,9 +98,9 @@ class PayrollController extends Controller
     
     public function addItem(Request $request)
     {   
-        $id = DB::table('salaries')->max('id') +1;
-
-        DB::table('salaries_details')->insert([
+        $id = Salary::max('id') +1;
+        
+        SalaryItems::insert([
             'salary_id' => $id,
             'concept'   => $request->concept,
             'amount'    => $request->amount,
@@ -115,7 +115,8 @@ class PayrollController extends Controller
 
     public function removeItem(Request $request)
     {       
-        DB::table('salaries_details')->where('id', $request->itemId)->delete();
+        $item = SalaryItems::find($request->input('itemId'));
+        $item->delete();
 
         return response()->json([
             "success" => true,

@@ -41,7 +41,7 @@ class ServicesController extends Controller
 
     public function store(Request $request)
     {
-        $serviceId = DB::table('services')->insertGetId([
+        $serviceId = Service::insertGetId([
             "client_id"    => $request->client,
             "car_id"       => $request->car,
             "odometer"     => (isset($request->odometer)) ? str_replace([' ', ','], '', $request->odometer) : null,
@@ -53,17 +53,15 @@ class ServicesController extends Controller
             "updated_at"   => Carbon::now(),
         ]);
 
-        $servicesDetails = DB::table('services')
-            ->join('autos','services.car_id','autos.id')
-            ->where('services.id', $serviceId)
-            ->first();
+        $servicesDetails = Service::find($serviceId);
 
         try {
             Telegram::send(
-                sprintf("<b>New service created:</b> #%s - %s \n\r<b>Fault:</b> %s", 
-                    $serviceId, 
-                    $servicesDetails->brand ." ". $servicesDetails->model, 
-                    $request->fault
+                sprintf("<b>New service created:</b> #%s - %s\n\r<b>Client:</b> %s  \n\r<b>Fault:</b> %s", 
+                    $servicesDetails->id, 
+                    $servicesDetails->car->brand ." ". $servicesDetails->car->model, 
+                    $servicesDetails->client->name,
+                    $servicesDetails->fault
                 )
             );
         } catch (Exception $err){
@@ -81,10 +79,7 @@ class ServicesController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $currentData = DB::table('services')
-            ->join('autos', 'services.car_id', 'autos.id')
-            ->where('services.id', $id)
-            ->first();
+        $currentData = Service::find($id);
 
         if ($currentData->status == 'Entregado'){
             $finishedDate = isset($currentData->finished_date) ? $currentData->finished_date : Carbon::now();
@@ -92,7 +87,7 @@ class ServicesController extends Controller
             $finishedDate = Carbon::now();
         }
 
-        DB::table('services')->where('id', $id)->update([
+        $currentData->update([
             "total"         => $request->total,
             "notes"         => $request->notes,
             "status"        => $request->status,
@@ -105,9 +100,10 @@ class ServicesController extends Controller
         if ($request->status == 'Entregado'){
             try {
                 Telegram::send(
-                    sprintf("<b>Service completed:</b> #%s - %s \n\r<b>Fault:</b> %s \n\r<b>Total:</b> $%s", 
-                        $id,
-                        $currentData->brand ." ". $currentData->model,
+                    sprintf("<b>Service completed:</b> #%s - %s \n\r<b>Client:</b> %s \n\r<b>Fault:</b> %s \n\r<b>Total:</b> $%s", 
+                        $currentData->id,
+                        $currentData->car->brand ." ". $currentData->car->model,
+                        $currentData->client->name,
                         $currentData->fault, 
                         number_format($request->total,2)
                     )

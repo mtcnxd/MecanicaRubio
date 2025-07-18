@@ -82,7 +82,7 @@
                         </span>
                     </td>
                     <td>
-                        {{ isset($salary->paid_date) ? Carbon\Carbon::parse($salary->paid_date)->format('d-m-Y') : null }}
+                        {{ isset($salary->paid_date) ? \Carbon\Carbon::parse($salary->paid_date)->format('d-m-Y') : null }}
                     </td>
                     <td>
                         @if ($salary->status == 'Pagado')
