@@ -137,12 +137,12 @@
                                 <th class="text-center">Fecha servicio</th>
                             </thead>
                             <tbody>
-                                @foreach ($services as $service)
+                                @foreach ($client->services as $service)
                                 <tr>
                                     <td>
-                                        <a href="{{ route('cars.show', $service->car_id) }}">{{ $service->brand }} {{ $service->model }}</a>
+                                        <a href="{{ route('cars.show', $service->car->id) }}">{{ $service->car->brand }} {{ $service->car->model }}</a>
                                     </td>
-                                    <td>{{ $service->year }}</td>
+                                    <td>{{ $service->car->year }}</td>
                                     <td>{{ $service->fault }}</td>
                                     <td>
                                         <span class="badge text-bg-success">{{ $service->status }}</span>
@@ -154,11 +154,7 @@
                         </table>
                         <p class="pt-2 mb-0">
                             <x-feathericon-clipboard class="table-icon" style="margin-top:-4px;"/>
-                            @if (count($services) > 1)
-                                Se encontraron {{ count($services) }} servicios.
-                            @else 
-                                Se encontro {{ count($services) }} servicio.
-                            @endif                            
+                            Se encontraron {{ $client->services->count() }} servicios.
                         </p>
                     </div>
                     <div class="tab-pane fade" id="profile-tab-pane" aria-labelledby="profile-tab">
@@ -170,7 +166,7 @@
                                 <th>Matrícula</th>
                             </thead>
                             <tbody>
-                                @foreach ($cars as $car)
+                                @foreach ($client->cars as $car)
                                 <tr>
                                     <td>
                                         <x-feathericon-arrow-right-circle class="table-icon" style="margin: 0 5px 2px"/>

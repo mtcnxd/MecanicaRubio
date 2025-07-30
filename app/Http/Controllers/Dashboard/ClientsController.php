@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use DB;
 use Exception;
 use Carbon\Carbon;
-use App\Models\Clients;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notifications\Telegram;
 
@@ -14,7 +14,7 @@ class ClientsController extends Controller
 {
     public function index()
     {
-        $clients = Clients::where('status', 'Activo')->get();
+        $clients = Client::all();
 
         return view ('dashboard.clients.index', compact('clients'));
     }
@@ -26,14 +26,14 @@ class ClientsController extends Controller
 
     public function store(Request $request)
     {
-        $contactExists = DB::table('clients')->where('phone', $request->phone)->first();
+        $contactExists = Client::where('phone', $request->phone)->first();
 
         if ($contactExists){
             session()->flash('warning', 'El número de teléfono ya esta registrado');
             return to_route('clients.index');
         }
 
-        $customerId = DB::table('clients')->insertGetId([
+        $customerId = Client::insertGetId([
             'name'       => $request->name,
             'email'      => $request->email,
             'phone'      => $request->phone,
@@ -44,15 +44,15 @@ class ClientsController extends Controller
             'state'      => $request->state,
             'rfc'        => $request->rfc,
             'comments'   => $request->comments,
-            'created_at' => Carbon::now(), 
-            'updated_at' => Carbon::now(),
         ]);
 
         try {
             Telegram::send(
                 sprintf("<b>New client created:</b> %s <b>Phone:</b> %s", $request->name, $request->phone)
             );
-        } catch (Exception $err){
+        }
+        
+        catch (Exception $err){
             session()->flash('warning', 'ERROR: '. $err->getMessage());
 		}
 
@@ -62,29 +62,23 @@ class ClientsController extends Controller
 
     public function show(string $id)
     {
-        $services = DB::table('autos')
-            ->join('services','autos.id','services.car_id')
-            ->where('autos.client_id', $id)
-            ->orderBy('services.created_at', 'desc')
-            ->get();
+        $client = Client::find($id);
 
-        return view('dashboard.clients.show', [
-            'client'   => DB::table('clients')->where('id', $id)->first(),
-            'services' => $services,
-            'cars'     => DB::table('autos')->where('client_id', $id)->get(),
-        ]);
+        return view('dashboard.clients.show', compact('client'));
     }
 
     public function edit(string $id)
     {
-        return view('dashboard.clients.edit', [
-            'client' => DB::table('clients')->where('id', $id)->first()
-        ]);
+        $client = Client::find($id);
+
+        return view('dashboard.clients.edit', compact('client'));
     }
 
     public function update(Request $request, string $id)
     {
-        DB::table('clients')->where('id', $id)->update([
+        $client = Client::find($id);
+        
+        $client->update([
             "name"     => $request->name,
             "email"    => $request->email,
             "phone"    => $request->phone,
@@ -102,7 +96,7 @@ class ClientsController extends Controller
 
     public function destroy(Request $request)
     {
-        DB::table('clients')->where('id', $request->client)->update([
+        Client::where('id', $request->client)->update([
             'status' => 'Eliminado'
         ]);
 
@@ -113,8 +107,7 @@ class ClientsController extends Controller
 
     public function getClientsList(Request $request)
     {
-        $data = DB::table('clients')
-            ->select('id','name')
+        $data = Client::select('id','name')
             ->where('name', 'like', '%'.$request->name.'%')
             ->get();
 

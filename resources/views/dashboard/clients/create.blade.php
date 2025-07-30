@@ -165,8 +165,10 @@
         if (this.value.length >= 5){
             $.ajax({
                 url: "{{ route('clients.getClientsList') }}",
-                method: "POST",
-                data: {name:this.value},
+                method: "GET",
+                data: {
+                    name:this.value
+                },
                 success:function (response){
                     console.log(response);
                     $("#resultClientsList").empty();

@@ -7,6 +7,7 @@
 @section('content')
 <div class="main-content">
     @include('includes.div_warning')
+    
     <div class="window-title-bar">
         <h6 class="window-title-text">Buscar cliente</h6>
         <x-feathericon-user-plus class="window-title-icon"/>

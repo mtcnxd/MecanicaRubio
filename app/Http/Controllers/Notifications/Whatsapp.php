@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Notifications;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use \Exception;
-use \Http;
 use \DB;
+use \Http;
+use \Exception;
+use Illuminate\Http\Request;
+use App\Contracts\Notificator;
+use App\Http\Controllers\Controller;
 
-class Whatsapp extends Controller
+class Whatsapp extends Controller implements Notificator
 {
     static function send($template = null)
     {

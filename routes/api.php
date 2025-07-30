@@ -53,9 +53,10 @@ Route::group(['controller' => PayrollController::class], function() {
 // Clients
 Route::controller(ClientsController::class)->group(function () {
     Route::post('deleteClient', 'destroy')->name('clients.deleteClient');
-    Route::post('getClientsList', 'getClientsList')->name('clients.getClientsList');
     Route::post('searchByPostcode', 'searchByPostcode')->name('clients.searchByPostcode');    
     Route::post('searchByAddress', 'searchByAddress')->name('clients.searchByAddress');    
+    
+    Route::get('getClientsList', 'getClientsList')->name('clients.getClientsList');
 });
 
 // Services

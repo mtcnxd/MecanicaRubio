@@ -9,7 +9,7 @@
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
-    <div class="window-body bg-white">
+    <div class="window-body bg-white p-4">
         <label class="window-body-form">Editar cliente</label>
         <form action="{{ route('clients.update', $client->id) }}" method="POST" class="border pt-5 pb-4">
         @method('PUT')
@@ -168,11 +168,12 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $("#deleteClient").on('click', function(btn){
+    $("#deleteClient").on('click', function(event){
+        event.preventDefault();
         var client = $(this).data('bsClient');
 
         $.ajax({
-            url: "/api/deleteClient",
+            url: "{{ route('clients.deleteClient') }}",
             method: 'POST',
             data: {
                 client:client
@@ -243,7 +244,7 @@
             icon: 'success',
             confirmButtonText: 'Aceptar'
         }).then(() => {
-            location.replace('/clients');
+            location.replace("{{ route('clients.index') }}");
         });
     }
 </script>
