@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use DB;
 use Carbon\Carbon;
 use App\Models\Cars;
-use App\Models\Clients;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notifications\Telegram;

@@ -10,7 +10,7 @@ use Exception;
 use DataTables;
 use Carbon\Carbon;
 use App\Mail\SendEmailInvoice;
-use App\Models\Clients;
+use App\Models\Client;
 use App\Models\Service;
 use App\Models\ServiceItems;
 use Illuminate\Http\Request;
@@ -22,9 +22,8 @@ class ServicesController extends Controller
 {
     public function index()
     {
-        // Services comes from Datatable API
         $services = array();
-        $clients  = Clients::orderBy('name')->get();
+        $clients  = Client::orderBy('name')->get();
 
         return view('dashboard.services.index', compact('services', 'clients'));
     }
