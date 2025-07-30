@@ -1,121 +1,83 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
 <div class="main-content">
     @include('includes.div_warning')
-    
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Registrar nuevo cliente</label>
         <form action="{{ route('clients.store') }}" method="POST" class="border pt-5 pb-4">
-        @method('POST')
-        @csrf
-        <div class="row">
-            <div class="col-md-6">
+            @method('POST')
+            @csrf
+            <div class="row col-md-6 p-4 pt-0">
                 <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Nombre
-                    </div>
-                    <div class="col-md-9">
+                    <div class="col-md-12">
+                        <label for="name">Nombre</label>
                         <input type="text" class="form-control" name="name" id="name" required autocomplete="off">
                         <ul id="resultClientsList" style="display: none;" class="float-suggestions"></ul>
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Correo
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="email">
+                    <div class="col-md-12">
+                        <label for="email">Correo</label>
+                        <input type="text" class="form-control" name="email" id="email">
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Teléfono
+                    <div class="col-md-6">
+                        <label for="phone">Teléfono</label>
+                        <input type="number" class="form-control" name="phone" id="phone" required>
                     </div>
-                    <div class="col-md-3">
-                        <input type="number" class="form-control" name="phone" required>
-                    </div>
-                    <div class="col-md-3 pt-2 text-end">
-                        Código Postal
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" id="postcode" name="postcode">
+                    <div class="col-md-6">
+                        <label for="postcode">Código Postal</label>
+                        <input type="text" class="form-control" name="postcode" id="postcode">
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Dirección
+                    <div class="col-md-12">
+                        <label for="address">Colónia</label>
+                        <select class="form-select" name="address" id="address">
+                            <option> - Selecciona una colonia - </option>
+                        </select>
                     </div>
-                    <div class="col-md-9">
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label for="street">Calle / Número</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="street">
+                            <input type="text" class="form-control" name="street" id="street">
                             <span class="input-group-text">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#searchModal">Buscar</a>
                             </span>
                         </div>
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Colónia
+                    <div class="col-md-6">
+                        <label for="city">Ciudad</label>
+                        <input type="text" class="form-control" name="city" id="city">
                     </div>
-                    <div class="col-md-9">
-                        <select class="form-select" id="address" name="address">
-                            <option> - Selecciona una colonia - </option>
-                        </select>
+                    <div class="col-md-6">
+                        <label for="state">Estado</label>
+                        <input type="text" class="form-control" name="state" id="state">
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Ciudad
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" id="city" name="city">
-                    </div>
-                    <div class="col-md-3 pt-2 text-end">
-                        Estado
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" id="state" name="state">
+                    <div class="col-md-6">
+                        <label for="rfc">RFC</label>
+                        <input type="text" class="form-control" name="rfc" id="rfc">
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        RFC
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="rfc">
+                    <div class="col-md-12">
+                        <label for="comments">Comentarios</label>
+                        <textarea class="form-control" cols="30" rows="4" name="comments" id="comments"></textarea>
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Comentarios
-                    </div>
-                    <div class="col-md-9">
-                        <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <div class="col-md-6 mt-3 text-end">
+                    <div class="col-md-12 text-end">
                         <a href="{{ route('clients.index') }}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" class="btn btn-success">
                             <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
@@ -124,8 +86,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
     </div>
 </div>
 @endsection
@@ -256,7 +217,7 @@
             icon: 'success',
             confirmButtonText: 'Aceptar'
         }).then(() => {
-            location.replace('/clients');
+            location.replace('/admin/clients');
         });
     }
 </script>

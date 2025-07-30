@@ -1,9 +1,5 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
 <div class="shadow-sm main-content">
     <div class="window-title-bar">

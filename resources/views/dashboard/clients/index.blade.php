@@ -1,9 +1,5 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
 <div class="main-content">
     @include('includes.div_warning')

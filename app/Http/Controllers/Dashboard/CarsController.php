@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use DB;
 use Carbon\Carbon;
 use App\Models\Cars;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notifications\Telegram;
 
@@ -22,14 +22,14 @@ class CarsController extends Controller
     public function create()
     {
         $brands  = DB::table('brands')->orderBy('brand')->get();
-        $clients = DB::table('clients')->where('status','Activo')->orderBy('name')->get();
+        $clients = DB::table('clients')->where('status', 'Activo')->orderBy('name')->get();
 
         return view('dashboard.autos.create', compact('brands','clients'));
     }
 
     public function store(Request $request)
     {
-        DB::table('autos')->insert([
+        Cars::create([
             "brand"      => $request->brand,
             "model"      => $request->model,
             "serie"      => $request->serie,
