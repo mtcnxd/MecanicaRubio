@@ -1,12 +1,8 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
 <div class="main-content shadow">
-    @include('includes.div_warning')
+    @include('includes.alert')
     <h6 class="title-bar text-uppercase fw-bold">Buscar</h6>
     <div class="window-body pt-3 pb-3 bg-white">
         <div class="row m-1 mb-3 pb-3" id="filters">

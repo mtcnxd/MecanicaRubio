@@ -1,18 +1,12 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="main-content">
-    @include('includes.div_warning')
-    <div class="window-title-bar">
-        <x-feathericon-menu class="window-title-icon"/>
-    </div>
+<div class="main-content shadow">
+    @include('includes.alert')
+    <h6 class="title-bar text-uppercase fw-bold">Buscar cliente</h6>
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Editar cliente</label>
-        <form action="{{ route('clients.update', $client->id) }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('clients.update', $client->id) }}" method="POST" class="border pt-4 pb-4">
             @method('PUT')
             @csrf
             <div class="row col-md-6 p-4 pt-0">

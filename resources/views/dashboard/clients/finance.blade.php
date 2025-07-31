@@ -1,12 +1,8 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="main-content">
-    @include('includes.div_warning')
+<div class="main-content shadow">
+    @include('includes.alert')
     <div class="row col-md-6">
         <div class="col-md-6">
             <div class="window-title-bar shadow-sm">

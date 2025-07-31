@@ -1,11 +1,7 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="main-content mb-4">
+<div class="main-content">
     <table class="table border table-hover">
         <thead>
             <thead>

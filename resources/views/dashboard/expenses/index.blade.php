@@ -1,14 +1,10 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content shadow">
     <h6 class="title-bar text-uppercase fw-bold">Listado de egresos</h6>
     <div class="window-body pt-3 pb-3 bg-white">
-        @include('includes.div_warning')
+        @include('includes.alert')
         
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-2">

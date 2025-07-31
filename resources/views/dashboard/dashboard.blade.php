@@ -1,11 +1,7 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="main-content">
+<div class="main-content shadow">
     <h4>Resumen</h4>
     <hr class="mb-4" style="color: var(--orange-800);">
     <div class="row">

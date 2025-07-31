@@ -1,18 +1,14 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
 <div class="main-content shadow">
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body p-4 bg-white">
-        @include('includes.div_warning')
+        @include('includes.alert')
         <label class="window-body-form">Nuevo Servicio</label>
-        <form action="{{ route('services.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('services.store') }}" method="POST" class="border pt-4 pb-4">
             @csrf
             <div class="row col-md-6 p-4 pt-0">
                 <div class="row">

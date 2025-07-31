@@ -1,9 +1,5 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
 <div class="main-content shadow">
     <h6 class="title-bar text-uppercase fw-bold">Auto</h6>

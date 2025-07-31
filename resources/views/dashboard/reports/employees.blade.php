@@ -1,11 +1,7 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="main-content">
+<div class="main-content shadow">
     <div class="row">
         <div class="col-md-6">
             <div class="card p-2">

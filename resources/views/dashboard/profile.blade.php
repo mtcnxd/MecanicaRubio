@@ -1,17 +1,8 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="main-content">
-    @if ( session('message') )
-        <div class="alert alert-warning alert-dismissible fade show">
-            <strong>Mensaje: </strong>{{ session('message') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+<div class="main-content shadow">
+    @include('includes.alert')
     <div class="row">
         <div class="col-md-6">
             <h6 class="title-bar text-uppercase fw-bold">Perfil</h6>

@@ -1,14 +1,10 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="main-content">
+<div class="main-content shadow">
     <h6 class="title-bar text-uppercase fw-bold">Listado de nominas</h6>
     <div class="window-body pt-3 pb-3 bg-white">
-        @include('includes.div_warning')
+        @include('includes.alert')
         <form action="{{ route('payroll.index') }}" method="POST">
             @csrf
             @method('GET')

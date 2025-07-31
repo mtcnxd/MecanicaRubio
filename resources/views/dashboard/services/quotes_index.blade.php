@@ -1,17 +1,13 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content shadow">
     <div class="window-title-bar">
         <h6 class="window-title-text">Buscar Cotizacion</h6>
         <x-feathericon-tool class="window-title-icon"/>
     </div>
     <div class="window-body pt-4 pb-3 bg-white">
-        @include('includes.div_warning')
+        @include('includes.alert')
 
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-3">

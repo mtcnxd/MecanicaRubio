@@ -1,11 +1,7 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="main-content">
+<div class="main-content shadow">
     <h6 class="title-bar text-uppercase fw-bold">Ingresos del mes</h6>
     <div class="window-body pb-3 bg-white">
         <table class="table border table-hover">

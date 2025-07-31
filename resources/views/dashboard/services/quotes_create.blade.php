@@ -1,17 +1,13 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content shadow">
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Cotizacion</label>
-        <form action="{{ route('quotes.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('quotes.store') }}" method="POST" class="border pt-4 pb-4">
             @csrf
             <div class="row">
                 <div class="row col-md-6">

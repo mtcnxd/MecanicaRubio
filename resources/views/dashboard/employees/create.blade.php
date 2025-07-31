@@ -1,15 +1,11 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content shadow">
     <h6 class="title-bar text-uppercase fw-bold">Empleados</h6>
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Crear nuevo empleado</label>
-        <form action="{{ route('employees.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('employees.store') }}" method="POST" class="border pt-4 pb-4">
         @method('POST')
         @csrf
         <div class="row">

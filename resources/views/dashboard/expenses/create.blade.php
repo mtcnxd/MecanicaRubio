@@ -1,15 +1,11 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content shadow">
     <h6 class="title-bar text-uppercase fw-bold">Egreso</h6>
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Registrar egreso</label>
-        <form action="{{ route('expenses.store') }}" method="POST" class="border pt-5 pb-4" enctype="multipart/form-data">
+        <form action="{{ route('expenses.store') }}" method="POST" class="border pt-4 pb-4" enctype="multipart/form-data">
             @csrf
             <div class="col-md-6">                
                 <div class="row">

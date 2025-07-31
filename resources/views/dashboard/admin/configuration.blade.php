@@ -1,23 +1,14 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="main-content">
-    @if ( session('message') )
-        <div class="alert alert-warning alert-dismissible fade show">
-            <strong>Mensaje: </strong>{{ session('message') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+<div class="main-content shadow">
+    @include('includes.alert')
     <div class="row">
         <div class="col-md-7">
             <h6 class="title-bar text-uppercase fw-bold">Configuracion</h6>
             <div class="window-body p-4 bg-white">
                 <label class="window-body-form">Nuevo indice de configuración</label>
-                <form action="{{ route('setting.store') }}" method="POST" class="border pt-5 pb-4 mb-4">
+                <form action="{{ route('setting.store') }}" method="POST" class="border pt-4 pb-4 mb-4">
                     @csrf
                     <div class="row">
                         <div class="col-md-3 pt-2 text-end">

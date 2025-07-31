@@ -1,12 +1,8 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
 <div class="calendar">
-    @include('includes.div_warning')
+    @include('includes.alert')
     <div class="window-title-bar calendar-title-bar">
         <h4 class="text-center">
             <x-feathericon-calendar class="window-title-icon" style="margin-top: -3px;"/>

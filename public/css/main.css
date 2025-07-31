@@ -148,6 +148,11 @@ a:hover {
     margin-bottom: 20px !important;
 }
 
+.dataTables_length, .dataTables_info, .dataTables_filter, .dataTables_paginate {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 #services_filter {
     display: none;
 }

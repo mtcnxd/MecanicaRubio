@@ -1,17 +1,13 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content shadow">
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Información del cliente</label>
-        <form action="" method="POST" class="border pt-5 pb-4 mb-4">
+        <form action="" method="POST" class="border pt-4 pb-4 mb-4">
             <div class="row">
                 <div class="col-md-6" style="padding-right: 40px;">
                     <div class="row">

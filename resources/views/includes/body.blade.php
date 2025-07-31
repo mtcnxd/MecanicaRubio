@@ -15,8 +15,12 @@
 </head>
 
 <body>
-    @yield('menu')
+    @if (Auth::user() )
+        @include('includes.menu')
+    @endif
+
     @yield('body')
+    
     @yield('content')
     
     @yield('modal')

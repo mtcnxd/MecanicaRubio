@@ -1,16 +1,12 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
 <div class="main-content shadow">
-    @include('includes.div_warning')
+    @include('includes.alert')
     <h6 class="title-bar text-uppercase fw-bold">Cliente</h6>
     <div class="window-body p-4 pt-4 bg-white">
         <label class="window-body-form">Nuevo cliente</label>
-        <form action="{{ route('clients.store') }}" method="POST" class="border pt-5 pb-4">
+        <form action="{{ route('clients.store') }}" method="POST" class="border pt-4 pb-4">
             @method('POST')
             @csrf
             <div class="row col-md-6 p-4 pt-0">
