@@ -1,25 +1,19 @@
 @extends('includes.body')
 
-@section('menu')
-    @include('includes.menu')
-@endsection
-
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content shadow">
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body p-4 bg-white">
-        <label class="window-body-form">Registrar nuevo automovil</label>
+        <label class="window-body-form">Nuevo automovil</label>
         <form action="{{ route('cars.store') }}" method="POST" class="border pt-5 pb-4">
-            @csrf
             @method('POST')
-            <div class="col-md-6">                
+            @csrf
+            <div class="row col-md-6 p-4 pt-0">
                 <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Marca
-                    </div>    
-                    <div class="col-md-9">
+                    <div class="col-md-12">
+                        <label for="select-brand">Marca</label>    
                         <div class="input-group">
                             <select class="form-select" id="select-brand" name="brand">
                                 <option>- Seleccione una marca -</option>
@@ -33,12 +27,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Modelo
-                    </div>
-                    <div class="col-md-9">
+                    <div class="col-md-12">
+                        <label for="select-model">Modelo</label>
                         <div class="input-group">
                             <select class="form-select" id="select-model" name="model">
                                 <option>- Seleccione un modelo -</option>
@@ -49,38 +40,27 @@
                         </div>
                     </div>    
                 </div>
-                
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        VIN
-                    </div>
-                    <div class="col-md-9">
+                    <div class="col-md-12">
+                        <label>VIN</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="serie" placeholder="Vehicle Identification Number">
                         </div>
                     </div>    
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Año
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
+                        <label>Año</label>
                         <input type="text" class="form-control" name="year" required>
                     </div>
-                    <div class="col-md-3 pt-2 text-end">
-                        Placa
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
+                        <label>Placa</label>
                         <input type="text" class="form-control" name="plate">
                     </div>
-                </div>    
-
+                </div>
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Cliente
-                    </div>
-                    <div class="col-md-9">
+                    <div class="col-md-12">
+                        <label>Cliente</label>
                         <select id="client" class="form-select" name="client">
                             @foreach ($clients as $client)
                                 <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -88,23 +68,21 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Comentarios
-                    </div>
-                    <div class="col-md-9">
+                    <div class="col-md-12">
+                        <label>Comentarios</label>
                         <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
-                    </div>                
-                </div>                
-            </div>
-            
-            <div class="col-md-6 mt-3 text-end">
-                <a href="{{ route('cars.index') }}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-success">
-                    <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                    Guardar
-                </button>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12 text-end">
+                        <a href="{{ route('cars.index') }}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-success">
+                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

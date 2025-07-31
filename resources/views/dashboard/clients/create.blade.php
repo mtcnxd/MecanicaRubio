@@ -1,13 +1,13 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content">
+<div class="main-content shadow">
     @include('includes.div_warning')
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body p-4 bg-white">
-        <label class="window-body-form">Registrar nuevo cliente</label>
+        <label class="window-body-form">Nuevo cliente</label>
         <form action="{{ route('clients.store') }}" method="POST" class="border pt-5 pb-4">
             @method('POST')
             @csrf

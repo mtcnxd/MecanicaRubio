@@ -10,6 +10,7 @@
         .col { width: 20%; }
         .text-end { text-align: right; }
     </style>
+    <meta charset="utf-8">
 </head>
 <body>
     <div style="display:flex; height:130px;">

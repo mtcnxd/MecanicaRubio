@@ -18,12 +18,10 @@
                         <input type="text" class="form-control" name="name" value="{{ isset($client) ? $client->name : '' }}" required>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <label>Correo</label>
-                            <input type="text" class="form-control" name="email" value="{{ isset($client) ? $client->email : '' }}">
-                        </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label>Correo</label>
+                        <input type="text" class="form-control" name="email" value="{{ isset($client) ? $client->email : '' }}">
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -59,28 +57,28 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <label>Ciudad</div>
+                        <label>Ciudad</label>
                         <input type="text" class="form-control" id="city" name="city" value="{{ isset($client) ? $client->city : '' }}">
                     </div>
                     <div class="col-md-6">
-                        <label>Estado</div>
+                        <label>Estado</label>
                         <input type="text" class="form-control" id="state" name="state" value="{{ isset($client) ? $client->state : '' }}">
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <label>RFC</div>
+                        <label>RFC</label>
                         <input type="text" class="form-control" name="rfc" value="{{ isset($client) ? $client->rfc : '' }}">
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12">
-                        <label>Comentarios</div>
+                        <label>Comentarios</label>
                         <textarea class="form-control" cols="30" rows="4" name="comments">{{ isset($client) ? $client->comments : '' }}</textarea>
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12 pt-3 text-end">
+                    <div class="col-md-12 text-end">
                         <button type="button" href="#" class="btn btn-danger" id="deleteClient" data-bs-client="{{ isset($client) ? $client->id : ''}}">Eliminar</button>
                         <a href="{{ route('clients.index') }}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" class="btn btn-success">

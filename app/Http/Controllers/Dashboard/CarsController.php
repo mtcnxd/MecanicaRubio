@@ -16,7 +16,7 @@ class CarsController extends Controller
     {
         $cars = Cars::all();
         
-        return view ('dashboard.autos.index', compact('cars'));
+        return view ('dashboard.cars.index', compact('cars'));
     }
 
     public function create()
@@ -24,7 +24,7 @@ class CarsController extends Controller
         $brands  = DB::table('brands')->orderBy('brand')->get();
         $clients = DB::table('clients')->where('status', 'Activo')->orderBy('name')->get();
 
-        return view('dashboard.autos.create', compact('brands','clients'));
+        return view('dashboard.cars.create', compact('brands','clients'));
     }
 
     public function store(Request $request)
@@ -64,7 +64,7 @@ class CarsController extends Controller
             ->where('autos.id', $id)
             ->get();
 
-        return view('dashboard.autos.show', compact('services','client'));
+        return view('dashboard.cars.show', compact('services','client'));
     }
 
     public function edit(string $id)
@@ -78,7 +78,7 @@ class CarsController extends Controller
             ->where('autos.id', $id)
             ->first();
 
-        return view('dashboard.autos.edit', compact('brands','clients','auto'));
+        return view('dashboard.cars.edit', compact('brands','clients','auto'));
     }
 
     public function update(Request $request, string $id)
