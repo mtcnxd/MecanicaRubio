@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    @include('includes.menu')
+    @yield('menu')
     @yield('body')
     @yield('content')
     
