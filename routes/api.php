@@ -60,11 +60,14 @@ Route::controller(ClientsController::class)->group(function () {
 });
 
 // Services
-Route::group(['controller' => ServicesController::class], function(){
-    Route::get('getServiceItems', 'getServiceItems')->name('services.getServiceItems');
-    Route::get('getDataTableServices', 'getDataTableServices')->name('getDataTableServices');
+Route::group(['controller' => ServicesController::class], function(){    
     Route::post('createServicePDF', 'createServicePDF')->name('services.createServicePDF');
     Route::post('getItemInformation', 'getItemInformation')->name('services.getItemInformation');
+
+    Route::get('getServiceItems', 'getServiceItems')->name('services.getServiceItems');
+    Route::get('getDataTableServices', 'getDataTableServices')->name('getDataTableServices');
+    
+    Route::get('/changeQuoteToService', 'changeQuoteToService')->name('services.change.quote');
 });
 
 

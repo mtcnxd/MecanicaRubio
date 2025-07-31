@@ -13,9 +13,14 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-12">
-                            <label>Cliente</label>    
-                            <input type="text" class="form-control" name="client" value="#{{ $service->client->id }} - {{ $service->client->name }}" disabled>
-                            <input type="hidden" value="{{ $service->id }}" id="service">
+                            <label>Cliente</label>
+                            <div class="input-group">
+                                <input type="hidden" value="{{ $service->id }}" id="service">
+                                <input type="text" class="form-control" name="client" value="#{{ $service->client->id }} - {{ $service->client->name }}" disabled>
+                                <span class="input-group-text">
+                                    <a href="{{ route('clients.edit', $service->client->id) }}">Editar</a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -89,7 +94,13 @@
                         <th width="30px"></th>
                     </thead>
                     <tbody>
+                        @php
+                            $grandTotal = 0;
+                        @endphp                        
                         @foreach ($service->invoiceItems as $item)
+                        @php
+                            $grandTotal += $item->amount * $item->price;
+                        @endphp
                         <tr>
                             <td>{{ $item->amount }}</td>
                             <td>{{ $item->item }}</td>
@@ -112,8 +123,8 @@
                                 </a>
                             </td>
                             <td class="text-end fw-bold">
-                                {{ '$'.number_format($service->invoiceItems->sum('price'), 2) }}
-                                <input type="hidden" name="total" value="{{ $service->invoiceItems->sum('price') }}">
+                                {{ '$'.number_format($grandTotal, 2) }}
+                                <input type="hidden" name="total" value="{{ $grandTotal }}">
                             </td>
                         </tr>
                     </tfoot>

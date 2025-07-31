@@ -221,6 +221,27 @@ class ServicesController extends Controller
         ]);
     }
 
+    public function changeQuoteToService(Request $request)
+    {
+        try {
+            Service::where('id', $request->id)->update([
+                'quote' => false
+            ]);
+        }
+
+        catch (Exception $err) {
+            return response()->json([
+                'success' => false,
+                'message' => $err->getMessage(),
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'La cotizacion es ahora un servicio',
+        ]);
+    }
+
     public function getDataTableServices(Request $request)
     {
         $servicesQuery = DB::table('services_view');

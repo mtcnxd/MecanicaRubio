@@ -56,7 +56,13 @@
                         <th width="30px"></th>
                     </thead>
                     <tbody>
+                        @php
+                            $grandTotal = 0;
+                        @endphp
                         @foreach ($service->invoiceItems as $item)
+                        @php
+                            $grandTotal += $item->amount * $item->price;
+                        @endphp
                         <tr>
                             <td>{{ $item->amount }}</td>
                             <td>{{ $item->item }}</td>
@@ -79,8 +85,8 @@
                                 </a>
                             </td>
                             <td class="text-end fw-bold">
-                                {{ '$'.number_format($service->invoiceItems->sum('price'), 2) }}
-                                <input type="hidden" name="total" value="{{ $service->invoiceItems->sum('price') }}">
+                                {{ '$'.number_format($grandTotal, 2) }}
+                                <input type="hidden" name="total" value="{{ $grandTotal }}">
                             </td>
                         </tr>
                     </tfoot>
@@ -92,26 +98,17 @@
                     <label>Comentarios</label>
                     <textarea name="notes" class="form-control" cols="30" rows="3">{{ $service->notes }}</textarea>
                 </div>
-                <div class="col-md-6">
-                    <label>Estatus</label>
-                    <select class="form-select" name="status">
-                        <option {{$service->status == "Cancelado" ? 'selected' : '' }}>Cancelado</option>
-                        <option {{$service->status == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
-                    </select>
-                </div>
             </div>
 
             <div class="row pt-0 p-4 pb-0">
                 <div class="col-md-12 text-end">
-                    <a href="{{ route('services.index') }}" class="btn btn-sm btn-secondary">Atras</a>
                     <a href="#" class="btn btn-sm btn-secondary" onclick="downloadPDF({{ $service->id }})">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
-                    <a href="{{ route('sendEmailInvoice', $service->id) }}" class="btn btn-sm btn-secondary">
-                        <x-feathericon-share-2 class="table-icon" style="margin: -2px 5px 2px"/>
-                        Enviar
-                    </a>
+                    <button type="button" class="btn btn-sm btn-secondary" id="chgService">
+                        Servicio
+                    </button>
                     <button type="submit" class="btn btn-sm btn-success">
                         <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                         Guardar
@@ -181,6 +178,32 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+$("#chgService").on('click', function(event){
+    if (
+        confirm('Desea convertir esta cotizacion en servicio')
+    ) {
+        $.ajax({
+            url: "{{ route('services.change.quote') }}",
+            method: 'GET',
+            data: {
+                id:{{ $service->id }}
+            },
+            success: function (response){
+                if (response.success){
+                    Swal.fire({
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    })
+                    .then(() => {
+                        location.replace("{{ route('services.show', $service->id) }}");
+                    })
+                }
+            }
+        })
+    }
+});
+
 $("#labour").on('change', function(){
     if ($(this).prop('checked')) {
         $("#amount").attr('disabled','disabled');
@@ -301,6 +324,5 @@ function downloadPDF(serviceid){
         },
     });
 }
-
 </script>    
 @endsection
