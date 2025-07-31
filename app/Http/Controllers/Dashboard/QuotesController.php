@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use DB;
 use App\Models\Cars;
 use App\Models\Quotes;
-use App\Models\Clients;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,7 +16,7 @@ class QuotesController extends Controller
      */
     public function index()
     {
-        $clients = Clients::orderBy('name')->get();
+        $clients = Client::orderBy('name')->get();
         $quotes  = Quotes::all();
         
         return view('dashboard.services.quotes_index', compact('clients', 'quotes'));
@@ -32,7 +32,7 @@ class QuotesController extends Controller
         $genericClientId = DB::table('settings')->where('name','genericClient')->first()->value;
         
         if (!is_null($genericClientId)){
-            $client = Clients::find($genericClientId);
+            $client = Client::find($genericClientId);
         }
 
         $cars = Cars::all();

@@ -6,8 +6,6 @@
 
 @section('content')
 <div class="main-content">
-    <h4>Configuración</h4>
-    <hr>
     @if ( session('message') )
         <div class="alert alert-warning alert-dismissible fade show">
             <strong>Mensaje: </strong>{{ session('message') }}
@@ -16,10 +14,7 @@
     @endif
     <div class="row">
         <div class="col-md-7">
-            <div class="window-title-bar shadow-sm">
-                <h6 class="window-title-text">API's</h6>
-                <x-feathericon-tool class="window-title-icon"/>
-            </div>
+            <h6 class="title-bar text-uppercase fw-bold">Configuracion</h6>
             <div class="window-body p-4 bg-white">
                 <label class="window-body-form">Nuevo indice de configuración</label>
                 <form action="{{ route('setting.store') }}" method="POST" class="border pt-5 pb-4 mb-4">

@@ -5,21 +5,19 @@
 @endsection
 
 @section('content')
-<div class="shadow-sm main-content">
+<div class="main-content shadow">
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
     <div class="window-body p-4 bg-white">
         @include('includes.div_warning')
-        <label class="window-body-form">Servicios</label>
+        <label class="window-body-form">Nuevo Servicio</label>
         <form action="{{ route('services.store') }}" method="POST" class="border pt-5 pb-4">
             @csrf
-            <div class="col-md-6">
+            <div class="row col-md-6 p-4 pt-0">
                 <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Cliente
-                    </div>    
-                    <div class="col-md-9">
+                    <div class="col-md-12">
+                        <label for="select-client">Cliente</label>    
                         <div class="input-group">
                             <select class="form-select" id="select-client" name="client" required>
                                 <option value="">- Seleccione un cliente -</option>
@@ -30,41 +28,29 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Automóvil
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-select" id="car" name="car">
+                    <div class="col-md-6">
+                        <label for="car">Automóvil</label>
+                        <select class="form-select" name="car" id="car" >
                             <option>- Seleccione un automovil -</option>
                         </select>
                     </div>
-                    <div class="col-md-3 pt-2 text-end">
-                        Odómetro
-                    </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
+                        <label for="odometer">Odómetro</label>
                         <div class="input-group">
-                        <input type="text" class="form-control" name="odometer">
+                        <input type="text" class="form-control" name="odometer" id="odometer">
                             <span class="input-group-text">Km</span>
                         </div>
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Servicio/Fallo reportado
-                    </div>
-                    <div class="col-md-9">
+                    <div class="col-md-12">
+                        <label for="fault">Servicio / Fallo reportado</label>
                         <textarea class="form-control" cols="30" rows="4" name="fault" required></textarea>
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Servicio
-                    </div>
-                    <div class="col-md-9 pt-2">
+                    <div class="col-md-12">
                         <label class="me-3">
                             <input type="radio" value="Fallo" name="type" id="type" checked>
                             Fallo/Reparación
@@ -79,23 +65,21 @@
                         </label>
                     </div>
                 </div>
-
                 <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Comentarios
-                    </div>
-                    <div class="col-md-9">
+                    <div class="col-md-12">
+                        <label for="comments">Comentarios</label>
                         <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
                     </div>
                 </div>
-            </div>
-            
-            <div class="col-md-6 mt-3 text-end">
-                <a href="{{ route('services.index') }}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-success">
-                    <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                    Guardar
-                </button>
+                <div class="row mt-3">
+                    <div class="col-md-12 text-end">
+                        <a href="{{ route('services.index') }}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-success">
+                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>

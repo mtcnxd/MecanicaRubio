@@ -6,9 +6,7 @@
 
 @section('content')
 <div class="shadow-sm main-content">
-    <div class="window-title-bar">
-        <x-feathericon-menu class="window-title-icon"/>
-    </div>
+    <h6 class="title-bar text-uppercase fw-bold">Usuarios</h6>
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Crear nuevo usuario</label>
         <form action="{{ route('users.store') }}" method="POST" class="border pt-5 pb-4">

@@ -6,9 +6,7 @@
 
 @section('content')
 <div class="main-content">
-    <div class="window-title-bar">
-        <x-feathericon-menu class="window-title-icon"/>
-    </div>
+    <h6 class="title-bar text-uppercase fw-bold">Nominas</h6>
     <div class="window-body p-4 bg-white">
         @include('includes.div_warning')
         <label class="window-body-form">Nomina</label>

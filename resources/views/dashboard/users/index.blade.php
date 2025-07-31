@@ -7,10 +7,7 @@
 @section('content')
 <div class="main-content">
     @include('includes.div_warning')
-    <div class="window-title-bar">
-        <h6 class="window-title-text">Buscar Usuario</h6>
-        <x-feathericon-tool class="window-title-icon"/>
-    </div>
+    <h6 class="title-bar text-uppercase fw-bold">Buscar</h6>
     <div class="window-body bg-white">
         <table class="table table-hover table-borderless" id="services">
             <thead>

@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'b58b3069bd057cf5c14e89b35a8b8b831a6e88d1',
+        'reference' => '4b466c45134aa8e6fbac77b4643e339a8f40237b',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -75,6 +75,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'devrabiul/laravel-toaster-magic' => array(
+            'pretty_version' => 'v1.3',
+            'version' => '1.3.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../devrabiul/laravel-toaster-magic',
+            'aliases' => array(),
+            'reference' => '09313fd8f3c2b72640678f47f4ddbed0f16d5041',
+            'dev_requirement' => false,
         ),
         'dflydev/dot-access-data' => array(
             'pretty_version' => 'v3.0.3',
@@ -493,7 +502,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'b58b3069bd057cf5c14e89b35a8b8b831a6e88d1',
+            'reference' => '4b466c45134aa8e6fbac77b4643e339a8f40237b',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(

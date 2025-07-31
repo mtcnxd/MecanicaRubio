@@ -26,6 +26,15 @@
     --gray-200: #EEEEEE;
 }
 
+.title-bar {
+    background-color: var(--blue-gray-100);
+    border: 1px solid var(--blue-gray-100);
+    border-radius: 10px 10px 0 0;
+    padding: 15px 10px 10px 20px;
+    margin-bottom: 0px;
+    font-size: 13px;
+}
+
 .table {
     --bs-table-bg:"";
 }

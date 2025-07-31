@@ -6,8 +6,6 @@
 
 @section('content')
 <div class="main-content">
-    <h4>Configuración del perfil</h4>
-    <hr>
     @if ( session('message') )
         <div class="alert alert-warning alert-dismissible fade show">
             <strong>Mensaje: </strong>{{ session('message') }}
@@ -16,10 +14,7 @@
     @endif
     <div class="row">
         <div class="col-md-6">
-            <div class="window-title-bar shadow-sm">
-                <h6 class="window-title-text">Datos personales</h6>
-                <x-feathericon-tool class="window-title-icon"/>
-            </div>
+            <h6 class="title-bar text-uppercase fw-bold">Perfil</h6>
             <div class="window-body bg-white p-4">
                 <label class="window-body-form">Editar perfil</label>
                 <form action="{{ route('profile.update') }}" method="POST" class="border pt-4 pb-4">

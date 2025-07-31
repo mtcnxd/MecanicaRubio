@@ -30,8 +30,7 @@ class ServicesController extends Controller
 
     public function create()
     {
-        $clients = DB::table('clients')
-            ->where('status','Activo')
+        $clients = Client::where('status','Activo')
             ->orderBy('name')
             ->get();
 
@@ -67,7 +66,7 @@ class ServicesController extends Controller
             session()->flash('warning', 'ERROR: '. $err->getMessage());
 		}
 
-        return to_route('services.index')->with('message', 'Los datos se guardaron con exito');
+        return to_route('services.index')->with('success', 'Los datos se guardaron con exito');
     }
 
     public function show(string $id)

@@ -63,30 +63,6 @@ a:hover {
     padding-top: 5px;
 }
 
-.window-title-bar {
-    background: var(--blue-gray-100);
-    padding: 10px 15px 7px 15px;
-    border-radius: 5px 5px 0 0;
-    border: solid 2px var(--blue-gray-100);
-    display: flex;
-    justify-content:space-between;
-}
-
-.window-title-bar .window-title-text {
-    display: inline;
-    margin-bottom: 0px;
-    font-size: 13px;
-    font-weight: bold;
-    margin-top: 4px;
-    text-transform: uppercase;
-}
-
-.window-title-bar .window-title-icon {
-    display: inline;
-    width: 18px;
-    height: 18px;
-}
-
 .window-body {
     border: solid 2px var(--blue-gray-100);
 }

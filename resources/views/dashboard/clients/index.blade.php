@@ -8,11 +8,8 @@
 <div class="main-content">
     @include('includes.div_warning')
     
-    <div class="window-title-bar">
-        <h6 class="window-title-text">Buscar cliente</h6>
-        <x-feathericon-user-plus class="window-title-icon"/>
-    </div>
-    <div class="window-body pt-3 pb-3 bg-white">
+    <h6 class="title-bar text-uppercase fw-bold">Buscar cliente</h6>
+    <div class="window-body pb-3 pt-3 bg-white">
         <table class="table table-hover table-borderless mb-4" id="clients">
             <thead>
                 <tr>

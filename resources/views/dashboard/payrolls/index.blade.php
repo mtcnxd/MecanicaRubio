@@ -6,10 +6,7 @@
 
 @section('content')
 <div class="main-content">
-    <div class="window-title-bar">
-        <h6 class="window-title-text">Listado de nominas</h6>
-        <x-feathericon-dollar-sign class="window-title-icon"/>
-    </div>
+    <h6 class="title-bar text-uppercase fw-bold">Listado de nominas</h6>
     <div class="window-body pt-3 pb-3 bg-white">
         @include('includes.div_warning')
         <form action="{{ route('payroll.index') }}" method="POST">
