@@ -8,76 +8,72 @@
         <label class="window-body-form">Nomina</label>
         <form action="{{ route('payroll.store') }}" method="POST" class="border pt-4 pb-4">
             @csrf
-            <div class="row">
-                <div class="row col-md-6">
-                    <div class="col-md-3 pt-2 text-end">
-                        Empleado
+            <div class="row pt-0 p-4 pb-0">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Empleado</label>
+                            <div class="input-group mb-3">
+                                <select class="form-select" name="employee" id="employee" required>
+                                    <option value="0"> - Seleccione empleado - </option>
+                                    @foreach ($employees as $employee)
+                                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="input-group-text" id="basic-addon2">
+                                    <x-feathericon-user class="table-icon" style="margin: -2px 5px 2px"/>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        <div class="input-group mb-3">
-                            <select class="form-select" name="employee" id="employee" required>
-                                <option value="0"> - Seleccione empleado - </option>
-                                @foreach ($employees as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                @endforeach
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Movimiento</label>
+                            <select class="form-select" name="type" id="type">
+                                <option value="0"> - Seleccione movimiento - </option>
+                                <option>Nomina</option>
+                                <option>Aguinaldo</option>
+                                <option>Finiquito</option>
+                                <option>Liquidacion</option>
+                                <option>Otras percepciones</option>
                             </select>
-                            <span class="input-group-text" id="basic-addon2">
-                                <x-feathericon-user class="table-icon" style="margin: -2px 5px 2px"/>
-                            </span>
+                        </div> 
+                        <div class="col-md-6">
+                            <label>Salario</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" name="salary" id="salary" value="" style="text-align: right" disabled>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="row col-md-6">
-                    <div class="col-md-3 pt-2 text-end">
-                        Correo
-                    </div>
-                    <div class="col-md-9">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="email" id="email" disabled>
-                            <span class="input-group-text" id="basic-addon2">
-                                <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
-                            </span>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Correo</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="email" id="email" disabled>
+                                <span class="input-group-text" id="basic-addon2">
+                                    <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row col-md-6 mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Movimiento
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-select" name="type" id="type">
-                            <option value="0"> - Seleccione movimiento - </option>
-                            <option>Nomina</option>
-                            <option>Aguinaldo</option>
-                            <option>Finiquito</option>
-                            <option>Liquidacion</option>
-                            <option>Otras percepciones</option>
-                        </select>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="salary" id="salary" value="" style="text-align: right" disabled>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Inicio</label>
+                            <input type="date" name="start_date" class="form-control" required>
                         </div>
-                    </div>
-                </div>
-
-                <div class="row col-md-6 mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Periodo
-                    </div>
-                    <div class="col-md-4">
-                        <input type="date" name="start_date" class="form-control" required>
-                    </div>
-                    <div class="col-md-5">
-                        <input type="date" name="end_date" class="form-control" required>
+                        <div class="col-md-6">
+                            <label>Final</label>
+                            <input type="date" name="end_date" class="form-control" required>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-12 mt-4 mb-4 border-top border-bottom bg-body-tertiary" style="height: 300px; overflow-y: scroll">
+            <div class="col-md-12 border-top border-bottom bg-body-tertiary mt-4 mb-4" style="height: 300px; overflow-y: scroll">
                 <table class="table table-hover table-borderless dataTable no-footer">
                     <thead>
                         <tr>
@@ -119,14 +115,14 @@
                 </table>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 text-end mt-3 pe-5">
-                    <a href="{{ route('payroll.index') }}" class="btn btn-secondary">Cancelar</a>
-                    <a href="#" onclick="print()" class="btn btn-secondary">
+            <div class="row pt-0 p-4 pb-0">
+                <div class="col-md-12 text-end">
+                    <a href="{{ route('payroll.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                    <a href="#" onclick="print()" class="btn btn-sm btn-secondary">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-sm btn-success">
                         <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                         Guardar
                     </button>

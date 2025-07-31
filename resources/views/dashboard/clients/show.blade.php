@@ -7,8 +7,8 @@
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Información del cliente</label>
         <form action="" method="POST" class="border pt-4 pb-4">
-            <div class="row">
-                <div class="col-md-6 pt-0 p-4 pb-0">
+            <div class="row pt-0 p-4 pb-0">
+                <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-12">
                             <label>Nombre</label>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 pt-0 p-4 pb-0">
+                <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-12">
                             <label>Dirección</label>
@@ -151,8 +151,8 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 pt-0 p-4 pb-0 text-end">
+            <div class="row pt-0 p-4 pb-0">
+                <div class="col-md-12 text-end">
                     <a href="{{ route('clients.index') }}" class="btn btn-sm btn-success">Atras</a>
                     <a href="{{ route('finance', $client->id) }}" class="btn btn-sm btn-success">Mas Información</a>
                 </div>

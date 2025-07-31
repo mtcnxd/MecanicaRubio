@@ -2,15 +2,13 @@
 
 @section('content')
 <div class="main-content shadow">
-    <div class="window-title-bar">
-        <x-feathericon-menu class="window-title-icon"/>
-    </div>
+    @include('includes.alert')    
+    <h6 class="title-bar text-uppercase fw-bold">Servicio</h6>
     <div class="window-body p-4 bg-white">
-        @include('includes.alert')
         <label class="window-body-form">Nuevo Servicio</label>
-        <form action="{{ route('services.store') }}" method="POST" class="border pt-4 pb-4">
+        <form action="{{ route('services.store') }}" method="POST" class="col-md-6 border pt-4 pb-4">
             @csrf
-            <div class="row col-md-6 p-4 pt-0">
+            <div class="pt-0 p-4">
                 <div class="row">
                     <div class="col-md-12">
                         <label for="select-client">Cliente</label>    

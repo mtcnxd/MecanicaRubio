@@ -9,8 +9,8 @@
         <form action="{{ route('services.update', $service->id) }}" method="POST" class="border pt-4 pb-4">
             @csrf
             @method('PATCH')
-            <div class="row">
-                <div class="col-md-6 pt-0 p-4 pb-0">
+            <div class="row pt-0 p-4 pb-0">
+                <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-12">
                             <label>Cliente</label>    
@@ -39,7 +39,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 pt-0 p-4 pb-0">
+                <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-6">
                             <label>Entrada</label>    
@@ -120,12 +120,12 @@
                 </table>
             </div>
 
-            <div class="row">
-                <div class="col-md-6 pt-0 p-4 pb-0">
+            <div class="row pt-0 p-4 pb-0">
+                <div class="col-md-6">
                     <label>Comentarios</label>
                     <textarea name="notes" class="form-control" cols="30" rows="3">{{ $service->notes }}</textarea>
                 </div>
-                <div class="col-md-6 pt-0 p-4 pb-0">
+                <div class="col-md-6">
                     <label>Estatus</label>
                     <select class="form-select" name="status">
                         <option {{$service->status == "Cancelado" ? 'selected' : '' }}>Cancelado</option>
@@ -138,8 +138,8 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 pt-0 p-4 pb-0 text-end">
+            <div class="row pt-0 p-4 pb-0">
+                <div class="col-md-12 text-end">
                     <a href="{{ route('services.index') }}" class="btn btn-sm btn-secondary">Atras</a>
                     <a href="#" class="btn btn-sm btn-secondary" onclick="downloadPDF({{ $service->id }})">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>

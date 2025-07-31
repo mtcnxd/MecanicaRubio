@@ -4,12 +4,12 @@
 <div class="main-content shadow">
     @include('includes.alert')
     <h6 class="title-bar text-uppercase fw-bold">Cliente</h6>
-    <div class="window-body p-4 pt-4 bg-white">
+    <div class="window-body p-4 bg-white">
         <label class="window-body-form">Nuevo cliente</label>
-        <form action="{{ route('clients.store') }}" method="POST" class="border pt-4 pb-4">
+        <form action="{{ route('clients.store') }}" method="POST" class="col-md-6 border pt-4 pb-4">
             @method('POST')
             @csrf
-            <div class="row col-md-6 p-4 pt-0">
+            <div class="pt-0 p-4">
                 <div class="row">
                     <div class="col-md-12">
                         <label for="name">Nombre</label>
@@ -76,8 +76,8 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-12 text-end">
-                        <a href="{{ route('clients.index') }}" class="btn btn-secondary">Cancelar</a>
-                        <button type="submit" class="btn btn-success">
+                        <a href="{{ route('clients.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-success">
                             <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                             Guardar
                         </button>
