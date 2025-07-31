@@ -3,17 +3,15 @@
 @section('content')
 <div class="main-content shadow">
     @include('includes.alert')    
-    <h6 class="title-bar text-uppercase fw-bold">Cliente</h6>
+    <h6 class="title-bar text-uppercase fw-bold">Cliente #{{ $client->id }}</h6>
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Información del cliente</label>
         <form action="" method="POST" class="border pt-4 pb-4">
             <div class="row">
-                <div class="col-md-6" style="padding-right: 40px;">
+                <div class="col-md-6 pt-0 p-4 pb-0">
                     <div class="row">
-                        <div class="col-md-3 pt-2 text-end">
-                            Nombre
-                        </div>
-                        <div class="col-md-9">
+                        <div class="col-md-12">
+                            <label>Nombre</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="name" value="{{ isset($client) ? "#".$client->id ." - ". $client->name : '' }}" disabled>
                                 <span class="input-group-text">
@@ -22,56 +20,39 @@
                               </div>
                         </div>
                     </div>
-    
                     <div class="row mt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Correo
-                        </div>
-                        <div class="col-md-9">
+                        <div class="col-md-12">
+                            <label>Correo</label>
                             <input type="text" class="form-control" name="email" value="{{ isset($client) ? $client->email : '' }}" disabled>
                         </div>                
                     </div>
-    
                     <div class="row mt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Telefono
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
+                            <label>Telefono</label>
                             <input type="text" class="form-control" name="phone" value="{{ isset($client) ? $client->phone : '' }}" disabled>
                         </div>
-                        <div class="col-md-3 pt-2 text-end">
-                            Codigo Postal
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
+                            <label>Codigo Postal</label>
                             <input type="text" class="form-control" id="postcode" name="postcode" value="{{ isset($client) ? $client->postcode : '' }}" disabled>
                         </div>
                     </div>
-    
                     <div class="row mt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            RFC
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
+                            <label>RFC</label>
                             <input type="text" class="form-control" name="rfc" value="{{ isset($client) ? $client->rfc : '' }}" disabled>
                         </div>
                     </div>
-                </div>                
-            
-                <div class="col-md-6" style="padding-right: 40px;">
+                </div>
+                <div class="col-md-6 pt-0 p-4 pb-0">
                     <div class="row">
-                        <div class="col-md-3 pt-2 text-end">
-                            Dirección
-                        </div>
-                        <div class="col-md-9">
+                        <div class="col-md-12">
+                            <label>Dirección</label>
                             <input type="text" class="form-control" name="street" value="{{ isset($client) ? $client->street : '' }}" disabled>
                         </div>
                     </div>
-    
                     <div class="row mt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Colónia
-                        </div>
-                        <div class="col-md-9">
+                        <div class="col-md-12">
+                            <label>Colónia</label>
                             <select class="form-select" id="address" name="address" disabled>
                                 @if ( isset($client) )
                                     <option>{{ $client->address }}</option>
@@ -79,34 +60,26 @@
                             </select>
                         </div>
                     </div>
-        
                     <div class="row mt-3"> 
-                        <div class="col-md-3 pt-2 text-end">
-                            Ciudad
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
+                            <label>Ciudad</label>
                             <input type="text" class="form-control" id="city" name="city" value="{{ isset($client) ? $client->city : '' }}" disabled>
                         </div>
-                        <div class="col-md-3 pt-2 text-end">
-                            Estado
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
+                            <label>Estado</label>
                             <input type="text" class="form-control" id="state" name="state" value="{{ isset($client) ? $client->state : '' }}" disabled>
                         </div>
                     </div>
-                    
                     <div class="row mt-3">
-                        <div class="col-md-3 pt-2 text-end">
-                            Comentarios
-                        </div>
-                        <div class="col-md-9">
+                        <div class="col-md-12">
+                            <label>Comentarios</label>
                             <textarea class="form-control" rows="4" name="comments" disabled>{{ isset($client) ? $client->comments : '' }}</textarea>
                         </div>
                     </div>
                 </div>                
             </div>
-            <hr>
-            <div class="col-md-12 p-4 pb-2" style="padding-right: 40px; padding-left:40px">
+
+            <div class="mt-4 mb-4">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" aria-selected="true">
@@ -147,7 +120,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <p class="pt-2 mb-0">
+                        <p class="pt-2 ps-3 mb-0">
                             <x-feathericon-clipboard class="table-icon" style="margin-top:-4px;"/>
                             Se encontraron {{ $client->services->count() }} servicios.
                         </p>
@@ -179,7 +152,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12 text-end" style="padding-right: 40px;">
+                <div class="col-md-12 pt-0 p-4 pb-0 text-end">
                     <a href="{{ route('clients.index') }}" class="btn btn-sm btn-success">Atras</a>
                     <a href="{{ route('finance', $client->id) }}" class="btn btn-sm btn-success">Mas Información</a>
                 </div>

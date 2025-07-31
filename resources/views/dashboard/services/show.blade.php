@@ -2,76 +2,84 @@
 
 @section('content')
 <div class="main-content shadow">
-    <h6 class="title-bar text-uppercase fw-bold">Servicio</h6>
+    @include('includes.alert')
+    <h6 class="title-bar text-uppercase fw-bold">Servicio #{{ $service->id }}</h6>
     <div class="window-body p-4 bg-white">
         <label class="window-body-form">Servicio</label>
-        <form action="{{ route('services.update', $service->id) }}" method="POST" class="border pb-4">
+        <form action="{{ route('services.update', $service->id) }}" method="POST" class="border pt-4 pb-4">
             @csrf
             @method('PATCH')
-            <div class="row p-4">            
-                <div class="row col-md-12">
-                    <div class="col-md-6">
-                        <label>Cliente</label>    
-                        <input type="text" class="form-control" name="client" value="{{ $service->client->name }}" disabled>
-                        <input type="hidden" value="{{ $service->id }}" id="service">
-                    </div>
-                    <div class="col-md-3">
-                        <label>Entrada</label>    
-                        <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->entry_date)) }}">
-                    </div>
-                    <div class="col-md-3">
-                        <label>ID</label>    
-                        <input type="text" class="form-control" name="client" value="{{ "#".$service->id }}" disabled>
-                    </div>
-                </div>    
-                <div class="row col-md-12 mt-3">
-                    <div class="col-md-3">
-                        <label>Automovil</label>
-                        <input type="text" class="form-control" id="car" name="car" value="{{ $service->car->brand }} {{ $service->car->model }} - {{ $service->car->year }}" disabled>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Odometro</label>
-                        <div class="input-group">
-                        <input type="text" class="form-control" name="odometer" value="{{ $service->odometer }}">
-                            <span class="input-group-text">Km</span>
+            <div class="row">
+                <div class="col-md-6 pt-0 p-4 pb-0">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Cliente</label>    
+                            <input type="text" class="form-control" name="client" value="{{ $service->client->name }}" disabled>
+                            <input type="hidden" value="{{ $service->id }}" id="service">
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <label>Salida</label>    
-                        @if (isset($service->due_date))
-                            <input type="date" class="form-control" name="client" value="{{ date('Y-m-d', strtotime($service->due_date)) }}" disabled>
-                        @else 
-                            <input type="date" class="form-control" name="client" disabled>
-                        @endif
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Automovil</label>
+                            <input type="text" class="form-control" id="car" name="car" value="{{ $service->car->brand }} {{ $service->car->model }} - {{ $service->car->year }}" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Odometro</label>
+                            <div class="input-group">
+                            <input type="text" class="form-control" name="odometer" value="{{ $service->odometer }}">
+                                <span class="input-group-text">Km</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <label>Días transcurridos</label>    
-                        @if ($service->status == 'Entregado')
-                            @php
-                            $elapsed = $service->created_at->diffInDays($service->due_date);
-                            @endphp
-                            <input type="text" class="form-control" name="client" value="{{ $elapsed }}" disabled>
-                        @else
-                            @php
-                            $elapsed = $service->created_at->diffInDays(Carbon\Carbon::now());
-                            @endphp
-                            <input type="text" class="form-control {{($elapsed >= 4) ? 'is-invalid' : '' }}" name="client" value="{{ $elapsed }}" disabled>
-                        @endif
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>Servicio/Fallo reportado</label>
+                            <textarea class="form-control" cols="30" rows="4" name="fault" disabled>{{ $service->fault }}</textarea>
+                        </div>
                     </div>
                 </div>
-                <div class="row col-md-12 mt-3">
-                    <div class="col-md-6">
-                        <label>Servicio/Fallo reportado</label>
-                        <textarea class="form-control" cols="30" rows="4" name="fault" disabled>{{ $service->fault }}</textarea>
+
+                <div class="col-md-6 pt-0 p-4 pb-0">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Entrada</label>    
+                            <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->entry_date)) }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Salida</label>    
+                            @if (isset($service->due_date))
+                                <input type="date" class="form-control" name="client" value="{{ date('Y-m-d', strtotime($service->due_date)) }}" disabled>
+                            @else 
+                                <input type="date" class="form-control" name="client" disabled>
+                            @endif
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label>Comentarios</label>
-                        <textarea class="form-control" cols="30" rows="4" name="comments" disabled>{{ $service->comments }}</textarea>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Días transcurridos</label>    
+                            @if ($service->status == 'Entregado')
+                                @php
+                                $elapsed = $service->created_at->diffInDays($service->due_date);
+                                @endphp
+                                <input type="text" class="form-control" name="client" value="{{ $elapsed }}" disabled>
+                            @else
+                                @php
+                                $elapsed = $service->created_at->diffInDays(Carbon\Carbon::now());
+                                @endphp
+                                <input type="text" class="form-control {{($elapsed >= 4) ? 'is-invalid' : '' }}" name="client" value="{{ $elapsed }}" disabled>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>Comentarios</label>
+                            <textarea class="form-control" cols="30" rows="4" name="comments" disabled>{{ $service->comments }}</textarea>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-12 border-top border-bottom bg-body-tertiary" style="height: 350px; overflow-y: scroll">
+            <div class="col-md-12 border-top border-bottom bg-body-tertiary mt-4 mb-4" style="height: 350px; overflow-y: scroll">
                 <table class="table table-hover table-borderless dataTable no-footer">
                     <thead>
                         <th width="30px">#</th>
@@ -112,12 +120,12 @@
                 </table>
             </div>
 
-            <div class="row p-4">
-                <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-6 pt-0 p-4 pb-0">
                     <label>Comentarios</label>
                     <textarea name="notes" class="form-control" cols="30" rows="3">{{ $service->notes }}</textarea>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 pt-0 p-4 pb-0">
                     <label>Estatus</label>
                     <select class="form-select" name="status">
                         <option {{$service->status == "Cancelado" ? 'selected' : '' }}>Cancelado</option>
@@ -130,18 +138,18 @@
                 </div>
             </div>
 
-            <div class="row p-4">
-                <div class="col-md-12 text-end">
-                    <a href="{{ route('services.index') }}" class="btn btn-secondary">Atras</a>
-                    <a href="#" class="btn btn-secondary" onclick="downloadPDF({{ $service->id }})">
+            <div class="row">
+                <div class="col-md-12 pt-0 p-4 pb-0 text-end">
+                    <a href="{{ route('services.index') }}" class="btn btn-sm btn-secondary">Atras</a>
+                    <a href="#" class="btn btn-sm btn-secondary" onclick="downloadPDF({{ $service->id }})">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
                         Imprimir
                     </a>
-                    <a href="{{ route('sendEmailInvoice', $service->id) }}" class="btn btn-secondary">
+                    <a href="{{ route('sendEmailInvoice', $service->id) }}" class="btn btn-sm btn-secondary">
                         <x-feathericon-share-2 class="table-icon" style="margin: -2px 5px 2px"/>
                         Enviar
                     </a>
-                    <button type="submit" class="btn btn-success">
+                    <button type="submit" class="btn btn-sm btn-success">
                         <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                         Guardar
                     </button>
