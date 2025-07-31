@@ -14,6 +14,7 @@ class Service extends Model
         'car_id',
         'fault',
         'service_type',
+        'quote',
         'entry_date',
         'finished_date',
         'comments',

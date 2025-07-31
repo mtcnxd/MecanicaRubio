@@ -1,7 +1,7 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content">
+<div class="window-container">
     <table class="table border table-hover">
         <thead>
             <thead>
@@ -35,7 +35,7 @@
     </table>
 </div>
 
-<div class="main-content mb-0">
+<div class="window-container mb-0">
     <div class="row">
         <div class="col-md-3">
             <div class="card">
@@ -77,7 +77,7 @@
     </div>
 </div>
 
-<div class="main-content">
+<div class="window-container">
     <div class="row col-md-4">
         <div class="col">
             <a class="btn btn-sm btn-outline-success" id="print" onclick="downloadPDF()">

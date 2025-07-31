@@ -1,7 +1,7 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
+<div class="window-container shadow">
     <div class="row">
         <div class="col-md-6">
             <div class="card p-2">

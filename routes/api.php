@@ -83,10 +83,3 @@ Route::post('getImageAttached', [ControllerAjax::class, 'getImageAttached'])->na
 Route::post('removeItemInvoice', [ControllerAjax::class, 'removeItemInvoice'])->name('removeItemInvoice');
 
 Route::post('createItemQuote', [ControllerAjax::class, 'createItemQuote'])->name('createItemQuote'); 
-
-
-
-Route::group(['prefix' => 'quotes', 'controller' => QuotesController::class ], function() {
-    Route::post('addItemToList', 'addItemToList')->name('quotes.addItemToList'); 
-    Route::post('remItemFromList', 'remItemFromList')->name('quotes.remItemFromList'); 
-});

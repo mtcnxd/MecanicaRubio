@@ -1,8 +1,8 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
-    <h6 class="title-bar text-uppercase fw-bold">Nominas</h6>
+<div class="window-container shadow">
+    <h6 class="window-title-bar text-uppercase fw-bold">Nominas</h6>
     <div class="window-body p-4 bg-white">
         @include('includes.alert')
         <label class="window-body-form">Nomina</label>

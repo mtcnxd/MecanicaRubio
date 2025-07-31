@@ -1,10 +1,10 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
+<div class="window-container">
     @include('includes.alert')
-    <h6 class="title-bar text-uppercase fw-bold">Buscar</h6>
-    <div class="window-body bg-white">
+    <h6 class="window-title-bar text-uppercase fw-bold">Buscar</h6>
+    <div class="window-body shadow bg-white">
         <table class="table table-hover table-borderless" id="services">
             <thead>
                 <tr>

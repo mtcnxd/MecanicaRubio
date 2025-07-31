@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 use App\Contracts\Notificator;
 use App\Http\Controllers\Controller;
 
-class Whatsapp extends Controller implements Notificator
+class Whatsapp extends Controller
 {
-    static function send($template = null)
+    public static function send($template = null)
     {
         $url   = 'https://graph.facebook.com/v21.0/590821560777074/messages';
 

@@ -1,90 +1,92 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
+<div class="window-container">
     @include('includes.alert')
-    <h6 class="title-bar text-uppercase fw-bold">Cliente</h6>
-    <div class="window-body p-4 bg-white">
-        <label class="window-body-form">Nuevo cliente</label>
-        <form action="{{ route('clients.store') }}" method="POST" class="col-md-6 border pt-4 pb-4">
-            @method('POST')
-            @csrf
-            <div class="pt-0 p-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="name">Nombre</label>
-                        <input type="text" class="form-control" name="name" id="name" required autocomplete="off">
-                        <ul id="resultClientsList" style="display: none;" class="float-suggestions"></ul>
+    <div class="col-md-7">
+        <h6 class="window-title-bar text-uppercase fw-bold">Cliente</h6>
+        <div class="window-body shadow p-4 bg-white">
+            <label class="window-body-form">Nuevo cliente</label>
+            <form action="{{ route('clients.store') }}" method="POST" class="col-md-12 border pt-4 pb-4">
+                @method('POST')
+                @csrf
+                <div class="pt-0 p-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="name">Nombre</label>
+                            <input type="text" class="form-control" name="name" id="name" required autocomplete="off">
+                            <ul id="resultClientsList" style="display: none;" class="float-suggestions"></ul>
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label for="email">Correo</label>
-                        <input type="text" class="form-control" name="email" id="email">
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="email">Correo</label>
+                            <input type="text" class="form-control" name="email" id="email">
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="phone">Teléfono</label>
-                        <input type="number" class="form-control" name="phone" id="phone" required>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="phone">Teléfono</label>
+                            <input type="number" class="form-control" name="phone" id="phone" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="postcode">Código Postal</label>
+                            <input type="text" class="form-control" name="postcode" id="postcode">
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label for="postcode">Código Postal</label>
-                        <input type="text" class="form-control" name="postcode" id="postcode">
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="address">Colónia</label>
+                            <select class="form-select" name="address" id="address">
+                                <option> - Selecciona una colonia - </option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label for="address">Colónia</label>
-                        <select class="form-select" name="address" id="address">
-                            <option> - Selecciona una colonia - </option>
-                        </select>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="street">Calle / Número</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="street" id="street">
+                                <span class="input-group-text">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#searchModal">Buscar</a>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label for="street">Calle / Número</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="street" id="street">
-                            <span class="input-group-text">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#searchModal">Buscar</a>
-                            </span>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="city">Ciudad</label>
+                            <input type="text" class="form-control" name="city" id="city">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="state">Estado</label>
+                            <input type="text" class="form-control" name="state" id="state">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="rfc">RFC</label>
+                            <input type="text" class="form-control" name="rfc" id="rfc">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="comments">Comentarios</label>
+                            <textarea class="form-control" cols="30" rows="4" name="comments" id="comments"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 text-end">
+                            <a href="{{ route('clients.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                                Guardar
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="city">Ciudad</label>
-                        <input type="text" class="form-control" name="city" id="city">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="state">Estado</label>
-                        <input type="text" class="form-control" name="state" id="state">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="rfc">RFC</label>
-                        <input type="text" class="form-control" name="rfc" id="rfc">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label for="comments">Comentarios</label>
-                        <textarea class="form-control" cols="30" rows="4" name="comments" id="comments"></textarea>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12 text-end">
-                        <a href="{{ route('clients.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
-                        <button type="submit" class="btn btn-sm btn-success">
-                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                            Guardar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

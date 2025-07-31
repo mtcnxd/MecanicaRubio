@@ -39,12 +39,19 @@ class ServicesController extends Controller
 
     public function store(Request $request)
     {
+        $quote = false;
+        
+        if (isset($request->quote)){
+            $quote = true;
+        }
+
         $serviceId = Service::insertGetId([
             "client_id"    => $request->client,
             "car_id"       => $request->car,
-            "odometer"     => (isset($request->odometer)) ? str_replace([' ', ','], '', $request->odometer) : null,
+            "odometer"     => isset($request->odometer) ? str_replace([' ', ','], '', $request->odometer) : null,
             "fault"        => $request->fault,
             "service_type" => $request->type,
+            "quote"        => $quote,
             "comments"     => $request->comments,
             "entry_date"   => Carbon::now(),
             "created_at"   => Carbon::now(),
@@ -53,18 +60,22 @@ class ServicesController extends Controller
 
         $servicesDetails = Service::find($serviceId);
 
-        try {
-            Telegram::send(
-                sprintf("<b>New service created:</b> #%s - %s\n\r<b>Client:</b> %s  \n\r<b>Fault:</b> %s", 
-                    $servicesDetails->id, 
-                    $servicesDetails->car->brand ." ". $servicesDetails->car->model, 
-                    $servicesDetails->client->name,
-                    $servicesDetails->fault
-                )
-            );
-        } catch (Exception $err){
-            session()->flash('warning', 'ERROR: '. $err->getMessage());
-		}
+        if (!$quote){
+            try {
+                Telegram::send(
+                    sprintf("<b>New service created:</b> #%s - %s\n\r<b>Client:</b> %s  \n\r<b>Fault:</b> %s", 
+                        $servicesDetails->id, 
+                        $servicesDetails->car->brand ." ". $servicesDetails->car->model, 
+                        $servicesDetails->client->name,
+                        $servicesDetails->fault
+                    )
+                );
+            }
+            
+            catch (Exception $err){
+                session()->flash('warning', 'ERROR: '. $err->getMessage());
+            }
+        }
 
         return to_route('services.index')->with('success', 'Los datos se guardaron con exito');
     }
@@ -160,7 +171,7 @@ class ServicesController extends Controller
             ->whereBetween('paid_date', [Carbon::now()->startOfMonth(), Carbon::now()])
             ->get();
 
-        return view('dashboard.dashboard',[
+        return view('dashboard.services.dashboard',[
             'services' => $services,
             'expenses' => $expenses,
             'salaries' => $salaries,
@@ -221,7 +232,7 @@ class ServicesController extends Controller
         if ($request->status != 'Todos') {
             $servicesQuery->where('status', $request->status);
         }
-        
+
         $servicesQuery->orderBy('status', 'desc')->get();
 
         return DataTables::of($servicesQuery)

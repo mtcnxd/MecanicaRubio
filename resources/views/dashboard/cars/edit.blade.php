@@ -1,11 +1,11 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
+<div class="window-container">
     <div class="window-title-bar">
         <x-feathericon-menu class="window-title-icon"/>
     </div>
-    <div class="window-body bg-white">
+    <div class="window-body shadow bg-white">
         <label class="window-body-form">Editar automovil</label>
         <form action="{{ route('cars.update', $auto->id) }}" method="POST" class="border pt-4 pb-4">
             @csrf

@@ -1,7 +1,7 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
+<div class="window-container">
     <h4>Resumen</h4>
     <hr class="mb-4" style="color: var(--orange-800);">
     <div class="row">

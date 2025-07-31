@@ -1,89 +1,91 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
+<div class="window-container">
     @include('includes.alert')
-    <h6 class="title-bar text-uppercase fw-bold">automovil</h6>
-    <div class="window-body p-4 bg-white">
-        <label class="window-body-form">Nuevo automovil</label>
-        <form action="{{ route('cars.store') }}" method="POST" class="col-md-6 border pt-4 pb-4">
-            @method('POST')
-            @csrf
-            <div class="pt-0 p-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="select-brand">Marca</label>    
-                        <div class="input-group">
-                            <select class="form-select" id="select-brand" name="brand">
-                                <option>- Seleccione una marca -</option>
-                                @foreach ($brands as $brand)
-                                    <option>{{ $brand->brand }}</option>
+    <div class="col-md-7">
+        <h6 class="window-title-bar text-uppercase fw-bold">automovil</h6>
+        <div class="window-body shadow p-4 bg-white">
+            <label class="window-body-form">Nuevo automovil</label>
+            <form action="{{ route('cars.store') }}" method="POST" class="col-md-12 border pt-4 pb-4">
+                @method('POST')
+                @csrf
+                <div class="pt-0 p-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="select-brand">Marca</label>    
+                            <div class="input-group">
+                                <select class="form-select" id="select-brand" name="brand">
+                                    <option>- Seleccione una marca -</option>
+                                    @foreach ($brands as $brand)
+                                        <option>{{ $brand->brand }}</option>
+                                    @endforeach
+                                </select>                            
+                                <span class="input-group-text">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#createBrand">Agregar</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="select-model">Modelo</label>
+                            <div class="input-group">
+                                <select class="form-select" id="select-model" name="model">
+                                    <option>- Seleccione un modelo -</option>
+                                </select>
+                                <span class="input-group-text">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#createModel">Agregar</a>
+                                </span>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>VIN</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="serie" placeholder="Vehicle Identification Number">
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Año</label>
+                            <input type="text" class="form-control" name="year" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Placa</label>
+                            <input type="text" class="form-control" name="plate">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>Cliente</label>
+                            <select id="client" class="form-select" name="client">
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
                                 @endforeach
-                            </select>                            
-                            <span class="input-group-text">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#createBrand">Agregar</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label for="select-model">Modelo</label>
-                        <div class="input-group">
-                            <select class="form-select" id="select-model" name="model">
-                                <option>- Seleccione un modelo -</option>
                             </select>
-                            <span class="input-group-text">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#createModel">Agregar</a>
-                            </span>
                         </div>
-                    </div>    
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label>VIN</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="serie" placeholder="Vehicle Identification Number">
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>Comentarios</label>
+                            <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
                         </div>
-                    </div>    
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label>Año</label>
-                        <input type="text" class="form-control" name="year" required>
                     </div>
-                    <div class="col-md-6">
-                        <label>Placa</label>
-                        <input type="text" class="form-control" name="plate">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label>Cliente</label>
-                        <select id="client" class="form-select" name="client">
-                            @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->name }}</option>
-                            @endforeach
-                        </select>
+                    <div class="row mt-3">
+                        <div class="col-md-12 text-end">
+                            <a href="{{ route('cars.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                                Guardar
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label>Comentarios</label>
-                        <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12 text-end">
-                        <a href="{{ route('cars.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
-                        <button type="submit" class="btn btn-sm btn-success">
-                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                            Guardar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

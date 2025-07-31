@@ -1,10 +1,10 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
+<div class="window-container">
     @include('includes.alert')
-    <h6 class="title-bar text-uppercase fw-bold">Servicio #{{ $service->id }}</h6>
-    <div class="window-body p-4 bg-white">
+    <h6 class="window-title-bar text-uppercase fw-bold">Servicio #{{ $service->id }}</h6>
+    <div class="window-body shadow p-4 bg-white">
         <label class="window-body-form">Servicio</label>
         <form action="{{ route('services.update', $service->id) }}" method="POST" class="border pt-4 pb-4">
             @csrf
@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label>Cliente</label>    
-                            <input type="text" class="form-control" name="client" value="{{ $service->client->name }}" disabled>
+                            <input type="text" class="form-control" name="client" value="#{{ $service->client->id }} - {{ $service->client->name }}" disabled>
                             <input type="hidden" value="{{ $service->id }}" id="service">
                         </div>
                     </div>

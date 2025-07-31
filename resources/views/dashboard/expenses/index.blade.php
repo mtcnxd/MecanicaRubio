@@ -1,8 +1,8 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
-    <h6 class="title-bar text-uppercase fw-bold">Listado de egresos</h6>
+<div class="window-container shadow">
+    <h6 class="window-title-bar text-uppercase fw-bold">Listado de egresos</h6>
     <div class="window-body pt-3 pb-3 bg-white">
         @include('includes.alert')
         

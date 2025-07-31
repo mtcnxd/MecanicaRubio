@@ -23,4 +23,9 @@ class Cars extends Model
     {
         return $this->belongsTo(Client::class, 'client_id');
     }
+
+    public function carName()
+    {
+        return $this->brand .' '.$this->model;
+    }
 }

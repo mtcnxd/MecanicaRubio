@@ -1,9 +1,9 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
-    <h6 class="title-bar text-uppercase fw-bold">Nominas</h6>
-    <div class="window-body p-4 bg-white">
+<div class="window-container">
+    <h6 class="window-title-bar text-uppercase fw-bold">Nominas</h6>
+    <div class="window-body shadow p-4 bg-white">
         @include('includes.alert')
         <label class="window-body-form">Nomina</label>
         <form action="{{ route('payroll.update', 1) }}" method="POST" class="border pt-4 pb-4">

@@ -1,9 +1,9 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
-    <h6 class="title-bar text-uppercase fw-bold">Ingresos del mes</h6>
-    <div class="window-body pb-3 bg-white">
+<div class="window-container">
+    <h6 class="window-title-bar text-uppercase fw-bold">Ingresos del mes</h6>
+    <div class="window-body shadow pb-3 bg-white">
         <table class="table border table-hover">
             <thead>
                 <th width="40px">#</th>

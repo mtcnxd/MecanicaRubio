@@ -1,12 +1,12 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
+<div class="window-container">
     @include('includes.alert')
     <div class="row">
         <div class="col-md-6">
-            <h6 class="title-bar text-uppercase fw-bold">Perfil</h6>
-            <div class="window-body bg-white p-4">
+            <h6 class="window-title-bar text-uppercase fw-bold">Perfil</h6>
+            <div class="window-body shadow bg-white p-4">
                 <label class="window-body-form">Editar perfil</label>
                 <form action="{{ route('profile.update') }}" method="POST" class="border pt-4 pb-4">
                     @csrf

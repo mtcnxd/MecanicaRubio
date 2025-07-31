@@ -80,7 +80,7 @@ Route::middleware(['auth'])->group( function ()
                 Route::resource('clients', ClientsController::class);
                 Route::resource('cars', CarsController::class);
                 Route::resource('employees', EmployeesController::class);
-                Route::resource('quotes', QuotesController::class);
+                Route::resource('quotes', QuotesController::class)->only('index','show');
                 Route::resource('users', UsersController::class);
 
                 Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');

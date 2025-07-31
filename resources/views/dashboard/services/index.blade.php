@@ -1,10 +1,10 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
+<div class="window-container">
     @include('includes.alert')
-    <h6 class="title-bar text-uppercase fw-bold">Buscar</h6>
-    <div class="window-body pt-3 pb-3 bg-white">
+    <h6 class="window-title-bar text-uppercase fw-bold">Buscar</h6>
+    <div class="window-body shadow pt-3 pb-3 bg-white">
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-3">
                 <label for="endDate" class="fw-bold">Cliente</label>

@@ -1,12 +1,10 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
-    <div class="window-title-bar">
-        <h6 class="window-title-text">Buscar Cotizacion</h6>
-        <x-feathericon-tool class="window-title-icon"/>
-    </div>
-    <div class="window-body pt-4 pb-3 bg-white">
+<div class="window-container">
+    @include('includes.alert')
+    <h6 class="window-title-bar text-uppercase fw-bold">Cotizaciones</h6>
+    <div class="window-body shadow p-4 bg-white">
         @include('includes.alert')
 
         <div class="row m-1 mb-3 pb-3" id="filters">
@@ -60,10 +58,10 @@
                     <td>{{ $quote->id }}</td>
                     <td>
                         <a href="{{ route('quotes.show', $quote->id) }}">
-                            {{ $quote->client_name }}</td>
+                            {{ $quote->client->name }}</td>
                         </a>
-                    <td>{{ $quote->car_name }}
-                    <td>{{ $quote->fault_reported }}
+                    <td>{{ $quote->car->carName() }}
+                    <td>{{ $quote->fault }}
                     <td>{{ $quote->status }}
                     </td>
                     <td class="text-end">{{ "$".number_format($quote->total, 2) }}</td>

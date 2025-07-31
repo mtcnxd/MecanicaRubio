@@ -1,11 +1,10 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
-    <div class="window-title-bar">
-        <x-feathericon-menu class="window-title-icon"/>
-    </div>
-    <div class="window-body p-4 bg-white">
+<div class="window-container">
+    @include('includes.alert')
+    <h6 class="window-title-bar text-uppercase fw-bold">Empleado</h6>
+    <div class="window-body shadow p-4 bg-white">
         <label class="window-body-form">Detalles empleado</label>
         <form action="{{ route('employees.update', $employee->id) }}" method="POST" class="border pt-4 pb-4">
             @method('PUT')

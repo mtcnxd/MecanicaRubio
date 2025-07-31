@@ -1,81 +1,89 @@
 @extends('includes.body')
 
 @section('content')
-<div class="main-content shadow">
-    @include('includes.alert')    
-    <h6 class="title-bar text-uppercase fw-bold">Servicio</h6>
-    <div class="window-body p-4 bg-white">
-        <label class="window-body-form">Nuevo Servicio</label>
-        <form action="{{ route('services.store') }}" method="POST" class="col-md-6 border pt-4 pb-4">
-            @csrf
-            <div class="pt-0 p-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="select-client">Cliente</label>    
-                        <div class="input-group">
-                            <select class="form-select" id="select-client" name="client" required>
-                                <option value="">- Seleccione un cliente -</option>
-                                @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                @endforeach
+<div class="window-container">
+    @include('includes.alert')
+    <div class="col-md-7">
+        <h6 class="window-title-bar text-uppercase fw-bold">Servicio</h6>
+        <div class="window-body shadow p-4 bg-white">
+            <label class="window-body-form">Nuevo Servicio</label>
+            <form action="{{ route('services.store') }}" method="POST" class="col-md-12 border pt-4 pb-4">
+                @csrf
+                <div class="pt-0 p-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="select-client">Cliente</label>    
+                            <div class="input-group">
+                                <select class="form-select" id="select-client" name="client" required>
+                                    <option value="">- Seleccione un cliente -</option>
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label for="car">Automóvil</label>
+                            <select class="form-select" name="car" id="car" >
+                                <option>- Seleccione un automovil -</option>
                             </select>
                         </div>
+                        <div class="col-md-6">
+                            <label for="odometer">Odómetro</label>
+                            <div class="input-group">
+                            <input type="text" class="form-control" name="odometer" id="odometer">
+                                <span class="input-group-text">Km</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label for="car">Automóvil</label>
-                        <select class="form-select" name="car" id="car" >
-                            <option>- Seleccione un automovil -</option>
-                        </select>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="fault">Servicio / Fallo reportado</label>
+                            <textarea class="form-control" cols="30" rows="4" name="fault" required></textarea>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label for="odometer">Odómetro</label>
-                        <div class="input-group">
-                        <input type="text" class="form-control" name="odometer" id="odometer">
-                            <span class="input-group-text">Km</span>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="me-3">
+                                <input type="radio" value="Fallo" name="type" id="type" checked>
+                                Fallo/Reparación
+                            </label>
+                            <label class="me-3">
+                                <input type="radio" value="Menor" name="type" id="type">
+                                Servicio Menor
+                            </label>
+                            <label>
+                                <input type="radio" value="Mayor" name="type" id="type">
+                                Servicio Mayor
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label for="comments">Comentarios</label>
+                            <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6 pt-2">
+                            <label class="me-3">
+                                <input type="checkbox" value="quote" name="quote" id="quote">
+                                Cotizacion
+                            </label>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a href="{{ route('services.index') }}" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-success">
+                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                                Guardar
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label for="fault">Servicio / Fallo reportado</label>
-                        <textarea class="form-control" cols="30" rows="4" name="fault" required></textarea>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label class="me-3">
-                            <input type="radio" value="Fallo" name="type" id="type" checked>
-                            Fallo/Reparación
-                        </label>
-                        <label class="me-3">
-                            <input type="radio" value="Menor" name="type" id="type">
-                            Servicio Menor
-                        </label>
-                        <label>
-                            <input type="radio" value="Mayor" name="type" id="type">
-                            Servicio Mayor
-                        </label>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label for="comments">Comentarios</label>
-                        <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12 text-end">
-                        <a href="{{ route('services.index') }}" class="btn btn-secondary">Cancelar</a>
-                        <button type="submit" class="btn btn-success">
-                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                            Guardar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
