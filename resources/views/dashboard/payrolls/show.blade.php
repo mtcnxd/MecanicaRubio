@@ -77,7 +77,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($salary->salaryItems as $count => $item)
+                        @foreach ($salary->salaryDetails as $count => $item)
                         <tr>
                             <td>{{ $count +1 }}</td>
                             <td>{{ $item->concept }}</td>
