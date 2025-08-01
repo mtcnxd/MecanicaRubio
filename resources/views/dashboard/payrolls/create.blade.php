@@ -1,10 +1,11 @@
 @extends('includes.body')
 
 @section('content')
-<div class="window-container shadow">
+<div class="window-container">
+    @include('includes.alert')
+
     <h6 class="window-title-bar text-uppercase fw-bold">Nominas</h6>
-    <div class="window-body p-4 bg-white">
-        @include('includes.alert')
+    <div class="window-body shadow p-4 bg-white">
         <label class="window-body-form">Nomina</label>
         <form action="{{ route('payroll.store') }}" method="POST" class="border pt-4 pb-4">
             @csrf
@@ -16,7 +17,7 @@
                             <div class="input-group mb-3">
                                 <select class="form-select" name="employee" id="employee" required>
                                     <option value="0"> - Seleccione empleado - </option>
-                                    @foreach ($employees as $employee)
+                                    @foreach (App\Models\User::all() as $employee)
                                         <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                                     @endforeach
                                 </select>
@@ -59,15 +60,14 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label>Inicio</label>
-                            <input type="date" name="start_date" class="form-control" required>
+                            <input type="date" name="start_date" class="form-control" value="{{ \Carbon\Carbon::now()->startOfWeek()->format('Y-m-d') }}" required>
                         </div>
                         <div class="col-md-6">
                             <label>Final</label>
-                            <input type="date" name="end_date" class="form-control" required>
+                            <input type="date" name="end_date" class="form-control" value="{{ \Carbon\Carbon::now()->endOfWeek()->format('Y-m-d') }}" required>
                         </div>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                             <td>{{ $item->concept }}</td>
                             <td class="text-end">{{ "$".number_format($item->amount, 2) }}</td>
                             <td>
-                                <a href="#" class="removeItem" id="{{ $item->id }}">
+                                <a href="#" class="removeButton" id="{{ $item->id }}">
                                     <x-feathericon-trash-2 class="table-icon"/>
                                 </a>
                             </td>
@@ -99,9 +99,8 @@
                     </tbody>
                     <tfoot class="border-top">
                         <tr>
-                            <td></td>
-                            <td>
-                                <a href="#" id="addConcept">
+                            <td colspan="2">
+                                <a href="#" id="openModal">
                                     Agregar
                                     <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
                                 </a>
@@ -118,10 +117,6 @@
             <div class="row pt-0 p-4 pb-0">
                 <div class="col-md-12 text-end">
                     <a href="{{ route('payroll.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
-                    <a href="#" onclick="print()" class="btn btn-sm btn-secondary">
-                        <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
-                        Imprimir
-                    </a>
                     <button type="submit" class="btn btn-sm btn-success">
                         <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                         Guardar
@@ -131,7 +126,9 @@
         </form>
     </div>
 </div>
+@endsection
 
+@section('modal')
 <div id="popup">
     <div class="row">
         <div class="col">
@@ -151,16 +148,14 @@
                 </optgroup>
             </select>
         </div>
-    
         <div class="col">
             <label for="amount">Importe</label>
             <input type="text" class="form-control" id="amount" name="amount">
         </div>
     </div>
-    
     <div class="row mt-3">
-        <button class="col btn btn-secondary m-1" onclick="closePopup()">Cancelar</button>
-        <button class="col btn btn-success m-1" id="acceptPopup">Agregar</button>
+        <button class="col btn btn-secondary m-1" id="closeButton">Cancelar</button>
+        <button class="col btn btn-success m-1" id="acceptButton">Agregar</button>
     </div>
 </div>
 <div id="overlay"></div>
@@ -170,12 +165,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <script>
 $("#employee").on('change', function(){
-    var employee = $(this).val();
-
     $.ajax({
         url: "{{ route('employees.load') }}",
         method: 'POST',
-        data: {employee: employee},
+        data: {
+            employee: $(this).val()
+        },
         success: function(response){
             $("#salary").val(response.data.salary);
             $("#email").val(response.data.email);
@@ -183,20 +178,18 @@ $("#employee").on('change', function(){
     })
 });
 
-const addConcept = document.getElementById('addConcept');
-
-addConcept.addEventListener('click', function(btn){
+$("#openModal").on('click', function(btn){
     btn.preventDefault();
     $('#popup').fadeIn();
     $('#overlay').fadeIn();
 });
 
-$(".removeItem").on('click', function(btn) {
-    let itemId = this.id;
-
+$(".removeButton").on('click', function() {
     $.ajax({
         url: "{{ route('payroll.removeItem') }}",
-        data: {itemId:itemId},
+        data: {
+            itemId:this.id
+        },
         method:'POST',
         success: function (response) {
             console.log(response)
@@ -207,7 +200,7 @@ $(".removeItem").on('click', function(btn) {
     });
 });
 
-$('#acceptPopup').click(function() {
+$('#acceptButton').click(function() {
     $.ajax({
         url: "{{ route('payroll.addItem') }}",
         method: 'POST',
@@ -223,6 +216,10 @@ $('#acceptPopup').click(function() {
         history.go();
     });
 
+    closePopup();
+});
+
+$("#closeButton").on('click', function(){
     closePopup();
 });
 

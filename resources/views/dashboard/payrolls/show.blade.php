@@ -2,71 +2,71 @@
 
 @section('content')
 <div class="window-container">
+    @include('includes.alert')
+    
     <h6 class="window-title-bar text-uppercase fw-bold">Nominas</h6>
     <div class="window-body shadow p-4 bg-white">
-        @include('includes.alert')
         <label class="window-body-form">Nomina</label>
-        <form action="{{ route('payroll.update', 1) }}" method="POST" class="border pt-4 pb-4">
-            @csrf
+        <form action="{{ route('payroll.update', $salary->id) }}" method="POST" class="border pt-4 pb-4">
             @method('PATCH')
-            <div class="row">
-                <div class="row col-md-6">
-                    <div class="col-md-3 pt-2 text-end">
-                        Empleado
+            @csrf
+            <div class="row pt-0 p-4 pb-0">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="text-uppercase fs-8 fw-bold">Empleado</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" value="{{ $salary->employee->name }}" disabled>
+                                <span class="input-group-text" id="basic-addon2">
+                                    <x-feathericon-user class="table-icon" style="margin: -2px 5px 2px"/>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-9">
-                        <div class="input-group mb-3">
-                            <input type="text" name="" id="" class="form-control" value="{{ $salary->employee->name }}" disabled>
-                            <span class="input-group-text" id="basic-addon2">
-                                <x-feathericon-user class="table-icon" style="margin: -2px 5px 2px"/>
-                            </span>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="text-uppercase fs-8 fw-bold">Movimiento</label>
+                            <input type="text" class="form-control" value="{{ $salary->type }}" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-uppercase fs-8 fw-bold">Fecha de dispersión</label>
+                            <input type="date" class="form-control" value="{{ ($salary->paid_date) ? \Carbon\Carbon::parse($salary->paid_date)->format('Y-m-d') : null }}" disabled>
                         </div>
                     </div>
                 </div>
-
-                <div class="row col-md-6">
-                    <div class="col-md-3 pt-2 text-end">
-                        Correo
-                    </div>
-                    <div class="col-md-9">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="email" id="email" value="{{ $salary->employee->email }}" disabled>
-                            <span class="input-group-text" id="basic-addon2">
-                                <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
-                            </span>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="text-uppercase fs-8 fw-bold">Correo</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="email" id="email" value="{{ $salary->employee->email }}" disabled>
+                                <span class="input-group-text" id="basic-addon2">
+                                    <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-uppercase fs-8 fw-bold">Status</label>
+                            @php
+                                $style = ($salary->status == 'Pagado') ? $style = 'success' : $style = 'warning';
+                            @endphp
+                            <input type="text" class="form-control border border-{{$style}}-subtle text-{{$style}}-emphasis bg-{{$style}}-subtle" value="{{ $salary->status }}" disabled/>
                         </div>
                     </div>
-                </div>
-
-                <div class="row col-md-6 mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Movimiento
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" name="" id="" class="form-control" value="{{ $salary->type }}" disabled>
-                    </div>
-                    <div class="col-md-3 pt-2 text-end">
-                        Fecha de dispersión
-                    </div>
-                    <div class="col-md-3">
-                        <input type="date" name="" id="" class="form-control" value="{{ \Carbon\Carbon::parse($salary->paid_date)->format('Y-m-d') }}" disabled>
-                    </div>
-                </div>
-
-                <div class="row col-md-6 mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Periodo
-                    </div>
-                    <div class="col-md-4">
-                        <input type="date" name="start_date" class="form-control" value="{{ $salary->start_date }}" disabled>
-                    </div>
-                    <div class="col-md-4">
-                        <input type="date" name="end_date" class="form-control" value="{{ $salary->end_date }}" disabled>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="text-uppercase fs-8 fw-bold">Inicio</label>
+                            <input type="date" name="start_date" class="form-control" value="{{ $salary->start_date }}" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-uppercase fs-8 fw-bold">Final</label>
+                            <input type="date" name="end_date" class="form-control" value="{{ $salary->end_date }}" disabled>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-12 mt-4 mb-4 border-top border-bottom bg-body-tertiary" style="height: 300px; overflow-y: scroll">
+            <div class="col-md-12 border-top border-bottom bg-body-tertiary mt-4 mb-4" style="height: 300px; overflow-y: scroll">
                 <table class="table table-hover table-borderless dataTable no-footer">
                     <thead>
                         <tr>
@@ -94,10 +94,12 @@
                         <tr>
                             <td></td>
                             <td>
+                                @if (!$salary->blocked)
                                 <a href="#" id="addConcept">
                                     Agregar
                                     <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
                                 </a>
+                                @endif
                             </td>
                             <td class="text-end">
                                 {{ '$'.number_format($salary->salaryItems->sum('amount'), 2) }}
@@ -108,17 +110,19 @@
                 </table>
             </div>
 
-            <div class="row">
-                <div class="col-md-12 text-end mt-3 pe-5">
-                    <a href="{{ route('payroll.index') }}" class="btn btn-secondary">Atras</a>
-                    <a href="#" onclick="print()" class="btn btn-secondary">
+            <div class="row pt-0 p-4 pb-0">
+                <div class="col-md-12 text-end">
+                    <a href="{{ route('payroll.index') }}" class="btn btn-sm btn-secondary">Atras</a>
+                    <button type="button" onclick="print()" class="btn btn-sm btn-secondary">
                         Imprimir
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>
-                    </a>
-                    <button type="submit" class="btn btn-success">
+                    </button>
+                    @if (!$salary->blocked)
+                    <button type="submit" class="btn btn-sm btn-success">
                         Pagar
                         <x-feathericon-dollar-sign class="table-icon" style="margin: -2px 5px 2px"/>
                     </button>
+                    @endif
                 </div>
             </div>
         </form>
@@ -157,9 +161,7 @@
 
 @section('js')
 <script>
-const addConcept = document.getElementById('addConcept');
-
-addConcept.addEventListener('click', function(btn){
+$("addConcept").on('click', function(btn){
     btn.preventDefault();
     $('#popup').fadeIn();
     $('#overlay').fadeIn();

@@ -71,7 +71,7 @@ Route::group(['controller' => ServicesController::class], function(){
 });
 
 
-Route::post('closeMonth', [FinanceController::class, 'closeMonth'])->name('finance.closeMonth');
+Route::post('/finance/close', [FinanceController::class, 'close'])->name('finance.close');
 
 Route::post('createBalancePDF', [FinanceController::class, 'createBalancePDF'])->name('finance.createBalancePDF');
 

@@ -24,7 +24,7 @@ class FinanceController extends Controller
         return view('dashboard.clients.finance', compact('services', 'items'));
     }
 
-    public function closeMonth(Request $request)
+    public function close(Request $request)
     {
         try {
             DB::table('montly_balances')->insert([
@@ -35,16 +35,21 @@ class FinanceController extends Controller
                 "comments"   => 'Comentarios del cierre de mes',
                 "created_at" => Carbon::now()
             ]);
-        } catch (Exception $err){
-            dd($err->getMessage());
+        }
+        
+        catch (Exception $err){
+            return Response()->json([
+                "success"  => false,
+                "messsage" => sprintf('Error: %s', $err->getMessage()) ,
+                "data"     => $request->all()
+            ]);
         }
 
         sleep(5);
 
         return Response()->json([
             "success"  => true,
-            "messsage" => 'El balance del mes actual a sido cerrado correctamente',
-            "data"     => $request->all()
+            "message" => 'El mes actual se ha cerrado correctamente',
         ]);
     }
 

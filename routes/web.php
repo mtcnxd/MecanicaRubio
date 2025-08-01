@@ -81,7 +81,7 @@ Route::middleware(['auth'])->group( function ()
                 Route::resource('cars', CarsController::class);
                 Route::resource('employees', EmployeesController::class);
                 Route::resource('quotes', QuotesController::class)->only('index','show');
-                Route::resource('users', UsersController::class);
+                Route::resource('users', UsersController::class)->only('index','create');
 
                 Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
                 Route::get('dashboard', [ServicesController::class, 'dashboard'])->name('dashboard.index');
@@ -109,9 +109,9 @@ Route::middleware(['auth'])->group( function ()
 
         Route::get('admin/settings', [SettingsController::class, 'index'])->name('setting.index');
 
-        Route::post('admin/settings', [SettingsController::class, 'update'])->name('setting.update');
-
         Route::post('admin/settings/create', [SettingsController::class, 'store'])->name('setting.store');
+        
+        Route::post('admin/settings', [SettingsController::class, 'update'])->name('setting.update');
 
         Route::get('admin/sendEmailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
     }

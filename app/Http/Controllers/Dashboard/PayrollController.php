@@ -23,22 +23,17 @@ class PayrollController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('dashboard.payrolls.index', [
-            "startDate" => $startDate,
-            "endDate"   => $endDate,
-            "salaries"  => $salaries
-        ]);
+        return view('dashboard.payrolls.index', compact('startDate','endDate','salaries'));
     }
 
     public function create()
     {
-        /* Current salarie is still not saved */
-        $id = Salary::max('id') + 1;
+        /* We plus one because current salarie is still not saved */
 
-        $employees = User::get();
-        $items     = SalaryItems::where('salary_id', $id)->get();
+        $id    = Salary::max('id') + 1;
+        $items = SalaryItems::where('salary_id', $id)->get();
 
-        return view('dashboard.payrolls.create', compact('employees', 'items'));
+        return view('dashboard.payrolls.create', compact('items'));
     }
 
     public function store(Request $request)
@@ -54,7 +49,19 @@ class PayrollController extends Controller
             "updated_at" => Carbon::now(),
         ]);
 
-        return to_route('payroll.index')->with('message', 'El registro se guardo correctamente');
+        return to_route('payroll.index')->with('success', 'El registro se guardo correctamente');
+    }
+
+    public function update(Request $request, string $id)
+    {
+        Salary::where('id', $id)->update([
+            'status'    => 'Pagado',
+            'blocked'   => true,
+            'paid_date' => Carbon::now(),
+        ]);
+
+        return to_route('payroll.show', $id)
+            ->with('success', 'El movimiento se guardo correctamente');
     }
 
     public function show(string $id)

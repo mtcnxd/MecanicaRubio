@@ -95,6 +95,7 @@
 
 
 @section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 const btnClose = document.getElementById('closeMonth');
 
@@ -109,7 +110,7 @@ btnClose.addEventListener('click', (btn) => {
     ){
         $("#loader").show();
         $.ajax({
-            url: "{{ route('finance.closeMonth') }}",
+            url: "{{ route('finance.close') }}",
             method: 'POST',
             data: {
                 income:income,
@@ -117,7 +118,15 @@ btnClose.addEventListener('click', (btn) => {
                 balance:balance
             },
             success: function(response){
-                console.log(response);
+                if (response.success){
+                    Swal.fire({
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        history.go();
+                    });
+                }
             },
             error:function(error){
                 console.log(error);
