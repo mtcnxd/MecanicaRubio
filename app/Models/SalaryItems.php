@@ -12,6 +12,6 @@ class SalaryItems extends Model
     protected $table = 'salaries_details';
 
     protected $hidden = [
-        'number'
+        'number',
     ];
 }

@@ -27,7 +27,7 @@
     </div>
     
 
-    @isset($employee->salaries)
+    @isset($salaries)
         <div class="col-md-12 mt-4">
             <div class="window-body shadow p-4 bg-white rounded">
                 <div class="row m-0 p-2">
@@ -57,8 +57,8 @@
                     </div>
                 </div>
                 
-                <p class="text-uppercase fs-8">Desglose de aportaciones a Caja de Ahorro</p>
                 <div class="col-md-12 border-top border-bottom bg-body-tertiary mt-4 mb-4" style="height: 600px; overflow-y: scroll">
+                    <p class="text-uppercase fs-8">Desglose de aportaciones a Caja de Ahorro</p>
                     <div class="col-md-12">
                         <table class="table table-hover">
                             <tbody>
@@ -70,26 +70,30 @@
                                     <th class="text-end">Importe</th>
                                 </tr>
                                 @php
+                                    $count = 1;
                                     $grandTotal = 0;
                                 @endphp
-                                @foreach ($employee->salaries as $row => $result)
-                                    <tr>
-                                        <th>{{ ($row+1) }}</th>
-                                        <td>
-                                            <a href="{{ route('payroll.show', $result->id) }}">{{ $result->type }} #{{ $result->id }}</a>
-                                        </td>
-                                        <td class="text-center">{{ Carbon\Carbon::parse($result->paid_date)->format('d-m-Y') }}</td>
-                                        <td class="text-center">
-                                            <span class="badge text-bg-warning">{{ $result->start_date }}</span> | <span class="badge text-bg-warning">{{ $result->end_date }}</span>
-                                        </td>
-                                        <td class="text-end">
-                                            @php
-                                                $grandTotal += $result->salaryDetails->where('concept','Caja de ahorro')->sum('amount');
-                                            @endphp
 
-                                            ${{ number_format($result->salaryDetails->where('concept','Caja de ahorro')->sum('amount'), 2) }}
-                                        </td>
-                                    </tr>
+                                @foreach ($salaries->where('status', 'Pagado') as $result)
+                                    @foreach ($result->salaryDetails->where('concept', 'Caja de ahorro') as $item)
+                                        <tr>
+                                            <td>{{ $count ++ }}</td>
+                                            <td>
+                                                <a href="{{ route('payroll.show', $result->id) }}">{{ $result->type }} #{{ $result->id }}</a>
+                                            </td>
+                                            <td class="text-center">{{ $result->paid_date->format('d M Y') }}</td>
+                                            <td class="text-center">
+                                                <span class="badge text-bg-warning">{{ $result->start_date }}</span> | <span class="badge text-bg-warning">{{ $result->end_date }}</span>
+                                            </td>
+                                            <td class="text-end">
+                                                @php
+                                                    $grandTotal += $result->salaryDetails->where('concept','Caja de ahorro')->sum('amount');
+                                                @endphp
+
+                                                ${{ number_format($result->salaryDetails->where('concept','Caja de ahorro')->sum('amount'), 2) }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @endforeach
                             </tbody>
                             <tfoot>

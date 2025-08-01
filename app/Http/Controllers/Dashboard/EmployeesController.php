@@ -165,8 +165,10 @@ class EmployeesController extends Controller
         if ($request->employee)
         {
             $employee = Employee::find($request->employee);
+            
+            $salaries = Salary::where('user_id', $request->employee)->get();
 
-            return view('dashboard.reports.employees', compact('employee'));
+            return view('dashboard.reports.employees', compact('employee', 'salaries'));
         }
 
         return view('dashboard.reports.employees');

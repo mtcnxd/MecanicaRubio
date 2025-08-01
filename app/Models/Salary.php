@@ -26,6 +26,10 @@ class Salary extends Model
         'created_at',
     ];
 
+    protected $casts = [
+        'paid_date' => 'date'
+    ];
+
     public function employee()
     {
         return $this->belongsTo(User::class, 'user_id');
