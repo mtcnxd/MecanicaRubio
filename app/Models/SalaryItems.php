@@ -10,4 +10,8 @@ class SalaryItems extends Model
     use HasFactory;
 
     protected $table = 'salaries_details';
+
+    protected $hidden = [
+        'number'
+    ];
 }

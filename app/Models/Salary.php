@@ -16,8 +16,14 @@ class Salary extends Model
         'start_date',
         'end_date',
         'total',
-        'created_at',
         'updated_at',
+        'created_at',
+    ];
+
+    protected $hidden = [
+        'blocked',
+        'updated_at',
+        'created_at',
     ];
 
     public function employee()
@@ -25,8 +31,8 @@ class Salary extends Model
         return $this->belongsTo(User::class, 'user_id');
     }    
 
-    public function salaryItems()
+    public function salaryDetails()
     {
-        return $this->hasMany(SalaryItems::class);
+        return $this->hasMany(SalaryItems::class, 'salary_id');
     }
 }

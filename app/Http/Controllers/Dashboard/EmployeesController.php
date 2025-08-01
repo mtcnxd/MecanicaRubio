@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use DB;
+use Exception;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Salary;
+use App\Models\Employee;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use App\Models\User;
-use Carbon\Carbon;
-use Exception;
-use DB;
 
 class EmployeesController extends Controller
 {
@@ -160,31 +162,13 @@ class EmployeesController extends Controller
 
     public function report(Request $request)
     {
-        $employees = DB::table('employees')
-            ->join('users', 'employees.user_id', 'users.id')
-            ->orderBy('users.name')
-            ->get();
-
         if ($request->employee)
         {
-            $results = DB::table('employees')
-                ->select('concept','type','salaries.id','salaries.start_date','salaries.end_date','salaries.paid_date','amount')
-                ->join('salaries','employees.id','salaries.user_id')
-                ->join('salaries_details', 'salaries.id', 'salaries_details.salary_id')
-                ->where('employees.id', $request->employee)
-                ->where('salaries.status','Pagado')
-                ->where('salaries_details.concept','Caja de Ahorro')
-                ->orderBy('salaries.paid_date')
-                ->get();
+            $employee = Employee::find($request->employee);
 
-            $employeeInfo = DB::table('employees')
-                ->join('users', 'employees.user_id', 'users.id')
-                ->where('employees.user_id', $request->employee)
-                ->first();
-
-            return view('dashboard.reports.employees', compact('employees','results', 'employeeInfo'));
+            return view('dashboard.reports.employees', compact('employee'));
         }
 
-        return view('dashboard.reports.employees', compact('employees'));
+        return view('dashboard.reports.employees');
     }
 }
