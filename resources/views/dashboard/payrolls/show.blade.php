@@ -103,7 +103,7 @@
                             </td>
                             <td class="text-end">
                                 {{ '$'.number_format($salary->salaryDetails->sum('amount'), 2) }}
-                                <input type="hidden" name="total" value="{{ $salary->salaryItems->sum('amount') }}" id="total">
+                                <input type="hidden" name="total" value="{{ $salary->salaryDetails->sum('amount') }}" id="total">
                             </td>
                         </tr>
                     </tfoot>
