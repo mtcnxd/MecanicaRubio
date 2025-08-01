@@ -101,8 +101,9 @@
                                 <th width="300px">Automovil</th>
                                 <th>Año</th>
                                 <th>Servicio/Fallo</th>
-                                <th>Status</th>
-                                <th class="text-center">Fecha servicio</th>
+                                <th></th>
+                                <th class="text-center">Status</th>
+                                <th class="text-end">Fecha servicio</th>
                             </thead>
                             <tbody>
                                 @foreach ($client->services as $service)
@@ -113,9 +114,12 @@
                                     <td>{{ $service->car->year }}</td>
                                     <td>{{ $service->fault }}</td>
                                     <td>
-                                        <span class="badge text-bg-success">{{ $service->status }}</span>
+                                        @if ($service->quote)
+                                            <span class="badge text-bg-warning">Cotización</span>
+                                        @endif
                                     </td>
-                                    <td class="text-center">{{ date ('d-m-Y', strtotime($service->created_at)) }}</td>
+                                    <td class="text-center"><span class="badge text-bg-success">{{ $service->status }}</span></td>
+                                    <td class="text-end">{{ date ('d-m-Y', strtotime($service->created_at)) }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
