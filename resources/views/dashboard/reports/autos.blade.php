@@ -1,10 +1,10 @@
 @extends('includes.body')
 
 @section('content')
-<div class="window-container shadow">
+<div class="window-container">
     <div class="row">
         <div class="col-md-3">
-            <div class="card">
+            <div class="card shadow">
                 <div class="card-header">
                     <strong>Autos</strong>
                 </div>
@@ -21,8 +21,8 @@
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card">
+        <div class="col-md-4">
+            <div class="card shadow">
                 <div class="card-header">
                     <strong>Refacciones</strong>
                 </div>

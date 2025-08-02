@@ -81,7 +81,7 @@ Route::middleware(['auth'])->group( function ()
                 Route::resource('cars', CarsController::class);
                 Route::resource('employees', EmployeesController::class);
                 Route::resource('quotes', QuotesController::class)->only('index','show');
-                Route::resource('users', UsersController::class)->only('index','create');
+                Route::resource('users', UsersController::class)->except('update','destroy');
 
                 Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
                 Route::get('dashboard', [ServicesController::class, 'dashboard'])->name('dashboard.index');
