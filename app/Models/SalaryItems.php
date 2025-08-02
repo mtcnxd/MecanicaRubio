@@ -14,4 +14,9 @@ class SalaryItems extends Model
     protected $hidden = [
         'number',
     ];
+
+    public function salary()
+    {
+        $this->belongsTo(Salary::class, 'salary_id');
+    }
 }

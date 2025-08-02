@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Salary;
 use App\Models\Employee;
+use App\Models\SalaryItems;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -166,7 +167,7 @@ class EmployeesController extends Controller
         {
             $employee = Employee::find($request->employee);
             
-            $salaries = Salary::where('user_id', $request->employee)->get();
+            $salaries = Salary::where('user_id', $request->employee)->orderBy('paid_date')->get();
 
             return view('dashboard.reports.employees', compact('employee', 'salaries'));
         }
