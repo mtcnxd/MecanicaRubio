@@ -3,15 +3,15 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
-use App\Http\Controllers\Dashboard\ClientsController;
-use App\Http\Controllers\Dashboard\FinanceController;
-use App\Http\Controllers\Dashboard\PayrollController;
-use App\Http\Controllers\Dashboard\CalendarController;
-use App\Http\Controllers\Dashboard\ExpensesController;
-use App\Http\Controllers\Dashboard\ServicesController;
-use App\Http\Controllers\Dashboard\CarsController;
-use App\Http\Controllers\Dashboard\QuotesController;
-use App\Http\Controllers\Dashboard\EmployeesController;
+use App\Http\Controllers\Admin\ClientsController;
+use App\Http\Controllers\Admin\FinanceController;
+use App\Http\Controllers\Admin\PayrollController;
+use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\Admin\ExpensesController;
+use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\CarsController;
+use App\Http\Controllers\Admin\QuotesController;
+use App\Http\Controllers\Admin\EmployeesController;
 
 /*
 |--------------------------------------------------------------------------

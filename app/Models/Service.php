@@ -24,6 +24,11 @@ class Service extends Model
         'total',
     ];
 
+    protected $casts = [
+        'entry_date'    => 'date',
+        'finished_date' => 'date'
+    ];
+
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');

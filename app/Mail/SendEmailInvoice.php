@@ -25,7 +25,7 @@ class SendEmailInvoice extends Mailable
 
     public function build()
     {
-        return $this->view('dashboard.templates.email_invoice')->with([
+        return $this->view('admin.templates.email_invoice')->with([
             'service' => $this->service,
             'items'   => $this->items,
         ]);
@@ -48,7 +48,7 @@ class SendEmailInvoice extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'dashboard.templates.email_invoice',
+            view: 'admin.templates.email_invoice',
         );
     }
 

@@ -27,7 +27,7 @@
 }
 
 .window-title-bar {
-    background-color: var(--blue-gray-100);
+    background: linear-gradient(0deg, #CFD8DC, #ECEFF1);
     border: 1px solid var(--blue-gray-100);
     border-radius: 10px 10px 0 0;
     padding: 15px 10px 10px 20px;
@@ -83,6 +83,16 @@
 
 .alert-success {
     background-color: var(--teal-50);
+}
+
+.banner {
+    padding: 1em;
+}
+
+.banner-warning {
+    border-left: 4px solid var(--amber-200);
+    background-color: var(--amber-50);
+    color: #D84315;
 }
 
 .swal2-actions .swal2-confirm {

@@ -1,11 +1,17 @@
 .menu-container {
 	background: var(--blue-gray-600);
 	height: 55px;
-	border-bottom: solid #DDD 5px;
-	box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.2);
+	border-bottom: solid 3px var(--blue-gray-800);
+	position: fixed;
+	/*
 	position: absolute;
 	width: 100%;
 	top: 0;
+	*/
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	width: 100%;
 }
 
 .menu-title {

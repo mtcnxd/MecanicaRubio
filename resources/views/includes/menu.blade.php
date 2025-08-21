@@ -1,4 +1,4 @@
-<div class="menu-container" style="display: flex; justify-content: space-around;">
+<div class="menu-container shadow" style="display: flex; justify-content: space-around;">
 	<ul class="dropdown p-0">
 		<li>
 			<a href="#clients">

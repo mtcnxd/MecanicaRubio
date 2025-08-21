@@ -11,6 +11,18 @@ class Cars extends Model
 
     protected $table = "autos";
 
+    protected $fillable = [
+        'brand',
+        'model',
+        'serie',
+        'year',
+        'plate',
+        'client_id',
+        'comments',
+        'created_at',
+        'updated_at',
+    ];    
+
     public function findByCriteria(string $criteria)
     {
         return $this->where(function($query) use ($criteria){
@@ -27,5 +39,10 @@ class Cars extends Model
     public function carName()
     {
         return $this->brand .' '.$this->model;
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'car_id');
     }
 }

@@ -2,22 +2,23 @@
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Http\Controllers\Auth\Login;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\UserType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\Dashboard\CarsController;
-use App\Http\Controllers\Dashboard\ClientsController;
-use App\Http\Controllers\Dashboard\FinanceController;
-use App\Http\Controllers\Dashboard\PayrollController;
-use App\Http\Controllers\Dashboard\CalendarController;
-use App\Http\Controllers\Dashboard\ExpensesController;
-use App\Http\Controllers\Dashboard\ServicesController;
-use App\Http\Controllers\Dashboard\SettingsController;
-use App\Http\Controllers\Dashboard\EmployeesController;
-use App\Http\Controllers\Dashboard\UsersController;
-use App\Http\Controllers\Dashboard\QuotesController;
+use App\Http\Controllers\Admin\CarsController;
+use App\Http\Controllers\Admin\ClientsController;
+use App\Http\Controllers\Admin\FinanceController;
+use App\Http\Controllers\Admin\PayrollController;
+use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\Admin\ExpensesController;
+use App\Http\Controllers\Admin\ServicesController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\EmployeesController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\QuotesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,12 @@ use App\Http\Controllers\Dashboard\QuotesController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+
+// Index for client frontend
+Route::get('/', function(){
+    return view('content');
+});
 
 // Login and registration routes
 Route::get('/auth/redirect', function () {
@@ -59,50 +66,49 @@ Route::get('/auth/callback', function () {
     }
 });
 
-Route::get('admin', [Login::class, 'index'])->name('login');
-Route::post('admin', [Login::class, 'login']);
-Route::post('admin/logout', [Login::class, 'logout'])->name('logout');
-
-
-Route::get('/', function(){
-    return view('content');
+Route::group(['controller' => LoginController::class], function() {
+    Route::get('/admin', 'index')->name('login');
+    Route::get('/register', 'register')->name('user.register');
+    
+    Route::post('/register', 'store')->name('user.store');
+    Route::post('/admin', 'login');
+    Route::post('/admin/logout', 'logout')->name('logout');
 });
 
-Route::group(['prefix' => 'client'], function(){
-    // Customer routes
+Route::group(['prefix' => 'client', 'middleware' => 'isAdmin'], function(){
+    Route::resource('clientServices', App\Http\Controllers\Client\ServicesController::class)->only('index','show');
 });
 
-Route::middleware(['auth'])->group( function ()
+Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function()
     {
-        Route::group(['prefix' => 'admin'], function()
-            {
-                Route::resource('services', ServicesController::class);
-                Route::resource('clients', ClientsController::class);
-                Route::resource('cars', CarsController::class);
-                Route::resource('employees', EmployeesController::class);
-                Route::resource('quotes', QuotesController::class)->only('index','show');
-                Route::resource('users', UsersController::class)->except('update','destroy');
+        Route::resource('services', ServicesController::class);
+        Route::resource('clients', ClientsController::class);
+        Route::resource('cars', CarsController::class);
+        Route::resource('employees', EmployeesController::class);
+        Route::resource('quotes', QuotesController::class)->only('index','show');
+        Route::resource('users', UsersController::class)->except('update','destroy');
 
-                Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
-                Route::get('dashboard', [ServicesController::class, 'dashboard'])->name('dashboard.index');
-                Route::get('profile', [EmployeesController::class, 'profileIndex'])->name('profile.index');
+        Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
+        Route::get('dashboard', [ServicesController::class, 'dashboard'])->name('dashboard.index');
+        Route::get('profile', [EmployeesController::class, 'profileIndex'])->name('profile.index');
 
-                # Reports
-                Route::get('reports/employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
-                Route::get('reports/employees', [EmployeesController::class, 'report'])->name('reports.employees');
-                Route::get('reports/balance', [ExpensesController::class, 'report'])->name('reports.balance');
-                Route::get('reports/autos', [CarsController::class, 'report'])->name('reports.autos');
+        # Reports
+        Route::get('reports/employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
+        Route::get('reports/employees', [EmployeesController::class, 'report'])->name('reports.employees');
+        Route::get('reports/balance', [ExpensesController::class, 'report'])->name('reports.balance');
+        Route::get('reports/autos', [CarsController::class, 'report'])->name('reports.autos');
 
-                Route::group(['prefix' => 'finance'], function() {
-                    Route::get('/ingress', [FinanceController::class, 'listOfIngress'])->name('finance.listOfIngress');
-                    Route::get('/finance/{client}', [FinanceController::class, 'show'])->name('finance');
-                    
-                    Route::resource('/payroll', PayrollController::class);
-                    Route::resource('/expenses', ExpensesController::class);
-                });
+        Route::group(['prefix' => 'finance'], function()
+        {
+            Route::get('/ingress', [FinanceController::class, 'listOfIngress'])->name('finance.listOfIngress');
+            Route::get('/finance/{client}', [FinanceController::class, 'show'])->name('finance');
+            
+            Route::resource('/payroll', PayrollController::class);
+            Route::resource('/expenses', ExpensesController::class);
+        }
+);
 
-            }
-        );
+        
 
 
         Route::post('admin/profile', [EmployeesController::class, 'profileUpdate'])->name('profile.update');
