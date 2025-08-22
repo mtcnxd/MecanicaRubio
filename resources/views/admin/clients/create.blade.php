@@ -6,11 +6,10 @@
     <div class="col-md-7">
         <h6 class="window-title-bar shadow text-uppercase fw-bold">Cliente</h6>
         <div class="window-body shadow p-4 bg-white">
-            <label class="window-body-form">Nuevo cliente</label>
-            <form action="{{ route('clients.store') }}" method="POST" class="col-md-12 border pt-4 pb-4">
-                @method('POST')
-                @csrf
-                <div class="pt-0 p-4">
+            <div class="border p-4" style="background-color: #FAFAFA;">
+                <form action="{{ route('clients.store') }}" method="POST">
+                    @method('POST')
+                    @csrf
                     <div class="row">
                         <div class="col-md-12">
                             <label for="name">Nombre</label>
@@ -84,8 +83,9 @@
                             </button>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

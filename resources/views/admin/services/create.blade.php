@@ -6,10 +6,9 @@
     <div class="col-md-7">
         <h6 class="window-title-bar shadow text-uppercase fw-bold">Servicio</h6>
         <div class="window-body shadow p-4 bg-white">
-            <label class="window-body-form">Nuevo Servicio</label>
-            <form action="{{ route('services.store') }}" method="POST" class="col-md-12 border pt-4 pb-4">
-                @csrf
-                <div class="pt-0 p-4">
+            <div class="border p-4" style="background-color: #FAFAFA;">
+                <form action="{{ route('services.store') }}" method="POST">
+                    @csrf
                     <div class="row">
                         <div class="col-md-12">
                             <label for="select-client">Cliente</label>    
@@ -81,8 +80,8 @@
                             </button>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

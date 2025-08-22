@@ -6,124 +6,125 @@
 
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Nominas</h6>
     <div class="window-body shadow p-4 bg-white">
-        <label class="window-body-form">Nomina</label>
-        <form action="{{ route('payroll.store') }}" method="POST" class="border pt-4 pb-4">
-            @csrf
-            <div class="row pt-0 p-4 pb-0">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Empleado</label>
-                            <div class="input-group mb-3">
-                                <select class="form-select" name="employee" id="employee" required>
-                                    <option value="0"> - Seleccione empleado - </option>
-                                    @foreach (App\Models\User::all() as $employee)
-                                        <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                    @endforeach
+        <div class="border pt-4 pb-4" style="background-color: #FAFAFA;">
+            <form action="{{ route('payroll.store') }}" method="POST">
+                @csrf
+                <div class="row pt-0 p-4 pb-0">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Empleado</label>
+                                <div class="input-group mb-3">
+                                    <select class="form-select" name="employee" id="employee" required>
+                                        <option value="0"> - Seleccione empleado - </option>
+                                        @foreach (App\Models\User::all() as $employee)
+                                            <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="input-group-text" id="basic-addon2">
+                                        <x-feathericon-user class="table-icon" style="margin: -2px 5px 2px"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label>Movimiento</label>
+                                <select class="form-select" name="type" id="type">
+                                    <option value="0"> - Seleccione movimiento - </option>
+                                    <option>Nomina</option>
+                                    <option>Aguinaldo</option>
+                                    <option>Finiquito</option>
+                                    <option>Liquidacion</option>
+                                    <option>Otras percepciones</option>
                                 </select>
-                                <span class="input-group-text" id="basic-addon2">
-                                    <x-feathericon-user class="table-icon" style="margin: -2px 5px 2px"/>
-                                </span>
+                            </div> 
+                            <div class="col-md-6">
+                                <label>Salario</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="text" class="form-control" name="salary" id="salary" value="" style="text-align: right" disabled>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label>Movimiento</label>
-                            <select class="form-select" name="type" id="type">
-                                <option value="0"> - Seleccione movimiento - </option>
-                                <option>Nomina</option>
-                                <option>Aguinaldo</option>
-                                <option>Finiquito</option>
-                                <option>Liquidacion</option>
-                                <option>Otras percepciones</option>
-                            </select>
-                        </div> 
-                        <div class="col-md-6">
-                            <label>Salario</label>
-                            <div class="input-group">
-                                <span class="input-group-text">$</span>
-                                <input type="text" class="form-control" name="salary" id="salary" value="" style="text-align: right" disabled>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Correo</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="email" id="email" disabled>
+                                    <span class="input-group-text" id="basic-addon2">
+                                        <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label>Inicio</label>
+                                <input type="date" name="start_date" class="form-control" value="{{ \Carbon\Carbon::now()->startOfWeek()->format('Y-m-d') }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Final</label>
+                                <input type="date" name="end_date" class="form-control" value="{{ \Carbon\Carbon::now()->endOfWeek()->format('Y-m-d') }}" required>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Correo</label>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="email" id="email" disabled>
-                                <span class="input-group-text" id="basic-addon2">
-                                    <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <label>Inicio</label>
-                            <input type="date" name="start_date" class="form-control" value="{{ \Carbon\Carbon::now()->startOfWeek()->format('Y-m-d') }}" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Final</label>
-                            <input type="date" name="end_date" class="form-control" value="{{ \Carbon\Carbon::now()->endOfWeek()->format('Y-m-d') }}" required>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-md-12 border-top border-bottom bg-body-tertiary mt-4 mb-4" style="height: 300px; overflow-y: scroll">
-                <table class="table table-hover table-borderless dataTable no-footer">
-                    <thead>
-                        <tr>
-                            <th width="30px">#</th>
-                            <th>Concepto</th>
-                            <th class="text-end">Importe</th>
-                            <th width="30px"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($items as $count => $item)
-                        <tr>
-                            <td>{{ $count +1 }}</td>
-                            <td>{{ $item->concept }}</td>
-                            <td class="text-end">{{ "$".number_format($item->amount, 2) }}</td>
-                            <td>
-                                <a href="#" class="removeButton" id="{{ $item->id }}">
-                                    <x-feathericon-trash-2 class="table-icon"/>
-                                </a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot class="border-top">
-                        <tr>
-                            <td colspan="2">
-                                <a href="#" id="openModal">
-                                    Agregar
-                                    <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
-                                </a>
-                            </td>
-                            <td class="text-end">
-                                {{ '$'.number_format($items->sum('amount'), 2) }}
-                                <input type="hidden" name="total" value="{{ $items->sum('amount') }}" id="total">
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-
-            <div class="row pt-0 p-4 pb-0">
-                <div class="col-md-12 text-end">
-                    <a href="{{ route('payroll.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-sm btn-success">
-                        <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                        Guardar
-                    </button>
+                <div class="col-md-12 border-top border-bottom bg-body-tertiary mt-4 mb-4" style="height: 300px; overflow-y: scroll">
+                    <table class="table table-hover table-borderless dataTable no-footer">
+                        <thead>
+                            <tr>
+                                <th width="30px">#</th>
+                                <th>Concepto</th>
+                                <th class="text-end">Importe</th>
+                                <th width="30px"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($items as $count => $item)
+                            <tr>
+                                <td>{{ $count +1 }}</td>
+                                <td>{{ $item->concept }}</td>
+                                <td class="text-end">{{ "$".number_format($item->amount, 2) }}</td>
+                                <td>
+                                    <a href="#" class="removeButton" id="{{ $item->id }}">
+                                        <x-feathericon-trash-2 class="table-icon"/>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot class="border-top">
+                            <tr>
+                                <td colspan="2">
+                                    <a href="#" id="openModal">
+                                        Agregar
+                                        <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
+                                    </a>
+                                </td>
+                                <td class="text-end">
+                                    {{ '$'.number_format($items->sum('amount'), 2) }}
+                                    <input type="hidden" name="total" value="{{ $items->sum('amount') }}" id="total">
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
-            </div>
-        </form>
+
+                <div class="row pt-0 p-4 pb-0">
+                    <div class="col-md-12 text-end">
+                        <a href="{{ route('payroll.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
