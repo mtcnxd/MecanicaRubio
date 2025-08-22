@@ -74,8 +74,8 @@
                             </label>
                         </div>
                         <div class="col-md-6 text-end">
-                            <a href="{{ route('services.index') }}" class="btn btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-success">
+                            <a href="{{ route('services.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-sm btn-success">
                                 <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                                 Guardar
                             </button>

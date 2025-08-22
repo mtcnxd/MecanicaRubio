@@ -29,10 +29,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 */
 
+// Employees
 Route::group(['prefix' => 'employees'], function () {
     Route::post('load', [EmployeesController::class, 'loadEmployee'])->name('employees.load'); 
-
     Route::post('delete', [EmployeesController::class, 'destroy'])->name('employees.delete');
+    Route::post('vacations', [EmployeesController::class, 'vacations'])->name('employees.vacations');
 });
 
 Route::group(['prefix' => 'cars', 'controller' => CarsController::class], function () {
@@ -63,10 +64,8 @@ Route::controller(ClientsController::class)->group(function () {
 Route::group(['controller' => ServicesController::class], function(){    
     Route::post('createServicePDF', 'createServicePDF')->name('services.createServicePDF');
     Route::post('getItemInformation', 'getItemInformation')->name('services.getItemInformation');
-
     Route::get('getServiceItems', 'getServiceItems')->name('services.getServiceItems');
     Route::get('getDataTableServices', 'getDataTableServices')->name('getDataTableServices');
-    
     Route::get('/changeQuoteToService', 'changeQuoteToService')->name('services.change.quote');
 });
 

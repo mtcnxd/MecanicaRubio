@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
 use Exception;
 use Carbon\Carbon;
 use App\Models\User;
@@ -10,6 +9,7 @@ use App\Models\Salary;
 use App\Models\Employee;
 use App\Models\SalaryItems;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -77,8 +77,10 @@ class EmployeesController extends Controller
             ->first();
 
         $extra = Carbon::parse($employee->created_at);
+
+        $vacations = DB::table('employees_vacations')->where('employee_id', $id)->get();
         
-        return view('admin.employees.show', compact('employee','extra'));
+        return view('admin.employees.show', compact('employee','extra', 'vacations'));
     }
 
     public function edit(Request $request, string $id)
@@ -166,12 +168,28 @@ class EmployeesController extends Controller
         if ($request->employee)
         {
             $employee = Employee::find($request->employee);
-            
             $salaries = Salary::where('user_id', $request->employee)->orderBy('paid_date')->get();
 
             return view('admin.reports.employees', compact('employee', 'salaries'));
         }
 
         return view('admin.reports.employees');
+    }
+
+    public function vacations(Request $request)
+    {
+        DB::table('employees_vacations')->insert([
+            'employee_id' => $request->employee,
+            'type'        => $request->type,
+            'date'        => $request->date,
+            'comment'     => $request->comment,
+            'updated_at'  => Carbon::now(),
+            'created_at'  => Carbon::now(),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'El registro se creo con exito',
+        ]);
     }
 }

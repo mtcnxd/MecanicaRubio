@@ -5,8 +5,8 @@
     @include('includes.alert')
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Empleado</h6>
     <div class="window-body shadow p-4 bg-white">
-        <label class="window-body-form">Detalles empleado</label>
-        <form action="{{ route('employees.update', $employee->id) }}" method="POST" class="border pt-4 pb-4">
+        <form action="{{ route('employees.update', $employee->id) }}" method="POST" class="border p-4" style="background-color: #FAFAFA;">
+            <p class="fw-bold">Detalles empleado</p>
             @method('PUT')
             @csrf
             <div class="row">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 
-                <div class="col mb-0 mt-0 m-4 border rounded">
+                <div class="col mb-0 mt-0 m-4">
                     <div class="row mt-2">
                         <h5 class="mt-2">Antiguedad</h5>
                         <div class="col-md-6 pt-2">
@@ -146,10 +146,30 @@
         </form>
 
         <div class="mt-4">
-            <label class="window-body-form">Solicitudes de ausencia</label>
-            <form action="{{ route('employees.update', $employee->id) }}" method="POST" class="border pt-5 p-4">
-                <div class="col-md-4">
-                    <label for="date">Tipo ausencia</label>
+            <form id="vacations" class="border p-4" style="background-color: #FAFAFA ;">
+                <p class="fs-5 fw-bold">Historial de solicitudes</p>
+                <div class="row">
+                    <table class="table table-hover">
+                    @foreach ($vacations as $vacation)
+                        <tr>
+                            <td>{{ $vacation->type }}</td>
+                            <td>{{ $vacation->comment }}</td>
+                            <td class="text-end">{{ $vacation->date }}</td>
+                            <td class="text-end">
+                                <a href="http://">Cancelar</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </table>
+                </div>
+            </form>
+        </div>        
+
+        <div class="mt-4">
+            <form id="vacations" class="border p-4" style="background-color: #FAFAFA ;">
+                <p class="fs-5 fw-bold">Solicitudes de ausencia</p>
+                <div class="col-md-12">
+                    <label for="date">Motivo de ausencia</label>
                     <select class="form-select" name="type" id="type">
                         <option>Permiso</option>
                         <option>Salud</option>
@@ -157,18 +177,18 @@
                     </select>
                 </div>
 
-                <div class="col-md-4 mt-3">
+                <div class="col-md-12 mt-3">
                     <label for="date">Fecha de ausencia</label>
                     <input type="date" class="form-control" name="date" id="date">
                 </div>
 
-                <div class="col-md-4 mt-3">
+                <div class="col-md-12 mt-3">
                     <label for="comment">Comentario</label>
                     <textarea class="form-control" name="comment" id="comment"></textarea>
                 </div>
 
-                <div class="col-md-4 mt-3 text-end">
-                    <button type="button" class="btn btn-success" onclick="createRow()">Guardar</button>
+                <div class="col-md-12 mt-3 text-end">
+                    <button type="button" class="btn btn-sm btn-success" onclick="createRow()">Guardar</button>
                 </div>
             </form>
         </div>
@@ -180,11 +200,25 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function createRow(){
-        var type    = $('#type');
-        var date    = $('#date');
-        var comment = $('#comment');
+        var employee = {{ $employee->id }};
+        var type     = $('#type');
+        var date     = $('#date');
+        var comment  = $('#comment');
 
-        console.log(type.val());
+        $.ajax({
+            url: "{{ route('employees.vacations') }}",
+            method: 'POST',
+            data:{
+                employee:employee,
+                type:type.val(),
+                date:date.val(),
+                comment:comment.val()
+            },
+            success:function(response){
+                showMessageAlert('success', response.message);
+                $("#vacations").trigger('reset');
+            }
+        });
     }
 
     function showMessageAlert(type, message){
@@ -192,8 +226,9 @@
             text: message,
             icon: type,
             confirmButtonText: 'Aceptar'
-        }).then(() => {
-            location.replace('/employees');
+        })
+        .then(() => {
+            location.reload();
         });
     }
 </script>

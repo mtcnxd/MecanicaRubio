@@ -13,8 +13,8 @@
                     <div class="col-md-10">
                         <select name="employee" id="employee" class="form-select">
                             <option value="">- Seleccione un empleado -</option>
-                            @foreach ( App\Models\Employee::all() as $employee)
-                                <option value="{{ $employee->user->id }}">{{ $employee->user->name }}</option>
+                            @foreach ( App\Models\Employee::all() as $employeesList)
+                                <option value="{{ $employeesList->user->id }}">{{ $employeesList->user->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -25,7 +25,6 @@
             </form>
         </div>
     </div>
-    
 
     @isset($salaries)
         <h6 class="window-title-bar text-uppercase fw-bold">Reporte</h6>

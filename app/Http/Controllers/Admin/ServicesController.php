@@ -24,7 +24,7 @@ class ServicesController extends Controller
     public function index()
     {
         $services = array();
-        $clients  = Client::orderBy('name')->get();
+        $clients  = Client::where('status','Activo')->orderBy('name')->get();
 
         return view('admin.services.index', compact('services', 'clients'));
     }
