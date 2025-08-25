@@ -27,14 +27,21 @@
     </div>
 
     @isset($salaries)
-        <h6 class="window-title-bar text-uppercase fw-bold">Reporte</h6>
+        <h6 class="window-title text-uppercase fw-bold"><span class="ms-3">Reporte</span></h6>
         <div class="window-body shadow p-4">
             <div class="form-container border">
                 <div class="row m-0 p-2">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Nombre</label>
-                        <input type="text" class="form-control" value="{{ $employee->user->name }}" disabled>
+                        <div class="input-group">
+                            <span class="input-group-text"> #{{ $employee->id }}</span>
+                            <input type="text" class="form-control" value="{{ $employee->user->name }}" disabled>
+                        </div>
                     </div>
+                    <div class="col-md-3">
+                        <label class="text-uppercase fs-8 fw-bold">Telefono</label>
+                        <input type="text" class="form-control" value="{{ $employee->user->phone }}" disabled>
+                    </div>                    
                     <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Puesto</label>
                         <input type="text" class="form-control" value="{{ $employee->depto }}" disabled>
@@ -113,7 +120,16 @@
                     </table>
                 </div>
             </div>
+        
+            <div class="col-md-12">
+                <a href="{{ route('employees.show', $employeesList->user->id) }}" class="btn btn-sm">
+                    <x-feathericon-info class="table-icon" style="margin: -2px 5px 2px"/>
+                    Más información
+                </a>
+            </div>
+
         </div>
+
     @endisset
 </div>
 @endsection

@@ -3,7 +3,7 @@
 @section('content')
 <div class="window-container">
     <div class="col-md-7">
-        <h6 class="window-title-bar shadow text-uppercase fw-bold">Gasto</h6>
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Gasto</span></h6>
         <div class="window-body shadow">
             <h4 class="ps-2 text-uppercase fs-6">Detalles del Egreso</h4>
             <div class="row mt-3">

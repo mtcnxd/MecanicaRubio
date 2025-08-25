@@ -1,17 +1,17 @@
 @extends('includes.body')
 
 @section('content')
+@include('includes.alert')
 <div class="window-container">
-    @include('includes.alert')
     <div class="col-md-7">
-        <h6 class="window-title-bar shadow text-uppercase fw-bold">automovil</h6>
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">automovil</span></h6>
         <div class="window-body shadow p-4">
-            <div class="form-container border">
-                <form action="{{ route('cars.store') }}" method="POST">
+            <form action="{{ route('cars.store') }}" method="POST">
+                <div class="form-container border">
                     @method('POST')
                     @csrf
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="select-brand">Marca</label>    
                             <div class="input-group">
                                 <select class="form-select" id="select-brand" name="brand">
@@ -25,9 +25,7 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label for="select-model">Modelo</label>
                             <div class="input-group">
                                 <select class="form-select" id="select-model" name="model">
@@ -39,24 +37,24 @@
                             </div>
                         </div>    
                     </div>
+
                     <div class="row mt-3">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <label>VIN</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="serie" placeholder="Vehicle Identification Number">
                             </div>
                         </div>    
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label>Año</label>
                             <input type="text" class="form-control" name="year" required>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label>Placa</label>
                             <input type="text" class="form-control" name="plate">
                         </div>
                     </div>
+
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label>Cliente</label>
@@ -73,17 +71,18 @@
                             <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12 text-end">
-                            <a href="{{ route('cars.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-sm btn-success">
-                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                                Guardar
-                            </button>
-                        </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12 text-end">
+                        <a href="{{ route('cars.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                            Guardar
+                        </button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="window-container">
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Empleados</h6>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Empleados</span></h6>
     <div class="window-body shadow">
         <label class="window-body-form">Editar empleado</label>
         <form action="{{ route('employees.update', $employee->id) }}" method="POST" class="border pt-4 pb-4">

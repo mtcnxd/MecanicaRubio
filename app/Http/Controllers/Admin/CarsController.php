@@ -54,17 +54,14 @@ class CarsController extends Controller
 
     public function show(string $id)
     {
-        $client = DB::table('autos')
-            ->join('clients','autos.client_id', 'clients.id')
-            ->where('autos.id', $id)
-            ->first();
+        $car = Cars::find($id);
 
         $services = DB::table('autos')
             ->join('services', 'services.car_id', 'autos.id')
             ->where('autos.id', $id)
             ->get();
 
-        return view('admin.cars.show', compact('services','client'));
+        return view('admin.cars.show', compact('car'));
     }
 
     public function edit(string $id)

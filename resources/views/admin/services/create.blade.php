@@ -4,10 +4,10 @@
 <div class="window-container">
     @include('includes.alert')
     <div class="col-md-7">
-        <h6 class="window-title-bar shadow text-uppercase fw-bold">Servicio</h6>
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Servicio</span></h6>
         <div class="window-body shadow p-4">
-            <div class="form-container border">
-                <form action="{{ route('services.store') }}" method="POST">
+            <form action="{{ route('services.store') }}" method="POST">
+                <div class="form-container border">
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
@@ -72,16 +72,19 @@
                                 Cotizacion
                             </label>
                         </div>
-                        <div class="col-md-6 text-end">
-                            <a href="{{ route('services.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-sm btn-success">
-                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                                Guardar
-                            </button>
-                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12 text-end">
+                        <a href="{{ route('services.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

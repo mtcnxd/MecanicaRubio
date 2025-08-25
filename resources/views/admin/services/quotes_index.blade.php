@@ -3,10 +3,8 @@
 @section('content')
 <div class="window-container">
     @include('includes.alert')
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Cotizaciones</h6>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Cotizaciones</span></h6>
     <div class="window-body shadow py-4">
-        @include('includes.alert')
-
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-3">
                 <label for="endDate" class="fw-bold">Cliente</label>

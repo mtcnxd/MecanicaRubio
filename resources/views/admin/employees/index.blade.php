@@ -3,7 +3,7 @@
 @section('content')
 <div class="window-container">
     @include('includes.alert')
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Empleados</h6>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Empleados</span></h6>
     <div class="window-body shadow">
         <table class="table table-hover table-borderless bg-white" id="services">
             <thead>

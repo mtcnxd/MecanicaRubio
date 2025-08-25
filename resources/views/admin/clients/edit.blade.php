@@ -3,90 +3,101 @@
 @section('content')
 <div class="window-container">
     @include('includes.alert')
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Buscar cliente</h6>
-    <div class="window-body shadow">
-        <label class="window-body-form">Editar cliente</label>
-        <form action="{{ route('clients.update', $client->id) }}" method="POST" class="border pt-4 pb-4">
-            @method('PUT')
-            @csrf
-            <div class="row col-md-6 p-4 pt-0">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" name="name" value="{{ isset($client) ? $client->name : '' }}" required>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label>Correo</label>
-                        <input type="text" class="form-control" name="email" value="{{ isset($client) ? $client->email : '' }}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label>Teléfono</label>
-                        <input type="number" class="form-control" name="phone" value="{{ isset($client) ? $client->phone : '' }}" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Código Postal</label>
-                        <input type="text" class="form-control" id="postcode" name="postcode" value="{{ isset($client) ? $client->postcode : '' }}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label>Colónia</label>
-                        <select class="form-select" id="address" name="address">
-                            @if ( isset($client) )
-                                <option>{{ $client->address }}</option>
-                            @endif
-                        </select>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label>Calle / Número</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="street" value="{{ isset($client) ? $client->street : '' }}">
-                            <span class="input-group-text">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#searchModal">Buscar</a>
-                            </span>
+    <div class="col-md-7">
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Buscar cliente</span></h6>
+        <div class="window-body shadow p-4">
+            <div class="form-container border">
+                <form action="{{ route('clients.update', $client->id) }}" method="POST">
+                    @method('PUT')
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" name="name" value="{{ isset($client) ? $client->name : '' }}" required>
                         </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label>Ciudad</label>
-                        <input type="text" class="form-control" id="city" name="city" value="{{ isset($client) ? $client->city : '' }}">
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>Correo</label>
+                            <input type="text" class="form-control" name="email" value="{{ isset($client) ? $client->email : '' }}">
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label>Estado</label>
-                        <input type="text" class="form-control" id="state" name="state" value="{{ isset($client) ? $client->state : '' }}">
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Teléfono</label>
+                            <input type="number" class="form-control" name="phone" value="{{ isset($client) ? $client->phone : '' }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Código Postal</label>
+                            <input type="text" class="form-control" id="postcode" name="postcode" value="{{ isset($client) ? $client->postcode : '' }}">
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label>RFC</label>
-                        <input type="text" class="form-control" name="rfc" value="{{ isset($client) ? $client->rfc : '' }}">
+
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>Colónia</label>
+                            <select class="form-select" id="address" name="address">
+                                @if ( isset($client) )
+                                    <option>{{ $client->address }}</option>
+                                @endif
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <label>Comentarios</label>
-                        <textarea class="form-control" cols="30" rows="4" name="comments">{{ isset($client) ? $client->comments : '' }}</textarea>
+                        
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>Calle / Número</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="street" value="{{ isset($client) ? $client->street : '' }}">
+                                <span class="input-group-text">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#searchModal">Buscar</a>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-12 text-end">
-                        <button type="button" href="#" class="btn btn-danger" id="deleteClient" data-bs-client="{{ isset($client) ? $client->id : ''}}">Eliminar</button>
-                        <a href="{{ route('clients.index') }}" class="btn btn-secondary">Cancelar</a>
-                        <button type="submit" class="btn btn-success">
-                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                            Guardar
-                        </button>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Ciudad</label>
+                            <input type="text" class="form-control" id="city" name="city" value="{{ isset($client) ? $client->city : '' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Estado</label>
+                            <input type="text" class="form-control" id="state" name="state" value="{{ isset($client) ? $client->state : '' }}">
+                        </div>
                     </div>
-                </div>
+
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>RFC</label>
+                            <input type="text" class="form-control" name="rfc" value="{{ isset($client) ? $client->rfc : '' }}">
+                        </div>
+                    </div>
+                        
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>Comentarios</label>
+                            <textarea class="form-control" cols="30" rows="4" name="comments">{{ isset($client) ? $client->comments : '' }}</textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-12 text-end">
+                            <button type="button" href="#" class="btn btn-sm btn-danger" id="deleteClient" data-bs-client="{{ isset($client) ? $client->id : ''}}">Eliminar</button>
+                            <a href="{{ route('clients.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 @endsection

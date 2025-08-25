@@ -3,10 +3,10 @@
 @section('content')
 <div class="window-container">
     <div class="col-md-7">    
-        <h6 class="window-title-bar shadow text-uppercase fw-bold">Egreso</h6>
-        <div class="window-body shadow">
-            <div class="border p-4" style="background-color: #FAFAFA;">
-                <form action="{{ route('expenses.store') }}" method="POST" enctype="multipart/form-data">
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Egreso</span></h6>
+        <div class="window-body shadow p-4">
+            <form action="{{ route('expenses.store') }}" method="POST" enctype="multipart/form-data">
+                <div class="form-container border">
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
@@ -58,17 +58,19 @@
                             <input type="file" class="form-control" name="attach">
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12 text-end">
-                            <a href="{{ route('expenses.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-sm btn-success">
-                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                                Guardar
-                            </button>
-                        </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12 text-end">
+                        <a href="{{ route('expenses.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                            Guardar
+                        </button>
                     </div>
-                </form>
-            </div>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>

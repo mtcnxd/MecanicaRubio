@@ -3,7 +3,7 @@
 @section('content')
 <div class="window-container">
     @include('includes.alert')
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Listado de nominas</h6>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Listado de nominas</span></h6>
     <div class="window-body shadow py-4">
         <form action="{{ route('payroll.index') }}" method="POST">
             @csrf

@@ -3,7 +3,7 @@
 @section('content')
 @include('includes.alert')
 <div class="window-container shadow">
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Listado de egresos</h6>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Listado de egresos</span></h6>
     <div class="window-body shadow py-4">
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-2">

@@ -4,7 +4,7 @@
 <div class="window-container">
     @include('includes.alert')
     <div class="col-md-7">
-        <h6 class="window-title-bar shadow text-uppercase fw-bold">Usuarios</h6>
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Usuarios</span></h6>
         <div class="window-body shadow">
             <label class="window-body-form">Crear nuevo usuario</label>
             <form action="{{ route('users.store') }}" method="POST" class="col-md-12 border pt-4 pb-4">

@@ -3,10 +3,10 @@
 @section('content')
 <div class="window-container">
     @include('includes.alert')
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Cotizacion #{{ $service->id }}</h6>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Cotizacion</span></h6>
     <div class="window-body shadow p-4">
-        <div class="form-container border">
-            <form action="{{ route('services.update', $service->id) }}" method="POST">
+        <form action="{{ route('services.update', $service->id) }}" method="POST">
+            <div class="form-container border mb-0">
                 @csrf
                 @method('PATCH')
                 <div class="row pt-0 pb-0">
@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12 border-top border-bottom border bg-white mt-4 mb-4" style="height: 350px; overflow-y: scroll">
+            <div class="col-md-12 bg-white border border-top-0 border-bottom-0" style="height: 350px; overflow-y: scroll">
                 <table class="table table-hover table-borderless dataTable no-footer">
                     <thead>
                         <th width="30px">#</th>
@@ -94,15 +94,16 @@
                 </table>
             </div>
 
-        <div class="form-container border">
-            <div class="row pt-0 p-4 pb-0">
-                <div class="col-md-6">
-                    <label>Comentarios</label>
-                    <textarea name="notes" class="form-control" cols="30" rows="3">{{ $service->notes }}</textarea>
+            <div class="form-container border">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Comentarios</label>
+                        <textarea name="notes" class="form-control" cols="30" rows="3">{{ $service->notes }}</textarea>
+                    </div>
                 </div>
             </div>
 
-            <div class="row pt-0 p-4 pb-0">
+            <div class="row">
                 <div class="col-md-12 text-end">
                     <a href="#" class="btn btn-sm btn-secondary" onclick="downloadPDF({{ $service->id }})">
                         <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>

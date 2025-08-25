@@ -3,7 +3,7 @@
 @section('content')
 <div class="window-container">
     @include('includes.alert')    
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Cliente #{{ $client->id }}</h6>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Cliente</span></h6>
     <div class="window-body shadow p-4">
         <div class="form-container border">
             <form method="POST">
@@ -13,10 +13,9 @@
                             <div class="col-md-12">
                                 <label>Nombre</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="name" value="{{ isset($client) ? "#".$client->id ." - ". $client->name : '' }}" disabled>
-                                    <span class="input-group-text">
-                                        <a href="{{ route('clients.edit', $client->id) }}">Editar</a>
-                                    </span>
+                                    <span class="input-group-text"> #{{ $client->id }}</span>
+                                    <input type="text" class="form-control" name="name" value="{{ isset($client) ? $client->name : '' }}" disabled>
+                                    <span class="input-group-text"><a href="{{ route('clients.edit', $client->id) }}">Editar</a></span>
                                 </div>
                             </div>
                         </div>

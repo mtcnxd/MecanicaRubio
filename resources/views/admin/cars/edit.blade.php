@@ -2,112 +2,94 @@
 
 @section('content')
 <div class="window-container">
-    <div class="window-title-bar shadow">
-        <x-feathericon-menu class="window-title-icon"/>
-    </div>
-    <div class="window-body shadow">
-        <label class="window-body-form">Editar automovil</label>
-        <form action="{{ route('cars.update', $auto->id) }}" method="POST" class="border pt-4 pb-4">
-            @csrf
-            @method('PUT')
-            <div class="col-md-6">                
-                <div class="row">
-                    <div class="col-md-3 pt-2 text-end">
-                        Cliente
-                    </div>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="client" id="client" value="{{ $auto->name }}" disabled>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Marca
-                    </div>    
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <select class="form-select" id="select-brand" name="brand">
-                                @if (isset($auto))
-                                    <option>{{ $auto->brand  }} </option>
-                                @else
-                                    <option>- Seleccione una marca -</option>
-                                @endif
-                                @foreach ($brands as $brand)
-                                    <option>{{ $brand->brand }}</option>
-                                @endforeach
-                            </select>
-                            <span class="input-group-text">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#createBrand">Agregar</a>
-                            </span>
+    <div class="col-md-7">
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">automovil</span></h6>
+        <div class="window-body shadow p-4">
+            <div class="form-container border">
+                <form action="{{ route('cars.update', $auto->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Cliente</label>
+                            <input type="text" class="form-control" name="client" id="client" value="{{ $auto->name }}" disabled>
                         </div>
                     </div>
-                </div>
 
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Modelo
-                    </div>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <select class="form-select" id="select-model" name="model">
-                                @if (isset($auto))
-                                    <option>{{ $auto->model }}</option>
-                                @else
-                                    <option>- Seleccione un modelo -</option>
-                                @endif
-                            </select>
-                            <span class="input-group-text">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#createModel">Agregar</a>
-                            </span>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label>Marca</label>    
+                            <div class="input-group">
+                                <select class="form-select" id="select-brand" name="brand">
+                                    @if (isset($auto))
+                                        <option>{{ $auto->brand  }} </option>
+                                    @else
+                                        <option>- Seleccione una marca -</option>
+                                    @endif
+                                    @foreach ($brands as $brand)
+                                        <option>{{ $brand->brand }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="input-group-text">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#createBrand">Agregar</a>
+                                </span>
+                            </div>
                         </div>
-                    </div>    
-                </div>
 
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        VIN
+                        <div class="col-md-6">
+                            <label>Modelo</label>
+                            <div class="input-group">
+                                <select class="form-select" id="select-model" name="model">
+                                    @if (isset($auto))
+                                        <option>{{ $auto->model }}</option>
+                                    @else
+                                        <option>- Seleccione un modelo -</option>
+                                    @endif
+                                </select>
+                                <span class="input-group-text">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#createModel">Agregar</a>
+                                </span>
+                            </div>
+                        </div>    
                     </div>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <input type="text" name="serie" id="serie" class="form-control" value="{{ isset($auto->serie) ? $auto->serie : '' }}">
+
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label>VIN</label>
+                            <div class="input-group">
+                                <input type="text" name="serie" id="serie" class="form-control" value="{{ isset($auto->serie) ? $auto->serie : '' }}">
+                            </div>
+                        </div>    
+                        <div class="col-md-4">
+                            <label>Año</label>
+                            <input type="text" class="form-control" name="year" value="{{ isset($auto) ? $auto->year : '' }}" required>
                         </div>
-                    </div>    
-                </div>
+                        <div class="col-md-4">
+                            <label>Placa</label>
+                            <input type="text" class="form-control" name="plate" value="{{ isset($auto) ? $auto->plate : '' }}">
+                        </div>
+                    </div>
 
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Año
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label>Comentarios</label>
+                            <textarea class="form-control" cols="30" rows="4" name="comments">{{ isset($auto) ? $auto->comments : '' }}</textarea>
+                        </div>                
                     </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="year" value="{{ isset($auto) ? $auto->year : '' }}" required>
+                    
+                    <div class="row">
+                        <div class="col-md-12 mt-3 text-end">
+                            <a href="{{ route('cars.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                                Guardar
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-md-3 pt-2 text-end">
-                        Placa
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="plate" value="{{ isset($auto) ? $auto->plate : '' }}">
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col-md-3 pt-2 text-end">
-                        Comentarios
-                    </div>
-                    <div class="col-md-9">
-                        <textarea class="form-control" cols="30" rows="4" name="comments">{{ isset($auto) ? $auto->comments : '' }}</textarea>
-                    </div>                
-                </div>                
-            </div>
-            
-            <div class="col-md-6 mt-3 text-end">
-                <a href="{{ route('cars.index') }}" class="btn btn-secondary">Cancelar</a>
-                <button type="submit" class="btn btn-success">
-                    <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                    Guardar
-                </button>
-            </div>
-        </form>
-    </div>
+                </form>
+        </div>
+    </div>    
 </div>
 @endsection
 

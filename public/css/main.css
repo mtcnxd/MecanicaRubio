@@ -21,15 +21,6 @@ a:hover {
     color: var(--orange-800);
 }
 
-.window-title-bar {
-    background: linear-gradient(0deg, #CFD8DC, #ECEFF1);
-    border: 1px solid var(--blue-gray-100);
-    border-radius: 10px 10px 0 0;
-    padding: 15px 10px 10px 20px;
-    margin-bottom: 0px;
-    font-size: 13px;
-}
-
 .window-container {
     width: 80%;
     margin: 2rem auto 100px;
@@ -37,22 +28,21 @@ a:hover {
     top: 60px;
 }
 
+.window-title {
+    background: linear-gradient(0deg, #CFD8DC, #ECEFF1);
+    border: 1px solid var(--blue-gray-100);
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 0px;
+    font-size: 13px;
+    height: 2.1rem;
+    display: flex;
+    align-items: center;
+}
+
 .window-body {
     border: solid 2px var(--blue-gray-100);
     background-color: var(--gray-50);
 }
-
-/*
-.window-body {
-    position: absolute;
-    margin-left: 20px;
-    padding: 12px;
-    margin-top: -20px;
-    text-transform: uppercase;
-    font-size: 13px;
-    font-weight: bold;
-}
-*/
 
 .form-container {
     background-color: #fff;

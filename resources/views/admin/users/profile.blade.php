@@ -5,7 +5,7 @@
     @include('includes.alert')
     <div class="row">
         <div class="col-md-6">
-            <h6 class="window-title-bar shadow text-uppercase fw-bold">Perfil</h6>
+            <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Perfil</span></h6>
             <div class="window-body shadow p-4">
                 <div class="form-container border">
                         <form action="{{ route('profile.update') }}" method="POST">

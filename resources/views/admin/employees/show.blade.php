@@ -3,7 +3,7 @@
 @section('content')
 <div class="window-container">
     @include('includes.alert')
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Empleado</h6>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Empleado</span></h6>
     <div class="window-body shadow p-4">
         <div class="form-container border">
             <form action="{{ route('employees.update', $employee->id) }}" method="POST">

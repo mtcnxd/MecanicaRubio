@@ -2,19 +2,18 @@
 
 @section('content')
 <div class="window-container">
-    <div class="window-title-bar shadow">
-        <x-feathericon-menu class="window-title-icon"/>
-    </div>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">automovil</span></h6>
     <div class="window-body shadow p-4">
         <div class="form-container border">
             <form method="POST">
+                <p class="fw-bold fs-5">Cliente</p>
                 <div class="row pt-0">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-12">
                                 <label>Nombre</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="name" value="{{ isset($client) ? $client->name : '' }}" disabled>
+                                    <input type="text" class="form-control" name="name" value="{{ $car->client->name }}" disabled>
                                     <span class="input-group-text">
                                         <a href="#">Editar</a>
                                     </span>
@@ -24,57 +23,45 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label>Correo</label>
-                                <input type="text" class="form-control" name="email" value="{{ isset($client) ? $client->email : '' }}" disabled>
+                                <input type="text" class="form-control" name="email" value="{{ $car->client->email }}" disabled>
                             </div>                
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <label>Telefono</label>
-                                <input type="text" class="form-control" name="phone" value="{{ isset($client) ? $client->phone : '' }}" disabled>
+                                <input type="text" class="form-control" name="phone" value="{{ $car->client->phone }}" disabled>
                             </div>
                             <div class="col-md-6">
                                 <label>Codigo Postal</label>
-                                <input type="text" class="form-control" id="postcode" name="postcode" value="{{ isset($client) ? $client->postcode : '' }}" disabled>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <label>RFC</label>
-                                <input type="text" class="form-control" name="rfc" value="{{ isset($client) ? $client->rfc : '' }}" disabled>
+                                <input type="text" class="form-control" id="postcode" name="postcode" value="{{ $car->client->postcode }}" disabled>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label>Dirección</label>
-                                <input type="text" class="form-control" name="street" value="{{ isset($client) ? $client->street : '' }}" disabled>
+                                <input type="text" class="form-control" name="street" value="{{ $car->client->street }}" disabled>
                             </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <label>Colónia</label>
-                                <select class="form-select" id="address" name="address" disabled>
-                                    @if ( isset($client) )
-                                        <option>{{ $client->address }}</option>
-                                    @endif
-                                </select>
+                                <input type="text" class="form-control" name="street" value="{{ $car->client->address }}" disabled>
                             </div>
                         </div>
                         <div class="row mt-3"> 
                             <div class="col-md-6">
                                 <label>Ciudad</label>
-                                <input type="text" class="form-control" id="city" name="city" value="{{ isset($client) ? $client->city : '' }}" disabled>
+                                <input type="text" class="form-control" id="city" name="city" value="{{ $car->client->city }}" disabled>
                             </div>
                             <div class="col-md-6">
                                 <label>Estado</label>
-                                <input type="text" class="form-control" id="state" name="state" value="{{ isset($client) ? $client->state : '' }}" disabled>
+                                <input type="text" class="form-control" id="state" name="state" value="{{ $car->client->state }}" disabled>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label>Comentarios</label>
-                                <textarea class="form-control" disabled>{{ isset($client) ? $client->comments : '' }}</textarea>
+                                <textarea class="form-control" disabled>{{ $car->client->comments }}</textarea>
                             </div>
                         </div>
                     </div>                
@@ -84,13 +71,14 @@
 
         <div class="form-container border">
             <form method="POST">
+                <p class="fw-bold fs-5">Automovil</p>
                 <div class="row pt-0">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Marca</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" value="{{ isset($client) ? $client->brand : '' }}" disabled>
+                                    <input type="text" class="form-control" value="{{ $car->brand }}" disabled>
                                     <span class="input-group-text">
                                         <a href="#">Editar</a>
                                     </span>
@@ -99,7 +87,7 @@
                             <div class="col-md-6">
                                 <div class="col-md-12">
                                     <label>Modelo</label>
-                                    <input type="text" class="form-control" value="{{ isset($client) ? $client->model : '' }}" disabled>
+                                    <input type="text" class="form-control" value="{{ $car->model }}" disabled>
                                 </div>
                             </div>                        
                         </div>
@@ -107,7 +95,7 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <label>Serie (VIN)</label>
-                                <input type="text" class="form-control" value="{{ isset($client) ? $client->serie : '' }}" disabled>
+                                <input type="text" class="form-control" value="{{ $car->serie }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -116,13 +104,20 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Año</label>
-                                <input type="text" class="form-control" value="{{ isset($client) ? $client->year : '' }}" disabled>
+                                <input type="text" class="form-control" value="{{ $car->year }}" disabled>
                             </div>
                             <div class="col-md-6">
                                 <label>Placa</label>
-                                <input type="text" class="form-control" value="{{ isset($client) ? $client->plate : '' }}" disabled>
+                                <input type="text" class="form-control" value="{{ $car->plate }}" disabled>
                             </div>
                         </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label>Comentarios</label>
+                                <textarea class="form-control" disabled>{{ $car->comments }}</textarea>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
             </form>
@@ -139,7 +134,7 @@
                     <th class="text-end">Total</th>
                 </thead>
                 <tbody>
-                    @foreach ($services as $service)
+                    @foreach ($car->services as $service)
                         <tr>
                             <td>
                                 <a href="{{ route('services.show', $service->id) }}">{{ Str::limit($service->fault, 80) }}</a>
@@ -161,20 +156,26 @@
             </table>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 mt-3">
-                <x-feathericon-clipboard class="table-icon" style="margin-top:-4px;"/>
-                @if (count($services) > 1)
-                    Se encontraron {{ count($services) }} registros.
-                @else 
-                    Se encontro {{ count($services) }} registro.
-                @endif
+        <div class="col-md-12">
+
+            <div class="row">
+                <div class="col-md-6 mt-3">
+                    <x-feathericon-clipboard class="table-icon"/>
+                    @if (count($car->services) > 1)
+                        Se encontraron {{ count($car->services) }} registros.
+                    @else 
+                        Se encontro {{ count($car->services) }} registro.
+                    @endif
+                </div>
+                <div class="col-md-6 mt-3 text-end">
+                    <a href="{{ route('cars.index') }}" class="btn btn-sm btn-success">Atras</a>
+                    <a href="{{ route('finance', $car->id) }}" class="btn btn-sm btn-success">Mas Información</a>
+                </div>
             </div>
-            <div class="col-md-6 mt-3 text-end" style="padding-right: 40px;">
-                <a href="{{ route('cars.index') }}" class="btn btn-sm btn-success">Atras</a>
-                <a href="{{ route('finance', $client->id) }}" class="btn btn-sm btn-success">Mas Información</a>
-            </div>
+
         </div>
+
+
     </div>
 </div>
 @endsection

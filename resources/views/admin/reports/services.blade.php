@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="window-container">
-    <h6 class="window-title-bar shadow text-uppercase fw-bold">Ingresos del mes</h6>
+    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Ingresos del mes</span></h6>
     <div class="window-body shadow">
         <table class="table border table-hover">
             <thead>

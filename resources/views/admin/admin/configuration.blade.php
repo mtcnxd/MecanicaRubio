@@ -4,7 +4,7 @@
 <div class="window-container">
     @include('includes.alert')
     <div class="col-md-6">
-        <h6 class="window-title-bar shadow text-uppercase fw-bold">Configuracion</h6>
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Configuracion</span></h6>
         <div class="window-body shadow p-4">
             <div class="form-container border">
                 <form action="{{ route('setting.store') }}" method="POST">

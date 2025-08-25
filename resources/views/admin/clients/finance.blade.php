@@ -5,7 +5,7 @@
     @include('includes.alert')
     <div class="row col-md-12">
         <div class="col-md-3">
-            <h6 class="window-title-bar" style="display: flex; justify-content: space-between; align-items: center;">
+            <h6 class="window-title" style="display: flex; justify-content: space-between; align-items: center;">
                 <span>Ingreso generados</span>
                 <x-feathericon-dollar-sign class="window-title-icon"/>
             </h6>
@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="col-md-3">            
-            <h6 class="window-title-bar" style="display: flex; justify-content: space-between; align-items: center;">
+            <h6 class="window-title" style="display: flex; justify-content: space-between; align-items: center;">
                 <span>Servicios ingresados</span>
                 <x-feathericon-tool class="window-title-icon"/>
             </h6>
