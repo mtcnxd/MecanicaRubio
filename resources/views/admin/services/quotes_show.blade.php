@@ -4,49 +4,50 @@
 <div class="window-container">
     @include('includes.alert')
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Cotizacion #{{ $service->id }}</h6>
-    <div class="window-body shadow p-4 bg-white">
-        <label class="window-body-form">Cotizacion</label>
-        <form action="{{ route('services.update', $service->id) }}" method="POST" class="border pt-4 pb-4">
-            @csrf
-            @method('PATCH')
-            <div class="row pt-0 p-4 pb-0">
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Cliente</label>    
-                            <input type="text" class="form-control" name="client" value="#{{ $service->client->id }} - {{ $service->client->name }}" disabled>
-                            <input type="hidden" value="{{ $service->id }}" id="service">
+    <div class="window-body shadow p-4">
+        <div class="form-container border">
+            <form action="{{ route('services.update', $service->id) }}" method="POST">
+                @csrf
+                @method('PATCH')
+                <div class="row pt-0 pb-0">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Cliente</label>    
+                                <input type="text" class="form-control" name="client" value="#{{ $service->client->id }} - {{ $service->client->name }}" disabled>
+                                <input type="hidden" value="{{ $service->id }}" id="service">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label>Servicio/Fallo reportado</label>
+                                <textarea class="form-control" cols="30" rows="4" name="fault" disabled>{{ $service->fault }}</textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <label>Servicio/Fallo reportado</label>
-                            <textarea class="form-control" cols="30" rows="4" name="fault" disabled>{{ $service->fault }}</textarea>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Automovil</label>
-                            <input type="text" class="form-control" id="car" name="car" value="{{ $service->car->brand }} {{ $service->car->model }} - {{ $service->car->year }}" disabled>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Automovil</label>
+                                <input type="text" class="form-control" id="car" name="car" value="{{ $service->car->brand }} {{ $service->car->model }} - {{ $service->car->year }}" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Fecha cotizacion</label>    
+                                <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->created_at)) }}">
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label>Fecha cotizacion</label>    
-                            <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->created_at)) }}">
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
-                            <label>Comentarios</label>
-                            <textarea class="form-control" cols="30" rows="4" name="comments" disabled>{{ $service->comments }}</textarea>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <label>Comentarios</label>
+                                <textarea class="form-control" cols="30" rows="4" name="comments" disabled>{{ $service->comments }}</textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-12 border-top border-bottom bg-body-tertiary mt-4 mb-4" style="height: 350px; overflow-y: scroll">
+            <div class="col-md-12 border-top border-bottom border bg-white mt-4 mb-4" style="height: 350px; overflow-y: scroll">
                 <table class="table table-hover table-borderless dataTable no-footer">
                     <thead>
                         <th width="30px">#</th>
@@ -76,7 +77,7 @@
                         </tr>
                         @endforeach
                     </tbody>
-                    <tfoot class="border-top">
+                    <tfoot>
                         <tr>
                             <td colspan="3">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#createItem" id="addItem">
@@ -93,6 +94,7 @@
                 </table>
             </div>
 
+        <div class="form-container border">
             <div class="row pt-0 p-4 pb-0">
                 <div class="col-md-6">
                     <label>Comentarios</label>

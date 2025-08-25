@@ -1,12 +1,11 @@
 @extends('includes.body')
 
 @section('content')
+@include('includes.alert')
 <div class="window-container">
-    @include('includes.alert')
-
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Nominas</h6>
-    <div class="window-body shadow p-4 bg-white">
-        <div class="border pt-4 pb-4" style="background-color: #FAFAFA;">
+    <div class="window-body shadow p-4">
+        <div class="form-container border mb-0">
             <form action="{{ route('payroll.store') }}" method="POST">
                 @csrf
                 <div class="row pt-0 p-4 pb-0">
@@ -17,8 +16,8 @@
                                 <div class="input-group mb-3">
                                     <select class="form-select" name="employee" id="employee" required>
                                         <option value="0"> - Seleccione empleado - </option>
-                                        @foreach (App\Models\User::all() as $employee)
-                                            <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                        @foreach (App\Models\Employee::all() as $employee)
+                                            <option value="{{ $employee->id }}">{{ $employee->user->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="input-group-text" id="basic-addon2">
@@ -72,48 +71,50 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-12 border-top border-bottom bg-body-tertiary mt-4 mb-4" style="height: 300px; overflow-y: scroll">
-                    <table class="table table-hover table-borderless dataTable no-footer">
-                        <thead>
-                            <tr>
-                                <th width="30px">#</th>
-                                <th>Concepto</th>
-                                <th class="text-end">Importe</th>
-                                <th width="30px"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($items as $count => $item)
-                            <tr>
-                                <td>{{ $count +1 }}</td>
-                                <td>{{ $item->concept }}</td>
-                                <td class="text-end">{{ "$".number_format($item->amount, 2) }}</td>
-                                <td>
-                                    <a href="#" class="removeButton" id="{{ $item->id }}">
-                                        <x-feathericon-trash-2 class="table-icon"/>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot class="border-top">
-                            <tr>
-                                <td colspan="2">
-                                    <a href="#" id="openModal">
-                                        Agregar
-                                        <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
-                                    </a>
-                                </td>
-                                <td class="text-end">
-                                    {{ '$'.number_format($items->sum('amount'), 2) }}
-                                    <input type="hidden" name="total" value="{{ $items->sum('amount') }}" id="total">
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+            <div class="col-md-12 bg-white border border-top-0 border-bottom-0" style="height: 300px; overflow-y: scroll">
+                <table class="table table-hover table-borderless dataTable no-footer">
+                    <thead>
+                        <tr>
+                            <th width="30px">#</th>
+                            <th>Concepto</th>
+                            <th class="text-end">Importe</th>
+                            <th width="30px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($items as $count => $item)
+                        <tr>
+                            <td>{{ $count +1 }}</td>
+                            <td>{{ $item->concept }}</td>
+                            <td class="text-end">{{ "$".number_format($item->amount, 2) }}</td>
+                            <td>
+                                <a href="#" class="removeButton" id="{{ $item->id }}">
+                                    <x-feathericon-trash-2 class="table-icon"/>
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot class="border-top">
+                        <tr>
+                            <td colspan="2">
+                                <a href="#" id="openModal">
+                                    Agregar
+                                    <x-feathericon-plus-circle class="table-icon" style="margin: 0 0 2px 5px"/>
+                                </a>
+                            </td>
+                            <td class="text-end fw-bold">
+                                {{ '$'.number_format($items->sum('amount'), 2) }}
+                                <input type="hidden" name="total" value="{{ $items->sum('amount') }}" id="total">
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
 
+            <div class="form-container border">
                 <div class="row pt-0 p-4 pb-0">
                     <div class="col-md-12 text-end">
                         <a href="{{ route('payroll.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>

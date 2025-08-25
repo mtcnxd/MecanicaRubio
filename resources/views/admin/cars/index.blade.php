@@ -4,8 +4,8 @@
 <div class="window-container">
     @include('includes.alert')
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Buscar auto</h6>
-    <div class="window-body shadow pt-3 pb-3 bg-white">
-        <table class="table table-hover table-borderless mb-4" id="autos">
+    <div class="window-body shadow py-4">
+        <table class="table table-hover table-borderless bg-white mb-4" id="autos">
             <thead>
                 <tr>
                     <th>Automovil</th>

@@ -4,7 +4,7 @@
 <div class="window-container">
     @include('includes.alert')
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Buscar cliente</h6>
-    <div class="window-body shadow p-4 bg-white">
+    <div class="window-body shadow">
         <label class="window-body-form">Editar cliente</label>
         <form action="{{ route('clients.update', $client->id) }}" method="POST" class="border pt-4 pb-4">
             @method('PUT')

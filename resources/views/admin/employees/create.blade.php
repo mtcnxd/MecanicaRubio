@@ -5,7 +5,7 @@
     @include('includes.alert')
     <div class="col-md-7">    
         <h6 class="window-title-bar shadow text-uppercase fw-bold">Empleado</h6>
-        <div class="window-body shadow p-4 bg-white">
+        <div class="window-body shadow p-4">
             <label class="window-body-form">Nuevo empleado</label>
             <form action="{{ route('employees.store') }}" method="POST" class="col-md-12 border pt-4 pb-4">
                 @method('POST')

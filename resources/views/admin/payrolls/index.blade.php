@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="window-container">
+    @include('includes.alert')
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Listado de nominas</h6>
-    <div class="window-body shadow pt-3 pb-3 bg-white">
-        @include('includes.alert')
+    <div class="window-body shadow py-4">
         <form action="{{ route('payroll.index') }}" method="POST">
             @csrf
             @method('GET')
@@ -39,7 +39,7 @@
             </div>
         </form>
         
-        <table class="table table-hover table-borderless mb-4" id="expenses" style="width:100%;">
+        <table class="table table-hover table-borderless bg-white border" id="expenses" style="width:100%;">
             <thead>
                 <tr>
                     <th width="40px">ID</th>

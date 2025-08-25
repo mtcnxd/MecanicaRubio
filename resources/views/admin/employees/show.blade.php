@@ -4,8 +4,8 @@
 <div class="window-container">
     @include('includes.alert')
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Empleado</h6>
-    <div class="window-body shadow p-4 bg-white">
-        <div class="border p-4" style="background-color: #FAFAFA;">
+    <div class="window-body shadow p-4">
+        <div class="form-container border">
             <form action="{{ route('employees.update', $employee->id) }}" method="POST">
                 <p class="fs-5 fw-bold">Detalles empleado</p>
                 @method('PUT')
@@ -126,53 +126,57 @@
         </div>
 
         <div class="mt-4">
-            <form id="vacations" class="border p-4" style="background-color: #FAFAFA ;">
-                <p class="fs-5 fw-bold">Historial de solicitudes</p>
-                <div class="row">
-                    <table class="table table-hover">
-                    @foreach ($vacations as $vacation)
-                        <tr>
-                            <td>{{ $vacation->type }}</td>
-                            <td>{{ $vacation->comment }}</td>
-                            <td class="text-end">{{ $vacation->date }}</td>
-                            <td class="text-end">
-                                @if (Carbon\Carbon::parse($vacation->date)->lt(Carbon\Carbon::now()))
-                                    <a href="http://">Cancelar</a>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                    </table>
-                </div>
-            </form>
+            <div class="form-container border">
+                <form id="vacations">
+                    <p class="fs-5 fw-bold">Historial de solicitudes</p>
+                    <div class="row">
+                        <table class="table table-hover">
+                        @foreach ($vacations as $vacation)
+                            <tr>
+                                <td>{{ $vacation->type }}</td>
+                                <td>{{ $vacation->comment }}</td>
+                                <td class="text-end">{{ $vacation->date }}</td>
+                                <td class="text-end">
+                                    @if (Carbon\Carbon::parse($vacation->date)->lt(Carbon\Carbon::now()))
+                                        <a href="http://">Cancelar</a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                        </table>
+                    </div>
+                </form>
+            </div>
         </div>        
 
         <div class="mt-4">
-            <form id="vacations" class="border p-4" style="background-color: #FAFAFA ;">
-                <p class="fs-5 fw-bold">Solicitudes de ausencia</p>
-                <div class="col-md-12">
-                    <label for="date">Motivo de ausencia</label>
-                    <select class="form-select" name="type" id="type">
-                        <option>Permiso</option>
-                        <option>Salud</option>
-                        <option>Vacaciones</option>
-                    </select>
-                </div>
+            <div class="form-container border">
+                <form id="vacations">
+                    <p class="fs-5 fw-bold">Solicitudes de ausencia</p>
+                    <div class="col-md-12">
+                        <label for="date">Motivo de ausencia</label>
+                        <select class="form-select" name="type" id="type">
+                            <option>Permiso</option>
+                            <option>Salud</option>
+                            <option>Vacaciones</option>
+                        </select>
+                    </div>
 
-                <div class="col-md-12 mt-3">
-                    <label for="date">Fecha de ausencia</label>
-                    <input type="date" class="form-control" name="date" id="date">
-                </div>
+                    <div class="col-md-12 mt-3">
+                        <label for="date">Fecha de ausencia</label>
+                        <input type="date" class="form-control" name="date" id="date">
+                    </div>
 
-                <div class="col-md-12 mt-3">
-                    <label for="comment">Comentario</label>
-                    <textarea class="form-control" name="comment" id="comment"></textarea>
-                </div>
+                    <div class="col-md-12 mt-3">
+                        <label for="comment">Comentario</label>
+                        <textarea class="form-control" name="comment" id="comment"></textarea>
+                    </div>
 
-                <div class="col-md-12 mt-3 text-end">
-                    <button type="button" class="btn btn-sm btn-success" onclick="createRow()">Guardar</button>
-                </div>
-            </form>
+                    <div class="col-md-12 mt-3 text-end">
+                        <button type="button" class="btn btn-sm btn-success" onclick="createRow()">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

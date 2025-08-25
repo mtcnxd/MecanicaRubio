@@ -4,7 +4,7 @@
 <div class="window-container">
     @include('includes.alert')
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Cotizaciones</h6>
-    <div class="window-body shadow p-4 bg-white">
+    <div class="window-body shadow py-4">
         @include('includes.alert')
 
         <div class="row m-1 mb-3 pb-3" id="filters">
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <table class="table table-hover table-borderless mb-4" id="quotes" style="width:100%;">
+        <table class="table table-hover table-borderless bg-white mb-4" id="quotes" style="width:100%;">
             <thead>
                 <tr>
                     <th width="30px">ID</th>

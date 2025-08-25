@@ -3,7 +3,7 @@
 @section('content')
 <div class="window-container">
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Ingresos del mes</h6>
-    <div class="window-body shadow pb-3 bg-white">
+    <div class="window-body shadow">
         <table class="table border table-hover">
             <thead>
                 <th width="40px">#</th>
@@ -23,7 +23,7 @@
                     </tr>
                 @endforeach
             </tbody>
-            <tfoot>
+            <tfoot class="border-top">
                 <tr>
                     <td colspan="3"></td>
                     <td class="text-end fw-bold">{{ "$".number_format($list->sum('price'), 2) }}</td>

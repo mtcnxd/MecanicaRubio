@@ -4,7 +4,7 @@
 <div class="window-container">
     <div class="col-md-7">    
         <h6 class="window-title-bar shadow text-uppercase fw-bold">Egreso</h6>
-        <div class="window-body shadow p-4 bg-white">
+        <div class="window-body shadow">
             <div class="border p-4" style="background-color: #FAFAFA;">
                 <form action="{{ route('expenses.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf

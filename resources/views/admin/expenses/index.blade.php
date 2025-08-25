@@ -1,11 +1,10 @@
 @extends('includes.body')
 
 @section('content')
+@include('includes.alert')
 <div class="window-container shadow">
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Listado de egresos</h6>
-    <div class="window-body shadow pt-3 pb-3 bg-white">
-        @include('includes.alert')
-        
+    <div class="window-body shadow py-4">
         <div class="row m-1 mb-3 pb-3" id="filters">
             <div class="col-md-2">
                 <label class="fw-bold">Inicio</label>
@@ -35,7 +34,7 @@
             </div>
         </div>
         
-        <table class="table table-hover table-borderless mb-4" id="expenses" style="width:100%;">
+        <table class="table table-hover table-borderless bg-white" id="expenses" style="width:100%;">
             <thead>
                 <tr>
                     <th width="40px">ID</th>

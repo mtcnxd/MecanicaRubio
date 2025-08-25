@@ -4,8 +4,8 @@
 <div class="window-container">
     @include('includes.alert')
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Usuarios</h6>
-    <div class="window-body shadow bg-white">
-        <table class="table table-hover table-borderless" id="services">
+    <div class="window-body shadow">
+        <table class="table table-hover table-borderless bg-white" id="services">
             <thead>
                 <tr>
                     <th>ID</th>

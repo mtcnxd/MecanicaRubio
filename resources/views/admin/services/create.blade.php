@@ -5,8 +5,8 @@
     @include('includes.alert')
     <div class="col-md-7">
         <h6 class="window-title-bar shadow text-uppercase fw-bold">Servicio</h6>
-        <div class="window-body shadow p-4 bg-white">
-            <div class="border p-4" style="background-color: #FAFAFA;">
+        <div class="window-body shadow p-4">
+            <div class="form-container border">
                 <form action="{{ route('services.store') }}" method="POST">
                     @csrf
                     <div class="row">

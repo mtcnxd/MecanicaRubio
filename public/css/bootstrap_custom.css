@@ -22,17 +22,17 @@
     --red-400: #EF5350;
     --orange-800: #EF6C00;
     --smooth-black: #444444;
+    --gray-50: #FAFAFA;
     --gray-100: #F5F5F5;
     --gray-200: #EEEEEE;
 }
 
-.window-title-bar {
-    background: linear-gradient(0deg, #CFD8DC, #ECEFF1);
-    border: 1px solid var(--blue-gray-100);
-    border-radius: 10px 10px 0 0;
-    padding: 15px 10px 10px 20px;
-    margin-bottom: 0px;
-    font-size: 13px;
+.fs-7 {
+    font-size: 14px;
+}
+
+.fs-8 {
+    font-size: 12px;
 }
 
 .table {

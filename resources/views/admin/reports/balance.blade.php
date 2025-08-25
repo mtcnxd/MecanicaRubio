@@ -2,41 +2,41 @@
 
 @section('content')
 <div class="window-container">
-    <table class="table border table-hover">
-        <thead>
-            <thead>
-                <th width="40px">#</th>
-                <th>Concepto</th>
-                <th>Fecha</th>
-                <th class="text-end">Ingresos</th>
-                <th class="text-end">Egresos</th>
-            </thead>
-        </thead>
-        <tbody>
-            @foreach ($rows as $key => $row)
-                <tr>
-                    <td>{{ $key = $key +1 }}</td>
-                    <td><strong>{{ $row->type }}</strong> {{ $row->concept }}</td>
-                    <td>{{ Carbon\Carbon::parse($row->date)->format('d-m-Y') }}</td>
-                    <td class="text-end">{{ "$".number_format($row->cash_in, 2) }}</td>    
-                    <td class="text-end">{{ "$".number_format($row->cash_out, 2) }}</td>
-                </tr>
-            @endforeach
-            <tfoot>
-                <tr>
-                    <td colspan="3"></td>
-                    <td class="text-end fw-bold">{{ "$".number_format($rows->sum('cash_in'), 2) }}</td>
-                    <td class="text-end fw-bold">{{ "$".number_format($rows->sum('cash_out'), 2) }}</td>
-                    <input type="hidden" id="income" value="{{ $rows->sum('cash_in') }}">
-                    <input type="hidden" id="expenses" value="{{ $rows->sum('cash_out') }}">
-                </tr>
-            </tfoot>
-        </tbody>
-    </table>
-</div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <table class="table border table-hover">
+                <thead>
+                    <th width="40px">#</th>
+                    <th>Concepto</th>
+                    <th>Fecha</th>
+                    <th class="text-end">Ingresos</th>
+                    <th class="text-end">Egresos</th>
+                </thead>
+                <tbody>
+                    @foreach ($rows as $key => $row)
+                        <tr>
+                            <td>{{ $key = $key +1 }}</td>
+                            <td><strong>{{ $row->type }}</strong> {{ $row->concept }}</td>
+                            <td>{{ Carbon\Carbon::parse($row->date)->format('d-m-Y') }}</td>
+                            <td class="text-end">{{ "$".number_format($row->cash_in, 2) }}</td>    
+                            <td class="text-end">{{ "$".number_format($row->cash_out, 2) }}</td>
+                        </tr>
+                    @endforeach
+                    <tfoot>
+                        <tr>
+                            <td colspan="3"></td>
+                            <td class="text-end fw-bold">{{ "$".number_format($rows->sum('cash_in'), 2) }}</td>
+                            <td class="text-end fw-bold">{{ "$".number_format($rows->sum('cash_out'), 2) }}</td>
+                            <input type="hidden" id="income" value="{{ $rows->sum('cash_in') }}">
+                            <input type="hidden" id="expenses" value="{{ $rows->sum('cash_out') }}">
+                        </tr>
+                    </tfoot>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<div class="window-container mb-0">
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-md-3">
             <div class="card">
                 <div class="card-header fs-6">
@@ -75,9 +75,7 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="window-container">
+    <hr style="color: var(--orange-800);">
     <div class="row col-md-4">
         <div class="col">
             <a class="btn btn-sm btn-outline-success" id="print" onclick="downloadPDF()">
@@ -89,7 +87,7 @@
             </a>
             <img src="{{ asset('/images/image.gif') }}" width="20px" height="20px" style="display:none;" class="ms-2" id="loader">
         </div>
-    </div>
+    </div>    
 </div>
 @endsection
 

@@ -5,7 +5,7 @@
     @include('includes.alert')
     
     <h6 class="window-title-bar shadow text-uppercase fw-bold">Nominas</h6>
-    <div class="window-body shadow p-4 bg-white">
+    <div class="window-body shadow">
         <label class="window-body-form">Nomina</label>
         <form action="{{ route('payroll.update', $salary->id) }}" method="POST" class="border pt-4 pb-4">
             @method('PATCH')
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12 border-top border-bottom bg-body-tertiary mt-4 mb-4" style="height: 300px; overflow-y: scroll">
+            <div class="col-md-12 border-top border-bottom bg-white mt-4 mb-4" style="height: 300px; overflow-y: scroll">
                 <table class="table table-hover table-borderless dataTable no-footer">
                     <thead>
                         <tr>
@@ -90,7 +90,7 @@
                         </tr>
                         @endforeach
                     </tbody>
-                    <tfoot class="border-top">
+                    <tfoot>
                         <tr>
                             <td></td>
                             <td>
