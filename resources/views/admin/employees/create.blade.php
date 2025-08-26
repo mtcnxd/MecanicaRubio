@@ -6,11 +6,10 @@
     <div class="col-md-7">    
         <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Empleado</span></h6>
         <div class="window-body shadow p-4">
-            <label class="window-body-form">Nuevo empleado</label>
-            <form action="{{ route('employees.store') }}" method="POST" class="col-md-12 border pt-4 pb-4">
-                @method('POST')
-                @csrf
-                <div class="pt-0 p-4">
+            <form action="{{ route('employees.store') }}" method="POST">
+                <div class="form-container border">
+                    @method('POST')
+                    @csrf
                     <div class="row">
                         <div class="col-md-12">
                             <label>Usuario</label>
@@ -81,17 +80,17 @@
                             <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
                         </div>
                     </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-12 text-end">
-                            <a href="{{ route('employees.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-sm btn-success">
-                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                                Guardar
-                            </button>
-                        </div>
-                    </div>
                 </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12 text-end">
+                        <a href="{{ route('employees.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                            Guardar
+                        </button>
+                    </div>
+                </div>                
             </form>
         </div>
     </div>

@@ -115,11 +115,12 @@ class EmployeesController extends Controller
 
     public function destroy(Request $request)
     {
+        
         DB::table('users')->where('id', $request->user)->update([
             "status" => 'Inactivo'
         ]);
-
-        sleep(random_int(1,3));
+        
+        sleep(random_int(1,5));
 
         return Response()->json([
             "success" => true,
