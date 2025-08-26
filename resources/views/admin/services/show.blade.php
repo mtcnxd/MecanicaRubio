@@ -15,11 +15,11 @@
                             <div class="col-md-12">
                                 <label>Cliente</label>
                                 <div class="input-group">
-                                    <input type="hidden" value="{{ $service->id }}" id="service">
-                                    <input type="text" class="form-control" name="client" value="#{{ $service->client->id }} - {{ $service->client->name }}" disabled>
                                     <span class="input-group-text">
-                                        <a href="{{ route('clients.edit', $service->client->id) }}">Editar</a>
+                                        #{{ $service->client->id }}
                                     </span>
+                                    <input type="hidden" value="{{ $service->id }}" id="service">
+                                    <input type="text" class="form-control" name="client" value="{{ $service->client->name }}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -46,11 +46,27 @@
 
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
+                                <label>Telefono</label>    
+                                <input type="number" class="form-control" value="{{ $service->client->phone }}" disabled>
+                            </div>                            
+                            <div class="col-md-4">
+                                <label>Folio de servicio</label>    
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <x-feathericon-hash class="table-icon"/>
+                                    </span>
+                                    <input type="text" class="form-control text-end" value="{{ $service->id }}" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-4">
                                 <label>Entrada</label>    
                                 <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->entry_date)) }}">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label>Salida</label>    
                                 @if (isset($service->due_date))
                                     <input type="date" class="form-control" name="client" value="{{ date('Y-m-d', strtotime($service->due_date)) }}" disabled>
@@ -58,22 +74,20 @@
                                     <input type="date" class="form-control" name="client" disabled>
                                 @endif
                             </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label>Días transcurridos</label>    
                                 @if ($service->status == 'Entregado')
                                     @php
                                     $elapsed = $service->created_at->diffInDays($service->due_date);
                                     @endphp
-                                    <input type="text" class="form-control" name="client" value="{{ $elapsed }}" disabled>
+                                    <input type="text" class="form-control text-end" name="client" value="{{ $elapsed }}" disabled>
                                 @else
                                     @php
                                     $elapsed = $service->created_at->diffInDays(Carbon\Carbon::now());
                                     @endphp
-                                    <input type="text" class="form-control {{($elapsed >= 4) ? 'is-invalid' : '' }}" name="client" value="{{ $elapsed }}" disabled>
+                                    <input type="text" class="form-control text-end {{($elapsed >= 4) ? 'is-invalid' : '' }}" name="client" value="{{ $elapsed }}" disabled>
                                 @endif
-                            </div>
+                            </div>                            
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-12">

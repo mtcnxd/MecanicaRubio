@@ -15,7 +15,9 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="name" value="{{ $car->client->name }}" disabled>
                                     <span class="input-group-text">
-                                        <a href="#">Editar</a>
+                                        <a href="#">
+                                            <x-feathericon-edit class="table-icon"/>
+                                        </a>
                                     </span>
                                 </div>
                             </div>
@@ -30,10 +32,6 @@
                             <div class="col-md-6">
                                 <label>Telefono</label>
                                 <input type="text" class="form-control" name="phone" value="{{ $car->client->phone }}" disabled>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Codigo Postal</label>
-                                <input type="text" class="form-control" id="postcode" name="postcode" value="{{ $car->client->postcode }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -80,7 +78,9 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" value="{{ $car->brand }}" disabled>
                                     <span class="input-group-text">
-                                        <a href="#">Editar</a>
+                                        <a href="#">
+                                            <x-feathericon-edit class="table-icon"/>
+                                        </a>
                                     </span>
                                 </div>
                             </div>

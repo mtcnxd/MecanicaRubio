@@ -30,7 +30,7 @@
         <h6 class="window-title text-uppercase fw-bold"><span class="ms-3">Reporte</span></h6>
         <div class="window-body shadow p-4">
             <div class="form-container border">
-                <div class="row m-0 p-2">
+                <div class="row">
                     <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Nombre</label>
                         <div class="input-group">
@@ -40,18 +40,28 @@
                     </div>
                     <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Telefono</label>
-                        <input type="text" class="form-control" value="{{ $employee->user->phone }}" disabled>
-                    </div>                    
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <x-feathericon-smartphone class="table-icon" style="margin: -2px 5px 2px"/>
+                            </span>
+                            <input type="text" class="form-control" value="{{ $employee->user->phone }}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="text-uppercase fs-8 fw-bold">Correo</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
+                            </span>
+                            <input type="text" class="form-control" value="{{ $employee->user->email }}" disabled>
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Puesto</label>
                         <input type="text" class="form-control" value="{{ $employee->depto }}" disabled>
                     </div>
-                    <div class="col-md-3">
-                        <label class="text-uppercase fs-8 fw-bold">Correo</label>
-                        <input type="text" class="form-control" value="{{ $employee->user->email }}" disabled>
-                    </div>
                 </div>
-                <div class="row m-0 p-2">
+                <div class="row mt-3">
                     <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Ingreso</label>
                         <input type="text" class="form-control" value="{{ $employee->user->created_at->format('d/m/Y') }}" disabled>

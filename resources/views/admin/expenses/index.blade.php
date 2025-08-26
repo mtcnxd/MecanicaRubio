@@ -34,7 +34,7 @@
             </div>
         </div>
         
-        <table class="table table-hover table-borderless bg-white" id="expenses" style="width:100%;">
+        <table class="table table-hover table-borderless bg-white mb-4" id="expenses" style="width:100%;">
             <thead>
                 <tr>
                     <th width="40px">ID</th>

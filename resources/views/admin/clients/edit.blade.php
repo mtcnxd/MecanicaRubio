@@ -6,8 +6,8 @@
     <div class="col-md-7">
         <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Buscar cliente</span></h6>
         <div class="window-body shadow p-4">
-            <div class="form-container border">
-                <form action="{{ route('clients.update', $client->id) }}" method="POST">
+            <form action="{{ route('clients.update', $client->id) }}" method="POST">
+                <div class="form-container border">
                     @method('PUT')
                     @csrf
                     <div class="row">
@@ -82,21 +82,20 @@
                             <label>Comentarios</label>
                             <textarea class="form-control" cols="30" rows="4" name="comments">{{ isset($client) ? $client->comments : '' }}</textarea>
                         </div>
+                    </div>                
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-12 text-end">
+                        <a href="#" class="btn btn-sm btn-danger" id="deleteClient" data-bs-client="{{ isset($client) ? $client->id : ''}}">Eliminar</a>
+                        <a href="{{ route('clients.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                            Guardar
+                        </button>
                     </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-12 text-end">
-                            <button type="button" href="#" class="btn btn-sm btn-danger" id="deleteClient" data-bs-client="{{ isset($client) ? $client->id : ''}}">Eliminar</button>
-                            <a href="{{ route('clients.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-sm btn-success">
-                                <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                                Guardar
-                            </button>
-                        </div>
-                    </div>
-                
-                </form>
-            </div>
+                </div>                
+            </form>
         </div>
     </div>
 </div>
