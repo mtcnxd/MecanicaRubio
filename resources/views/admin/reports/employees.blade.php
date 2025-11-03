@@ -72,12 +72,14 @@
                     </div>
                     <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Vacaciones tomadas</label>
-                        <input type="text" class="form-control" value="8" disabled>
+                        <input type="text" class="form-control" value="{{ $vacations->where('type','Vacaciones')->count() }}" disabled>
                     </div>
+                    <!--
                     <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Vacaciones pendientes</label>
                         <input type="text" class="form-control" value="8" disabled>
                     </div>
+                    -->
                 </div>
             </div>
                 

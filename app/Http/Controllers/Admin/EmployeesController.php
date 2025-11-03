@@ -79,8 +79,6 @@ class EmployeesController extends Controller
         $extra = Carbon::parse($employee->created_at);
 
         $vacations = DB::table('employees_vacations')->where('employee_id', $id)->get();
-
-        // dd($vacations->where('type','Vacaciones')->count());
         
         return view('admin.employees.show', compact('employee','extra', 'vacations'));
     }
@@ -172,8 +170,9 @@ class EmployeesController extends Controller
         {
             $employee = Employee::find($request->employee);
             $salaries = Salary::where('user_id', $request->employee)->orderBy('paid_date')->get();
+            $vacations = DB::table('employees_vacations')->where('employee_id', $request->employee)->get();
 
-            return view('admin.reports.employees', compact('employee', 'salaries'));
+            return view('admin.reports.employees', compact('employee', 'salaries', 'vacations'));
         }
 
         return view('admin.reports.employees');

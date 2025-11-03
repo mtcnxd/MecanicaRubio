@@ -110,8 +110,8 @@
                             <td>{{ $vacation->comment }}</td>
                             <td class="text-end">{{ $vacation->date }}</td>
                             <td class="text-end">
-                                @if (Carbon\Carbon::parse($vacation->date)->lt(Carbon\Carbon::now()))
-                                    <a href="http://">Cancelar</a>
+                                @if (Carbon\Carbon::parse($vacation->date)->gt(Carbon\Carbon::now()))
+                                    <a href="#">Cancelar</a>
                                 @endif
                             </td>
                         </tr>
