@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\VacationsProcessor;
 
 class EmployeesController extends Controller
 {
@@ -77,8 +78,7 @@ class EmployeesController extends Controller
             ->first();
 
         $extra = Carbon::parse($employee->created_at);
-
-        $vacations = DB::table('employees_vacations')->where('employee_id', $id)->get();
+        $vacations = VacationsProcessor::Information($id);
         
         return view('admin.employees.show', compact('employee','extra', 'vacations'));
     }
@@ -168,9 +168,9 @@ class EmployeesController extends Controller
     {
         if ($request->employee)
         {
-            $employee = Employee::find($request->employee);
-            $salaries = Salary::where('user_id', $request->employee)->orderBy('paid_date')->get();
-            $vacations = DB::table('employees_vacations')->where('employee_id', $request->employee)->get();
+            $employee  = Employee::find($request->employee);
+            $salaries  = Salary::where('user_id', $request->employee)->orderBy('paid_date')->get();
+            $vacations = VacationsProcessor::Information($request->employee);
 
             return view('admin.reports.employees', compact('employee', 'salaries', 'vacations'));
         }
