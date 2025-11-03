@@ -107,10 +107,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function()
             Route::resource('/expenses', ExpensesController::class);
         }
 );
-
-        
-
-
         Route::post('admin/profile', [EmployeesController::class, 'profileUpdate'])->name('profile.update');
 
         Route::get('admin/settings', [SettingsController::class, 'index'])->name('setting.index');

@@ -103,8 +103,9 @@
                 <p class="fs-5 fw-bold">Historial de solicitudes</p>
                 <div class="row">
                     <table class="table table-hover">
-                    @foreach ($vacations as $vacation)
+                    @foreach ($vacations as $row => $vacation)
                         <tr>
+                            <td>{{ $row + 1 }}</td>
                             <td>{{ $vacation->type }}</td>
                             <td>{{ $vacation->comment }}</td>
                             <td class="text-end">{{ $vacation->date }}</td>
@@ -167,12 +168,14 @@
                         <p class="fs-5 fw-bold">Vacaciones</p>
                         <div class="col-md-6">
                             <label>Dias tomados</label> 
-                            <input type="text" value="4" class="form-control" disabled>
+                            <input type="text" value="{{ $vacations->where('type','Vacaciones')->count() }}" class="form-control" disabled>
                         </div>
+                        <!--
                         <div class="col-md-6">
                             <label>Dias pendientes</label>
                             <input type="text" value="8" class="form-control" disabled>
                         </div>
+                        -->
                     </div>
                     
                 </div>

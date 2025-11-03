@@ -25,9 +25,9 @@
                     <td>{{ $user->phone }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->status }}</td>
-                    <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}</td>
+                    <td>{{ Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}</td>
                     <td>
-                        <a href="{{ route('users.edit', $user->id) }}">
+                        <a href="{{ route('users.show', $user->id) }}">
                             <x-feathericon-edit class="table-icon"/>
                         </a>
                     </td>

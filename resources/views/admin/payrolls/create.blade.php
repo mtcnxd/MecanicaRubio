@@ -139,14 +139,15 @@
                 <optgroup label="Prestaciones">
                     <option>Salario</option>
                     <option>Caja de ahorro</option>
-                    <option>Prestamo de nomina</option>
-                    <option>Hora Extra</option>
-                    <option>Bono adicional</option>
-                    <option>Prima Vacacional</option>
+                    <option>Prestamo</option>
+                    <option>Hora extra</option>
+                    <option>Bono</option>
+                    <option>Comision</option>
+                    <option>Prima vacacional</option>
                 </optgroup>
                 <optgroup label="Descuentos">
-                    <option>Descuento</option>
                     <option>Descuento por prestamo</option>
+                    <option>Otro descuento</option>
                 </optgroup>
             </select>
         </div>
