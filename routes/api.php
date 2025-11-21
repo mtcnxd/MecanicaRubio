@@ -33,7 +33,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'employees'], function () {
     Route::post('load', [EmployeesController::class, 'loadEmployee'])->name('employees.load'); 
     Route::post('delete', [EmployeesController::class, 'destroy'])->name('employees.delete');
-    Route::post('vacations', [EmployeesController::class, 'vacations'])->name('employees.vacations');
+    
+    Route::post('vacations/create', [EmployeesController::class, 'createPendindVacationDay'])->name('employees.vacations.create');
+    Route::get('vacations/cancell', [EmployeesController::class, 'cancellPendingVacationDay'])->name('employees.vacations.cancell');
 });
 
 Route::group(['prefix' => 'cars', 'controller' => CarsController::class], function () {

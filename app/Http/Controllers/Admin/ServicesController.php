@@ -93,7 +93,9 @@ class ServicesController extends Controller
 
         if ($currentData->status == 'Entregado'){
             $finishedDate = isset($currentData->finished_date) ? $currentData->finished_date : Carbon::now();
-        } else {
+        }
+        
+        else {
             $finishedDate = Carbon::now();
         }
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Service;
 use Carbon\Carbon;
 use DB;
 
@@ -13,29 +14,42 @@ class Calendar extends Model
 
     protected $table = 'calendar';
 
-    static function currentMonth()
+    protected $fillable = [
+        'event',
+        'description',
+        'service_id',
+        'date',
+        'status',
+        'notified',
+    ];
+
+    protected $dates = [
+        'date'
+    ];
+
+    public function service()
     {
-        return Carbon::now()->month;
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
-    static function currentDay()
+    public function currentDay()
     {
         return Carbon::now()->day;
     }
 
-    static function getEvents() : array
+    public function getEvents() : array
     {
         for($i = 0; $i<= date('t') -1; $i++) {
             $createdDate = Carbon::parse(date('Y-m-').$i);
-            $events[$i]  = Calendar::where('date', $createdDate)->first();
+            $events[$i]  = Calendar::where('event_date', $createdDate)->first();
         }
-
+        
         return $events;
     }
 
-    static function startDay()
+    public function startDay()
     {
-        $month = self::currentMonth();
+        $month    = Carbon::now()->month;
         $firstDay = mktime(0, 0, 0, $month, 0, date("Y"));
 
         if ( date('N', $firstDay) == 7 ){
@@ -45,41 +59,29 @@ class Calendar extends Model
         return date('N', $firstDay);
     }
 
-    static function weekDays()
+    public function weekDays()
     {
-        return (object) [
-            'Lunes', 
-            'Martes', 
-            'Miercoles', 
-            'Jueves', 
-            'Viernes', 
-            'Sabado', 
+        return [
+            'Lunes',    'Martes',   'Miercoles', 
+            'Jueves',   'Viernes',  'Sabado', 
             'Domingo'
         ];
     }
 
-    static function monthName(){
+    public function monthName(){
         $monthNames = [
-            'Enero',
-            'Febrero',
-            'Marzo',
-            'Abril',
-            'Mayo',
-            'Junio',
-            'Julio',
-            'Agosto',
-            'Septiembre',
-            'Octubre',
-            'Noviembre',
-            'Diciembre'
+            'Enero',    'Febrero',      'Marzo',
+            'Abril',    'Mayo',         'Junio',
+            'Julio',    'Agosto',       'Septiembre',
+            'Octubre',  'Noviembre',    'Diciembre'
         ];
 
-        $month = self::currentMonth() -1;
+        $month = Carbon::now()->month -1;
         return $monthNames[$month];
     }
 
-    static function getCalendar()
+    public function getCalendar()
     {
-        return new Calendar;
+        return $this;
     }
 }

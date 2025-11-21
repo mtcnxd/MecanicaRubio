@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->integer('client_id');
-            $table->integer('car_id');
-            $table->integer('odometer')->nullable();
-            $table->string('service_type')->nullable();
-            $table->text('fault');
+            $table->boolean('quote')->default(false);
+            $table->unsignedInteger('client_id');
+            $table->unsignedInteger('car_id');
+            $table->unsignedBigInteger('odometer')->nullable();
+            $table->string('service_type',32)->nullable();
+            $table->text('fault')->nullable();
             $table->text('comments')->nullable();
             $table->string('status')->default('Pendiente');
             $table->text('notes')->nullable();
+            $table->date('entry_date')->nullable();
+            $table->date('finished_date')->nullable();
             $table->date('due_date')->nullable();
             $table->double('total')->nullable();
             $table->timestamps();

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('price');
             $table->string('status')->default('Pagado');
             $table->integer('responsible');
+            $table->date('expense_date')->nullable();
             $table->string('attach')->nullable();
             $table->timestamps();
         });

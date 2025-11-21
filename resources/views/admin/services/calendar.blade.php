@@ -3,7 +3,7 @@
 @section('content')
 <div class="calendar">
     @include('includes.alert')
-    <div class="window-title calendar-title-bar">
+    <div class="calendar-title-bar pt-2">
         <h4 class="text-center">
             <x-feathericon-calendar class="window-title-icon" style="margin-top: -3px;"/>
             {{ $calendar->monthName() }}
@@ -30,8 +30,8 @@
             <div class="day date {{ ($key + 1 == $calendar->currentDay()) ? 'active' : '' }}">
                 <div style="display: grid;">
                     <span class="day-label">{{ $key + 1 }}</span>
-                    @if (isset($event->event))
-                        <a href="#" id="{{ $event->id }}" class='event' data-bs-toggle="modal" data-bs-target="#eventDetails">{{ $event->event }}</a>	
+                    @if (isset($event))
+                        <a href="#" id="{{ $event->id }}" class='event' data-bs-toggle="modal" data-bs-target="#eventDetails">{{ $event->name }}</a>
                     @endif
                 </div>
             </div>
@@ -111,15 +111,17 @@ $(".event").on('click', function(){
     $.ajax({
         url: "{{ route('calendar.getEvent') }}",
         method: 'POST',
-        data: { id:this.id },
+        data: { 
+            id:this.id
+        },
         success: function(response){
             console.log(response);
-
-            $("#event").val(response.data.event);
-            $("#description").val(response.data.description);
-            $("#client").val(response.data.name);
-            $("#car").val(response.data.brand + ' ' + response.data.model);
-            $("#phone").val(response.data.phone);
+            
+            $("#event").val(response.data.event.event);
+            $("#description").val(response.data.event.description);
+            $("#client").val(response.data.client.name);
+            $("#car").val(response.data.car.brand + ' ' + response.data.car.model);
+            $("#phone").val(response.data.client.phone);
         }
     });
 })

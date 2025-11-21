@@ -13,20 +13,16 @@ use \DB;
 
 class CalendarController extends Controller
 {
-    public function index()
+    public function index(Calendar $calendar)
     {
-        $calendar = Calendar::getCalendar();
+        $events = [];
 
-        // session()->flash('success', "Hola mundo" );
+        $events = $calendar->whereBetween('event_date',[
+            Carbon::now()->startOfMonth(),
+            Carbon::now()->endOfMonth()
+        ])->get();
 
-        try {
-            self::sendNotification();
-
-        } catch (Exception $err){
-            session()->flash('warning', $err->getMessage() );
-        }
-
-        return view('admin.services.calendar', compact('calendar'));
+        return view('admin.services.calendar', compact('calendar', 'events'));
     }
 
     public function sendNotification()
@@ -46,16 +42,16 @@ class CalendarController extends Controller
 
     public function getEvent(Request $request)
     {
-        $event = DB::table('calendar')
-            ->select('calendar.*', 'clients.name','clients.phone', 'autos.brand', 'autos.model')
-            ->join('clients', 'calendar.client_id', 'clients.id')
-            ->join('autos', 'calendar.car_id', 'autos.id')
-            ->where('calendar.id', $request->id)
-            ->first();
+        $event = Calendar::find($request->id);
 
         return response()->json([
             "success" => true,
-            "data"    => $event
+            "data"    => [
+                'event'   => $event,
+                'service' => $event->service,
+                'client'  => $event->service->client,
+                'car'     => $event->service->car,
+            ]
         ]);
     }
 }

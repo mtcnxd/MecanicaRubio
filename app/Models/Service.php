@@ -9,6 +9,8 @@ class Service extends Model
 {
     use HasFactory;
 
+    protected $table = 'services';
+
     protected $fillable = [
         'client_id',
         'car_id',
@@ -24,9 +26,9 @@ class Service extends Model
         'total',
     ];
 
-    protected $casts = [
-        'entry_date'    => 'date',
-        'finished_date' => 'date'
+    protected $dates = [
+        'entry_date',
+        'finished_date',
     ];
 
     public function client()

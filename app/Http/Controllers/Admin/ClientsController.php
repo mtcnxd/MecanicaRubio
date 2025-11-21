@@ -33,30 +33,20 @@ class ClientsController extends Controller
             return to_route('clients.index');
         }
 
-        $customerId = Client::insertGetId([
-            'name'       => $request->name,
-            'email'      => $request->email,
-            'phone'      => $request->phone,
-            'postcode'   => $request->postcode,
-            'street'     => $request->street,
-            'address'    => $request->address,
-            'city'       => $request->city,
-            'state'      => $request->state,
-            'rfc'        => $request->rfc,
-            'comments'   => $request->comments,
-        ]);
-
         try {
+            Client::insert($request->except('_method','_token'));
+
+            session()->flash('success', sprintf('El cliente %s se guardó correctamente', $request->name));
+            
             Telegram::send(
                 sprintf("<b>New client created:</b> %s <b>Phone:</b> %s", $request->name, $request->phone)
             );
         }
         
         catch (Exception $err){
-            session()->flash('warning', 'ERROR: '. $err->getMessage());
+            session()->flash('warning', sprintf('Error al crear cliente | %s ', $err->getMessage()));
 		}
 
-        session()->flash('success', 'El cliente se guardó correctamente');
         return to_route('clients.index');
     }
 
@@ -78,25 +68,17 @@ class ClientsController extends Controller
     {
         $client = Client::find($id);
         
-        $client->update([
-            "name"     => $request->name,
-            "email"    => $request->email,
-            "phone"    => $request->phone,
-            "postcode" => $request->postcode,
-            "street"   => $request->street,
-            "address"  => $request->address,
-            "city"     => $request->city,
-            "state"    => $request->state,
-            "rfc"      => $request->rfc,
-            "comments" => $request->comments,
-        ]);
+        $client->update($request->except('_method','_token'));
 
-        return to_route('clients.index')->with('message', 'El registro se actualizo correctamente');
+        return to_route('clients.index')
+            ->with('message', 'El registro se actualizo correctamente');
     }
 
     public function destroy(Request $request)
     {
-        Client::where('id', $request->client)->update([
+        $client = Client::find($request->id);
+        
+        $client->update([
             'status' => 'Eliminado'
         ]);
 

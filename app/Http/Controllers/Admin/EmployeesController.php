@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\VacationsProcessor;
+use App\Http\Controllers\VacationsController;
 
 class EmployeesController extends Controller
 {
@@ -72,15 +72,15 @@ class EmployeesController extends Controller
 
     public function show(string $id)
     {
-        $employee = DB::table('employees')
-            ->join('users','employees.user_id','users.id')
-            ->where('employees.user_id', $id)
-            ->first();
+        $employee = Employee::find($id);
 
-        $extra = Carbon::parse($employee->created_at);
-        $vacations = VacationsProcessor::Information($id);
+        // dd($employee);
+
+        // dd($employee->vacations());
+        // dd($employee->user->email);
+        // dd($employee->vacationsDaysTaken());
         
-        return view('admin.employees.show', compact('employee','extra', 'vacations'));
+        return view('admin.employees.show', compact('employee'));
     }
 
     public function edit(Request $request, string $id)
@@ -167,31 +167,93 @@ class EmployeesController extends Controller
     public function report(Request $request)
     {
         if ($request->employee)
-        {
+        {            
             $employee  = Employee::find($request->employee);
             $salaries  = Salary::where('user_id', $request->employee)->orderBy('paid_date')->get();
-            $vacations = VacationsProcessor::Information($request->employee);
 
-            return view('admin.reports.employees', compact('employee', 'salaries', 'vacations'));
+            return view('admin.reports.employees', compact('employee', 'salaries'));
         }
 
         return view('admin.reports.employees');
     }
 
-    public function vacations(Request $request)
+    public function createPendindVacationDay(Request $request)
     {
-        DB::table('employees_vacations')->insert([
+        $request->merge([
             'employee_id' => $request->employee,
-            'type'        => $request->type,
-            'date'        => $request->date,
-            'comment'     => $request->comment,
-            'updated_at'  => Carbon::now(),
-            'created_at'  => Carbon::now(),
+            'status'      => 'Pendiente',
         ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'El registro se creo con exito',
-        ]);
+        try {
+            DB::table('vacations_history')->insert($request->except('employee'));
+            
+            DB::table('vacations_pendings')->where('employee_id', $request->employee_id)->update([
+                'days_taken'   => DB::raw('days_taken + 1'),
+                'days_pending' => DB::raw('days_pending - 1'),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'type'    => 'success',
+                'message' => 'El registro se creo con exito',
+            ]);
+        }
+
+        catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'type'    => 'error',
+                'message' => 'Ocurrio un error: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function cancellPendingVacationDay(Request $request)
+    {
+        $type = '';
+        $message = '';
+
+        try {
+            $result = DB::table('vacations_history')->where('id', $request->id)->first();
+            
+            if ($result->status != 'Pendiente'){
+                $type = 'warning';
+                $message = sprintf('La fecha seleccionada no puede ser cancelada porque no esta en estatus pendiente');
+            } 
+
+            else if (Carbon::parse($result->date)->lt(Carbon::now())){
+                $type = 'warning';
+                $message = sprintf('La fecha seleccionada no puede ser cancelada porque ya es una fecha pasada');
+            }
+
+            else {
+                $type = 'success';
+                $message = sprintf('La fecha solicitada a sido cancelada');
+                
+                DB::table('vacations_history')->where('id', $request->id)->update([
+                    'status' => 'Cancelado'
+                ]);
+
+                DB::table('vacations_pendings')->where('employee_id', $result->employee_id)->update([
+                    'days_taken'   => DB::raw('days_taken - 1'),
+                    'days_pending' => DB::raw('days_pending + 1'),
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'type'    => $type,
+                'message' => $message,
+                'request' => $request->id,
+            ]);
+        }
+
+        catch (Exception $err){
+            return response()->json([
+                'success' => false,
+                'type'    => 'error',
+                'message' => $err->getMessage(),
+            ]);
+        }
     }
 }

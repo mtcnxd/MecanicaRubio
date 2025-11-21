@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->enum('status',['Pendiente', 'Pagado', 'Cancelado'])->default('Pendiente');
-            $table->enum('type',['Nomina','Aguinaldo','Finiquito','Liquidacion'])->default('Nomina');
+            $table->enum('type',['Nomina','Aguinaldo','Finiquito','Liquidacion','Otras percepciones'])->default('Nomina');
             $table->date('start_date');
             $table->date('end_date');
+            $table->date('paid_date')->nullable();
             $table->double('total');
             $table->timestamps();
         });

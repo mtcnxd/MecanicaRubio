@@ -30,11 +30,24 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    // configuration for Google Oauth
+    
+    // Configuration for Google Oauth
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => 'http://127.0.0.1:8000/auth/callback',
     ],
+
+    // Telegram notifications
+    'telegram' => [
+        'api'     => env('TELEGRAM_API'),
+        'chat_id' => env('TELEGRAM_CHAT_ID'),
+    ],
+
+    // Conecting Bitso wallet
+    'bitso' => [
+        'bitso_key'    => env('BITSO_KEY'),
+        'bitso_secret' => env('BITSO_SECRET'),
+    ]
 
 ];

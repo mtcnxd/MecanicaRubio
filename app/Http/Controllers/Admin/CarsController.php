@@ -14,8 +14,7 @@ class CarsController extends Controller
 {
     public function index()
     {
-        $cars = Cars::all();
-        
+        $cars = Cars::all();   
         return view ('admin.cars.index', compact('cars'));
     }
 
@@ -29,27 +28,23 @@ class CarsController extends Controller
 
     public function store(Request $request)
     {
-        Cars::create([
-            "brand"      => $request->brand,
-            "model"      => $request->model,
-            "serie"      => $request->serie,
-            "year"       => $request->year,
-            "plate"      => $request->plate,
-            "client_id"  => $request->client,
-            "comments"   => $request->comments,
-            "created_at" => Carbon::now(),
-            "updated_at" => Carbon::now()
-        ]);
-
+        $request->merge(['client_id' => $request->client]);
+        
         try {
+            Cars::create($request->except('_method','_token'));
+
+            session()->flash('success', 'Los datos se guardaron correctamente');
+            
             Telegram::send(
                 sprintf("<b>New car created:</b> %s <b>Model:</b> %s", $request->brand, $request->model)
             );
-        } catch (Exception $err){
-            session()->flash('warning', 'ERROR: '. $err->getMessage());
+        }
+        
+        catch (Exception $err){
+            session()->flash('warning', sprintf('Error al crear auto | %s ', $err->getMessage()));
 		}
 
-        return to_route('cars.index')->with('message', 'Los datos se guardaron correctamente');
+        return to_route('cars.index');
     }
 
     public function show(string $id)

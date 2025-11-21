@@ -72,11 +72,11 @@
                     </div>
                     <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Vacaciones tomadas</label>
-                        <input type="text" class="form-control" value="{{ $vacations['history']->count() }}" disabled>
+                        <input type="text" class="form-control" value="{{ ($employee->vacations()) ? $employee->vacations()->days_taken : 0 }}" disabled>
                     </div>
                     <div class="col-md-3">
                         <label class="text-uppercase fs-8 fw-bold">Vacaciones pendientes</label>
-                        <input type="text" class="form-control" value="{{ $vacations['current'] - $vacations['history']->count() }}" disabled>
+                        <input type="text" class="form-control" value="{{ ($employee->vacations()) ? $employee->vacations()->days_pending : 0 }}" disabled>
                     </div>
                 </div>
             </div>

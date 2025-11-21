@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('rfc')->nullable();
             $table->string('curp')->nullable();
             $table->string('nss')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->enum('status',['Activo','Inactivo']);
             $table->text('comments')->nullable();
             $table->timestamps();

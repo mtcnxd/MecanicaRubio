@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('email')->unique();
-            $table->string('avatar');
-            $table->string('google_userid')->unique();
-            $table->string('google_token');
+            $table->string('avatar')->nullable();
+            $table->string('google_userid')->nullable();
+            $table->string('google_token')->nullable();
             $table->string('password');
             $table->enum('status',['Activo', 'Inactivo', 'Cancelado']);
             $table->enum('rol',['Admin', 'Limit', 'Client'])->default('Admin');

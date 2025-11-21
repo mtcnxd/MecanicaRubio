@@ -17,24 +17,24 @@
                                 <label>Nombre</label>
                                 <div class="input-group">
                                     <span class="input-group-text" id="basic-addon1"> #{{ $employee->id }}</span>
-                                    <input type="text" class="form-control" name="name" value="{{ $employee->name }}">
+                                    <input type="text" class="form-control" name="name" value="{{ $employee->user->name }}">
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label>CURP</label>
-                                <input type="text" class="form-control" name="curp" value="{{ $employee->curp }}">
+                                <input type="text" class="form-control" name="curp" value="{{ $employee->user->curp }}">
                             </div>
 
                             <div class="col-md-4">
                                 <label>RFC</label>
-                                <input type="text" class="form-control" name="rfc" value="{{ $employee->rfc }}">
+                                <input type="text" class="form-control" name="rfc" value="{{ $employee->user->rfc }}">
                             </div>
 
                             <div class="col-md-4">
                                 <label>NSS</label>
-                                <input type="text" class="form-control" name="nss" value="{{ $employee->nss }}">
+                                <input type="text" class="form-control" name="nss" value="{{ $employee->user->nss }}">
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -79,11 +79,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Correo</label>
-                                <input type="text" class="form-control" name="email" value="{{ $employee->email }}">
+                                <input type="text" class="form-control" name="email" value="{{ $employee->user->email }}">
                             </div>
                             <div class="col-md-6">
                                 <label>Teléfono</label>
-                                <input type="number" class="form-control" name="phone" value="{{ $employee->phone }}">
+                                <input type="number" class="form-control" name="phone" value="{{ $employee->user->phone }}">
                             </div>                            
                         </div>
                         <div class="row mt-3">
@@ -103,20 +103,32 @@
                 <p class="fs-5 fw-bold">Historial de solicitudes</p>
                 <div class="row">
                     <table class="table table-hover">
-                    @foreach ($vacations['history'] as $row => $vacation)
+                    @foreach ($employee->vacationsDaysTaken() as $row => $vacation)
                         <tr>
                             <td>{{ $row + 1 }}</td>
                             <td>{{ $vacation->type }}</td>
-                            <td>
-                                <span class="badge rounded-pill text-bg-success">
-                                    {{ $vacation->status }}
-                                </span>
-                            </td>
                             <td>{{ $vacation->comment }}</td>
-                            <td class="text-end">{{ $vacation->date }}</td>
+                            <td class="text-center">{{ $vacation->date }}</td>
                             <td class="text-end">
-                                @if (Carbon\Carbon::parse($vacation->date)->gt(Carbon\Carbon::now()))
-                                    <a href="#">Cancelar</a>
+                                @switch($vacation->status)
+                                    @case('Pendiente')
+                                        <span class="badge rounded-pill text-bg-warning">{{ $vacation->status }}</span>    
+                                        @break
+                                    @case('Autorizado')
+                                        <span class="badge rounded-pill text-bg-success">{{ $vacation->status }}</span>    
+                                        @break
+                                    @case('Cancelado')
+                                        <span class="badge rounded-pill text-bg-secondary">{{ $vacation->status }}</span>    
+                                        @break
+                                @endswitch
+                            </td>
+                            <td class="text-end">
+                                @if ($vacation->status == 'Pendiente')
+                                    <a href="#" data-id="{{ $vacation->id }}" class="btn btn-sm cancellVacationDate">Autorizar</a>
+                                @endif
+
+                                @if ($vacation->status != 'Cancelado')
+                                    <a href="#" data-id="{{ $vacation->id }}" class="btn btn-sm cancellVacationDate">Cancelar</a>
                                 @endif
                             </td>
                         </tr>
@@ -131,17 +143,19 @@
                 <div class="form-container border">
                     <form id="vacations">
                         <p class="fs-5 fw-bold">Solicitudes de ausencia</p>
-                        <div class="col-md-12">
-                            <label for="date">Motivo de ausencia</label>
-                            <select class="form-select" name="type" id="type">
-                                <option>Permiso</option>
-                                <option>Salud</option>
-                                <option>Vacaciones</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12 mt-3">
-                            <label for="date">Fecha de ausencia</label>
-                            <input type="date" class="form-control" name="date" id="date">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="date">Fecha de ausencia</label>
+                                <input type="date" class="form-control" name="date" id="date">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="date">Motivo de ausencia</label>
+                                <select class="form-select" name="type" id="type">
+                                    <option>Permiso</option>
+                                    <option>Salud</option>
+                                    <option>Vacaciones</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-12 mt-3">
                             <label for="comment">Comentario</label>
@@ -161,11 +175,11 @@
                         <p class="fs-5 fw-bold">Antiguedad</p>
                         <div class="col-md-6">
                             <label>Fecha de inicio</label> 
-                            <input type="date" value="{{ $extra->format('Y-m-d') }}" class="form-control" disabled>
+                            <input type="date" value="{{ Carbon\Carbon::parse($employee->created_at)->format('Y-m-d') }}" class="form-control" disabled>
                         </div>
                         <div class="col-md-6">
                             <label>Antiguedad</label>
-                            <input type="text" value="{{ $extra->diffInMonths() }} meses" class="form-control" disabled>
+                            <input type="text" value="{{ Carbon\Carbon::parse($employee->created_at)->diffInMonths() }} meses" class="form-control" disabled>
                         </div>
                     </div>
                     
@@ -173,12 +187,12 @@
                         <p class="fs-5 fw-bold">Vacaciones</p>
                         <div class="col-md-6">
                             <label>Dias tomados</label> 
-                            <input type="text" value="{{ $vacations['history']->count() }}" class="form-control" disabled>
+                            <input type="text" value="{{ !is_null($employee->vacations()) ? $employee->vacations()->days_taken : 0 }}" class="form-control" disabled>
                         </div>
 
                         <div class="col-md-6">
                             <label>Dias pendientes</label>
-                            <input type="text" value="{{ $vacations['current'] - $vacations['history']->count() }}" class="form-control" disabled>
+                            <input type="text" value="{{ !is_null($employee->vacations()) ? $employee->vacations()->days_pending : 0 }}" class="form-control" disabled>
                         </div>
                     </div>
                     
@@ -199,7 +213,7 @@
         var comment  = $('#comment');
 
         $.ajax({
-            url: "{{ route('employees.vacations') }}",
+            url: "{{ route('employees.vacations.create') }}",
             method: 'POST',
             data:{
                 employee:employee,
@@ -208,8 +222,9 @@
                 comment:comment.val()
             },
             success:function(response){
-                showMessageAlert('success', response.message);
+                console.log(response);
                 $("#vacations").trigger('reset');
+                showMessageAlert(response.type, response.message);
             }
         });
     }
@@ -224,5 +239,21 @@
             location.reload();
         });
     }
+
+    $(".cancellVacationDate").on('click', function(event){
+        event.preventDefault();
+        $.ajax({
+            url:"{{ route('employees.vacations.cancell') }}",
+            method: 'GET',
+            data:{
+                id:this.dataset.id
+            },
+            success:function(response){
+                console.log(response.message);
+                showMessageAlert(response.type, response.message);
+            }
+        });
+        
+    });
 </script>
 @endsection
