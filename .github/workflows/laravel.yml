@@ -15,8 +15,8 @@ jobs:
       - name: Upload to FTP server
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
-          host: ${{ secrets.FTP_HOST }}
+          server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_dir: ./  # Ruta de los archivos en el repositorio
-          server_dir: ./public_html/  # Ruta de destino en el servidor
+          local-dir: ./  # Ruta de los archivos en el repositorio
+          server-dir: ./public_html/  # Ruta de destino en el servidor
