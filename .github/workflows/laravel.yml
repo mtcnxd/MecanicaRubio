@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  ftp-deploy:
+  web-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -20,3 +20,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./  # Ruta de los archivos en el repositorio
           server-dir: ./public_html/  # Ruta de destino en el servidor
+          timeout: 60000
