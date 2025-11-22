@@ -2,13 +2,16 @@
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Middleware\UserType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Admin\Bitso;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Admin\CarsController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\QuotesController;
 use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\PayrollController;
@@ -17,8 +20,6 @@ use App\Http\Controllers\Admin\ExpensesController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\EmployeesController;
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Admin\QuotesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,9 @@ Route::group(['prefix' => 'client', 'middleware' => 'isAdmin'], function(){
 
 Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function()
     {
+        Route::get('mybitso', [Bitso::class, 'index'])->name('bitso.index');
+        Route::post('mybitso/store', [Bitso::class, 'store'])->name('bitso.store');
+
         Route::resource('services', ServicesController::class);
         Route::resource('clients', ClientsController::class);
         Route::resource('cars', CarsController::class);

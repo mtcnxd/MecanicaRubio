@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Service;
 use App\Models\Calendar;
 use Illuminate\Console\Command;
+use App\Http\Controllers\Notifications\Telegram;
 
 class createCalendarEvent extends Command
 {
@@ -35,6 +36,8 @@ class createCalendarEvent extends Command
         foreach ($services as $service){
             $this->createCalendarEvent($service);
         }
+
+        Telegram::send("Hola mundo");
 
         echo 'Process finished'.PHP_EOL;
     }

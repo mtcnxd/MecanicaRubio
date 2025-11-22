@@ -3,14 +3,14 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
+use App\Http\Controllers\Admin\CarsController;
+use App\Http\Controllers\Admin\QuotesController;
 use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\PayrollController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\ExpensesController;
 use App\Http\Controllers\Admin\ServicesController;
-use App\Http\Controllers\Admin\CarsController;
-use App\Http\Controllers\Admin\QuotesController;
 use App\Http\Controllers\Admin\EmployeesController;
 
 /*
@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\EmployeesController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 /*
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -71,6 +72,7 @@ Route::group(['controller' => ServicesController::class], function(){
     Route::get('/changeQuoteToService', 'changeQuoteToService')->name('services.change.quote');
 });
 
+Route::get('/calendar/create/service', [CalendarController::class, 'createScheduleService'])->name('create.schedule.service');
 
 Route::post('/finance/close', [FinanceController::class, 'close'])->name('finance.close');
 

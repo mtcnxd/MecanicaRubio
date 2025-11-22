@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Http\Controllers\BitsoController;
+
+class BitsoData extends Model
+{
+    use HasFactory;
+
+    protected $table = 'bitso_data';
+    
+    protected $ticker = [];
+    protected $bitso;
+
+    protected $fillable = [
+        'book',
+        'amount',
+        'price',
+        'active',
+        'purchase_value'
+    ];
+
+    public function __construct()
+    {
+        $this->bitso = new BitsoController();
+    }
+
+    public function currentGainOrLost(string $book)
+    {
+        $result        = 0.0;
+        $purchaseValue = $this->purchase_value;
+        $currentValue  = $this->currentPurchaseValue($book); 
+        $result        = ($currentValue - $purchaseValue) / $currentValue;
+
+        return $result * 100;
+    }
+
+    public function getTickerByBook(string $book)
+    {
+        $this->ticker = $this->bitso->getTicker();
+
+        foreach ($this->ticker as $item) {
+            if (in_array($book, (array) $item)){
+                return $item;
+            }
+        }
+    }
+
+    public function currentPurchaseValue(string $book)
+    {
+        $price = $this->getTickerByBook($book)->last;
+        return ($price * $this->amount);
+    }
+}

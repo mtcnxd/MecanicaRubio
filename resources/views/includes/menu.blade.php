@@ -137,6 +137,11 @@
 				<li>
 					<a class="a-item" href="{{ route('profile.index') }}">Perfil</a>
 				</li>
+				@if (Auth::user()->id == 1)
+					<li>
+						<a class="a-item" href="{{ route('bitso.index') }}">My Bitso</a>
+					</li>
+				@endif
 				<li>
 					<form action="{{ route('logout') }}" method="POST">
 						@csrf

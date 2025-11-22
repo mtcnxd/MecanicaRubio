@@ -44,10 +44,10 @@ return [
         'chat_id' => env('TELEGRAM_CHAT_ID'),
     ],
 
-    // Conecting Bitso wallet
+    // Connect Bitso wallet
     'bitso' => [
-        'bitso_key'    => env('BITSO_KEY'),
-        'bitso_secret' => env('BITSO_SECRET'),
+        'key'    => env('BITSO_KEY'),
+        'secret' => env('BITSO_SECRET'),
     ]
 
 ];

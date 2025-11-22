@@ -64,5 +64,5 @@
             target: [2,3,4,5]
         }]            
     });
-    </script>
+</script>
 @endsection
