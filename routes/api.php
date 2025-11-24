@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\Bitso;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
 use App\Http\Controllers\Admin\CarsController;
@@ -89,3 +90,5 @@ Route::post('getImageAttached', [ControllerAjax::class, 'getImageAttached'])->na
 Route::post('removeItemInvoice', [ControllerAjax::class, 'removeItemInvoice'])->name('removeItemInvoice');
 
 Route::post('createItemQuote', [ControllerAjax::class, 'createItemQuote'])->name('createItemQuote'); 
+
+Route::get('/mybitso/destroy', [Bitso::class, 'destroy'])->name('mybitso.destroy');
