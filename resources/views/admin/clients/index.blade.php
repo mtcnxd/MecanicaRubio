@@ -11,6 +11,7 @@
                     <th>Nombre</th>
                     <th>Teléfono</th>
                     <th>Dirección</th>
+                    <th class="text-end">Cliente desde</th>
                     <th class="text-end">Editar</th>
                 </tr>
             </thead>
@@ -28,6 +29,9 @@
                         {{ $client->phone }}
                     </td>
                     <td>{{ $client->street }} {{ $client->address }}</td>
+                    <td class="text-end">
+                        <span title="{{ $client->created_at->diffForHumans() }}">{{ $client->created_at->format('j M Y') }}</span>
+                    </td>
                     <td class="text-end">
                         <a href="{{ route('clients.edit', $client->id) }}">
                             <x-feathericon-edit class="table-icon"/>

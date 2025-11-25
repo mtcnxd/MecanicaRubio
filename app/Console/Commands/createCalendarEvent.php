@@ -27,22 +27,49 @@ class createCalendarEvent extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(Telegram $telegram)
     {
+        $servicesCreatedCounter = 0;
+
         $services = Service::where('created_at','>', Carbon::now()->subDays(10))
             ->whereIn('service_type',['Mayor','Menor'])
             ->get();
 
-        foreach ($services as $service){
-            $this->createCalendarEvent($service);
+        try {
+            foreach ($services as $service){
+                if ($this->createCalendarEvent($service)){
+                    $servicesCreatedCounter +1;
+                }
+            }
+    
+            if ($servicesCreatedCounter > 0){
+                $telegram->send(
+                    sprintf('New %s service scheduled created successfully', $servicesCreatedCounter)
+                );
+            }
         }
 
-        Telegram::send("Hola mundo");
+        catch (\Exception $e){
+            $telegram->send(
+                sprintf('Error while creating calendar events | Error: %s', $e->getMessage())
+            );
+        }
 
-        echo 'Process finished'.PHP_EOL;
+        /*
+        $events = Calendar::where('status', 'Pendiente')->where('notified', false);
+
+        $events->each(function ($event){
+            echo sprintf(
+                '(%s) => Hola %s, te recordamos que tu %s ya requiere mantenimiento. Nuestro mecanico se pondra en contacto contigo pronto'.PHP_EOL ,
+                $event->client->phone,
+                $event->client->name,
+                $event->service->car->carName()
+            );
+        });
+        */
     }
 
-    protected function createCalendarEvent($service)
+    protected function createCalendarEvent($service) : bool
     {
         $eventFound = Calendar::where('client_id', $service->client_id)->where('car_id', $service->car_id)->first();
 
@@ -56,6 +83,10 @@ class createCalendarEvent extends Command
                 'created_at'    => Carbon::now(),
                 'updated_at'    => Carbon::now(),
             ]);
+
+            return true;
         }
+
+        return false;
     }
 }

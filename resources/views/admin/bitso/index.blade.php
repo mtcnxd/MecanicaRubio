@@ -17,7 +17,8 @@
                     <th class="text-end">Valor compra</th>
                     <th class="text-end">Valor actual</th>
                     <th class="text-end">G/L %</th>
-                    <th></th>
+                    <th class="text-end">Fecha de compra</th>
+                    <th style="width: 30px;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -41,7 +42,10 @@
                                 <span class="badge text-bg-success rounded-pill">{{ Number::percentage($item->currentGainOrLost($item->book), 2) }}</span>
                             @endif
                         </td>
-                        <td class="text-end" style="width: 20px;">
+                        <td class="text-end">
+                            <span title="{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}">{{ Carbon\Carbon::parse($item->created_at)->format('j M Y') }}</span>
+                        </td>
+                        <td class="text-end">
                             <a href="#" class="cancell-trade" data-id="{{ $item->id }}">
                                 <x-feathericon-trash class="table-icon" />
                             </a>
@@ -55,7 +59,7 @@
                     <td class="text-end fw-bold">{{ $bitso->sum('amount') }}</td>
                     <td colspan="2"></td>
                     <td class="text-end fw-bold">{{ Number::currency($sumCurrentValue) }}</td>
-                    <td colspan="2"></td>
+                    <td colspan="3"></td>
                 </tr>
             </tfoot>
         </table>
@@ -96,16 +100,24 @@
                         <tr>
                             <th>Activo</th>
                             <th class="text-end">Cantidad</th>
-                            <th class="text-end">Ultimo incremento</th>
+                            <th class="text-end">Incremento</th>
                             <th class="text-end">Porcentaje</th>
                             <th class="text-end" width="25%">Ultima actualizacion</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $sumDifference = 0;
+                        @endphp
+
                         @foreach ($investments as $investment)
                             @if ($investment->investmentData->last())
+                                @php
+                                    $sumDifference += $investment->differenceBetweenDeposits();
+                                @endphp
+
                                 <tr>
-                                    <td><a href="#">{{ $investment->name }}</a></td>
+                                    <td><a href="{{ route('investments.show', $investment->id) }}">{{ $investment->name }}</a></td>
                                     <td class="text-end">{{ Number::currency($investment->investmentData->last()->amount) }}</td>
                                     <td class="text-end">{{ Number::currency($investment->differenceBetweenDeposits()) }}</td>
                                     <td class="text-end">{{ Number::percentage($investment->investmentPercentage(), 1) }}</td>
@@ -118,7 +130,8 @@
                         <tr>
                             <td></td>
                             <td class="text-end fw-bold">{{ Number::currency($investments->sum('current_amount')) }}</td>
-                            <td colspan="3"></td>
+                            <td class="text-end fw-bold">{{ Number::currency($sumDifference) }}</td>
+                            <td colspan="2"></td>
                         </tr>
                     </tfoot>
                 </table>

@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\ExpensesController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\EmployeesController;
+use App\Http\Controllers\Admin\Investments;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function()
         Route::get('mybitso', [Bitso::class, 'index'])->name('bitso.index');
         Route::post('mybitso/store', [Bitso::class, 'store'])->name('bitso.store');
         Route::post('mybitso/update', [Bitso::class, 'update'])->name('bitso.update');
+
+        Route::get('investments/{investment_id}', [Investments::class, 'show'])->name('investments.show');
 
         Route::resource('services', ServicesController::class);
         Route::resource('clients', ClientsController::class);

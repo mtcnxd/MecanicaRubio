@@ -7,14 +7,19 @@ use App\Models\Investment;
 use Illuminate\Http\Request;
 use App\Models\InvestmentData;
 use App\Http\Controllers\Controller;
+use App\Models\Charts;
 
 class Bitso extends Controller
 {
-    public function index(BitsoData $bitsoData, Investment $investment)
+    public function index(BitsoData $bitsoData, Investment $investment, Charts $charts)
     {
         $bitso = $bitsoData->where('active', true)->get();
 
         $investments = $investment->where('active', true)->get(); 
+
+        // $chartData = $charts->chartAssetsIncrement();
+        $chartData = $charts->chartServicesByMonth();
+        // dd($chartData);
 
         return view('admin.bitso.index', compact('bitso', 'investments'));
     }

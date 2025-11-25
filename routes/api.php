@@ -73,8 +73,6 @@ Route::group(['controller' => ServicesController::class], function(){
     Route::get('/changeQuoteToService', 'changeQuoteToService')->name('services.change.quote');
 });
 
-Route::get('/calendar/create/service', [CalendarController::class, 'createScheduleService'])->name('create.schedule.service');
-
 Route::post('/finance/close', [FinanceController::class, 'close'])->name('finance.close');
 
 Route::post('createBalancePDF', [FinanceController::class, 'createBalancePDF'])->name('finance.createBalancePDF');
