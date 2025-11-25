@@ -28,4 +28,9 @@ class Investment extends Model
         $value = $this->current_amount;
         return ($value/$total) * 100;
     }
+
+    public function differenceBetweenDeposits()
+    {
+        return ($this->current_amount - $this->last_amount);
+    }
 }

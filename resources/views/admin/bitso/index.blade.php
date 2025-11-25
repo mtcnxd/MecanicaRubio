@@ -3,7 +3,9 @@
 @section('content')
 <div class="window-container" style="margin-bottom: 50px;">
     @include('includes.alert')
-    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Bitso wallet</span></h6>
+    <h6 class="window-title shadow text-uppercase fw-bold">
+        <span class="ms-3">Bitso wallet</span>
+    </h6>
     <div class="window-body shadow py-4">
         <p class="fw-bold ps-2">Libro de compras</p>
         <table class="table table-hover table-responsive" id="bitso">
@@ -58,48 +60,69 @@
             </tfoot>
         </table>
             
-        <a href="#" class="ms-3 ps-3 pe-3 btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addShopping">Nueva compra</a>
+        <a href="#" class="ms-3 ps-3 pe-3 btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addShopping">Nueva Compra</a>
     </div>
 </div>
 
 @include('admin.bitso.modal_create')
 
 <div class="window-container">
-    <div class="col-md-6">
-        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Mis Inversiones</span></h6>
-        <div class="window-body shadow pb-4">
-            <table class="table table-hover table-responsive" id="bitso">
-                <thead class="thead-inverse">
-                    <tr>
-                        <th>Activo</th>
-                        <th class="text-end">Cantidad</th>
-                        <th class="text-end">Porcentaje</th>
-                        <th class="text-end" width="25%">Ultima actualizacion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($investments as $investment)
-                        @if ($investment->investmentData->last())
-                            <tr>
-                                <td>{{ $investment->name }}</td>
-                                <td class="text-end">{{ Number::currency($investment->investmentData->last()->amount) }}</td>
-                                <td class="text-end">{{ Number::percentage($investment->investmentPercentage(), 1) }}</td>
-                                <td class="text-end">{{ Carbon\Carbon::parse($investment->investmentData->last()->created_at)->format('d M Y') }}</td>
-                            </tr>                            
-                        @endif
-                    @endforeach
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td></td>
-                        <td class="text-end fw-bold">{{ Number::currency($investments->sum('current_amount')) }}</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
-                
-            <a href="#" class="ms-2 ps-3 pe-3 btn btn-sm btn-secondary">Actualizar Inversion</a>
+    <div class="row">
+        <div class="col-md-5">
+            <h6 class="window-title shadow text-uppercase fw-bold">
+                <span class="ms-3">Actualizar Saldo</span>
+            </h6>
+            <div class="window-body shadow p-4">
+                <form action="{{ route('bitso.update') }}" method="POST">
+                    @csrf
+                    <label for="investment_id" class="mb-1">Instrumento de inversion</label>
+                    <select name="investment_id" class="form-select">
+                        @foreach ($investments as $investment)
+                            <option value="{{ $investment->id }}">{{ $investment->name }}</option>
+                        @endforeach
+                    </select>
+                    <label for="amount" class="mt-3 mb-1">Cantidad actual</label>
+                    <input type="text" name="amount" class="form-control">
+                    <button type="submit" class="ps-3 pe-3 btn btn-sm btn-secondary mt-3">Actualizar Saldo</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Mis Inversiones</span></h6>
+            <div class="window-body shadow pb-4">
+                <table class="table table-hover table-responsive" id="bitso">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Activo</th>
+                            <th class="text-end">Cantidad</th>
+                            <th class="text-end">Ultimo incremento</th>
+                            <th class="text-end">Porcentaje</th>
+                            <th class="text-end" width="25%">Ultima actualizacion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($investments as $investment)
+                            @if ($investment->investmentData->last())
+                                <tr>
+                                    <td><a href="#">{{ $investment->name }}</a></td>
+                                    <td class="text-end">{{ Number::currency($investment->investmentData->last()->amount) }}</td>
+                                    <td class="text-end">{{ Number::currency($investment->differenceBetweenDeposits()) }}</td>
+                                    <td class="text-end">{{ Number::percentage($investment->investmentPercentage(), 1) }}</td>
+                                    <td class="text-end">{{ Carbon\Carbon::parse($investment->investmentData->last()->created_at)->format('d M Y') }}</td>
+                                </tr>                            
+                            @endif
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td class="text-end fw-bold">{{ Number::currency($investments->sum('current_amount')) }}</td>
+                            <td colspan="3"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 </div>

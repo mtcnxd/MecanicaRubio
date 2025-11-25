@@ -84,6 +84,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function()
     {
         Route::get('mybitso', [Bitso::class, 'index'])->name('bitso.index');
         Route::post('mybitso/store', [Bitso::class, 'store'])->name('bitso.store');
+        Route::post('mybitso/update', [Bitso::class, 'update'])->name('bitso.update');
 
         Route::resource('services', ServicesController::class);
         Route::resource('clients', ClientsController::class);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\BitsoData;
 use App\Models\Investment;
 use Illuminate\Http\Request;
+use App\Models\InvestmentData;
 use App\Http\Controllers\Controller;
 
 class Bitso extends Controller
@@ -27,6 +28,26 @@ class Bitso extends Controller
         BitsoData::create($request->except('_token'));
 
         session()->flash('success', sprintf('El registro almacenado con exito'));
+
+        return to_route('bitso.index');
+    }
+
+    public function update(Request $request)
+    {        
+        try {
+            InvestmentData::create($request->except('_token'));
+
+            Investment::where('id', $request->investment_id)->update([
+                'last_amount'    => Investment::raw('current_amount'),
+                'current_amount' => $request->amount
+            ]);
+            
+            session()->flash('success', sprintf('El registro almacenado con exito'));
+        }
+
+        catch (\Exception $er){
+            session()->flash('error', sprintf('we got an error: %s', $er->getMessage()));
+        }
 
         return to_route('bitso.index');
     }
