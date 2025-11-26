@@ -35,16 +35,16 @@ class ServicesController extends Controller
 
     public function store(Request $request, Telegram $telegram)
     {
-        $quote = false;
+        $isQuote = isset($request->quote) ? true :false;
+        
+        $request->merge([
+            'quote' => $isQuote,
+        ]);
+        
+        Service::create($request->except('_token'));
 
-        if (isset($request->quote)){
-            $quote = true;
-        }
-
-        if (!$quote){
-            try {        
-                Service::create($request->except('_token'));
-
+        if (!$isQuote){
+            try {
                 $latestServiceCreated = Service::latest()->first();
 
                 $telegram->send(
@@ -81,19 +81,18 @@ class ServicesController extends Controller
     public function update(Request $request, string $id)
     {
         $service = Service::find($id);
+        $finishedDate = Carbon::now();
 
-        if ($service->status == 'Entregado'){
-            $finishedDate = isset($request->finished_date) ? Carbon::parse($request->finished_date) : Carbon::now();
+        if ($request->status == 'Entregado'){
+            $finishedDate = isset($request->finished_date) ? $request->finished_date : Carbon::now();
         }
         
-        else {
-            $finishedDate = Carbon::now();
-        }
-
         $request->merge([
             'entry_date'    => isset($request->entry_date) ? Carbon::parse($request->entry_date) : null,
             'finished_date' => ($request->status == 'Entregado') ? Carbon::parse($finishedDate) : null,
         ]);
+
+        // dd($request->except('_token','_method'));
 
         try {
             $service->update($request->except('_token','_method'));

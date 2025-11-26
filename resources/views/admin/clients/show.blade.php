@@ -112,7 +112,7 @@
                             @foreach ($client->services as $service)
                             <tr>
                                 <td>
-                                    <a href="{{ route('cars.show', $service->car->id) }}">{{ $service->car->brand }} {{ $service->car->model }}</a>
+                                    <a href="{{ route('cars.show', $service->car->id) }}">{{ $service->car->carName() }}</a>
                                 </td>
                                 <td>{{ $service->car->year }}</td>
                                 <td>{{ $service->fault }}</td>
@@ -122,7 +122,11 @@
                                     @endif
                                 </td>
                                 <td class="text-center"><span class="badge text-bg-success">{{ $service->status }}</span></td>
-                                <td class="text-end">{{ date ('d-m-Y', strtotime($service->created_at)) }}</td>
+                                <td class="text-end">
+                                    <span title="{{ $service->created_at->diffForHumans() }}">
+                                        {{ $service->created_at->format('j M Y') }}
+                                    </span>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

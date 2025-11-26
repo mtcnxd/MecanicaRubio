@@ -60,7 +60,7 @@
                         @php
                             $grandTotal = 0;
                         @endphp
-                        @foreach ($service->invoiceItems as $item)
+                        @foreach ($service->serviceItems as $item)
                         @php
                             $grandTotal += $item->amount * $item->price;
                         @endphp

@@ -1,6 +1,10 @@
 @extends('includes.body')
 
 @section('content')
+@php
+    $disabled = $service->status == 'Entregado' ? 'disabled' : null;
+@endphp
+
 <div class="window-container">
     @include('includes.alert')
     <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Servicio</span></h6>
@@ -19,7 +23,7 @@
                                         #{{ $service->client->id }}
                                     </span>
                                     <input type="hidden" value="{{ $service->id }}" id="service">
-                                    <input type="text" class="form-control" name="client" value="{{ $service->client->name }}" disabled>
+                                    <input type="text" class="form-control" name="client" value="{{ $service->client->name }}" disabled />
                                 </div>
                             </div>
                         </div>
@@ -31,7 +35,7 @@
                             <div class="col-md-6">
                                 <label>Odometro</label>
                                 <div class="input-group">
-                                <input type="text" class="form-control" name="odometer" value="{{ $service->odometer }}">
+                                <input type="text" class="form-control" name="odometer" value="{{ $service->odometer }}" {{$disabled}} />
                                     <span class="input-group-text">Km</span>
                                 </div>
                             </div>
@@ -64,28 +68,18 @@
                         <div class="row mt-3">
                             <div class="col-md-4">
                                 <label>Entrada</label>
-                                <input type="date" class="form-control" name="entry_date" value="{{ !is_null($service->entry_date) ? date('Y-m-d', strtotime($service->entry_date)) : '' }}">
+                                <input type="date" class="form-control" name="entry_date" value="{{ !is_null($service->entry_date) ? date('Y-m-d', strtotime($service->entry_date)) : '' }}" {{ $disabled }} />
                             </div>
                             <div class="col-md-4">
                                 <label>Salida</label>    
-                                @if (isset($service->due_date))
-                                    <input type="date" class="form-control" name="client" value="{{ date('Y-m-d', strtotime($service->due_date)) }}" disabled>
-                                @else 
-                                    <input type="date" class="form-control" name="client" disabled>
-                                @endif
+                                <input type="date" class="form-control" name="client" value="{{ $service->finished_date }}" {{ $disabled }} />
                             </div>
                             <div class="col-md-4">
-                                <label>Días transcurridos</label>    
+                                <label>Días transcurridos</label>
                                 @if ($service->status == 'Entregado')
-                                    @php
-                                    $elapsed = $service->created_at->diffInDays($service->due_date);
-                                    @endphp
-                                    <input type="text" class="form-control text-end" name="client" value="{{ $elapsed }}" disabled>
+                                    <input type="text" class="form-control text-end" name="client" value="{{ $service->daysElapsed() }}" disabled>
                                 @else
-                                    @php
-                                    $elapsed = $service->created_at->diffInDays(Carbon\Carbon::now());
-                                    @endphp
-                                    <input type="text" class="form-control text-end {{($elapsed >= 4) ? 'is-invalid' : '' }}" name="client" value="{{ $elapsed }}" disabled>
+                                    <input type="text" class="form-control text-end {{($service->daysElapsed() >= 5) ? 'is-invalid' : '' }}" name="client" value="{{ $service->daysElapsed() }}" disabled>
                                 @endif
                             </div>                            
                         </div>
@@ -144,11 +138,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label>Comentarios</label>
-                        <textarea name="notes" class="form-control" cols="30" rows="3">{{ $service->notes }}</textarea>
+                        <textarea name="notes" class="form-control" cols="30" rows="3" {{ $disabled }}>{{ $service->notes }}</textarea>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label>Estatus</label>
-                        <select class="form-select" name="status">
+                        <select class="form-select" name="status" {{ $disabled }}>
                             <option {{$service->status == "Cancelado" ? 'selected' : '' }}>Cancelado</option>
                             <option {{$service->status == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
                             <option {{$service->status == 'Esperando cliente' ? 'selected' : '' }}>Esperando cliente</option>
