@@ -5,7 +5,7 @@
     @include('includes.alert')
     <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Servicio</span></h6>
     <div class="window-body shadow p-4">
-        <form action="{{ route('services.update', $service->id) }}" method="POST">
+        <form action="{{ route('services.update', $service) }}" method="POST">
             <div class="form-container border mb-0">
                 @csrf
                 @method('PATCH')
@@ -63,8 +63,8 @@
 
                         <div class="row mt-3">
                             <div class="col-md-4">
-                                <label>Entrada</label>    
-                                <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->entry_date)) }}">
+                                <label>Entrada</label>
+                                <input type="date" class="form-control" name="entry_date" value="{{ !is_null($service->entry_date) ? date('Y-m-d', strtotime($service->entry_date)) : '' }}">
                             </div>
                             <div class="col-md-4">
                                 <label>Salida</label>    
@@ -109,18 +109,12 @@
                         <th width="30px"></th>
                     </thead>
                     <tbody>
-                        @php
-                            $grandTotal = 0;
-                        @endphp                        
-                        @foreach ($service->invoiceItems as $item)
-                        @php
-                            $grandTotal += $item->amount * $item->price;
-                        @endphp
+                        @foreach ($service->serviceItems as $item)
                         <tr>
                             <td>{{ $item->amount }}</td>
                             <td>{{ $item->item }}</td>
-                            <td class="text-end">{{ '$'.number_format($item->price,2) }}</td>
-                            <td class="text-end">{{ '$'.number_format($item->amount * $item->price, 2) }}</td>
+                            <td class="text-end">{{ Number::currency($item->price) }}</td>
+                            <td class="text-end">{{ Number::currency($item->amount * $item->price) }}</td>
                             <td>
                                 <a href="#" class="removeItem" id="{{ $item->id }}">
                                     <x-feathericon-trash-2 class="table-icon"/>
@@ -138,8 +132,8 @@
                                 </a>
                             </td>
                             <td class="text-end fw-bold">
-                                {{ '$'.number_format($grandTotal, 2) }}
-                                <input type="hidden" name="total" value="{{ $grandTotal }}">
+                                <input type="hidden" name="total" value="{{ $service->serviceItemsTotal() }}">
+                                {{ Number::currency($service->serviceItemsTotal()) }}
                             </td>
                         </tr>
                     </tfoot>
@@ -177,10 +171,12 @@
                         <x-feathericon-share-2 class="table-icon" style="margin: -2px 5px 2px"/>
                         Enviar
                     </a>
-                    <button type="submit" class="btn btn-sm btn-success">
-                        <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
-                        Guardar
-                    </button>
+                    @if ($service->status != 'Entregado')
+                        <button type="submit" class="btn btn-sm btn-success">
+                            <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
+                            Guardar
+                        </button>
+                    @endif                    
                 </div>
             </div>
 

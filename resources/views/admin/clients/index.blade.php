@@ -30,7 +30,9 @@
                     </td>
                     <td>{{ $client->street }} {{ $client->address }}</td>
                     <td class="text-end">
-                        <span title="{{ $client->created_at->diffForHumans() }}">{{ $client->created_at->format('j M Y') }}</span>
+                        @if ($client->created_at)
+                            <span title="{{ $client->created_at->diffForHumans() }}">{{ $client->created_at->format('j M Y') }}</span>
+                        @endif
                     </td>
                     <td class="text-end">
                         <a href="{{ route('clients.edit', $client->id) }}">

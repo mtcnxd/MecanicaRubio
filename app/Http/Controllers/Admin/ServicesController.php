@@ -4,18 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use PDF;
-use Str;
 use Mail;
-use Exception;
-use DataTables;
 use Carbon\Carbon;
-use App\Models\Client;
-use App\Models\Service;
-use App\Models\ServiceItems;
+use App\Models\{
+    Client, Service, ServiceItems
+};
+
 use Illuminate\Http\Request;
 use App\Mail\SendEmailInvoice;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notifications\Telegram;
 use App\Http\Controllers\Admin\ChartsController;
 
@@ -23,109 +22,110 @@ class ServicesController extends Controller
 {
     public function index()
     {
-        $services = array();
-        $clients  = Client::where('status','Activo')->orderBy('name')->get();
-
-        return view('admin.services.index', compact('services', 'clients'));
+        // Server side processing
+        return view('admin.services.index');
     }
 
-    public function create()
+    public function create(Client $clients)
     {
-        $clients = Client::where('status','Activo')
-            ->orderBy('name')
-            ->get();
-
-        return view('admin.services.create', compact('clients'));
+        return view('admin.services.create', 
+            compact('clients')
+        );
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Telegram $telegram)
     {
         $quote = false;
-        
+
         if (isset($request->quote)){
             $quote = true;
         }
 
-        $serviceId = Service::insertGetId([
-            "client_id"    => $request->client,
-            "car_id"       => $request->car,
-            "odometer"     => isset($request->odometer) ? str_replace([' ', ','], '', $request->odometer) : null,
-            "fault"        => $request->fault,
-            "service_type" => $request->type,
-            "quote"        => $quote,
-            "comments"     => $request->comments,
-            "entry_date"   => Carbon::now(),
-            "created_at"   => Carbon::now(),
-            "updated_at"   => Carbon::now(),
-        ]);
-
-        $servicesDetails = Service::find($serviceId);
-
         if (!$quote){
-            try {
-                Telegram::send(
-                    sprintf("<b>New service created:</b> #%s - %s\n\r<b>Client:</b> %s  \n\r<b>Fault:</b> %s", 
-                        $servicesDetails->id, 
-                        $servicesDetails->car->brand ." ". $servicesDetails->car->model, 
-                        $servicesDetails->client->name,
-                        $servicesDetails->fault
+            try {        
+                Service::create($request->except('_token'));
+
+                $latestServiceCreated = Service::latest()->first();
+
+                $telegram->send(
+                    sprintf("<b>New service created ID:</b> %s \n\r<b>Client name:</b> %s \n\r<b>Car model:</b> %s \n\r<b>Fault:</b> %s", 
+                        $latestServiceCreated->id,
+                        $latestServiceCreated->client->name,
+                        $latestServiceCreated->car->carName(),
+                        $latestServiceCreated->fault
                     )
+                );
+
+                session()->flash('success', 
+                    sprintf("Servicio creado con folio: #%s", $latestServiceCreated->id)
                 );
             }
             
-            catch (Exception $err){
-                session()->flash('warning', 'ERROR: '. $err->getMessage());
+            catch (\Exception $err){
+                session()->flash('warning', 
+                    sprintf("Ocurrio un error | Mensaje: %s", $err->getMessage())
+                );
             }
         }
 
-        return to_route('services.index')->with('success', 'Los datos se guardaron con exito');
+        return to_route('services.index');
     }
 
     public function show(string $id)
     {
         $service = Service::find($id);
+
         return view('admin.services.show', compact('service'));
     }
 
     public function update(Request $request, string $id)
     {
-        $currentData = Service::find($id);
+        $service = Service::find($id);
 
-        if ($currentData->status == 'Entregado'){
-            $finishedDate = isset($currentData->finished_date) ? $currentData->finished_date : Carbon::now();
+        if ($service->status == 'Entregado'){
+            $finishedDate = isset($request->finished_date) ? Carbon::parse($request->finished_date) : Carbon::now();
         }
         
         else {
             $finishedDate = Carbon::now();
         }
 
-        $currentData->update([
-            "total"         => $request->total,
-            "notes"         => $request->notes,
-            "status"        => $request->status,
-            "odometer"      => $request->odometer,
-            "finished_date" => ($request->status == 'Entregado') ? $finishedDate : null,
-            "entry_date"    => Carbon::parse($request->entry),
-            "updated_at"    => Carbon::now()
+        $request->merge([
+            'entry_date'    => isset($request->entry_date) ? Carbon::parse($request->entry_date) : null,
+            'finished_date' => ($request->status == 'Entregado') ? Carbon::parse($finishedDate) : null,
         ]);
+
+        try {
+            $service->update($request->except('_token','_method'));
+            
+            session()->flash('success', 'Guardado con exito');
+        }
+
+        catch(\Exception $err){
+            session()->flash('warning', 'Ocurrio un error | Mensaje: '. $err->getMessage());
+        }
 
         if ($request->status == 'Entregado'){
             try {
                 Telegram::send(
                     sprintf("<b>Service completed:</b> #%s - %s \n\r<b>Client:</b> %s \n\r<b>Fault:</b> %s \n\r<b>Total:</b> $%s", 
-                        $currentData->id,
-                        $currentData->car->brand ." ". $currentData->car->model,
-                        $currentData->client->name,
-                        $currentData->fault, 
+                        $service->id,
+                        $service->car->brand ." ". $service->car->model,
+                        $service->client->name,
+                        $service->fault, 
                         number_format($request->total,2)
                     )
                 );
-            } catch (Exception $err) {
-                session()->flash('warning', 'ERROR: '. $err->getMessage());
+
+                session()->flash('success', 'Guardado con exito');
+            }
+            
+            catch (\Exception $err) {
+                session()->flash('warning', 'Ocurrio un error | Mensaje: '. $err->getMessage());
             }
         }
 
-        return to_route('services.index')->with('message', 'Guardado con exito');
+        return to_route('services.index');
     }
 
     public function createServicePDF(Request $request)
@@ -232,7 +232,7 @@ class ServicesController extends Controller
             ]);
         }
 
-        catch (Exception $err) {
+        catch (\Exception $err) {
             return response()->json([
                 'success' => false,
                 'message' => $err->getMessage(),
@@ -259,22 +259,22 @@ class ServicesController extends Controller
 
         $servicesQuery->orderBy('status', 'desc')->get();
 
-        return DataTables::of($servicesQuery)
+        return \DataTables::of($servicesQuery)
             ->addColumn('service_id', function($service){
                 return $service->service_id;
             })
             ->addColumn('fault', function($service){
-                return '<a href="'. route("services.show", $service->service_id) .'">'. Str::limit($service->fault, 32) ."</a>";
+                return '<a href="'. route("services.show", $service->service_id) .'">'. \Str::limit($service->fault, 32) ."</a>";
             })
             ->addColumn('entry_date', function($service){
-                return Carbon::parse($service->entry_date)->format('d-m-Y');
+                return Carbon::parse($service->entry_date)->format('j M Y');
             })
             ->addColumn('finished_date', function($service){
                 if ($service->finished_date == null){
                     return null;
                 }
 
-                return Carbon::parse($service->finished_date)->format('d-m-Y');
+                return Carbon::parse($service->finished_date)->format('j M Y');
             })
             ->addColumn('status', function($service){
                 if ($service->status == 'Entregado'){

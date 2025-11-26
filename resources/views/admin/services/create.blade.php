@@ -13,9 +13,9 @@
                         <div class="col-md-12">
                             <label for="select-client">Cliente</label>    
                             <div class="input-group">
-                                <select class="form-select" id="select-client" name="client" required>
+                                <select class="form-select" id="select-client" name="client_id" required>
                                     <option value="">- Seleccione un cliente -</option>
-                                    @foreach ($clients as $client)
+                                    @foreach ($clients->where('status','Activo')->orderBy('name')->get() as $client)
                                         <option value="{{ $client->id }}">{{ $client->name }}</option>
                                     @endforeach
                                 </select>
@@ -25,7 +25,7 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label for="car">Automóvil</label>
-                            <select class="form-select" name="car" id="car" >
+                            <select class="form-select" name="car_id" id="car" >
                                 <option>- Seleccione un automovil -</option>
                             </select>
                         </div>
@@ -46,15 +46,15 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label class="me-3">
-                                <input type="radio" value="Fallo" name="type" id="type" checked>
+                                <input type="radio" value="Fallo" name="service_type" id="type" checked>
                                 Fallo/Reparación
                             </label>
                             <label class="me-3">
-                                <input type="radio" value="Menor" name="type" id="type">
+                                <input type="radio" value="Menor" name="service_type" id="type">
                                 Servicio Menor
                             </label>
                             <label>
-                                <input type="radio" value="Mayor" name="type" id="type">
+                                <input type="radio" value="Mayor" name="service_type" id="type">
                                 Servicio Mayor
                             </label>
                         </div>

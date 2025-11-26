@@ -10,7 +10,7 @@
                 <label for="endDate" class="fw-bold">Cliente</label>
                 <select class="form-select" id="client">
                     <option>Todos</option>
-                    @foreach ($clients as $client)
+                    @foreach (App\Models\Client::where('status','Activo')->orderBy('name')->get() as $client)
                         <option value="{{ $client->id }}">{{ $client->name }}</option>
                     @endforeach
                 </select>
@@ -42,7 +42,7 @@
         <table class="table table-hover table-borderless bg-white mb-4" id="services" style="width:100%;">
             <thead>
                 <tr>
-                    <th width="30px">ID</th>
+                    <th width="30px">Folio</th>
                     <th width="330px">Servicio/Fallo</th>
                     <th width="250px">Cliente</th>
                     <th>Automovil</th>
@@ -53,32 +53,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($services as $service)
-                <tr>
-                    <td>
-                        <a href="{{ route('services.show', $service->id) }}">
-                            {{ Str::limit($service->fault, 32) }}
-                        </a>
-                    </td>
-                    <td>{{ $service->name }}</td>
-                    <td>{{ $service->brand }} {{ $service->model }}</td>
-                    <td>{{ Carbon\Carbon::parse($service->entry_date)->format('d-m-Y') }}</td>
-                    <td>{{ isset($service->finished_date) ? Carbon\Carbon::parse($service->finished_date)->format('d-m-Y') : null }}</td>
-                    <td>
-                        @switch($service->status)
-                        @case('Entregado')
-                            <span class="badge text-bg-success">{{ $service->status }}</span>
-                            @break
-                        @case('Pendiente')
-                            <span class="badge text-bg-warning">{{ $service->status }}</span>
-                            @break
-                        @default
-                            <span class="badge text-bg-secondary">{{ $service->status }}</span>
-                        @endswitch
-                    </td>
-                    <td class="text-end">{{ "$".number_format($service->total, 2) }}</td>
-                </tr>
-                @endforeach
+
             </tbody>
         </table>
     </div>

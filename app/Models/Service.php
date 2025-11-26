@@ -41,8 +41,14 @@ class Service extends Model
         return $this->belongsTo(Cars::class, 'car_id');
     }
 
-    public function invoiceItems()
+    public function serviceItems()
     {
         return $this->hasMany(ServiceItems::class,'service_id');
+    }
+
+    public function serviceItemsTotal()
+    {
+        return ServiceItems::where('service_id', $this->id)
+            ->sum(ServiceItems::raw('price * amount'));
     }
 }
