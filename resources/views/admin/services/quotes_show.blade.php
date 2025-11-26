@@ -30,11 +30,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Automovil</label>
-                                <input type="text" class="form-control" id="car" name="car" value="{{ $service->car->brand }} {{ $service->car->model }} - {{ $service->car->year }}" disabled>
+                                <input type="text" class="form-control" id="car" name="car" value="{{ $service->car->carName() }} - {{ $service->car->year }}" disabled>
                             </div>
                             <div class="col-md-6">
                                 <label>Fecha cotizacion</label>    
-                                <input type="date" class="form-control" name="entry" value="{{ date('Y-m-d', strtotime($service->created_at)) }}">
+                                <input type="date" class="form-control" name="entry" value="{{ $service->created_at->format('Y-m-d') }}">
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -57,18 +57,12 @@
                         <th width="30px"></th>
                     </thead>
                     <tbody>
-                        @php
-                            $grandTotal = 0;
-                        @endphp
                         @foreach ($service->serviceItems as $item)
-                        @php
-                            $grandTotal += $item->amount * $item->price;
-                        @endphp
                         <tr>
                             <td>{{ $item->amount }}</td>
                             <td>{{ $item->item }}</td>
-                            <td class="text-end">{{ '$'.number_format($item->price,2) }}</td>
-                            <td class="text-end">{{ '$'.number_format($item->amount * $item->price, 2) }}</td>
+                            <td class="text-end">{{ Number::currency($item->price) }}</td>
+                            <td class="text-end">{{ Number::currency($item->amount * $item->price) }}</td>
                             <td>
                                 <a href="#" class="removeItem" id="{{ $item->id }}">
                                     <x-feathericon-trash-2 class="table-icon"/>
@@ -86,8 +80,8 @@
                                 </a>
                             </td>
                             <td class="text-end fw-bold">
-                                {{ '$'.number_format($grandTotal, 2) }}
-                                <input type="hidden" name="total" value="{{ $grandTotal }}">
+                                {{ Number::currency($service->serviceItemsTotal()) }}
+                                <input type="hidden" name="total" value="{{ $service->serviceItemsTotal() }}">
                             </td>
                         </tr>
                     </tfoot>

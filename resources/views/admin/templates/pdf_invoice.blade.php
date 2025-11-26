@@ -30,14 +30,18 @@
     <hr>
     <br>
     <div style="background-color: #efefef; padding: 10px; border:solid 1px #888;">
-        <h4 style="margin-top: 0px;">ORDEN DE SERVICIO</h4>
+        @if ($title)
+            <h4 style="margin-top: 0px;">{{ $title }}</h4>
+        @else
+            <h4 style="margin-top: 0px;">ORDEN DE SERVICIO</h4>
+        @endif
         <table width="100%">
             <tr>
-                <td width="75%"><b style="font-size:12px">CLIENTE:</b> {{ $client->name }}</td>
+                <td width="75%"><b style="font-size:12px">CLIENTE:</b> {{ $service->client->name }}</td>
                 <td><b style="font-size:12px">FECHA: </b>{{ Carbon\Carbon::now()->format('d/m/Y') }}</td>
             </tr>
             <tr>
-                <td width="75%"><b style="font-size:12px">AUTOMOVIL:</b> {{ $auto->brand }} {{ $auto->model }} {{ $auto->year }}</td>
+                <td width="75%"><b style="font-size:12px">AUTOMOVIL:</b> {{ $service->car->carName() }} {{ $service->car->year }}</td>
                 <td><b style="font-size:12px">SERVICIO: </b>{{ "#".$service->id }}</td>
             </tr>
         </table>
@@ -59,18 +63,12 @@
             <td class="text-end"><b>Importe</b></td>
         </thead>
         <tbody>
-            @php
-                $total = 0;
-            @endphp
-            @foreach ($items as $item)
-            @php
-                $total += $item->amount * $item->price;
-            @endphp
+            @foreach ($service->serviceItems as $item)
             <tr style="height: 35px;">
                 <td>{{ $item->amount }}</td>
                 <td>{{ $item->item }}</td>
-                <td class="text-end">{{ "$".number_format($item->price, 2) }}</td>
-                <td class="text-end">{{ "$".number_format($item->amount * $item->price, 2) }}</td>
+                <td class="text-end">{{ Number::currency($item->price) }}</td>
+                <td class="text-end">{{ Number::currency($item->amount * $item->price) }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -81,7 +79,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
-            <td class="text-end">{{ "$".number_format($total, 2) }}</td>
+            <td class="text-end">{{ Number::currency($service->serviceItemsTotal()) }}</td>
         </tr>
     </table>
 

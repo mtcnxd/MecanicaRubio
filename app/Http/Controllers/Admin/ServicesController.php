@@ -92,8 +92,6 @@ class ServicesController extends Controller
             'finished_date' => ($request->status == 'Entregado') ? Carbon::parse($finishedDate) : null,
         ]);
 
-        // dd($request->except('_token','_method'));
-
         try {
             $service->update($request->except('_token','_method'));
             
@@ -129,25 +127,18 @@ class ServicesController extends Controller
 
     public function createServicePDF(Request $request)
     {
-        $service = DB::table('services')->where('id', $request->serviceid)->first();
-        $items   = DB::table('services_items')->where('service_id', $request->serviceid)->get();
-        $client  = DB::table('clients')->where('id', $service->client_id)->first();
-        $auto    = DB::table('autos')->where('id', $service->car_id)->first();
+        $service = Service::find($request->serviceid);
 
         $path = public_path('images/mainlogo.png');
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $image = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($image);
 
-        $data = [
+        $pdf = PDF::loadView('admin.templates.pdf_invoice', [
+            "title"   => 'COTIZACION',
             "service" => $service,
-            "client"  => $client,
-            "auto"    => $auto,
-            "items"   => $items,
-            "image"   => $base64
-        ];
-
-        $pdf = PDF::loadView('admin.templates.pdf_invoice', $data);
+            "image"   => $base64,
+        ]);
         
         return $pdf->download('invoice.pdf');
     }
