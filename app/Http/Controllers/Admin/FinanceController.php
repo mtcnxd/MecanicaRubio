@@ -20,18 +20,11 @@ class FinanceController extends Controller
         return view('admin.reports.services', compact('list'));
     }
 
-    public function show($client)
+    public function show($client, Service $service)
     {
-        $services = DB::table('services')
-            ->where('client_id', $client)
-            ->get();
+        $service = $service->where('client_id', $client)->get();
 
-        $items = DB::table('services')
-            ->join('services_items', 'services.id', 'services_items.service_id')
-            ->where('services.client_id', $client)
-            ->get();
-
-        return view('admin.clients.finance', compact('services', 'items'));
+        return view('admin.clients.finance', compact('service'));
     }
 
     public function close(Request $request)

@@ -10,7 +10,7 @@
                 <x-feathericon-dollar-sign class="window-title-icon"/>
             </h6>
             <div class="window-body bg-white text-center center-vertically" style="min-height: 100px;">
-                <h3>{{ "$".number_format($services->sum('total'), 2) }}</h3>
+                <h3>{{ Number::currency($service->sum('total')) }}</h3>
             </div>
         </div>
         <div class="col-md-3">            
@@ -19,18 +19,20 @@
                 <x-feathericon-tool class="window-title-icon"/>
             </h6>
             <div class="window-body bg-white text-center center-vertically" style="min-height: 100px;">
-                <h3>{{ $services->count() }}</h3>
+                <h3>{{ $service->count() }}</h3>
             </div>
         </div>
     </div>
-    
+
     <div class="row col-md-12 mt-4">
-        @foreach ($items as $item)
-            <div class="row border p-3 m-2 shadow-sm" style="background-color: var(--gray-100)">
-                <div class="col-md-4">{{ $item->item }}</div>
-                <div class="col-md-3">{{ $item->supplier }}</div>
-                <div class="col text-end">{{ "$".number_format($item->price, 2) }}</div>
-            </div>
+        @foreach ($service as $item)
+            @foreach ($item->serviceItems as $serviceItem)
+                <div class="row border p-3 m-2 shadow-sm" style="background-color: var(--gray-100)">
+                    <div class="col-md-4">{{ $serviceItem->item }}</div>
+                    <div class="col-md-3">{{ $serviceItem->supplier }}</div>
+                    <div class="col text-end">{{ Number::currency($serviceItem->price) }}</div>
+                </div>
+            @endforeach
         @endforeach
     </div>
 </div>

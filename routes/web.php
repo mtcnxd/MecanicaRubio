@@ -124,7 +124,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
 
     Route::group(['prefix' => 'finance'], function(){
         Route::get('/ingresos', [FinanceController::class, 'index'])->name('finance.ingresos');
-        Route::get('/finance/{client}', [FinanceController::class, 'show'])->name('finance');
+        Route::get('/client/{client}', [FinanceController::class, 'show'])->name('finance.client');
 
         Route::resource('/payroll', PayrollController::class);
         Route::resource('/expenses', ExpensesController::class);

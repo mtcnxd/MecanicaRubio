@@ -6,6 +6,7 @@
     <div class="window-body shadow">
         <table class="table border table-hover bg-white">
             <thead>
+                <th width="5%">#</th>
                 <th width="5%">Folio</th>
                 <th width="10%">Fecha</th>
                 <th>Concepto</th>
@@ -22,10 +23,11 @@
                         $total += $row->serviceItems->where('item','Servicio (mano de obra)')->first()->price;
                     @endphp
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td>
-                            <a href="{{ route('services.show', $row->id) }}">{{ $row->id }}</a>
+                            <a href="{{ route('services.show', $row->id) }}"> #{{ $row->id }}</a>
                         </td>
-                        <td>{{ $row->finished_date }}</td>
+                        <td>{{ Carbon\Carbon::parse($row->finished_date)->format('j M Y') }}</td>
                         <td>
                             <a href="{{ route('services.show', $row->id) }}">{{ $row->car->carName() }}</a>
                         </td>
@@ -36,7 +38,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="3"></td>
+                    <td colspan="4"></td>
                     <td class="text-end fw-bold">{{ Number::currency($total) }}</td>
                     <td class="text-end fw-bold">{{ Number::currency($list->sum('total')) }}</td>
                 </tr>
