@@ -1,6 +1,7 @@
 @extends('includes.body')
 
 @section('content')
+
 @php
     $disabled = $service->status == 'Entregado' ? 'disabled' : null;
 @endphp
@@ -357,6 +358,5 @@ function downloadPDF(serviceid){
         },
     });
 }
-
 </script>    
 @endsection

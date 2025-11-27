@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\Service;
+use Carbon\Carbon;
 
 class Charts extends Model
 {
@@ -12,11 +14,11 @@ class Charts extends Model
 
     protected $table = null;
 
-    public static $months = [
-        'Enero', 'Febrero', 'Marzo',
-        'Abril', 'Mayo', 'Junio',
-        'Julio', 'Agosto', 'Septiembre',
-        'Octubre', 'Noviembre', 'Diciembre'
+    protected static $months = [
+        'En', 'Feb', 'Mar',
+        'Ab', 'May', 'Jun',
+        'Jul', 'Ago', 'Sep',
+        'Oct', 'Nov', 'Dic'
     ];
 
     public function chartAssetsIncrement()
@@ -35,7 +37,7 @@ class Charts extends Model
             ->get();
         
         foreach ($data as $value) {
-            $labels[] = self::$months[(Integer)$value->month -1] .' '.$value->year;
+            $labels[] = self::$months[(Integer)$value->month] .' '.$value->year;
             $values[] = $value->services;
         }
 
@@ -43,5 +45,42 @@ class Charts extends Model
             'labels' => $labels,
             'values' => $values,
         );
+    }
+
+    public function chartCarsReleaseThisMonth()
+    {
+        return Service::where('status','Entregado')
+            ->whereBetween('finished_date', [Carbon::now()->startOfMonth(), Carbon::now()])
+            ->get();
+    }
+
+    static function getServicesChart()
+    {
+        $data = DB::table('chart_service_by_months')->get();
+
+        foreach ($data as $value) {
+            $labels[] = self::$months[(Integer) $value->month - 1] .' '.$value->year;
+            $values[] = $value->services;
+        }
+
+        return [
+            'labels' => $labels,
+            'values' => $values,
+        ];
+    }
+
+    static function getIncomeChart()
+    {
+        $data = DB::table('chart_incomes_by_months')->get();
+
+        foreach($data as $value){
+            $labels[] = self::$months[(Integer)$value->month -1];
+            $values[] = $value->price;
+        }
+
+        return [
+            'labels' => $labels,
+            'values' => $values,
+        ];
     }
 }

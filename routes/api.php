@@ -89,4 +89,4 @@ Route::post('removeItemInvoice', [ControllerAjax::class, 'removeItemInvoice'])->
 
 Route::post('createItemQuote', [ControllerAjax::class, 'createItemQuote'])->name('createItemQuote'); 
 
-Route::get('/mybitso/destroy', [Bitso::class, 'destroy'])->name('mybitso.destroy');
+Route::get('/bitso/destroy', [Bitso::class, 'destroy'])->name('bitso.destroy');

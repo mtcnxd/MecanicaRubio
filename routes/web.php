@@ -20,7 +20,10 @@ use App\Http\Controllers\Admin\ExpensesController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\EmployeesController;
-use App\Http\Controllers\Admin\Investments;
+use App\Http\Controllers\Admin\{
+    Investments,
+    Dashboard
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +64,7 @@ Route::get('/auth/callback', function () {
 
         return to_route('services.index');
     }
+
     catch (Exception $err) {
         print_r(
             sprintf("Error: %s", $err->getMessage())
@@ -78,51 +82,51 @@ Route::group(['controller' => LoginController::class], function() {
 });
 
 Route::group(['prefix' => 'client', 'middleware' => 'isAdmin'], function(){
-    Route::resource('clientServices', App\Http\Controllers\Client\ServicesController::class)->only('index','show');
+    // Client resources
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function()
-    {
-        Route::get('mybitso', [Bitso::class, 'index'])->name('bitso.index');
-        Route::post('mybitso/store', [Bitso::class, 'store'])->name('bitso.store');
-        Route::post('mybitso/update', [Bitso::class, 'update'])->name('bitso.update');
+Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
+    
+    Route::get('bitso', [Bitso::class, 'index'])->name('bitso.index');
+    Route::post('bitso/store', [Bitso::class, 'store'])->name('bitso.store');
+    Route::post('bitso/update', [Bitso::class, 'update'])->name('bitso.update');
 
-        Route::get('investments/{investment_id}', [Investments::class, 'show'])->name('investments.show');
+    Route::get('investments/{investment_id}', [Investments::class, 'show'])->name('investments.show');
 
-        Route::resource('services', ServicesController::class);
-        Route::resource('clients', ClientsController::class);
-        Route::resource('cars', CarsController::class);
-        Route::resource('employees', EmployeesController::class);
-        Route::resource('quotes', QuotesController::class)->only('index','show');
-        Route::resource('users', UsersController::class)->except('update','destroy');
+    Route::resource('services', ServicesController::class);
 
-        Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
-        Route::get('dashboard', [ServicesController::class, 'dashboard'])->name('dashboard.index');
-        Route::get('profile', [EmployeesController::class, 'profileIndex'])->name('profile.index');
+    Route::get('dashboard', [Dashboard::class, 'index'])->name('dashboard.index');
 
-        # Reports
-        Route::get('reports/employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
-        Route::get('reports/employees', [EmployeesController::class, 'report'])->name('reports.employees');
-        Route::get('reports/balance', [ExpensesController::class, 'report'])->name('reports.balance');
-        Route::get('reports/autos', [CarsController::class, 'report'])->name('reports.autos');
+    Route::get('emailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
 
-        Route::group(['prefix' => 'finance'], function()
-        {
-            Route::get('/ingress', [FinanceController::class, 'listOfIngress'])->name('finance.listOfIngress');
-            Route::get('/finance/{client}', [FinanceController::class, 'show'])->name('finance');
-            
-            Route::resource('/payroll', PayrollController::class);
-            Route::resource('/expenses', ExpensesController::class);
-        }
-);
-        Route::post('admin/profile', [EmployeesController::class, 'profileUpdate'])->name('profile.update');
+    Route::resource('clients', ClientsController::class);
+    Route::resource('cars', CarsController::class);
+    Route::resource('employees', EmployeesController::class);
+    Route::resource('quotes', QuotesController::class)->only('index','show');
+    Route::resource('users', UsersController::class)->except('update','destroy');
 
-        Route::get('admin/settings', [SettingsController::class, 'index'])->name('setting.index');
+    Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
+    Route::get('profile', [EmployeesController::class, 'profileIndex'])->name('profile.index');
 
-        Route::post('admin/settings/create', [SettingsController::class, 'store'])->name('setting.store');
-        
-        Route::post('admin/settings', [SettingsController::class, 'update'])->name('setting.update');
+    # Reports
+    Route::get('reports/employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
+    Route::get('reports/employees', [EmployeesController::class, 'report'])->name('reports.employees');
+    Route::get('reports/balance', [ExpensesController::class, 'report'])->name('reports.balance');
+    Route::get('reports/autos', [CarsController::class, 'report'])->name('reports.autos');
 
-        Route::get('admin/sendEmailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
-    }
-);
+    Route::post('admin/profile', [EmployeesController::class, 'profileUpdate'])->name('profile.update');
+
+    Route::get('admin/settings', [SettingsController::class, 'index'])->name('setting.index');
+
+    Route::post('admin/settings/create', [SettingsController::class, 'store'])->name('setting.store');
+    
+    Route::post('admin/settings', [SettingsController::class, 'update'])->name('setting.update');
+
+    Route::group(['prefix' => 'finance'], function(){
+        Route::get('/ingress', [FinanceController::class, 'listOfIngress'])->name('finance.listOfIngress');
+        Route::get('/finance/{client}', [FinanceController::class, 'show'])->name('finance');
+
+        Route::resource('/payroll', PayrollController::class);
+        Route::resource('/expenses', ExpensesController::class);
+    });
+});

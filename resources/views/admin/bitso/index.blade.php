@@ -152,7 +152,7 @@
         event.preventDefault();
         
         $.ajax({
-            url: "{{ route('mybitso.destroy') }}",
+            url: "{{ route('bitso.destroy') }}",
             method:'GET',
             data:{
                 id:this.dataset.id

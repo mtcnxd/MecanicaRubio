@@ -14,10 +14,7 @@
                             <x-feathericon-tool class="window-title-icon"/>
                         </div>
                         <div class="widget-simple-body fs-3">
-                            @php
-                                $count = count($services);
-                            @endphp
-                            {{ ($count > 1) ? $count.' autos' : $count.' auto' }}
+                            {{ $charts->chartCarsReleaseThisMonth()->count() }} autos
                         </div>
                     </div>
                 </div>
@@ -28,7 +25,7 @@
                             <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
                         <div class="widget-simple-body fs-3">
-                            {{ '$'.number_format($salaries->sum('total'), 2) }}
+                            {{ Number::currency($payroll->getTotalCurrentMonth()) }}
                         </div>
                     </div>
                 </div>
@@ -42,15 +39,7 @@
                             <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
                         <div class="widget-simple-body fs-3">
-                            @php
-                                $total_income = 0;
-                            @endphp
-                            @foreach ($services as $income)
-                                @php
-                                    $total_income += $income->price
-                                @endphp
-                            @endforeach
-                            {{ '$'.number_format($total_income,2) }}
+                            {{ Number::currency($data['income']) }}
                             <div class="fs-6">Autos entregados</div>
                         </div>
                     </div>
@@ -62,15 +51,7 @@
                             <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
                         <div class="widget-simple-body fs-3">
-                            @php
-                                $total_expenses = 0;
-                            @endphp
-                            @foreach ($expenses as $expense)
-                                @php
-                                    $total_expenses += $expense->amount * $expense->price;
-                                @endphp
-                            @endforeach
-                            {{ '$'.number_format($total_expenses,2) }}
+                            {{ Number::currency($expense->getTotalCurrentMonth()) }}
                         </div>
                     </div>
                 </div>
@@ -97,10 +78,9 @@
                 </div>
                 <div class="widget-simple-body" style="max-height:180px; overflow-y:overlay;">
                     <table class="table table-sm table-striped">
-                        @foreach ($services as $row => $service)
+                        @foreach ($charts->chartCarsReleaseThisMonth() as $service)
                             <tr>
-                                <td>{{ $row +1 }}</td>
-                                <td>{{ $service->car }}</td>
+                                <td>{{ $service->car->carName() }}</td>
                                 <td>{{ Carbon\Carbon::parse($service->finished_date)->format('d-m-Y') }}</td>
                                 <td class="text-end">
                                     <x-feathericon-check-circle class="table-icon"/>
@@ -122,9 +102,9 @@
     var incomes = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: @json($servicesChart['labels']),
+            labels: @json($charts->getServicesChart()['labels']),
             datasets: [{
-                data: @json($servicesChart['values']),
+                data: @json($charts->getServicesChart()['values']),
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
@@ -155,9 +135,9 @@
     var services = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: @json($incomesChart['labels']),
+            labels: @json($charts->getIncomeChart()['labels']),
             datasets: [{
-                data: @json($incomesChart['values']),
+                data: @json($charts->getIncomeChart()['values']),
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1

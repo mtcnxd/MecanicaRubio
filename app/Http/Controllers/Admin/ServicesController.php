@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use DB;
-use PDF;
 use Mail;
 use Carbon\Carbon;
 use App\Models\{
@@ -134,61 +133,13 @@ class ServicesController extends Controller
         $image = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($image);
 
-        $pdf = PDF::loadView('admin.templates.pdf_invoice', [
+        $pdf = \PDF::loadView('admin.templates.pdf_invoice', [
             "title"   => 'COTIZACION',
             "service" => $service,
             "image"   => $base64,
         ]);
         
         return $pdf->download('invoice.pdf');
-    }
-
-    public function dashboard()
-    {
-        $services = DB::table('services_view')
-            ->select(DB::raw('sum(price) as price, car, finished_date'))
-            ->join('services_items','services_view.service_id','services_items.service_id')
-            ->where('services_items.labour', true)
-            ->where('services_view.status', 'Entregado')
-            ->whereBetween('services_view.finished_date', [Carbon::now()->startOfMonth(), Carbon::now()])
-            ->groupBy('services_view.car','finished_date')
-            ->orderBy('services_view.finished_date')
-            ->get();
-
-        $expenses = DB::table('expenses')
-            ->whereBetween('expense_date', [Carbon::now()->startOfMonth(), Carbon::now()])
-            ->get();
-
-        $salaries = DB::table('salaries')
-            ->where('status','Pagado')
-            ->whereBetween('paid_date', [Carbon::now()->startOfMonth(), Carbon::now()])
-            ->get();
-
-        return view('admin.services.dashboard',[
-            'services' => $services,
-            'expenses' => $expenses,
-            'salaries' => $salaries,
-            'servicesChart' => ChartsController::getServicesChart(),
-            'incomesChart'  => ChartsController::getIncomeChart(),
-        ]);        
-    }
-
-    public function sendEmailInvoice($id)
-    {
-        $service = DB::table('services')
-            ->join('clients', 'services.client_id', 'clients.id')
-            ->where('services.id', $id)
-            ->first();
-
-        $items = DB::table('services_items')
-            ->where('service_id', $id)
-            ->get();
-
-        $response = Mail::to('mtc.nxd@gmail.com')->send(
-            new SendEmailInvoice($service, $items)
-        );
-        
-        return to_route('services.show', $id);
     }
 
     public function getServiceItems(Request $request)

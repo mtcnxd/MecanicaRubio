@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SalaryItems extends Model
+class PayrollItems extends Model
 {
     use HasFactory;
 
