@@ -7,9 +7,9 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Employee;
-use App\Models\Salary;
+use App\Models\Payroll;
 use Illuminate\Http\Request;
-use App\Models\SalaryItems;
+use App\Models\PayrollItems;
 use App\Http\Controllers\Controller;
 
 class PayrollController extends Controller
@@ -19,7 +19,7 @@ class PayrollController extends Controller
         $startDate = Carbon::now()->subMonths(2)->startofMonth()->format('Y-m-d');
         $endDate   = Carbon::now()->addDay()->format('Y-m-d');
 
-        $salaries = Salary::whereBetween('created_at', [$startDate, $endDate])
+        $salaries = Payroll::whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -30,15 +30,15 @@ class PayrollController extends Controller
     {
         /* We plus one because current salarie is still not saved */
 
-        $id    = Salary::max('id') + 1;
-        $items = SalaryItems::where('salary_id', $id)->get();
+        $id    = Payroll::max('id') + 1;
+        $items = PayrollItems::where('salary_id', $id)->get();
 
         return view('admin.payrolls.create', compact('items'));
     }
 
     public function store(Request $request)
     {
-        $insert = Salary::insert([
+        $insert = Payroll::insert([
             "user_id"    => $request->employee,
             "type"       => $request->type,
             "status"     => 'Pendiente',
@@ -54,7 +54,7 @@ class PayrollController extends Controller
 
     public function update(Request $request, string $id)
     {
-        Salary::where('id', $id)->update([
+        Payroll::where('id', $id)->update([
             'status'    => 'Pagado',
             'blocked'   => true,
             'paid_date' => Carbon::now(),
@@ -66,7 +66,7 @@ class PayrollController extends Controller
 
     public function show(string $id)
     {
-        $salary = Salary::find($id);
+        $salary = Payroll::find($id);
 
         return view('admin.payrolls.show', compact('salary'));  
     }
@@ -105,9 +105,9 @@ class PayrollController extends Controller
     
     public function addItem(Request $request)
     {   
-        $id = Salary::max('id') +1;
+        $id = Payroll::max('id') +1;
         
-        SalaryItems::insert([
+        PayrollItems::insert([
             'salary_id' => $id,
             'concept'   => $request->concept,
             'amount'    => $request->amount,
@@ -122,7 +122,7 @@ class PayrollController extends Controller
 
     public function removeItem(Request $request)
     {       
-        $item = SalaryItems::find($request->input('itemId'));
+        $item = PayrollItems::find($request->input('itemId'));
         $item->delete();
 
         return response()->json([
