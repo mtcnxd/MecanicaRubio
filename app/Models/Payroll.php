@@ -41,6 +41,8 @@ class Payroll extends Model
 
     public function getTotalCurrentMonth()
     {
-        return $this->whereMonth('paid_date', now()->month)->first()->total;
+        return $this->select(Payroll::raw('SUM(total) as total'))
+            ->whereMonth('paid_date', now()->month)
+            ->first()->total;
     }
 }
