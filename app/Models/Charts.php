@@ -71,10 +71,12 @@ class Charts extends Model
 
     static function getIncomeChart()
     {
-        $data = DB::table('chart_incomes_by_months')->get();
+        $data = DB::table('chart_incomes_by_months')
+            ->orderBy('month', 'asc')
+            ->get();
 
         foreach($data as $value){
-            $labels[] = self::$months[(Integer)$value->month -1];
+            $labels[] = self::$months[(Integer)$value->month - 1];
             $values[] = $value->price;
         }
 

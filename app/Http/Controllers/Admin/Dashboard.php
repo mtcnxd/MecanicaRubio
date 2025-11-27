@@ -21,6 +21,8 @@ class Dashboard extends Controller
             return $service->serviceItems->where('labour', true)->sum('price');
         });
 
+        // dd($charts->getIncomeChart());
+
         return view('admin.reports.dashboard', 
             compact('expense','payroll','charts','data')
         );

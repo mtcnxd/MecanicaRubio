@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Exception;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Salary;
+use App\Models\{
+    Payroll, PayrollItems
+};
 use App\Models\Employee;
-use App\Models\SalaryItems;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -73,12 +74,6 @@ class EmployeesController extends Controller
     public function show(string $id)
     {
         $employee = Employee::find($id);
-
-        // dd($employee);
-
-        // dd($employee->vacations());
-        // dd($employee->user->email);
-        // dd($employee->vacationsDaysTaken());
         
         return view('admin.employees.show', compact('employee'));
     }
@@ -164,14 +159,14 @@ class EmployeesController extends Controller
         ]);
     }
 
-    public function report(Request $request)
+    public function report(Request $request, Payroll $payroll)
     {
         if ($request->employee)
         {            
-            $employee  = Employee::find($request->employee);
-            $salaries  = Salary::where('user_id', $request->employee)->orderBy('paid_date')->get();
+            $employee = Employee::find($request->employee);
+            $payrolls = $payroll->where('user_id', $request->employee)->orderBy('paid_date')->get();
 
-            return view('admin.reports.employees', compact('employee', 'salaries'));
+            return view('admin.reports.employees', compact('employee', 'payrolls'));
         }
 
         return view('admin.reports.employees');

@@ -77,7 +77,7 @@
                 <span class="ms-3">Actualizar Saldo</span>
             </h6>
             <div class="window-body shadow p-4">
-                <form action="{{ route('bitso.update') }}" method="POST">
+                <form action="{{ route('investments.update') }}" method="POST">
                     @csrf
                     <label for="investment_id" class="mb-1">Instrumento de inversion</label>
                     <select name="investment_id" class="form-select">

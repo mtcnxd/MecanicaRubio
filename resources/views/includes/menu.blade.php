@@ -53,7 +53,7 @@
 			</a>
 			<ul class="menu-dropdown">
 				<li>
-					<a class="a-item" href="{{ route('finance.ingresos') }}">Ingresos</a>
+					<a class="a-item" href="{{ route('finance.incomes') }}">Ingresos</a>
 				</li>
 				<li>
 					<a class="a-item" href="{{ route('payroll.index') }}">Nominas</a>
@@ -79,7 +79,7 @@
 				</h5>
 			</a>
 			<ul class="menu-dropdown">
-				<li><a class="a-item" href="{{ route('dashboard.index') }}">Resumen</a></li>
+				<li><a class="a-item" href="{{ route('reports.overview') }}">Resumen</a></li>
 				<li>
 					<a class="a-item" href="#">Reportes</a>
 					<ul class="submenu">
@@ -139,7 +139,7 @@
 				</li>
 				@if (Auth::user()->id == 1)
 					<li>
-						<a class="a-item" href="{{ route('bitso.index') }}">My Bitso</a>
+						<a class="a-item" href="{{ route('investments.index') }}">Inversiones</a>
 					</li>
 				@endif
 				<li>

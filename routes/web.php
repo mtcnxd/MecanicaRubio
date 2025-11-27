@@ -81,52 +81,53 @@ Route::group(['controller' => LoginController::class], function() {
     Route::post('/admin/logout', 'logout')->name('logout');
 });
 
-Route::group(['prefix' => 'client', 'middleware' => 'isAdmin'], function(){
+Route::group(['prefix' => 'client'], function(){
     // Client resources
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
-    
-    Route::get('bitso', [Bitso::class, 'index'])->name('bitso.index');
-    Route::post('bitso/store', [Bitso::class, 'store'])->name('bitso.store');
-    Route::post('bitso/update', [Bitso::class, 'update'])->name('bitso.update');
-
-    Route::get('investments/{investment_id}', [Investments::class, 'show'])->name('investments.show');
-
-    Route::resource('services', ServicesController::class);
-
-    Route::get('dashboard', [Dashboard::class, 'index'])->name('dashboard.index');
-
-    Route::get('emailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
-
+    // Main resources
     Route::resource('clients', ClientsController::class);
     Route::resource('cars', CarsController::class);
+    Route::resource('services', ServicesController::class);    
     Route::resource('employees', EmployeesController::class);
     Route::resource('quotes', QuotesController::class)->only('index','show');
-    Route::resource('users', UsersController::class)->except('update','destroy');
+    Route::resource('users', UsersController::class)->except('update','destroy'); 
 
+    Route::group(['prefix' => 'finance'], function(){
+        Route::get('/incomes', [FinanceController::class, 'index'])->name('finance.incomes');
+        
+        Route::resource('/expenses', ExpensesController::class);
+        Route::resource('/payroll', PayrollController::class);
+    });
+
+    Route::group(['prefix' => 'reports'], function(){
+        Route::get('overview', [Dashboard::class, 'index'])->name('reports.overview');
+        Route::get('employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
+        Route::get('employees', [EmployeesController::class, 'report'])->name('reports.employees');
+        Route::get('autos', [CarsController::class, 'report'])->name('reports.autos');
+        Route::get('close-month', [ExpensesController::class, 'report'])->name('reports.balance');
+
+        Route::get('/client/{client}', [FinanceController::class, 'show'])->name('reports.client');
+    });
+
+    Route::group(['prefix' => 'investments'], function(){
+        Route::get('/', [Bitso::class, 'index'])->name('investments.index');
+        Route::post('store', [Bitso::class, 'store'])->name('investments.store');
+        Route::post('update', [Bitso::class, 'update'])->name('investments.update');
+
+        Route::get('instrument/{investment_id}', [Investments::class, 'show'])->name('investments.show');
+    });
+
+    Route::get('emailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
     Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
     Route::get('profile', [EmployeesController::class, 'profileIndex'])->name('profile.index');
 
-    # Reports
-    Route::get('reports/employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
-    Route::get('reports/employees', [EmployeesController::class, 'report'])->name('reports.employees');
-    Route::get('reports/balance', [ExpensesController::class, 'report'])->name('reports.balance');
-    Route::get('reports/autos', [CarsController::class, 'report'])->name('reports.autos');
-
-    Route::post('admin/profile', [EmployeesController::class, 'profileUpdate'])->name('profile.update');
-
-    Route::get('admin/settings', [SettingsController::class, 'index'])->name('setting.index');
-
-    Route::post('admin/settings/create', [SettingsController::class, 'store'])->name('setting.store');
-    
-    Route::post('admin/settings', [SettingsController::class, 'update'])->name('setting.update');
-
-    Route::group(['prefix' => 'finance'], function(){
-        Route::get('/ingresos', [FinanceController::class, 'index'])->name('finance.ingresos');
-        Route::get('/client/{client}', [FinanceController::class, 'show'])->name('finance.client');
-
-        Route::resource('/payroll', PayrollController::class);
-        Route::resource('/expenses', ExpensesController::class);
+    Route::group(['prefix' => 'profile'], function(){ 
+        Route::post('profile', [EmployeesController::class, 'profileUpdate'])->name('profile.update');
+        Route::post('settings', [SettingsController::class, 'update'])->name('setting.update');
+        Route::post('settings/create', [SettingsController::class, 'store'])->name('setting.store');    
     });
+
+    Route::get('settings', [SettingsController::class, 'index'])->name('setting.index');
 });

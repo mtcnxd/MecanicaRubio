@@ -6,7 +6,7 @@
     <div class="window-body shadow">
         <table class="table border table-hover bg-white">
             <thead>
-                <th width="5%">#</th>
+                <th width="3%">#</th>
                 <th width="5%">Folio</th>
                 <th width="10%">Fecha</th>
                 <th>Concepto</th>
@@ -24,9 +24,7 @@
                     @endphp
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>
-                            <a href="{{ route('services.show', $row->id) }}"> #{{ $row->id }}</a>
-                        </td>
+                        <td> #{{ $row->id }}</td>
                         <td>{{ Carbon\Carbon::parse($row->finished_date)->format('j M Y') }}</td>
                         <td>
                             <a href="{{ route('services.show', $row->id) }}">{{ $row->car->carName() }}</a>

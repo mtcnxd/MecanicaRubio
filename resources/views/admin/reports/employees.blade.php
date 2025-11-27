@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    @isset($salaries)
+    @isset($payrolls)
         <h6 class="window-title text-uppercase fw-bold"><span class="ms-3">Reporte</span></h6>
         <div class="window-body shadow p-4">
             <div class="form-container border">
@@ -94,27 +94,26 @@
                                 <th class="text-end">Importe</th>
                             </tr>
                             @php
-                                $count = 1;
                                 $grandTotal = 0;
                             @endphp
 
-                            @foreach ($salaries->where('status', 'Pagado') as $result)
-                                @foreach ($result->salaryDetails->where('concept', 'Caja de ahorro') as $item)
+                            @foreach ($payrolls->where('status', 'Pagado') as $result)
+                                @foreach ($result->payrollItems->where('concept', 'Caja de ahorro') as $item)
                                     <tr>
-                                        <td>{{ $count ++ }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <a href="{{ route('payroll.show', $result->id) }}">{{ $result->type }} #{{ $result->id }}</a>
                                         </td>
-                                        <td class="text-center">{{ $result->paid_date->format('d M Y') }}</td>
+                                        <td class="text-center">{{ Carbon\Carbon::parse($result->paid_date)->format('d M Y') }}</td>
                                         <td class="text-center">
                                             <span class="badge text-bg-warning">{{ $result->start_date }}</span> | <span class="badge text-bg-warning">{{ $result->end_date }}</span>
                                         </td>
                                         <td class="text-end">
                                             @php
-                                                $grandTotal += $result->salaryDetails->where('concept','Caja de ahorro')->sum('amount');
+                                                $grandTotal += $result->payrollItems->where('concept','Caja de ahorro')->sum('amount');
                                             @endphp
 
-                                            ${{ number_format($result->salaryDetails->where('concept','Caja de ahorro')->sum('amount'), 2) }}
+                                            ${{ number_format($result->payrollItems->where('concept','Caja de ahorro')->sum('amount'), 2) }}
                                         </td>
                                     </tr>
                                 @endforeach

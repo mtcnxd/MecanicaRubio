@@ -66,7 +66,7 @@ class Service extends Model
                 return Carbon::parse($this->entry_date)->diffInDays(Carbon::parse($this->finished_date));
             }
 
-            return $this->entry_date->diffInDays(Carbon::now());
+            return Carbon::parse($this->entry_date)->diffInDays(Carbon::now());
         }
         
         return;
