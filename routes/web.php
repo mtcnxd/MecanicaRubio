@@ -123,7 +123,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
     Route::post('admin/settings', [SettingsController::class, 'update'])->name('setting.update');
 
     Route::group(['prefix' => 'finance'], function(){
-        Route::get('/ingress', [FinanceController::class, 'listOfIngress'])->name('finance.listOfIngress');
+        Route::get('/ingresos', [FinanceController::class, 'index'])->name('finance.ingresos');
         Route::get('/finance/{client}', [FinanceController::class, 'show'])->name('finance');
 
         Route::resource('/payroll', PayrollController::class);

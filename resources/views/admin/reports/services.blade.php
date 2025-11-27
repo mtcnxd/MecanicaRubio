@@ -9,24 +9,36 @@
                 <th width="5%">Folio</th>
                 <th width="10%">Fecha</th>
                 <th>Concepto</th>
-                <th class="text-end">Ingresos</th>
+                <th class="text-end">Mano de obra</th>
+                <th class="text-end">Total</th>
             </thead>
             <tbody class="bg-white">
+                @php
+                    $total = 0;
+                @endphp
+
                 @foreach ($list as $row)
+                    @php
+                        $total += $row->serviceItems->where('item','Servicio (mano de obra)')->first()->price;
+                    @endphp
                     <tr>
-                        <td>{{ $row->id }}</td>
+                        <td>
+                            <a href="{{ route('services.show', $row->id) }}">{{ $row->id }}</a>
+                        </td>
                         <td>{{ $row->finished_date }}</td>
                         <td>
-                            <a href="{{ route('services.show', $row->id) }}">{{ $row->brand }} {{ $row->model }}</a>
+                            <a href="{{ route('services.show', $row->id) }}">{{ $row->car->carName() }}</a>
                         </td>
-                        <td class="text-end">{{ "$".number_format($row->price, 2) }}</td>
+                        <td class="text-end">{{ Number::currency($row->serviceItems->where('item','Servicio (mano de obra)')->first()->price) }}</td>
+                        <td class="text-end">{{ Number::currency($row->total) }}</td>
                     </tr>
                 @endforeach
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="3"></td>
-                    <td class="text-end fw-bold">{{ "$".number_format($list->sum('price'), 2) }}</td>
+                    <td class="text-end fw-bold">{{ Number::currency($total) }}</td>
+                    <td class="text-end fw-bold">{{ Number::currency($list->sum('total')) }}</td>
                 </tr>
             </tfoot>
         </table>

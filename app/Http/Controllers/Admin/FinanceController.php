@@ -4,12 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Service;
 use \Carbon\Carbon;
 use \DB;
 use PDF;
 
 class FinanceController extends Controller
 {
+    public function index(Service $service)
+    {
+        $list = $service->where('status', 'Entregado')
+            ->whereMonth('finished_date', now()->month)
+            ->get();
+
+        return view('admin.reports.services', compact('list'));
+    }
+
     public function show($client)
     {
         $services = DB::table('services')
@@ -76,20 +86,5 @@ class FinanceController extends Controller
         $pdf = PDF::loadView('admin.templates.pdf_balance', $data);
         
         return $pdf->download('balance.pdf');
-    }
-
-    public function listOfIngress()
-    {
-        $list = DB::table('services')
-            ->join('autos', 'services.car_id','autos.id')
-            ->join('services_items','services.id','services_items.service_id')
-            ->where('finished_date','>', Carbon::now()->startOfMonth())
-            ->where('services_items.labour', true)
-            ->where('services.status', 'Entregado')
-            ->select('services.id', 'brand','model','services.finished_date','services_items.price')
-            ->orderBy('services.finished_date')
-            ->get();
-
-        return view('admin.reports.services', compact('list'));
     }
 }
