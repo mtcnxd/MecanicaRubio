@@ -102,39 +102,18 @@
 
     <div class="row mt-5">
         <div class="col-md-4">
-            <div class="widget-simple">
-                <div class="widget-simple-head">
-                    <span class="pt-1">Tiempo promedio de entrega en los ultimos 6 meses</span>
-                    <x-feathericon-clock class="window-title-icon"/>
-                </div>
-                <div class="widget-simple-body fs-3">
-                    {{ Number::format($data['avg'], 0) }} Días
-                </div>
-            </div>
+            <x-card_simple_overview_1 
+                title="Tiempo promedio de entrega en los ultimos 6 meses" 
+                message="{{ Number::format($data['avg'], 0) }} Días"
+            />
         </div>
 
         <div class="col-md-4">
-            <div class="widget-simple">
-                <div class="widget-simple-head">
-                    <span class="pt-1">Pending ...</span>
-                    <x-feathericon-clock class="window-title-icon"/>
-                </div>
-                <div class="widget-simple-body fs-3">
-                    ...
-                </div>
-            </div>
+            <x-card_simple_overview_1 title="Pending ..." message="..."/>
         </div>
 
         <div class="col-md-4">
-            <div class="widget-simple">
-                <div class="widget-simple-head">
-                    <span class="pt-1">Pending ...</span>
-                    <x-feathericon-clock class="window-title-icon"/>
-                </div>
-                <div class="widget-simple-body fs-3">
-                    ...
-                </div>
-            </div>
+            <x-card_simple_overview_1 title="Pending ..." message="..."/>
         </div>
     </div>
 
