@@ -61,7 +61,7 @@
         </div>
 
         <div class="col-md-5">
-            <div class="widget-simple">
+            <div class="widget-simple bg-white">
                 <canvas id="incomes"></canvas>
             </div>
         </div>
@@ -71,7 +71,7 @@
     -->
     <div class="row mt-5">
         <div class="col-md-5">
-            <div class="widget-simple">
+            <div class="widget-simple bg-white">
                 <canvas id="services"></canvas>
             </div>
         </div>
@@ -82,7 +82,7 @@
                     <span class="pt-1">Lista autos entregados</span>
                     <x-feathericon-tool class="window-title-icon"/>
                 </div>
-                <div class="widget-simple-body" style="min-height:180px; max-height:200px; overflow-y:overlay;">
+                <div class="widget-simple-body" style="min-height:180px; max-height:250px; overflow-y:overlay;">
                     <table class="table table-sm table-striped">
                         @foreach ($charts->chartCarsReleaseThisMonth() as $service)
                             <tr>
@@ -95,6 +95,20 @@
                             </tr>
                         @endforeach
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-5">
+            <div class="widget-simple">
+                <div class="widget-simple-head">
+                    <span class="pt-1">Tiempo promedio de entrega</span>
+                    <x-feathericon-clock class="window-title-icon"/>
+                </div>
+                <div class="widget-simple-body fs-3">
+                    {{ Number::format($data['avg'], 0) }} Días
                 </div>
             </div>
         </div>

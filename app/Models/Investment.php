@@ -45,6 +45,9 @@ class Investment extends Model
             ->where('export_date', now()->subDays(2)->format('Y-m-d'))
             ->first()->amount;
 
-        return ($last - $first);
+        $difference = ($last - $first);
+        $percentage = ($difference / $first) * 100;
+
+        return $difference;
     }
 }
