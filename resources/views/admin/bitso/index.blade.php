@@ -174,13 +174,10 @@
         options: {
             scales: {
                 y: {
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 1
-                    },
+                    beginAtZero: false,
                     title: {
                         display: true,
-                        text: 'AUTOMOVILES / SERVICIOS'
+                        text: 'Revenue'
                     }
                 }
             },
