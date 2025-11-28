@@ -94,11 +94,11 @@
                 <div class="widget-simple-body fs-3" style="min-height: 40px;">
                     <div style="display: flex;justify-content: space-between;">
                         <div>
-                            <span>{{ $service->whereNotIn('status', ['Entregado','Pendiente'])->count(); }}</span>
-                            <div class="fs-6 text-uppercase fw-bold fs-7">Otros Estatus</div>
+                            <span>{{ $service->whereNotIn('status', ['Entregado','Pendiente','Cancelado'])->count(); }}</span>
+                            <div class="fs-6 text-uppercase fw-bold fs-7">Servicios en espera</div>
                         </div>
                         <div style="display: flex;align-items: center;">
-                            <x-feathericon-x class="window-title-icon" style="height: 36px; width: 36px;"/>
+                            <x-feathericon-clock class="window-title-icon" style="height: 36px; width: 36px;"/>
                         </div>
                     </div>    
                 </div>

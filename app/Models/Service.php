@@ -42,11 +42,6 @@ class Service extends Model
         return $this->belongsTo(Cars::class, 'car_id');
     }
 
-    public function getCarName()
-    {
-        return $this->hasOne(Cars::class, 'id', 'car_id');
-    }
-
     public function serviceItems()
     {
         return $this->hasMany(ServiceItems::class,'service_id');

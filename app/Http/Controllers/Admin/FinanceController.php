@@ -22,9 +22,9 @@ class FinanceController extends Controller
 
     public function show($client, Service $service)
     {
-        $service = $service->where('client_id', $client)->get();
+        $servicesByClient = $service->where('client_id', $client)->get();
 
-        return view('admin.clients.finance', compact('service'));
+        return view('admin.reports.client', compact('servicesByClient'));
     }
 
     public function close(Request $request)
