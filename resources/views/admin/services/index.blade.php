@@ -79,7 +79,7 @@
                 <div class="widget-simple-body fs-3" style="min-height: 40px;">
                     <div style="display: flex;justify-content: space-between;">
                         <div>
-                            <span>{{ $service->where('status', 'Pendiente')->count(); }}</span>
+                            <span>{{ $service->where('quote', false)->where('status', 'Pendiente')->count(); }}</span>
                             <div class="fs-6 text-uppercase fw-bold fs-7">Servicios Pendientes</div>
                         </div>
                         <div style="display: flex;align-items: center;">
