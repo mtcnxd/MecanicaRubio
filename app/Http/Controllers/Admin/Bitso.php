@@ -15,7 +15,7 @@ class Bitso extends Controller
     {
         $bitso = $bitsoData->where('active', true)->get();
 
-        $investments = $investment->where('active', true)->get(); 
+        $investments = $investment->where('active', true)->get();
 
         return view('admin.bitso.index', compact('bitso', 'investments', 'charts'));
     }

@@ -147,6 +147,34 @@
                 <canvas id="chartRevenue"></canvas>
             </div>
         </div>
+
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="widget-simple">
+                        <div class="widget-simple-head">
+                            <span class="pt-1">$ Incremento en 30 días</span>
+                            <x-feathericon-dollar-sign class="window-title-icon"/>
+                        </div>
+                        <div class="widget-simple-body fs-3">
+                            {{ Number::currency(App\Models\Investment::getInvestmentPercentageMonthAgo()) }}
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-md-6">
+                    <div class="widget-simple">
+                        <div class="widget-simple-head">
+                            <span class="pt-1">% Incremento en 30 días</span>
+                            <x-feathericon-percent class="window-title-icon"/>
+                        </div>
+                        <div class="widget-simple-body fs-3">
+                            {{ Number::percentage(32) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
