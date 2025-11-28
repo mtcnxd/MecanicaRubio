@@ -37,10 +37,12 @@ class Investment extends Model
 
     public static function getInvestmentPercentageMonthAgo()
     {
+        $last = 0;
         $last = DB::table('chart_assets_increment')
             ->where('export_date', now()->format('Y-m-d'))
             ->first()->amount;
         
+        $first = 0;
         $first = DB::table('chart_assets_increment')
             ->where('export_date', now()->subDays(2)->format('Y-m-d'))
             ->first()->amount;
