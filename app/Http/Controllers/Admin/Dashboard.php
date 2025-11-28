@@ -24,6 +24,7 @@ class Dashboard extends Controller
         });
 
         $data['avg'] = $service->select(Service::raw('AVG(DATEDIFF(finished_date, entry_date)) as avg'))
+            ->where('created_at', '>', Carbon::now()->subMonths(6))
             ->where('status', 'Entregado')
             ->first()->avg;
 
