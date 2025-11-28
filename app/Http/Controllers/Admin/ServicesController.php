@@ -19,10 +19,10 @@ use App\Http\Controllers\Admin\ChartsController;
 
 class ServicesController extends Controller
 {
-    public function index()
+    public function index(Service $service)
     {
         // Server side processing
-        return view('admin.services.index');
+        return view('admin.services.index', compact('service'));
     }
 
     public function create(Client $clients)

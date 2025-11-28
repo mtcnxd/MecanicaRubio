@@ -64,7 +64,7 @@
                 <div class="widget-simple-body fs-3" style="min-height: 40px;">
                     <div style="display: flex;justify-content: space-between;">
                         <div>
-                            <span>10</span>
+                            <span>{{ $service->where('status', 'Entregado')->where('finished_date','>=', Carbon\Carbon::now()->startOfMonth())->count(); }}</span>
                             <div class="fs-6 text-uppercase fw-bold fs-7">Servicios Entregados</div>
                         </div>
                         <div style="display: flex;align-items: center;">
@@ -79,7 +79,7 @@
                 <div class="widget-simple-body fs-3" style="min-height: 40px;">
                     <div style="display: flex;justify-content: space-between;">
                         <div>
-                            <span>6</span>
+                            <span>{{ $service->where('status', 'Pendiente')->count(); }}</span>
                             <div class="fs-6 text-uppercase fw-bold fs-7">Servicios Pendientes</div>
                         </div>
                         <div style="display: flex;align-items: center;">
@@ -94,8 +94,8 @@
                 <div class="widget-simple-body fs-3" style="min-height: 40px;">
                     <div style="display: flex;justify-content: space-between;">
                         <div>
-                            <span>1</span>
-                            <div class="fs-6 text-uppercase fw-bold fs-7">Servicios Cancelados</div>
+                            <span>{{ $service->whereNotIn('status', ['Entregado','Pendiente'])->count(); }}</span>
+                            <div class="fs-6 text-uppercase fw-bold fs-7">Otros Estatus</div>
                         </div>
                         <div style="display: flex;align-items: center;">
                             <x-feathericon-x class="window-title-icon" style="height: 36px; width: 36px;"/>
