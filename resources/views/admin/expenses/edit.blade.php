@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-md-6">
                             <label>Precio</label>
-                            <input type="text" class="form-control" value="{{ "$".number_format($expense->price, 2) }}" disabled>
+                            <input type="text" class="form-control" value="{{ Number::currency($expense->price) }}" disabled>
                         </div>
                     </div>
 
@@ -35,7 +35,10 @@
                         </div>
                         <div class="col-md-6">
                             <label>Status</label>
-                            <input type="text" class="form-control" value="{{ $expense->status }}" disabled>
+                            <select class="form-select" name="status">
+                                <option value="Pagado" {{ $expense->status == 'Pagado' ? 'selected' : '' }}>Pagado</option>
+                                <option value="Pendiente" {{ $expense->status == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
+                            </select>
                         </div>
                     </div>
 

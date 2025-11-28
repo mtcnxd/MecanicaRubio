@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\ExpensesController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\EmployeesController;
+use App\Http\Controllers\Api\{
+    Employee
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -32,12 +35,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 // Employees
-Route::group(['prefix' => 'employees'], function () {
-    Route::post('load', [EmployeesController::class, 'loadEmployee'])->name('employees.load'); 
-    Route::post('delete', [EmployeesController::class, 'destroy'])->name('employees.delete');
-    
-    Route::post('vacations/create', [EmployeesController::class, 'createPendindVacationDay'])->name('employees.vacations.create');
-    Route::get('vacations/cancell', [EmployeesController::class, 'cancellPendingVacationDay'])->name('employees.vacations.cancell');
+Route::group(['prefix' => 'employees_api', 'controller' => Employee::class], function(){
+    Route::get('all', 'loadAll')->name('employees.load.all'); 
+    Route::get('delete', 'delete')->name('employees.delete');
+});
+
+Route::group(['prefix' => 'employees', 'controller' => EmployeesController::class], function () {
+    Route::post('vacations/create', 'createPendindVacationDay')->name('employees.vacations.create');
+    Route::get('vacations/cancell', 'cancellPendingVacationDay')->name('employees.vacations.cancell');
 });
 
 Route::group(['prefix' => 'cars', 'controller' => CarsController::class], function () {
@@ -73,6 +78,10 @@ Route::group(['controller' => ServicesController::class], function(){
     Route::get('/changeQuoteToService', 'changeQuoteToService')->name('services.change.quote');
 });
 
+Route::post('createItemInvoice', [ServicesController::class, 'createItemInvoice'])->name('createItemInvoice');
+
+Route::post('removeItemInvoice', [ServicesController::class, 'removeItemInvoice'])->name('removeItemInvoice');
+
 Route::post('/finance/close', [FinanceController::class, 'close'])->name('finance.close');
 
 Route::post('createBalancePDF', [FinanceController::class, 'createBalancePDF'])->name('finance.createBalancePDF');
@@ -81,12 +90,6 @@ Route::post('deleteItem', [ExpensesController::class, 'deleteItem'])->name('expe
 
 Route::post('getEvent', [CalendarController::class, 'getEvent'])->name('calendar.getEvent');
 
-Route::post('createItemInvoice', [ControllerAjax::class, 'createItemInvoice'])->name('createItemInvoice');
-
-Route::post('getImageAttached', [ControllerAjax::class, 'getImageAttached'])->name('getImageAttached');
-
-Route::post('removeItemInvoice', [ControllerAjax::class, 'removeItemInvoice'])->name('removeItemInvoice');
-
-Route::post('createItemQuote', [ControllerAjax::class, 'createItemQuote'])->name('createItemQuote'); 
+Route::post('getImageAttached', [ExpensesController::class, 'getImageAttached'])->name('getImageAttached');
 
 Route::get('/bitso/destroy', [Bitso::class, 'destroy'])->name('bitso.destroy');

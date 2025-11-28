@@ -138,13 +138,16 @@
         event.preventDefault();
         var client = $(this).data('bsClient');
 
+        console.log(client);
+
         $.ajax({
-            url: "{{ route('clients.deleteClient') }}",
-            method: 'POST',
+            url: "{{ route('employees.delete') }}",
+            method: 'GET',
             data: {
                 client:client
             },
             success: function(response){
+                console.log(response);
                 showMessageAlert(response.message);
             }
         });

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Models\Expense;
 use DB;
 
 class ExpensesController extends Controller
@@ -75,25 +76,31 @@ class ExpensesController extends Controller
 
     public function update(Request $request, string $id)
     {
-        if($request->hasFile('attach')){
+        if ($request->hasFile('attach')){
             $newFilename = time() .'.'. $request->attach->extension();
             $request->attach->move(public_path('uploads/expenses'), $newFilename);
 
-            DB::table('expenses')->where('id', $id)->update([
+            Expense::where('id', $id)->update([
                 "attach"       => isset($newFilename) ? $newFilename : '',
                 "expense_date" => $request->expense_date,
+                "status"       => $request->status,
                 "updated_at"   => Carbon::now()
             ]);
 
-            return to_route('expenses.index')->with('message', 'Egreso actualizado correctaamente');
-        }
+            session()->flash('message', 'Egreso actualizado correctaamente');
 
-        DB::table('expenses')->where('id', $id)->update([
+            return to_route('expenses.index');
+        }
+        
+        Expense::where('id', $id)->update([
             "expense_date" => $request->expense_date,
+            "status"       => $request->status,
             "updated_at"   => Carbon::now()
         ]);
 
-        return to_route('expenses.index')->with('message', 'Egreso actualizado correctaamente');
+        session()->flash('message', 'Egreso actualizado correctaamente');
+
+        return to_route('expenses.index');
     }
 
     public function deleteItem(Request $request)
@@ -106,6 +113,13 @@ class ExpensesController extends Controller
             "success" => true,
             "message" => 'Eliminado correctamente'
         ]);
+    }
+
+    public function getImageAttached(Request $request)
+    {
+        return DB::table('expenses')
+            ->where('id', $request->id)
+            ->first();
     }
 
     public function report()

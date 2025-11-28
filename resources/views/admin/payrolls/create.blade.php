@@ -169,12 +169,13 @@
 <script>
 $("#employee").on('change', function(){
     $.ajax({
-        url: "{{ route('employees.load') }}",
-        method: 'POST',
+        url: "{{ route('employees.load.all') }}",
+        method: 'GET',
         data: {
             employee: $(this).val()
         },
         success: function(response){
+            console.log(response);
             $("#salary").val(response.data.salary);
             $("#email").val(response.data.email);
         }

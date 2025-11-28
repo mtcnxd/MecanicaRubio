@@ -108,22 +108,6 @@ class EmployeesController extends Controller
             ->with('message', 'Los datos se actualizaron correctamente');
     }
 
-    public function destroy(Request $request)
-    {
-        
-        DB::table('users')->where('id', $request->user)->update([
-            "status" => 'Inactivo'
-        ]);
-        
-        sleep(random_int(1,5));
-
-        return Response()->json([
-            "success" => true,
-            "message" => 'El usuario a sido eliminado',
-            "data"    => $request->user
-        ]);
-    }
-
     public function profileIndex()
     {
         $self = User::find(Auth::user()->id);
@@ -144,19 +128,6 @@ class EmployeesController extends Controller
         ]);
 
         return to_route('profile.index')->with('message', 'Los datos se actualizaron correctamente');
-    }
-
-    public function loadEmployee(Request $request)
-    {
-        $employee = DB::table('employees')
-            ->join('users', 'employees.user_id', 'users.id')
-            ->where('users.id', $request->employee)
-            ->first();
-
-        return Response()->json([
-            "success" => true,
-            "data"    => $employee
-        ]);
     }
 
     public function report(Request $request, Payroll $payroll)

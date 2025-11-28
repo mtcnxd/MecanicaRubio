@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="window-container">
-    @include('includes.alert')    
+    @include('includes.alert')
     <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Buscar cliente</span></h6>
     <div class="window-body shadow py-4">
         <table class="table table-hover table-borderless bg-white mb-4" id="clients">

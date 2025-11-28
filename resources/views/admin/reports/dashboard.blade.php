@@ -2,12 +2,14 @@
 
 @section('content')
 <div class="window-container">
-    <h4>Resumen</h4>
+    <h3>Resumen</h3>
+    
     <hr class="mb-4" style="color: var(--orange-800);">
+
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-7" style="display: grid; align-content: space-between;">
             <div class="row">
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6">
                     <div class="widget-simple">
                         <div class="widget-simple-head">
                             <span class="pt-1">Autos Entregados</span>
@@ -32,7 +34,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6">
                     <div class="widget-simple">
                         <div class="widget-simple-head">
                             <span class="pt-1">Ingresos</span>
@@ -44,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-4">
+                <div class="col-md-6">
                     <div class="widget-simple">
                         <div class="widget-simple-head">
                             <span class="pt-1">Egresos</span>
@@ -59,29 +61,34 @@
         </div>
 
         <div class="col-md-5">
-            <canvas id="incomes"></canvas>
+            <div class="widget-simple">
+                <canvas id="incomes"></canvas>
+            </div>
         </div>
     </div>
-    
+    <!--
     <hr class="mb-5" style="color: var(--orange-800);">
-
-    <div class="row">
-        <div class="col-md-4">
-            <canvas id="services"></canvas>
+    -->
+    <div class="row mt-5">
+        <div class="col-md-5">
+            <div class="widget-simple">
+                <canvas id="services"></canvas>
+            </div>
         </div>
 
-        <div class="col-md-4 mb-4">
+        <div class="col-md-7" style="display: grid;">
             <div class="widget-simple">
                 <div class="widget-simple-head">
                     <span class="pt-1">Lista autos entregados</span>
                     <x-feathericon-tool class="window-title-icon"/>
                 </div>
-                <div class="widget-simple-body" style="max-height:180px; overflow-y:overlay;">
+                <div class="widget-simple-body" style="min-height:180px; max-height:200px; overflow-y:overlay;">
                     <table class="table table-sm table-striped">
                         @foreach ($charts->chartCarsReleaseThisMonth() as $service)
                             <tr>
                                 <td>{{ $service->car->carName() }}</td>
-                                <td>{{ Carbon\Carbon::parse($service->finished_date)->format('d-m-Y') }}</td>
+                                <td>{{ Carbon\Carbon::parse($service->finished_date)->format('j M Y') }}</td>
+                                <td class="text-end">{{ Number::currency($service->total) }}</td>
                                 <td class="text-end">
                                     <x-feathericon-check-circle class="table-icon"/>
                                 </td>
@@ -92,6 +99,10 @@
             </div>
         </div>
     </div>
+
+    <!--
+    <hr class="mb-5" style="color: var(--orange-800);">
+    -->
 </div>
 @endsection
 
