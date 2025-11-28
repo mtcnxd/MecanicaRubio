@@ -101,7 +101,7 @@
     </div>
 
     <div class="row mt-5">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="widget-simple">
                 <div class="widget-simple-head">
                     <span class="pt-1">Tiempo promedio de entrega en los ultimos 6 meses</span>
@@ -109,6 +109,30 @@
                 </div>
                 <div class="widget-simple-body fs-3">
                     {{ Number::format($data['avg'], 0) }} Días
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="widget-simple">
+                <div class="widget-simple-head">
+                    <span class="pt-1">Pending ...</span>
+                    <x-feathericon-clock class="window-title-icon"/>
+                </div>
+                <div class="widget-simple-body fs-3">
+                    ...
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="widget-simple">
+                <div class="widget-simple-head">
+                    <span class="pt-1">Pending ...</span>
+                    <x-feathericon-clock class="window-title-icon"/>
+                </div>
+                <div class="widget-simple-body fs-3">
+                    ...
                 </div>
             </div>
         </div>

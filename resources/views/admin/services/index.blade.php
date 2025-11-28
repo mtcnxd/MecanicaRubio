@@ -57,6 +57,55 @@
             </tbody>
         </table>
     </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="widget-simple shadow" style="solid 2px var(--blue-gray-100);">
+                <div class="widget-simple-body fs-3" style="min-height: 40px;">
+                    <div style="display: flex;justify-content: space-between;">
+                        <div>
+                            <span>10</span>
+                            <div class="fs-6 text-uppercase fw-bold fs-7">Servicios Entregados</div>
+                        </div>
+                        <div style="display: flex;align-items: center;">
+                            <x-feathericon-check-circle class="window-title-icon" style="height: 36px; width: 36px;"/>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="widget-simple shadow" style="solid 2px var(--blue-gray-100);">
+                <div class="widget-simple-body fs-3" style="min-height: 40px;">
+                    <div style="display: flex;justify-content: space-between;">
+                        <div>
+                            <span>6</span>
+                            <div class="fs-6 text-uppercase fw-bold fs-7">Servicios Pendientes</div>
+                        </div>
+                        <div style="display: flex;align-items: center;">
+                            <x-feathericon-circle class="window-title-icon" style="height: 36px; width: 36px;"/>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="widget-simple shadow" style="solid 2px var(--blue-gray-100);">
+                <div class="widget-simple-body fs-3" style="min-height: 40px;">
+                    <div style="display: flex;justify-content: space-between;">
+                        <div>
+                            <span>1</span>
+                            <div class="fs-6 text-uppercase fw-bold fs-7">Servicios Cancelados</div>
+                        </div>
+                        <div style="display: flex;align-items: center;">
+                            <x-feathericon-x class="window-title-icon" style="height: 36px; width: 36px;"/>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection
 
