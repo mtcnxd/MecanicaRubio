@@ -85,4 +85,23 @@ class Charts extends Model
             'values' => $values,
         ];
     }
+
+    static function getRevenueChart()
+    {
+        $data = DB::table('chart_assets_increment')
+            ->select(DB::raw('sum(amount) as amount, export_date'))
+            ->groupBy('export_date')
+            ->orderBy('export_date', 'asc')
+            ->get();
+
+        foreach($data as $value){
+            $labels[] = $value->export_date;
+            $values[] = $value->amount;
+        }
+
+        return [
+            'labels' => $labels,
+            'values' => $values,
+        ];
+    }
 }

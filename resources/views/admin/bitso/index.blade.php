@@ -1,7 +1,7 @@
 @extends('includes.body')
 
 @section('content')
-<div class="window-container" style="margin-bottom: 50px;">
+<div class="window-container mb-0">
     @include('includes.alert')
     <h6 class="window-title shadow text-uppercase fw-bold">
         <span class="ms-3">Bitso wallet</span>
@@ -70,7 +70,7 @@
 
 @include('admin.bitso.modal_create')
 
-<div class="window-container">
+<div class="window-container mb-0">
     <div class="row">
         <div class="col-md-5">
             <h6 class="window-title shadow text-uppercase fw-bold">
@@ -139,6 +139,16 @@
         </div>
     </div>
 </div>
+
+<div class="window-container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="widget-simple">
+                <canvas id="chartRevenue"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('css')
@@ -147,7 +157,41 @@
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    var ctx = document.getElementById('chartRevenue').getContext('2d');
+    var incomes = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: @json($charts->getRevenueChart()['labels']),
+            datasets: [{
+                data: @json($charts->getRevenueChart()['values']),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    },
+                    title: {
+                        display: true,
+                        text: 'AUTOMOVILES / SERVICIOS'
+                    }
+                }
+            },
+            plugins:{
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
     $(".cancell-trade").on('click', function(event){
         event.preventDefault();
         

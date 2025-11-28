@@ -17,11 +17,7 @@ class Bitso extends Controller
 
         $investments = $investment->where('active', true)->get(); 
 
-        // $chartData = $charts->chartAssetsIncrement();
-        $chartData = $charts->chartServicesByMonth();
-        // dd($chartData);
-
-        return view('admin.bitso.index', compact('bitso', 'investments'));
+        return view('admin.bitso.index', compact('bitso', 'investments', 'charts'));
     }
 
     public function store(Request $request)
