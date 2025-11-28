@@ -92,6 +92,7 @@ a:hover {
     box-shadow: 0px 5px 5px #efefef;
     border: #dedede solid 1px;
     padding: 13px;
+    border-radius: 10px;
 }
 
 .widget-simple-head {

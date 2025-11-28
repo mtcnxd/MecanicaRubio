@@ -61,7 +61,7 @@
         </div>
 
         <div class="col-md-5">
-            <div class="widget-simple bg-white">
+            <div class="widget-simple bg-white rounded">
                 <canvas id="incomes"></canvas>
             </div>
         </div>
@@ -71,7 +71,7 @@
     -->
     <div class="row mt-5">
         <div class="col-md-5">
-            <div class="widget-simple bg-white">
+            <div class="widget-simple bg-white rounded">
                 <canvas id="services"></canvas>
             </div>
         </div>
