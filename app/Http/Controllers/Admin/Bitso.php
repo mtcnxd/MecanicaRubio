@@ -30,7 +30,7 @@ class Bitso extends Controller
 
         session()->flash('success', sprintf('El registro almacenado con exito'));
 
-        return to_route('bitso.index');
+        return to_route('investments.index');
     }
 
     public function update(Request $request)
@@ -50,7 +50,7 @@ class Bitso extends Controller
             session()->flash('error', sprintf('we got an error: %s', $er->getMessage()));
         }
 
-        return to_route('bitso.index');
+        return to_route('investments.index');
     }
 
     public function destroy(Request $request)
