@@ -41,8 +41,10 @@ class Payroll extends Model
 
     public function getTotalCurrentMonth()
     {
+        $lastCloseDate = DB::table('montly_balances')->orderBy('id', 'desc')->first()->close_date;
+        
         return $this->select(Payroll::raw('SUM(total) as total'))
-            ->whereMonth('paid_date', now()->month)
+            ->where('paid_date', $lastCloseDate)
             ->first()->total;
     }
 }
