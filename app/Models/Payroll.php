@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Payroll extends Model
 {
@@ -42,7 +43,7 @@ class Payroll extends Model
 
     public function getTotalCurrentMonth()
     {
-        $lastCloseDate = DB::table('montly_balances')->orderBy('id', 'desc')->first();
+        $lastCloseDate = DB::table('montly_balances')->orderBy('id', 'desc')->first()->close_date;
         $lastCloseDate = Carbon::parse($lastCloseDate);
 
         dd($lastCloseDate);
