@@ -43,6 +43,7 @@ class Payroll extends Model
     public function getTotalCurrentMonth()
     {
         $lastCloseDate = DB::table('montly_balances')->orderBy('id', 'desc')->first();
+        $lastCloseDate = Carbon::parse($lastCloseDate);
 
         dd($lastCloseDate);
         
