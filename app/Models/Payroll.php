@@ -45,8 +45,6 @@ class Payroll extends Model
     {
         $lastCloseDate = DB::table('montly_balances')->orderBy('id', 'desc')->first()->close_date;
         $lastCloseDate = Carbon::parse($lastCloseDate);
-
-        dd($lastCloseDate);
         
         return $this->select(Payroll::raw('SUM(total) as total'))
             ->where('paid_date', $lastCloseDate)
