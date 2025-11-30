@@ -44,7 +44,7 @@ class Investment extends Model
         
         $first = 0;
         $first = DB::table('chart_assets_increment')
-            ->where('export_date', now()->subDays(3)->format('Y-m-d'))
+            ->where('export_date', now()->subDays(4)->format('Y-m-d'))
             ->first()->amount;
 
         $difference = ($last - $first);
