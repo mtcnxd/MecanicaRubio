@@ -58,14 +58,9 @@ class Charts extends Model
     {
         $data = DB::table('chart_service_by_months')->get();
 
-        foreach ($data as $value) {
-            $labels[] = self::$months[(Integer) $value->month - 1] .' '.$value->year;
-            $values[] = $value->services;
-        }
-
         return [
-            'labels' => $labels,
-            'values' => $values,
+            'labels' => $data->pluck('month'),
+            'values' => $data->pluck('services'),
         ];
     }
 
@@ -75,14 +70,9 @@ class Charts extends Model
             ->orderBy('month', 'asc')
             ->get();
 
-        foreach($data as $value){
-            $labels[] = self::$months[(Integer)$value->month - 1];
-            $values[] = $value->price;
-        }
-
         return [
-            'labels' => $labels,
-            'values' => $values,
+            'labels' => $data->pluck('month'),
+            'values' => $data->pluck('price'),
         ];
     }
 

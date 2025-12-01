@@ -38,9 +38,15 @@ class Investment extends Model
 
     protected static function getAmountByDaysAgo($daysAgo)
     {
-        return DB::table('chart_assets_increment')
+        $amount = DB::table('chart_assets_increment')
             ->where('export_date', now()->subDays($daysAgo)->format('Y-m-d'))
-            ->first()->amount;
+            ->first();
+
+        if ($amount){
+            return $amount->amount;
+        }
+
+        return 0;
     }
 
     public static function getInvestmentAmountMonthAgo()
