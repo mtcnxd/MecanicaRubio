@@ -22,6 +22,6 @@ class Helpers extends Controller
     public static function convertToPercentage(float $first, float $second) : float
     {
         $difference = ($first - $second);
-        return ($difference / $first) * $first;
+        return ($difference / $first) * 100;
     }
 }
