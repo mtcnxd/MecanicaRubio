@@ -49,6 +49,6 @@ class Payroll extends Model
             ->where('paid_date','>','2025-11-02')
             ->first()->total;
 
-        return $lastCloseData->total;
+        return $lastCloseData;
     }
 }
