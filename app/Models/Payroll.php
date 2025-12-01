@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Http\Controllers\Helpers;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Payroll extends Model
 {
@@ -43,12 +44,17 @@ class Payroll extends Model
 
     public function getTotalCurrentMonth()
     {
-        $lastCloseData = 0;
-        $lastCloseData = DB::table('salaries')
+        $lastCutDate = Helpers::getLastCutDate();
+
+        $lastBalance = DB::table('salaries')
             ->select(DB::raw('SUM(total) as total'))
-            ->where('paid_date','>','2025-11-02')
+            ->where('paid_date','>', $lastCutDate)
             ->first()->total;
 
-        return $lastCloseData;
+        if ($lastBalance){
+            return $lastBalance;
+        }
+
+        return 0.0;
     }
 }
