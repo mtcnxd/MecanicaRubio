@@ -157,7 +157,7 @@
                             <x-feathericon-dollar-sign class="window-title-icon"/>
                         </div>
                         <div class="widget-simple-body fs-3">
-                            {{ Number::currency(App\Models\Investment::getInvestmentPercentageMonthAgo()) }}
+                            {{ Number::currency(App\Models\Investment::getInvestmentAmountMonthAgo()) }}
                         </div>
                     </div>
                 </div>
