@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Auth\LoginController;
+
 use App\Http\Controllers\Admin\{
     CarsController,
-    LoginController,
     UsersController,
     QuotesController,
     ClientsController,
