@@ -2,9 +2,7 @@
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Http\Middleware\UserType;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Auth\LoginController;

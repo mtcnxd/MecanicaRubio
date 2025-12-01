@@ -17,6 +17,7 @@ class InvestmentData extends Model
     ];
 
     protected $dates = [
+        'date',
         'updated_at',
         'created_at'
     ];

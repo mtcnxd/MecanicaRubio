@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use NumberFormatter;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Charts;
@@ -36,8 +37,15 @@ class Investments extends Controller
     }
 
     public function update(Request $request)
-    {        
+    {
         try {
+            $formatter = new NumberFormatter('en_US', NumberFormatter::DECIMAL);            
+            
+            $request->merge([
+                'date'   => now()->format('Y-m-d'),
+                'amount' => $formatter->parse($request->amount),
+            ]);
+
             InvestmentData::create($request->except('_token'));
 
             Investment::where('id', $request->investment_id)->update([
