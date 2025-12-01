@@ -35,21 +35,26 @@ class Investment extends Model
         return ($this->current_amount - $this->last_amount);
     }
 
+    protected static function getAmountByDaysAgo($daysAgo)
+    {
+        return DB::table('chart_assets_increment')
+            ->where('export_date', now()->subDays($daysAgo)->format('Y-m-d'))
+            ->first()->amount;
+    }
+
+    public static function getInvestmentAmountMonthAgo()
+    {
+        $first = self::getAmountByDaysAgo(1);
+        $last  = self::getBalanceByLastDays(6);
+
+        return Helpers::convertToPercentage($first, $last);
+    }
+
     public static function getInvestmentPercentageMonthAgo()
     {
-        $last = 0;
-        $last = DB::table('chart_assets_increment')
-            ->where('export_date', now()->subDays(1)->format('Y-m-d'))
-            ->first()->amount;
-        
-        $first = 0;
-        $first = DB::table('chart_assets_increment')
-            ->where('export_date', now()->subDays(4)->format('Y-m-d'))
-            ->first()->amount;
+        $first = self::getAmountByDaysAgo(1);
+        $last  = self::getAmountByDaysAgo(6);
 
-        $difference = ($last - $first);
-        $percentage = ($difference / $first) * 100;
-
-        return $difference;
+        return ($first - $last);
     }
 }

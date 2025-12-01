@@ -169,7 +169,7 @@
                             <x-feathericon-percent class="window-title-icon"/>
                         </div>
                         <div class="widget-simple-body fs-3">
-                            {{ Number::percentage(32) }}
+                            {{ Number::percentage(App\Models\Investment::getInvestmentPercentageMonthAgo()) }}
                         </div>
                     </div>
                 </div>

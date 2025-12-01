@@ -3,9 +3,7 @@
 @section('content')
 <div class="window-container">
     <h3>Resumen</h3>
-    
     <hr class="mb-4" style="color: var(--orange-800);">
-
     <div class="row">
         <div class="col-md-7" style="display: grid; align-content: space-between;">
             <div class="row">
