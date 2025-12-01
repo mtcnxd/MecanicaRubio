@@ -5,22 +5,21 @@ use App\Models\User;
 use App\Http\Middleware\UserType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Controllers\Admin\Bitso;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\Admin\CarsController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Admin\QuotesController;
-use App\Http\Controllers\Admin\ClientsController;
-use App\Http\Controllers\Admin\FinanceController;
-use App\Http\Controllers\Admin\PayrollController;
-use App\Http\Controllers\Admin\CalendarController;
-use App\Http\Controllers\Admin\ExpensesController;
-use App\Http\Controllers\Admin\ServicesController;
-use App\Http\Controllers\Admin\SettingsController;
-use App\Http\Controllers\Admin\EmployeesController;
 use App\Http\Controllers\Admin\{
+    CarsController,
+    LoginController,
+    UsersController,
+    QuotesController,
+    ClientsController,
+    FinanceController,
+    PayrollController,
+    CalendarController,
+    ExpensesController,
+    ServicesController,
+    SettingsController,
+    Employees,
     Investments,
     Dashboard
 };
@@ -90,7 +89,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
     Route::resource('clients', ClientsController::class);
     Route::resource('cars', CarsController::class);
     Route::resource('services', ServicesController::class);    
-    Route::resource('employees', EmployeesController::class);
+    Route::resource('employees', Employees::class);
     Route::resource('quotes', QuotesController::class)->only('index','show');
     Route::resource('users', UsersController::class)->except('update','destroy'); 
 
@@ -103,8 +102,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
 
     Route::group(['prefix' => 'reports'], function(){
         Route::get('overview', [Dashboard::class, 'index'])->name('reports.overview');
-        Route::get('employees/{userid}', [EmployeesController::class, 'report'])->name('reports.employees');
-        Route::get('employees', [EmployeesController::class, 'report'])->name('reports.employees');
+        Route::get('employees/{userid}', [Employees::class, 'report'])->name('reports.employees');
+        Route::get('employees', [Employees::class, 'report'])->name('reports.employees');
         Route::get('autos', [CarsController::class, 'report'])->name('reports.autos');
         Route::get('close-month', [ExpensesController::class, 'report'])->name('reports.balance');
 
@@ -112,9 +111,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
     });
 
     Route::group(['prefix' => 'investments'], function(){
-        Route::get('/', [Bitso::class, 'index'])->name('investments.index');
-        Route::post('store', [Bitso::class, 'store'])->name('investments.store');
-        Route::post('update', [Bitso::class, 'update'])->name('investments.update');
+        Route::get('/', [Investments::class, 'index'])->name('investments.index');
+        Route::post('store', [Investments::class, 'store'])->name('investments.store');
+        Route::post('update', [Investments::class, 'update'])->name('investments.update');
 
         Route::get('instrument/{investment_id}', [Investments::class, 'show'])->name('investments.show');
     });

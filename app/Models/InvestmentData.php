@@ -15,4 +15,20 @@ class InvestmentData extends Model
         'investment_id',
         'amount',
     ];
+
+    protected $dates = [
+        'updated_at',
+        'created_at'
+    ];
+
+    public function getAmountByDaysAgo($daysAgo)
+    {
+        $result = InvestmentData::where('date', now()->subDays($daysAgo)->format('Y-m-d'))->first();
+
+        if ($result){
+            return $result->amount;
+        }
+
+        return 0;
+    }
 }

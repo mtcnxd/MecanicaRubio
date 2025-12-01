@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\VacationsController;
 
-class EmployeesController extends Controller
+class Employees extends Controller
 {
     public function index()
     {

@@ -4,10 +4,26 @@
 <div class="window-container" style="margin-bottom: 50px;">
     @include('includes.alert')
     <h6 class="window-title shadow text-uppercase fw-bold">
-        <span class="ms-3">Bitso wallet</span>
+        <span class="ms-3">{{ $investment->name }}</span>
     </h6>
     <div class="window-body shadow py-4">
-        <p class="fw-bold ps-2">Historial de inversion</p>
+        <p class="fw-bold ps-2 text-uppercase">Reporte</p>
+        
+        <div class="row p-4 pt-0">
+            <div class="col-md-3">
+                <x-card_simple_overview_1
+                    title="{{ now()->subDays(8)->format('d M Y') }}" 
+                    message="{{ Number::currency($investmentData->getAmountByDaysAgo(8)); }}"
+                />
+            </div>
+            <div class="col-md-3">
+                <x-card_simple_overview_1
+                    title="{{ now()->subDays(1)->format('d M Y') }}" 
+                    message="{{ Number::currency($investmentData->getAmountByDaysAgo(1)); }}"
+                />
+            </div>  
+        </div>
+
         <table class="table table-hover table-responsive" id="bitso">
             <thead class="thead-inverse">
                 <tr>
@@ -18,7 +34,9 @@
             <tbody>
                 @foreach ($investment->investmentData->sortByDesc('created_at') as $item)
                     <tr>
-                        <td>{{ Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>
+                        <td title="{{ Carbon\Carbon::parse($item->date)->diffForHumans() }}">
+                            {{ Carbon\Carbon::parse($item->date)->format('d M Y') }}
+                        </td>
                         <td class="text-end">{{ Number::currency($item->amount) }}</td>
                     </tr>
                 @endforeach

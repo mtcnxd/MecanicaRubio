@@ -1,7 +1,7 @@
 @extends('includes.body')
 
 @section('content')
-<div class="window-container mb-0">
+<div class="window-container">
     @include('includes.alert')
     <h6 class="window-title shadow text-uppercase fw-bold">
         <span class="ms-3">Bitso wallet</span>
@@ -66,12 +66,8 @@
             
         <a href="#" class="ms-3 ps-3 pe-3 btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addShopping">Nueva Compra</a>
     </div>
-</div>
 
-@include('admin.bitso.modal_create')
-
-<div class="window-container mb-0">
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-md-5">
             <h6 class="window-title shadow text-uppercase fw-bold">
                 <span class="ms-3">Actualizar Saldo</span>
@@ -138,10 +134,8 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="window-container">
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-md-5">
             <div class="widget-simple">
                 <canvas id="chartRevenue"></canvas>
@@ -178,6 +172,8 @@
     </div>
 </div>
 @endsection
+
+@include('admin.investments.modal_create')
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
