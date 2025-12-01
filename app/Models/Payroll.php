@@ -43,10 +43,11 @@ class Payroll extends Model
 
     public function getTotalCurrentMonth()
     {
+        $lastCloseData = 0;
         $lastCloseData = DB::table('salaries')
             ->select(DB::raw('SUM(total) as total'))
             ->where('paid_date','>','2025-11-02')
-            ->first();
+            ->first()->total;
 
         return $lastCloseData->total;
     }

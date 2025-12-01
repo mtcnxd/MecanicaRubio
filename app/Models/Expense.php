@@ -34,8 +34,11 @@ class Expense extends Model
 
     public function getTotalCurrentMonth()
     {
-        return $this->select(Expense::raw('SUM(amount * price) as total'))
+        $total = 0;
+        $total = $this->select(Expense::raw('SUM(amount * price) as total'))
             ->whereMonth('expense_date', now()->month)
             ->first()->total;
+
+        return $total;
     }
 }
