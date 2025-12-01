@@ -13,13 +13,13 @@
             <div class="col-md-3">
                 <x-card_simple_overview_1
                     title="{{ now()->subDays(8)->format('d M Y') }}" 
-                    message="{{ Number::currency($investmentData->getAmountByDaysAgo(8)); }}"
+                    message="{{ Number::currency($investmentData->getAmountByDaysAgo(8, $investment->id)); }}"
                 />
             </div>
             <div class="col-md-3">
                 <x-card_simple_overview_1
                     title="{{ now()->subDays(1)->format('d M Y') }}" 
-                    message="{{ Number::currency($investmentData->getAmountByDaysAgo(1)); }}"
+                    message="{{ Number::currency($investmentData->getAmountByDaysAgo(1, $investment->id)); }}"
                 />
             </div>  
         </div>
