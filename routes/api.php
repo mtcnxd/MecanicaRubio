@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Admin\Bitso;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerAjax;
 use App\Http\Controllers\Admin\CarsController;
@@ -11,8 +10,11 @@ use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\PayrollController;
 use App\Http\Controllers\Admin\CalendarController;
 use App\Http\Controllers\Admin\ExpensesController;
-use App\Http\Controllers\Admin\ServicesController;
-use App\Http\Controllers\Admin\EmployeesController;
+use App\Http\Controllers\Admin\{
+    ServicesController,
+    Employees,
+    Investments,
+};
 use App\Http\Controllers\Api\{
     Employee
 };
@@ -40,7 +42,7 @@ Route::group(['prefix' => 'employees_api', 'controller' => Employee::class], fun
     Route::get('delete', 'delete')->name('employees.delete');
 });
 
-Route::group(['prefix' => 'employees', 'controller' => EmployeesController::class], function () {
+Route::group(['prefix' => 'employees', 'controller' => Employees::class], function () {
     Route::post('vacations/create', 'createPendindVacationDay')->name('employees.vacations.create');
     Route::get('vacations/cancell', 'cancellPendingVacationDay')->name('employees.vacations.cancell');
 });
@@ -92,4 +94,4 @@ Route::post('getEvent', [CalendarController::class, 'getEvent'])->name('calendar
 
 Route::post('getImageAttached', [ExpensesController::class, 'getImageAttached'])->name('getImageAttached');
 
-Route::get('/bitso/destroy', [Bitso::class, 'destroy'])->name('bitso.destroy');
+Route::get('/bitso/destroy', [Investments::class, 'destroy'])->name('bitso.destroy');

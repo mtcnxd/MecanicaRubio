@@ -34,7 +34,6 @@ use App\Http\Controllers\Admin\{
 |
 */
 
-
 // Index for client frontend
 Route::get('/', function(){
     return view('content');
@@ -119,10 +118,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
 
     Route::get('emailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
     Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
-    Route::get('profile', [EmployeesController::class, 'profileIndex'])->name('profile.index');
+    Route::get('profile', [Employees::class, 'profileIndex'])->name('profile.index');
 
     Route::group(['prefix' => 'profile'], function(){ 
-        Route::post('profile', [EmployeesController::class, 'profileUpdate'])->name('profile.update');
+        Route::post('profile', [Employees::class, 'profileUpdate'])->name('profile.update');
         Route::post('settings', [SettingsController::class, 'update'])->name('setting.update');
         Route::post('settings/create', [SettingsController::class, 'store'])->name('setting.store');    
     });
