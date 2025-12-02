@@ -12,8 +12,8 @@
         <div class="row p-4 pt-0">
             <div class="col-md-3">
                 <x-card_simple_overview_1
-                    title="{{ now()->subDays(8)->format('d M Y') }}" 
-                    message="{{ Number::currency($investmentData->getAmountByDaysAgo(8, $investment->id)); }}"
+                    title="{{ now()->subDays(7)->format('d M Y') }}" 
+                    message="{{ Number::currency($investmentData->getAmountByDaysAgo(7, $investment->id)); }}"
                 />
             </div>
             <div class="col-md-3">
