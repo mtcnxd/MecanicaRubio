@@ -3,10 +3,8 @@
 @section('content')
 <div class="window-container">
     @include('includes.alert')
-    <h6 class="window-title shadow text-uppercase fw-bold">
-        <span class="ms-3">Bitso wallet</span>
-    </h6>
-    <div class="window-body shadow py-4">
+
+    <x-window_main title="Bitso wallet" class="py-4">
         <p class="fw-bold ps-2">Libro de compras</p>
         <table class="table table-hover table-responsive" id="bitso">
             <thead class="thead-inverse">
@@ -63,16 +61,16 @@
                 </tr>
             </tfoot>
         </table>
-            
-        <a href="#" class="ms-3 ps-3 pe-3 btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addShopping">Nueva Compra</a>
-    </div>
+        
+        <div style="display: flex; justify-content:space-between;">
+            <a href="#" class="ms-3 ps-3 pe-3 btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addShopping">Nueva Compra</a>
+            <span class="pe-3">{{ $bitso->count() }} Registros encontrados</span>
+        </div>
+    </x-window_main>
 
     <div class="row mt-5">
         <div class="col-md-5">
-            <h6 class="window-title shadow text-uppercase fw-bold">
-                <span class="ms-3">Actualizar Saldo</span>
-            </h6>
-            <div class="window-body shadow p-4">
+            <x-window_main title="Actualizar Saldo" class="p-4">
                 <form action="{{ route('investments.update') }}" method="POST">
                     @csrf
                     <label for="investment_id" class="mb-1">Instrumento de inversion</label>
@@ -85,12 +83,11 @@
                     <input type="text" name="amount" class="form-control">
                     <button type="submit" class="ps-3 pe-3 btn btn-sm btn-secondary mt-3">Actualizar Saldo</button>
                 </form>
-            </div>
+            </x-window_main>
         </div>
 
         <div class="col-md-7">
-            <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Mis Inversiones</span></h6>
-            <div class="window-body shadow pb-4">
+            <x-window_main title="Mis Inversiones" class="pb-4" >
                 <table class="table table-hover table-responsive" id="bitso">
                     <thead class="thead-inverse">
                         <tr>
@@ -131,7 +128,7 @@
                         </tr>
                     </tfoot>
                 </table>
-            </div>
+            </x-window_main>
         </div>
     </div>
 
@@ -141,31 +138,20 @@
                 <canvas id="chartRevenue"></canvas>
             </div>
         </div>
-
         <div class="col-md-7">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="widget-simple">
-                        <div class="widget-simple-head">
-                            <span class="pt-1">$ Incremento en 30 días</span>
-                            <x-feathericon-dollar-sign class="window-title-icon"/>
-                        </div>
-                        <div class="widget-simple-body fs-3">
-                            {{ Number::currency(App\Models\Investment::getInvestmentAmountMonthAgo()) }}
-                        </div>
-                    </div>
+                    <x-card_simple_overview_1
+                        title="$ Incremento en 30 días"
+                        message="{{ Number::currency(App\Models\Investment::getInvestmentAmountMonthAgo()) }}"
+                    />
                 </div>
         
                 <div class="col-md-6">
-                    <div class="widget-simple">
-                        <div class="widget-simple-head">
-                            <span class="pt-1">% Incremento en 30 días</span>
-                            <x-feathericon-percent class="window-title-icon"/>
-                        </div>
-                        <div class="widget-simple-body fs-3">
-                            {{ Number::percentage(App\Models\Investment::getInvestmentPercentageMonthAgo(), 2) }}
-                        </div>
-                    </div>
+                    <x-card_simple_overview_1
+                        title="% Incremento en 30 días"
+                        message="{{ Number::percentage(App\Models\Investment::getInvestmentPercentageMonthAgo(), 2) }}"
+                    />
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use NumberFormatter;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Charts;
@@ -18,7 +19,7 @@ class Investments extends Controller
     {
         $bitso = $bitsoData->where('active', true)->get();
 
-        $investments = $investment->where('active', true)->get();
+        $investments = $investment->where('active', true)->orderBy('name')->get();
 
         return view('admin.investments.index', compact('bitso', 'investments', 'charts'));
     }
@@ -42,7 +43,7 @@ class Investments extends Controller
             $formatter = new NumberFormatter('en_US', NumberFormatter::DECIMAL);            
             
             $request->merge([
-                'date'   => now()->format('Y-m-d'),
+                'date'   => Carbon::now(),
                 'amount' => $formatter->parse($request->amount),
             ]);
 

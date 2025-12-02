@@ -3,8 +3,7 @@
 @section('content')
 @include('includes.alert')
 <div class="window-container">
-    <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Nominas</span></h6>
-    <div class="window-body shadow p-4">
+    <x-window_main title="Nominas" class="p-4">
         <form action="{{ route('payroll.store') }}" method="POST">
             <div class="form-container border mb-0">
                 @csrf
@@ -126,7 +125,7 @@
             </div>
 
         </form>
-    </div>
+    </x-window_main>
 </div>
 @endsection
 
