@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use App\Models\Service;
 use Carbon\Carbon;
+use App\Models\{
+    Service, Investment
+};
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Charts extends Model
 {
@@ -87,6 +89,21 @@ class Charts extends Model
         foreach($data as $value){
             $labels[] = $value->export_date;
             $values[] = $value->amount;
+        }
+
+        return [
+            'labels' => $labels,
+            'values' => $values,
+        ];
+    }
+
+    static function getDiversificationChart()
+    {
+        $investments = Investment::where('active', true)->orderBy('name')->get();
+
+        foreach ($investments as $investment) {
+            $labels[] = $investment->name;
+            $values[] = number_format($investment->investmentPercentage(), 1);
         }
 
         return [

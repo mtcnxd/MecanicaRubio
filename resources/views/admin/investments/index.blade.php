@@ -138,24 +138,27 @@
                 <canvas id="chartRevenue"></canvas>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-3">
             <div class="row">
-                <div class="col-md-6">
-                    <x-card_simple_overview_1
-                        title="$ Incremento en 30 días"
-                        message="{{ Number::currency(App\Models\Investment::getInvestmentAmountMonthAgo()) }}"
-                    />
-                </div>
-        
-                <div class="col-md-6">
-                    <x-card_simple_overview_1
-                        title="% Incremento en 30 días"
-                        message="{{ Number::percentage(App\Models\Investment::getInvestmentPercentageMonthAgo(), 2) }}"
-                    />
-                </div>
+                <x-card_simple_overview_1
+                    title="$ Incremento en 30 días"
+                    message="{{ Number::currency(App\Models\Investment::getInvestmentAmountMonthAgo()) }}"
+                />
+            </div>
+            <div class="row mt-4">
+                <x-card_simple_overview_1
+                    title="% Incremento en 30 días"
+                    message="{{ Number::percentage(App\Models\Investment::getInvestmentPercentageMonthAgo(), 2) }}"
+                />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div style="max-height: 330px;display: flex;justify-content: center;">
+                <canvas id="chartPie"></canvas>
             </div>
         </div>
     </div>
+
 </div>
 @endsection
 
@@ -194,6 +197,31 @@
             plugins:{
                 legend: {
                     display: false
+                }
+            }
+        }
+    });
+
+    var ctx = document.getElementById('chartPie').getContext('2d');
+    var incomes = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: @json($charts->getDiversificationChart()['labels']),
+            datasets: [{
+                data: @json($charts->getDiversificationChart()['values']),
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.3)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(75, 192, 192, 0.9)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins:{
+                legend: {
+                    position: 'bottom',
+                    display: true
                 }
             }
         }
