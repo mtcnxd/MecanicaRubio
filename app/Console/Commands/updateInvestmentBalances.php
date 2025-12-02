@@ -33,7 +33,8 @@ class updateInvestmentBalances extends Command
             Investment::all()->each(function ($investment) {
                 DB::table('assets_increment')->insert([
                     'investment_id' => $investment->id,
-                    'amount' => $investment->investmentData->last()->amount,
+                    'amount'     => $investment->investmentData->last()->amount,
+                    'date'       => Carbon::now(),
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
