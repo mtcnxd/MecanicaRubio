@@ -70,6 +70,39 @@
 
     <div class="row mt-5">
         <div class="col-md-5">
+            <div class="widget-simple">
+                <canvas id="chartRevenue"></canvas>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <x-card_simple_overview_1
+                    title="$ Incremento en 30 días"
+                    message="{{ Number::currency(App\Models\Investment::getInvestmentAmountMonthAgo()) }}"
+                />
+            </div>
+            <div class="row mt-3">
+                <x-card_simple_overview_1
+                    title="% Incremento en 30 días"
+                    message="{{ Number::percentage(App\Models\Investment::getInvestmentPercentageMonthAgo(), 2) }}"
+                />
+            </div>
+            <div class="row mt-3">
+                <x-card_simple_overview_1
+                    title="Pending ..."
+                    message="Loading ..."
+                />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="widget-simple" style="max-height: 330px;display: flex;justify-content: center;">
+                <canvas id="chartPie"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-5">
             <x-window_main title="Actualizar Saldo" class="p-4">
                 <form action="{{ route('investments.update') }}" method="POST">
                     @csrf
@@ -129,33 +162,6 @@
                     </tfoot>
                 </table>
             </x-window_main>
-        </div>
-    </div>
-
-    <div class="row mt-5">
-        <div class="col-md-5">
-            <div class="widget-simple">
-                <canvas id="chartRevenue"></canvas>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="row">
-                <x-card_simple_overview_1
-                    title="$ Incremento en 30 días"
-                    message="{{ Number::currency(App\Models\Investment::getInvestmentAmountMonthAgo()) }}"
-                />
-            </div>
-            <div class="row mt-4">
-                <x-card_simple_overview_1
-                    title="% Incremento en 30 días"
-                    message="{{ Number::percentage(App\Models\Investment::getInvestmentPercentageMonthAgo(), 2) }}"
-                />
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div style="max-height: 330px;display: flex;justify-content: center;">
-                <canvas id="chartPie"></canvas>
-            </div>
         </div>
     </div>
 
