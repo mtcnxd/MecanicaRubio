@@ -31,13 +31,15 @@ class updateInvestmentBalances extends Command
     {
         try {
             Investment::all()->each(function ($investment) {
-                DB::table('assets_increment')->insert([
-                    'investment_id' => $investment->id,
-                    'amount'     => $investment->investmentData->last()->amount,
-                    'date'       => Carbon::now(),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
+                if ($investment->investmentData->last()){
+                    DB::table('assets_increment')->insert([
+                        'investment_id' => $investment->id,
+                        'amount'     => $investment->investmentData->last()->amount,
+                        'date'       => Carbon::now(),
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                }
             });
     
             $telegram->send(
