@@ -18,24 +18,28 @@
                     <th>&nbsp;</th>
                 </tr>
             </thead>
-            @foreach ($employees as $employee) 
             <tbody>
-                <tr>
-                    <td>{{ $employee->id }}</td>
-                    <td><a href="{{ route('employees.show', $employee->id) }}">{{ $employee->name }}</a></td>
-                    <td>{{ $employee->phone }}</td>
-                    <td>{{ $employee->email }}</td>
-                    <td>{{ $employee->status }}</td>
-                    <td>{{ $employee->user_status }}</td>
-                    <td>{{ \Carbon\Carbon::parse($employee->start_date)->format('d-m-Y') }}</td>
-                    <td>
-                        <a href="{{ route('employees.edit', $employee->id) }}">
-                            <x-feathericon-edit class="table-icon"/>
-                        </a>
-                    </td>
-                </tr>
+                @foreach ($employees as $employee) 
+                    <tr>
+                        <td>{{ $employee->id }}</td>
+                        <td>
+                            <a href="{{ route('employees.show', $employee->id) }}">
+                                {{ $employee->user->name }}
+                            </a>
+                        </td>
+                        <td>{{ $employee->user->phone }}</td>
+                        <td>{{ $employee->user->email }}</td>
+                        <td>{{ $employee->status }}</td>
+                        <td>{{ $employee->user->status }}</td>
+                        <td>{{ \Carbon\Carbon::parse($employee->start_date)->format('d M Y') }}</td>
+                        <td>
+                            <a href="{{ route('employees.edit', $employee->id) }}">
+                                <x-feathericon-edit class="table-icon"/>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
-            @endforeach
         </table>
     </div>
 </div>

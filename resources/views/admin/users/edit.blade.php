@@ -4,29 +4,29 @@
 <div class="window-container">
     @include('includes.alert')
     <div class="col-md-7">
-        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Nuevo usuario</span></h6>
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Usuarios</span></h6>
         <div class="window-body shadow p-4">
-            <form action="{{ route('users.store') }}" method="POST">
+            <form action="{{ route('users.update', '$user') }}" method="POST">
                 <div class="form-container border">
-                    @method('POST')
+                    @method('PUT')
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
                             <label>Nombre</label>
-                            <input type="text" class="form-control" name="name" required>
+                            <input type="text" class="form-control" name="name" value="{{ isset($user) ? $user->name : '' }}" required>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label>Correo</label>
-                            <input type="text" class="form-control" name="email" required>
+                            <input type="text" class="form-control" name="email" value="{{ isset($user) ? $user->email : '' }}" disabled>
                         </div>
                     </div>
 
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label>Teléfono</label>
-                            <input type="number" class="form-control" name="phone" required>
+                            <input type="number" class="form-control" name="phone" value="{{ isset($user) ? $user->phone : '' }}" disabled>
                         </div>
                     </div>
 
@@ -43,6 +43,7 @@
                             <label>Estatus</label>
                             <select class="form-select" name="status">
                                 <option>Activo</option>
+                                <option>Cancelado</option>
                                 <option>Inactivo</option>
                             </select>
                         </div>
@@ -51,14 +52,15 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label>Comentarios</label>
-                            <textarea class="form-control" cols="30" rows="4" name="comments"></textarea>
+                            <textarea class="form-control" cols="30" rows="4" name="comments">{{ isset($user) ? $user->comments : '' }}</textarea>
                         </div>
                     </div>
                 </div>
 
                 <div class="row mt-3">
                     <div class="col-md-12 text-end">
-                        <a href="{{ route('employees.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+                        <a href="#" class="btn btn-sm btn-danger">Borrar</a>
+                        <a href="{{ route('users.index') }}" class="btn btn-sm btn-secondary">Atras</a>
                         <button type="submit" class="btn btn-sm btn-success">
                             <x-feathericon-save class="table-icon" style="margin: -2px 5px 2px"/>
                             Guardar

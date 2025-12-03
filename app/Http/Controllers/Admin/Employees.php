@@ -4,34 +4,27 @@ namespace App\Http\Controllers\Admin;
 
 use Exception;
 use Carbon\Carbon;
-use App\Models\User;
-use App\Models\{
-    Payroll, PayrollItems
-};
-use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Models\{
+    User, Employee, Payroll, PayrollItems
+};
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\VacationsController;
 
 class Employees extends Controller
 {
     public function index()
     {
-        $employees = DB::table('employees')
-            ->select('employees.*', 'users.name','users.phone','users.email', DB::raw('users.status as user_status'))
-            ->join('users','employees.user_id','users.id')
-            ->get();
-
+        $employees = Employee::all();
         return view('admin.employees.index', compact('employees'));
     }
 
     public function create()
     {
         $users = User::all();
-
         return view('admin.employees.create', compact('users'));
     }
 
@@ -80,10 +73,7 @@ class Employees extends Controller
 
     public function edit(Request $request, string $id)
     {
-        $employee = DB::table('employees')
-            ->join('users','employees.user_id','users.id')
-            ->where('employees.user_id', $id)
-            ->first();
+        $employee = Employee::find($id);
 
         $extra = Carbon::parse($employee->created_at);
         
@@ -106,28 +96,6 @@ class Employees extends Controller
 
         return to_route('employees.index')
             ->with('message', 'Los datos se actualizaron correctamente');
-    }
-
-    public function profileIndex()
-    {
-        $self = User::find(Auth::user()->id);
-
-        return view('admin.users.profile', compact('self'));
-    }
-
-    public function profileUpdate(Request $request)
-    {
-        if ($request->password != $request->repeat){
-            return to_route('profile.index')->with('message', 'Las contraseñas introducidas no coinciden');
-        }
-
-        $result = DB::table('users')->where('id', $request->id)->update([
-            "name"     => $request->name,
-            "phone"    => $request->phone,
-            "password" => Hash::make($request->password)
-        ]);
-
-        return to_route('profile.index')->with('message', 'Los datos se actualizaron correctamente');
     }
 
     public function report(Request $request, Payroll $payroll)

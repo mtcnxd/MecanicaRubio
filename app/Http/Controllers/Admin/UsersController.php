@@ -14,7 +14,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::get();
+        $users = User::where('status','Activo')->get();
 
         return view('admin.users.index', compact('users'));
     }
@@ -29,10 +29,38 @@ class UsersController extends Controller
         return view('admin.users.create', compact('employees'));
     }
 
+    public function store(Request $request)
+    {
+        try {
+            $request->merge([
+                'password' => bcrypt($request->input('phone'))
+            ]);
+
+            User::create($request->except('_method','_token'));
+
+            session()->flash(
+                'success', sprintf('El usuario %s fue creado correctamente', $request->input('name'))
+            );
+        }
+
+        catch (\Exception $e) {
+            session()->flash(
+                'success', sprintf('Error al crear usuario: %s', $e->getMessage())
+            );
+        }
+
+        return to_route('users.index');
+    }
+
     public function show()
     {
         $users = User::get();
 
         return view('admin.users.index', compact('users'));
+    }
+
+    public function edit(User $user)
+    {
+        return view('admin.users.edit', compact('user'));
     }
 }

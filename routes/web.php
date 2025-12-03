@@ -17,9 +17,10 @@ use App\Http\Controllers\Admin\{
     CalendarController,
     ExpensesController,
     ServicesController,
-    SettingsController,
+    Settings,
     Employees,
     Investments,
+    Profile,
     Dashboard
 };
 
@@ -70,12 +71,12 @@ Route::get('/auth/callback', function () {
 });
 
 Route::group(['controller' => LoginController::class], function() {
-    Route::get('/admin', 'index')->name('login');
-    Route::get('/register', 'register')->name('user.register');
+    Route::get('/admin','index')->name('login');
+    Route::get('/register','register')->name('user.register');
     
-    Route::post('/register', 'store')->name('user.store');
-    Route::post('/admin', 'login');
-    Route::post('/admin/logout', 'logout')->name('logout');
+    Route::post('/register','store')->name('user.store');
+    Route::post('/admin','login');
+    Route::post('/admin/logout','logout')->name('logout');
 });
 
 Route::group(['prefix' => 'client'], function(){
@@ -89,7 +90,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
     Route::resource('services', ServicesController::class);    
     Route::resource('employees', Employees::class);
     Route::resource('quotes', QuotesController::class)->only('index','show');
-    Route::resource('users', UsersController::class)->except('update','destroy'); 
+    Route::resource('users', UsersController::class)->except('destroy'); 
 
     Route::group(['prefix' => 'finance'], function(){
         Route::get('/incomes', [FinanceController::class, 'index'])->name('finance.incomes');
@@ -115,16 +116,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
 
         Route::get('instrument/{investment_id}', [Investments::class, 'show'])->name('investments.show');
     });
-
-    Route::get('emailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
-    Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
-    Route::get('profile', [Employees::class, 'profileIndex'])->name('profile.index');
-
+    
     Route::group(['prefix' => 'profile'], function(){ 
-        Route::post('profile', [Employees::class, 'profileUpdate'])->name('profile.update');
-        Route::post('settings', [SettingsController::class, 'update'])->name('setting.update');
-        Route::post('settings/create', [SettingsController::class, 'store'])->name('setting.store');    
+        Route::get('/', [Profile::class, 'index'])->name('profile.index');
+        Route::post('update', [Profile::class, 'update'])->name('profile.update');
     });
 
-    Route::get('settings', [SettingsController::class, 'index'])->name('setting.index');
+    Route::group(['prefix' => 'settings', 'controller' => Settings::class], function (){
+        Route::get('/', 'index')->name('setting.index');
+        Route::post('update', 'update')->name('setting.update');
+        Route::post('create', 'store')->name('setting.store');
+    });
+    
+    Route::get('emailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
+    
+    Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');    
 });

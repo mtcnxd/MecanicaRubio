@@ -11,17 +11,17 @@
                     @method('POST')
                     @csrf
 
-                    @isset($self->avatar)
+                    @isset($user->avatar)
                         <div class="text-center mb-3">
-                            <img src="{{ $self->avatar }}" width="86px" height="86px" class="rounded-pill border border-4">
+                            <img src="{{ $user->avatar }}" width="86px" height="86px" class="rounded-pill border border-4">
                         </div>
                     @endisset
 
                     <div class="row">
                         <div class="col-md-12">
                             <label>Nombre</label>
-                            <input type="text" class="form-control" name="name" value="{{ $self->name }}">
-                            <input type="hidden" name="id" value="{{ $self->id }}">
+                            <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                            <input type="hidden" name="id" value="{{ $user->id }}">
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -31,7 +31,7 @@
                                 <span class="input-group-text">
                                     <x-feathericon-smartphone class="table-icon" style="margin: -2px 5px 2px"/>
                                 </span>
-                                <input type="number" class="form-control" name="phone" value="{{ $self->phone }}">
+                                <input type="number" class="form-control" name="phone" value="{{ $user->phone }}">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -40,7 +40,7 @@
                                 <span class="input-group-text">
                                     <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
                                 </span>
-                                <input type="text" class="form-control" name="email" value="{{ $self->email }}" disabled>
+                                <input type="text" class="form-control" name="email" value="{{ $user->email }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -48,11 +48,11 @@
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label>Fecha inicio</label>
-                            <input type="date" class="form-control" name="date" value="{{ isset($self->created_at) ? $self->created_at->format('Y-m-d') : '' }}" disabled>
+                            <input type="date" class="form-control" name="date" value="{{ isset($user->created_at) ? $user->created_at->format('Y-m-d') : '' }}" disabled>
                         </div>
                         <div class="col-md-6">
                             <label>Antiguedad</label>
-                            <input type="text" class="form-control" value="{{ isset($self->created_at) ? $self->created_at->diffInMonths() : '-' }} meses" disabled>
+                            <input type="text" class="form-control" value="{{ isset($user->created_at) ? $user->created_at->diffInMonths() : '-' }} meses" disabled>
                         </div>
                     </div>
 

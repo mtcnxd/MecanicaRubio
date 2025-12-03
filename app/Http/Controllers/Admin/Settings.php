@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 
-class SettingsController extends Controller
+class Settings extends Controller
 {   
     public function index()
     {
         $configs = DB::table('settings')->get();
 
-        return view('admin.admin.configuration', compact('configs'));
+        return view('admin.settings.index', compact('configs'));
     }
 
     public function update(Request $request)
@@ -25,7 +25,9 @@ class SettingsController extends Controller
             }
         }
 
-        return to_route('setting.index')->with('message', 'La configuracion a sido guardada con exito');
+        session()->flash('success', 'La configuracion a sido guardada con exito');
+
+        return to_route('setting.index');
     }
 
     public function store(Request $request)
@@ -35,6 +37,8 @@ class SettingsController extends Controller
             "value" => $request->value
         ]);
 
-        return to_route('setting.index')->with('message', 'Nuevo elemento de configuracion creado');
+        session()->flash('success', 'Nuevo elemento de configuracion creado');
+
+        return to_route('setting.index');
     }
 }

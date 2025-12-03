@@ -68,7 +68,7 @@
         </div>
     </x-window_main>
 
-    <div class="row mt-5">
+    <div class="row mt-4">
         <div class="col-md-5">
             <div class="widget-simple">
                 <canvas id="chartRevenue"></canvas>
@@ -101,7 +101,7 @@
         </div>
     </div>
 
-    <div class="row mt-5">
+    <div class="row mt-4">
         <div class="col-md-5">
             <x-window_main title="Actualizar Saldo" class="p-4">
                 <form action="{{ route('investments.update') }}" method="POST">

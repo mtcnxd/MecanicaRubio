@@ -14,7 +14,7 @@
                             <label>Nombre</label>
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon1">#{{ $employee->id }}</span>
-                                <input type="text" class="form-control" name="name" value="{{ $employee->name }}">
+                                <input type="text" class="form-control" name="name" value="{{ $employee->user->name }}">
                             </div>
                         </div>
                     </div>
@@ -22,14 +22,14 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label>Correo</label>
-                            <input type="text" class="form-control" name="email" value="{{ $employee->email }}">
+                            <input type="text" class="form-control" name="email" value="{{ $employee->user->email }}">
                         </div>
                     </div>
 
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label>Teléfono</label>
-                            <input type="number" class="form-control" name="phone" value="{{ $employee->phone }}">
+                            <input type="number" class="form-control" name="phone" value="{{ $employee->user->phone }}">
                         </div>
                         <div class="col-md-6">
                             <label>RFC</label>

@@ -12,9 +12,7 @@
     <h6 class="window-title shadow text-uppercase fw-bold">
         <span class="ms-3">{{ $investment->name }}</span>
     </h6>
-    <div class="window-body shadow py-4">
-        <p class="fw-bold ps-2 text-uppercase">Reporte</p>
-        
+    <div class="window-body shadow py-4">        
         <div class="row p-4 pt-0">
             <div class="col-md-3">
                 <x-card_simple_overview_1

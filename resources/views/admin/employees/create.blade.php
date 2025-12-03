@@ -4,7 +4,7 @@
 <div class="window-container">
     @include('includes.alert')
     <div class="col-md-7">    
-        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Empleado</span></h6>
+        <h6 class="window-title shadow text-uppercase fw-bold"><span class="ms-3">Nuevo Empleado</span></h6>
         <div class="window-body shadow p-4">
             <form action="{{ route('employees.store') }}" method="POST">
                 <div class="form-container border">
@@ -12,7 +12,7 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
-                            <label>Usuario</label>
+                            <label>Seleccione usuario</label>
                             <select class="form-select" name="name">
                                 @foreach ($users as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>

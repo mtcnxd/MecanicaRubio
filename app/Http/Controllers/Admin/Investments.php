@@ -32,7 +32,7 @@ class Investments extends Controller
 
         BitsoData::create($request->except('_token'));
 
-        session()->flash('success', sprintf('El registro almacenado con exito'));
+        session()->flash('success', sprintf('Registro almacenado con exito!'));
 
         return to_route('investments.index');
     }
