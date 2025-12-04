@@ -18,7 +18,7 @@
                     <th>&nbsp;</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="border-bottom">
                 @foreach ($employees as $employee) 
                     <tr>
                         <td>{{ $employee->id }}</td>
@@ -41,6 +41,16 @@
                 @endforeach
             </tbody>
         </table>
+        
+        <div class="m-3" style="display: flex; justify-content: space-between;">
+            <a href="{{ route('employees.create') }}" class="btn btn-sm btn-success">
+                Crear nuevo
+            </a>
+
+            <span>
+                {{ $employee->count() }} registros encontrados
+            </span>
+        </div>
     </div>
 </div>
 @endsection

@@ -37,7 +37,7 @@ class Payroll extends Model
         return $this->belongsTo(User::class, 'user_id');
     }    
 
-    public function PayrollItems()
+    public function payrollItems()
     {
         return $this->hasMany(PayrollItems::class, 'salary_id');
     }

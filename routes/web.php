@@ -91,12 +91,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
     Route::resource('employees', Employees::class);
     Route::resource('quotes', QuotesController::class)->only('index','show');
     Route::resource('users', UsersController::class)->except('destroy'); 
-
+    Route::resource('payroll', PayrollController::class);
+    Route::resource('expenses', ExpensesController::class);
+    
     Route::group(['prefix' => 'finance'], function(){
-        Route::get('/incomes', [FinanceController::class, 'index'])->name('finance.incomes');
-        
-        Route::resource('/expenses', ExpensesController::class);
-        Route::resource('/payroll', PayrollController::class);
+        Route::get('/', [FinanceController::class, 'index'])->name('finance.incomes');
+        Route::get('/send-payroll/{payroll}', [PayrollController::class, 'sendEmail'])->name('payroll.email');
     });
 
     Route::group(['prefix' => 'reports'], function(){
@@ -119,7 +119,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
     
     Route::group(['prefix' => 'profile'], function(){ 
         Route::get('/', [Profile::class, 'index'])->name('profile.index');
-        Route::post('update', [Profile::class, 'update'])->name('profile.update');
+        
+        // Update profile it will be implemented through API routes
+        // Route::post('update', [Profile::class, 'update'])->name('profile.update');
     });
 
     Route::group(['prefix' => 'settings', 'controller' => Settings::class], function (){

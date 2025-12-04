@@ -6,11 +6,14 @@ use DB;
 use Exception;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Employee;
 use App\Models\Payroll;
-use Illuminate\Http\Request;
+use App\Models\Employee;
 use App\Models\PayrollItems;
+use Illuminate\Http\Request;
+use App\Mail\PayrollDispersed;
+
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class PayrollController extends Controller
 {
@@ -66,9 +69,36 @@ class PayrollController extends Controller
 
     public function show(string $id)
     {
-        $salary = Payroll::find($id);
+        $payroll = Payroll::find($id);
 
-        return view('admin.payrolls.show', compact('salary'));  
+        return view('admin.payrolls.show', compact('payroll'));  
+    }
+
+    public function sendEmail(Payroll $payroll)
+    {
+        if (!isset($payroll->employee->email)){
+            session()->flash(
+                'success', 'El empleado no tiene configurado un correo electronico'
+            );
+        }
+
+        try {
+            Mail::to($payroll->employee->email)->send(new PayrollDispersed($payroll));
+            
+            session()->flash(
+                'success', sprintf('El correo se envio correctamente a: %s', $payroll->employee->email)
+            );
+
+            return redirect()->back();
+        }
+
+        catch (Exception $e) {
+            session()->flash(
+                'success', sprintf('Ocurrio un error al enviar el correo: %s', $e->getMessage())
+            );
+            
+            return to_route('payroll.index');
+        }
     }
 
     public function manageSalaries(Request $request)
