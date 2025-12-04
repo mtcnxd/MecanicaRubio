@@ -74,7 +74,8 @@ class ServicesController extends Controller
         $service = Service::find($id);
         /*
         try {
-            MailController::sendQuoteEmail($service);
+            // MailController::sendQuoteEmail($service);
+            // MailController::serviceComplete($service);
         }
 
         catch (\Exception $e) {
