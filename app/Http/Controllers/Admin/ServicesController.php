@@ -10,12 +10,11 @@ use App\Models\{
 };
 
 use Illuminate\Http\Request;
-use App\Mail\SendEmailInvoice;
 use Illuminate\Support\Facades\Auth;
-
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notifications\Telegram;
 use App\Http\Controllers\Admin\ChartsController;
+use App\Http\Controllers\Support\MailController;
 
 class ServicesController extends Controller
 {
@@ -73,7 +72,15 @@ class ServicesController extends Controller
     public function show(string $id)
     {
         $service = Service::find($id);
+        /*
+        try {
+            MailController::sendQuoteEmail($service);
+        }
 
+        catch (\Exception $e) {
+            session()->flash('success', $e->getMessage());
+        }
+        */
         return view('admin.services.show', compact('service'));
     }
 

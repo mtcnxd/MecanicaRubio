@@ -15,6 +15,7 @@ class PayrollDispersed extends Mailable
 {
     use Queueable, SerializesModels;
 
+    protected $payroll;
     /**
      * Create a new message instance.
      */

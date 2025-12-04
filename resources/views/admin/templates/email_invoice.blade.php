@@ -74,20 +74,11 @@
             Enviado: {{ \Carbon\Carbon::now()->format('h:i a d-m-Y') }}
         </div>
         <div class="page">
-            <h2>{{ $service->name }}, Gracias por contratar nuestro servicio.</h2>
+            <h2>Hola {{ $service->client->name }}</h2>
             <p>A continuación encontrará el desglose de las refacciones utilizadas, asi como el costo por nuestro servicio.</p>
             <table>
-                @php
-                    $total = 0.0;
-                @endphp
-                @foreach ($items as $item)
-                @php
-                    $total = $total + ($item->amount * $item->price);
-                @endphp
-                <tr>
-                    <td>{{ $item->amount }} {{ $item->item }}</td>
-                    <td class="text-end">{{ "$".number_format( $item->amount * $item->price,2) }}</td>
-                </tr>
+                @foreach ($service->holamundo as $item)
+                    
                 @endforeach
             </table>
 

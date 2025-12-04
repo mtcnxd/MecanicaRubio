@@ -112,10 +112,6 @@
 
             <div class="col-md-12 text-end">
                 <a href="{{ route('payroll.index') }}" class="btn btn-sm btn-secondary">Atras</a>
-                <a href="{{ route('payroll.email', $payroll ) }}" class="btn btn-sm btn-secondary">
-                    Correo
-                    <x-feathericon-mail class="table-icon" style="margin: -2px 5px 2px"/>
-                </a>
                 <button type="button" onclick="print()" class="btn btn-sm btn-secondary">
                     Imprimir
                     <x-feathericon-printer class="table-icon" style="margin: -2px 5px 2px"/>

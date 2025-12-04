@@ -2,33 +2,24 @@
 
 namespace App\Mail;
 
+use App\Models\Service;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SendEmailInvoice extends Mailable
+class QuoteToClient extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $service;
-    public $items;
+    protected $service;
 
-    public function __construct($service, $items)
+    public function __construct(Service $service)
     {
         $this->service = $service;
-        $this->items = $items;
-    }
-
-    public function build()
-    {
-        return $this->view('admin.templates.email_invoice')->with([
-            'service' => $this->service,
-            'items'   => $this->items,
-        ]);
     }
 
     /**
@@ -37,8 +28,8 @@ class SendEmailInvoice extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address("mtc.nxd@gmail.com"),
-            subject: 'Ingenieria Mecanica Rubio',
+            from: new Address("notifications@mecanicarubio.com"),
+            subject: 'Cotizacion de Servicio',
         );
     }
 
@@ -49,6 +40,9 @@ class SendEmailInvoice extends Mailable
     {
         return new Content(
             view: 'admin.templates.email_invoice',
+            with: [
+                'service' => $this->service
+            ]
         );
     }
 

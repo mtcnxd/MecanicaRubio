@@ -10,10 +10,8 @@ use App\Models\Payroll;
 use App\Models\Employee;
 use App\Models\PayrollItems;
 use Illuminate\Http\Request;
-use App\Mail\PayrollDispersed;
-
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Support\MailController;
 
 class PayrollController extends Controller
 {
@@ -55,81 +53,54 @@ class PayrollController extends Controller
         return to_route('payroll.index')->with('success', 'El registro se guardo correctamente');
     }
 
-    public function update(Request $request, string $id)
-    {
-        Payroll::where('id', $id)->update([
-            'status'    => 'Pagado',
-            'blocked'   => true,
-            'paid_date' => Carbon::now(),
-        ]);
-
-        return to_route('payroll.show', $id)
-            ->with('success', 'El movimiento se guardo correctamente');
-    }
-
     public function show(string $id)
     {
         $payroll = Payroll::find($id);
-
         return view('admin.payrolls.show', compact('payroll'));  
-    }
-
-    public function sendEmail(Payroll $payroll)
-    {
-        if (!isset($payroll->employee->email)){
-            session()->flash(
-                'success', 'El empleado no tiene configurado un correo electronico'
-            );
-        }
-
-        try {
-            Mail::to($payroll->employee->email)->send(new PayrollDispersed($payroll));
-            
-            session()->flash(
-                'success', sprintf('El correo se envio correctamente a: %s', $payroll->employee->email)
-            );
-
-            return redirect()->back();
-        }
-
-        catch (Exception $e) {
-            session()->flash(
-                'success', sprintf('Ocurrio un error al enviar el correo: %s', $e->getMessage())
-            );
-            
-            return to_route('payroll.index');
-        }
     }
 
     public function manageSalaries(Request $request)
     {
+        $payroll = Payroll::find($request->id);
+        
         switch ($request->action){
             case 'pay':
-                DB::table('salaries')->where('id', $request->id)->update([
-                    "status"     => 'Pagado',
-                    "paid_date"  => Carbon::now(),
-                    "updated_at" => Carbon::now()
-                ]);
-                $response = "El pago se realizo correctamente";
-                break;
+                try {
+                    $payroll->update([
+                        "status"     => 'Pagado',
+                        "paid_date"  => Carbon::now(),
+                        "updated_at" => Carbon::now()
+                    ]);
+    
+                    MailController::sendPayrollEmail($payroll);
 
-                case 'cancell':
-                DB::table('salaries')->where('id', $request->id)->update([
+                    $message = "El pago se realizo correctamente";
+                } 
+
+                catch (\Exception $e){
+                    $message = 'Error: '. $e->getMessage();
+                }
+
+            break;
+
+            case 'cancell':
+                $payroll->update([
                     'status' => 'Cancelado',
                     "updated_at" => Carbon::now()
                 ]);
-                $response = "El movimiento se cancelo correctamente";
-                break;
+                
+                $message = "El movimiento se cancelo correctamente";
+            break;
 
             case 'delete':
-                DB::table('salaries')->where('id', $request->id)->delete();
-                $response = "El registro se elimino correctamente";
+                $payroll->delete();
+                $message = "El registro se elimino correctamente";
                 break;
         }
 
         return response()->json([
             'status' => true,
-            'message' => $response
+            'message' => $message
         ]);
     }
     

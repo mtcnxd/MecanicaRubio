@@ -91,12 +91,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
     Route::resource('employees', Employees::class);
     Route::resource('quotes', QuotesController::class)->only('index','show');
     Route::resource('users', UsersController::class)->except('destroy'); 
-    Route::resource('payroll', PayrollController::class);
+    Route::resource('payroll', PayrollController::class)->except('edit', 'destroy');
     Route::resource('expenses', ExpensesController::class);
     
+    Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');
+    Route::get('emailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
+
     Route::group(['prefix' => 'finance'], function(){
         Route::get('/', [FinanceController::class, 'index'])->name('finance.incomes');
-        Route::get('/send-payroll/{payroll}', [PayrollController::class, 'sendEmail'])->name('payroll.email');
     });
 
     Route::group(['prefix' => 'reports'], function(){
@@ -129,8 +131,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function(){
         Route::post('update', 'update')->name('setting.update');
         Route::post('create', 'store')->name('setting.store');
     });
-    
-    Route::get('emailInvoice/{service}', [ServicesController::class, 'sendEmailInvoice'])->name('sendEmailInvoice');
-    
-    Route::get('calendar', [CalendarController::class, 'index'])->name('calendar.index');    
 });
