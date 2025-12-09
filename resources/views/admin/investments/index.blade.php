@@ -77,13 +77,13 @@
         <div class="col-md-3">
             <div class="row">
                 <x-card_simple_overview_1
-                    title="$ Incremento en 10 días"
+                    title="$ Incremento en 13 días"
                     message="{{ Number::currency(App\Models\Investment::getInvestmentAmountMonthAgo()) }}"
                 />
             </div>
             <div class="row mt-3">
                 <x-card_simple_overview_1
-                    title="% Incremento en 10 días"
+                    title="% Incremento en 13 días"
                     message="{{ Number::percentage(App\Models\Investment::getInvestmentPercentageMonthAgo(), 2) }}"
                 />
             </div>
