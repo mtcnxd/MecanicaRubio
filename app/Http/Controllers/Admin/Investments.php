@@ -39,11 +39,11 @@ class Investments extends Controller
 
     public function update(Request $request)
     {
+        $formatter = new NumberFormatter('en_US', NumberFormatter::DECIMAL);            
+        
         try {
-            $formatter = new NumberFormatter('en_US', NumberFormatter::DECIMAL);            
-            
             $request->merge([
-                'date'   => Carbon::now(),
+                'date'   => Carbon::now()->format('Y-m-d'),
                 'amount' => $formatter->parse($request->amount),
             ]);
 

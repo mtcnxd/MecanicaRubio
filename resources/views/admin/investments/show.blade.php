@@ -16,7 +16,7 @@
         <div class="row p-4 pt-0">
             <div class="col-md-3">
                 <x-card_simple_overview_1
-                    title="{{ now()->subDays(7)->format('d M Y') }}"
+                    title="{{ now()->subDays(13)->format('d M Y') }}"
                     message="{{ Number::currency($first); }}"
                 />
             </div>
@@ -28,13 +28,13 @@
             </div>
             <div class="col-md-3">
                 <x-card_simple_overview_1
-                    title="$ Incremento a 7 días" 
+                    title="$ Incremento a 13 días" 
                     message="{{ Number::currency($diff); }}"
                 />
             </div>
             <div class="col-md-3">
                 <x-card_simple_overview_1
-                    title="% Incremento a 7 días" 
+                    title="% Incremento a 13 días" 
                     message="{{ Number::percentage(App\Http\Controllers\Helpers::convertToPercentage($last, $first), 2); }}"
                 />
             </div>  
