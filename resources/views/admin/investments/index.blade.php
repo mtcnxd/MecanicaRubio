@@ -77,7 +77,7 @@
         <div class="col-md-3">
             <div class="row">
                 <x-card_simple_overview_1
-                    title="$ Incremento en 13 días"
+                    title="$ Incremento en 16 días"
                     message="{{ Number::currency(App\Models\Investment::getInvestmentAmountMonthAgo()) }}"
                 />
             </div>
