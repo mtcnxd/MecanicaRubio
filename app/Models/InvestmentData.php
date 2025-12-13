@@ -14,6 +14,7 @@ class InvestmentData extends Model
 
     protected $fillable = [
         'investment_id',
+        'date',
         'amount',
     ];
 
