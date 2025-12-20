@@ -49,18 +49,18 @@ class Investment extends Model
         return 0;
     }
 
-    public static function getInvestmentAmountMonthAgo()
+    public static function getInvestmentAmountMonthAgo($days = 10)
     {
         $first = self::getAmountByDaysAgo(1);
-        $last  = self::getAmountByDaysAgo(20);
+        $last  = self::getAmountByDaysAgo($days);
 
         return  ($first - $last);
     }
 
-    public static function getInvestmentPercentageMonthAgo()
+    public static function getInvestmentPercentageMonthAgo($days = 10)
     {
         $first = self::getAmountByDaysAgo(1);
-        $last  = self::getAmountByDaysAgo(20);
+        $last  = self::getAmountByDaysAgo($days);
 
         return Helpers::convertToPercentage($first, $last);
     }

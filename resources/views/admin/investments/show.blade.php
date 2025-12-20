@@ -1,5 +1,5 @@
 @php
-    $first = $investmentData->getAmountByDaysAgo(7, $investment->id);
+    $first = $investmentData->getAmountByDaysAgo(25, $investment->id);
     $last  = $investmentData->getAmountByDaysAgo(1, $investment->id);
     $diff  = $last - $first;
 @endphp
@@ -28,13 +28,13 @@
             </div>
             <div class="col-md-3">
                 <x-card_simple_overview_1
-                    title="$ Incremento a 16 días" 
+                    title="$ Incremento a 25 días" 
                     message="{{ Number::currency($diff); }}"
                 />
             </div>
             <div class="col-md-3">
                 <x-card_simple_overview_1
-                    title="% Incremento a 16 días" 
+                    title="% Incremento a 25 días" 
                     message="{{ Number::percentage(App\Http\Controllers\Helpers::convertToPercentage($last, $first), 2); }}"
                 />
             </div>  
