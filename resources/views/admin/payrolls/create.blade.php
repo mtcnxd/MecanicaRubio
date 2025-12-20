@@ -136,8 +136,9 @@
             <label for="concept">Concepto</label>
             <select name="concept" id="concept" class="form-select">
                 <optgroup label="Prestaciones">
-                    <option>Salario</option>
+                    <option>Aguinaldo</option>
                     <option>Caja de ahorro</option>
+                    <option>Salario</option>
                     <option>Prestamo</option>
                     <option>Hora extra</option>
                     <option>Bono</option>
