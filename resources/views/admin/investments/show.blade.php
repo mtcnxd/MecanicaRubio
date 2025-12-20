@@ -1,5 +1,5 @@
 @php
-    $first = $investmentData->getAmountByDaysAgo(25, $investment->id);
+    $first = $investmentData->getAmountByDaysAgo(23, $investment->id);
     $last  = $investmentData->getAmountByDaysAgo(1, $investment->id);
     $diff  = $last - $first;
 @endphp
@@ -16,7 +16,7 @@
         <div class="row p-4 pt-0">
             <div class="col-md-3">
                 <x-card_simple_overview_1
-                    title="{{ now()->subDays(16)->format('d M Y') }}"
+                    title="{{ now()->subDays(23)->format('d M Y') }}"
                     message="{{ Number::currency($first); }}"
                 />
             </div>
