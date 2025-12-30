@@ -70,7 +70,7 @@ class Investments extends Controller
         InvestmentData $investmentData
     ){
         $investment = $investment->load([
-            'investmentData' => function($query){
+            'investmentResults' => function($query){
                 $query->orderBy('date', 'desc')->limit(10);                
             }
         ]);
