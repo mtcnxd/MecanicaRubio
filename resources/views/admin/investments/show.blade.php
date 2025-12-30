@@ -1,6 +1,6 @@
 @php
-    $first = $investmentDetails->getAmountByDaysAgo(23, $investment->id);
-    $last  = $investmentDetails->getAmountByDaysAgo(1, $investment->id);
+    $first = $investmentData->getAmountByDaysAgo(23, $investment->id);
+    $last  = $investmentData->getAmountByDaysAgo(1, $investment->id);
     $diff  = $last - $first;
 @endphp
 
@@ -48,7 +48,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($investment->investmentData as $item)
+                @foreach ($investment->investmentData->sortByDesc('created_at') as $item)
                     <tr>
                         <td title="{{ Carbon\Carbon::parse($item->date)->diffForHumans() }}">
                             {{ Carbon\Carbon::parse($item->date)->format('d M Y') }}
