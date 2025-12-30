@@ -48,7 +48,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($investment->investmentResults as $item)
+                @foreach ($investment->investmentData as $item)
                     <tr>
                         <td title="{{ Carbon\Carbon::parse($item->date)->diffForHumans() }}">
                             {{ Carbon\Carbon::parse($item->date)->format('d M Y') }}
