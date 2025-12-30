@@ -67,16 +67,16 @@ class Investments extends Controller
     public function show(
         string $investment_id, 
         Investment $investment,
-        InvestmentData $investmentData
+        InvestmentData $investmentDetails
     ){
         $investment = $investment->load([
-            'investmentResults' => function($query){
+            'investmentData' => function($query){
                 $query->orderBy('date', 'desc')->limit(10);                
             }
         ]);
 
         return view('admin.investments.show', 
-            compact('investment','investmentData')
+            compact('investment','investmentDetails')
         );
     }
 

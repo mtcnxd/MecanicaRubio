@@ -1,6 +1,6 @@
 @php
-    $first = $investmentData->getAmountByDaysAgo(23, $investment->id);
-    $last  = $investmentData->getAmountByDaysAgo(1, $investment->id);
+    $first = $investmentDetails->getAmountByDaysAgo(23, $investment->id);
+    $last  = $investmentDetails->getAmountByDaysAgo(1, $investment->id);
     $diff  = $last - $first;
 @endphp
 
