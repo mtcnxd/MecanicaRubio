@@ -66,7 +66,8 @@ class Investments extends Controller
 
     public function show(
         string $investment_id, 
-        Investment $investment
+        Investment $investment,
+        InvestmentData $investmentData
     ){
         $investment = $investment->load([
             'investmentData' => function($query){
@@ -75,7 +76,7 @@ class Investments extends Controller
         ]);
 
         return view('admin.investments.show', 
-            compact('investment')
+            compact('investment','investmentData')
         );
     }
 
