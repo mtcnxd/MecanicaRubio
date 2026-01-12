@@ -84,8 +84,11 @@ class Charts extends Model
             ->select(DB::raw('sum(amount) as amount, export_date'))
             ->groupBy('export_date')
             ->orderBy('export_date', 'asc')
-            ->limit(30)
+            ->limit(20)
             ->get();
+        
+        $labels = [];
+        $values = [];
 
         foreach($data as $value){
             $labels[] = $value->export_date;
@@ -102,6 +105,8 @@ class Charts extends Model
     {
         $investments = Investment::where('active', true)->orderBy('name')->get();
 
+        $labels = [];
+        $values = [];
         foreach ($investments as $investment) {
             $labels[] = $investment->name;
             $values[] = number_format($investment->investmentPercentage(), 1);

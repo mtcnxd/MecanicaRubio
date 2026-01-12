@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('assets_increment', function (Blueprint $table) {
             $table->id();
             $table->integer('investment_id');
+            $table->date('date');
             $table->double('amount')->default(0);
             $table->timestamps();
         });
