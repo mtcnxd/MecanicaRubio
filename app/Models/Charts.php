@@ -83,7 +83,7 @@ class Charts extends Model
         $data = DB::table('chart_assets_increment')
             ->select(DB::raw('sum(amount) as amount, export_date'))
             ->groupBy('export_date')
-            ->orderBy('export_date', 'asc')
+            ->orderBy('export_date', 'desc')
             ->limit(20)
             ->get();
         
