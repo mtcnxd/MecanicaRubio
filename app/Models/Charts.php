@@ -84,7 +84,7 @@ class Charts extends Model
             ->select(DB::raw('sum(amount) as amount, export_date'))
             ->groupBy('export_date')
             ->orderBy('export_date', 'desc')
-            ->limit(20)
+            ->limit(30)
             ->get();
         
         $labels = [];
