@@ -124,4 +124,14 @@ class ClientsController extends Controller
             "data"    => $addresses
         ]);
     }
+
+    public function getServicesByClient(Request $request)
+    {
+        $client = Clients::find($request->clientId);
+
+        return Response()->json([
+            "success" => true,
+            "data" => $client->services
+        ]);
+    }
 }

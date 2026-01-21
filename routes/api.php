@@ -69,6 +69,7 @@ Route::controller(ClientsController::class)->group(function () {
     Route::post('searchByAddress', 'searchByAddress')->name('clients.searchByAddress');    
     
     Route::get('getClientsList', 'getClientsList')->name('clients.getClientsList');
+    Route::get('getServicesByClient/{clientId}', 'getServicesByClient')->name('clients.getServicesByClient');
 });
 
 // Services
