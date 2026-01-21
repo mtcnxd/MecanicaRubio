@@ -28,6 +28,11 @@ class Investment extends Model
     {
         $total = $this->sum('current_amount');
         $value = $this->current_amount;
+
+        if ($total == 0){
+            return 0;
+        }
+
         return ($value/$total) * 100;
     }
 

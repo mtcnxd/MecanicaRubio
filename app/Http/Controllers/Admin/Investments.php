@@ -39,7 +39,7 @@ class Investments extends Controller
 
     public function update(Request $request)
     {
-        $formatter = new NumberFormatter('en_US', NumberFormatter::DECIMAL);            
+        $formatter = new NumberFormatter('en_US', NumberFormatter::DECIMAL);
         
         try {
             $request->merge([
@@ -58,26 +58,19 @@ class Investments extends Controller
         }
 
         catch (\Exception $er){
-            session()->flash('error', sprintf('we got an error: %s', $er->getMessage()));
+            session()->flash('warning', sprintf('we got an error: %s', $er->getMessage()));
         }
 
         return to_route('investments.index');
     }
 
-    public function show(
-        string $investment_id, 
-        Investment $investment,
-        InvestmentData $investmentData
-    ){
-        /*
-        $investment = $investment->load([
-            'investmentData' => function($query){
-                $query->orderBy('date', 'desc')->limit(10);                
-            }
-        ]);
-        */
-
+    public function show(string $investment_id, Investment $investment, InvestmentData $investmentData)
+    {
         $investment = $investment->find($investment_id);
+
+        $investment = $investment->load(['investmentData' => function($query){
+            $query->orderBy('date','desc')->take(10);
+        }]);
 
         return view('admin.investments.show', 
             compact('investment','investmentData')
