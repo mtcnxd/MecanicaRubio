@@ -131,13 +131,13 @@ class ClientsController extends Controller
 
         foreach ($client->services as $service) {
             $services[] = [
-                'id'     => $service->id, 
-                'carId'  => $service->car->carName(),
-                'fault'  => $service->fault,
-                'status' => $service->status,
+                'id'       => $service->id, 
+                'car'      => $service->car->carName(),
+                'fault'    => $service->fault,
                 'started'  => $service->entry_date,
                 'finished' => $service->finished_date,
-                'total' => $service->total
+                'status'   => $service->status,
+                'total'    => $service->total
             ];
         }
 

@@ -68,8 +68,12 @@ Route::controller(ClientsController::class)->group(function () {
     Route::post('searchByPostcode', 'searchByPostcode')->name('clients.searchByPostcode');    
     Route::post('searchByAddress', 'searchByAddress')->name('clients.searchByAddress');    
     
-    Route::get('getClientsList', 'getClientsList')->name('clients.getClientsList');
-    Route::get('getServicesByClient/{clientId}', 'getServicesByClient')->name('clients.getServicesByClient');
+    // Routes for Phone Aplication
+    Route::prefix('client')->group(function () {
+        Route::get('getAll', 'getAll')->name('clients.getClientsList');
+        Route::get('getClientInfo','getClientInfo')->name('clients.getClientInfo');
+        Route::get('getServices/{clientId}', 'getServicesByClient')->name('clients.getServicesByClient');
+    });
 });
 
 // Services
