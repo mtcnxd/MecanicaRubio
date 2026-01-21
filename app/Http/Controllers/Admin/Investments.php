@@ -72,9 +72,7 @@ class Investments extends Controller
             $query->orderBy('date','desc')->take(10);
         }]);
 
-        return view('admin.investments.show', 
-            compact('investment','investmentData')
-        );
+        return view('admin.investments.show', compact('investment','investmentData'));
     }
 
     public function destroy(Request $request)

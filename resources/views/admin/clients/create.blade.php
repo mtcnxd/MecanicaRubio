@@ -154,7 +154,7 @@
     $("#textPostalCode").on('keyup', function(){
         if (this.value.length > 3) {
             $.ajax({
-                url:"{{ route('clients.searchByAddress') }}",
+                url:"{{ route('client.searchByAddress') }}",
                 method: 'POST',
                 data:{ address:this.value },
                 success: function(response){
@@ -172,7 +172,7 @@
         var client = $(this).data('bsClient');
 
         $.ajax({
-            url: "{{ route('clients.deleteClient') }}",
+            url: "{{ route('client.delete') }}",
             method: 'POST',
             data: {
                 client:client
@@ -186,7 +186,7 @@
     function ajaxRequest(element){
         if (element.value.length >= 4){
             $.ajax({
-                url: "{{ route('clients.searchByPostcode') }}",
+                url: "{{ route('client.searchByPostcode') }}",
                 method: 'POST',
                 data: {
                     postcode:element.value

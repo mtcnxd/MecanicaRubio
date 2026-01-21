@@ -63,16 +63,20 @@ Route::group(['controller' => PayrollController::class], function() {
 });
 
 // Clients
-Route::controller(ClientsController::class)->group(function () {
-    Route::post('deleteClient', 'destroy')->name('clients.deleteClient');
-    Route::post('searchByPostcode', 'searchByPostcode')->name('clients.searchByPostcode');    
-    Route::post('searchByAddress', 'searchByAddress')->name('clients.searchByAddress');    
-    
+Route::group(['prefix' => 'clients'], function(){
+    // Internal routes for ajax requests
+    Route::controller(ClientsController::class)->group(function () {
+        Route::post('delete', 'destroy')->name('client.delete');
+        Route::post('searchByPostcode', 'searchByPostcode')->name('client.searchByPostcode');    
+        Route::post('searchByAddress', 'searchByAddress')->name('client.searchByAddress');    
+    });
+
     // Routes for Phone Aplication
-    Route::prefix('client')->group(function () {
-        Route::get('getAll', 'getAll')->name('clients.getAll');
-        Route::get('getClientInfo/{clientId}','getClientInfo')->name('clients.getClientInfo');
-        Route::get('getServices/{clientId}', 'getServices')->name('clients.getServices');
+    Route::controller(App\Http\Controllers\Api\ClientController::class)->group(function () {
+        Route::get('all', 'getAll')->name('clients.getAll');
+        Route::get('info/{clientId}','getInfo')->name('clients.getInfo');
+        Route::get('services/{clientId}', 'getServices')->name('clients.getServices');
+        Route::get('services/{clientId}/info/{serviceId}', 'getServiceInfo')->name('clients.getServiceInfo');
     });
 });
 
@@ -82,7 +86,6 @@ Route::group(['controller' => ServicesController::class], function(){
     Route::post('getItemInformation', 'getItemInformation')->name('services.getItemInformation');
     Route::get('getServiceItems', 'getServiceItems')->name('services.getServiceItems');
     Route::get('getDataTableServices', 'getDataTableServices')->name('getDataTableServices');
-    Route::get('/changeQuoteToService', 'changeQuoteToService')->name('services.change.quote');
 });
 
 Route::post('createItemInvoice', [ServicesController::class, 'createItemInvoice'])->name('createItemInvoice');

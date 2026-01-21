@@ -8378,8 +8378,7 @@
                 "orchestra/testbench-core": "^8.35.0",
                 "pestphp/pest": "^2.36.0",
                 "phpunit/phpunit": "^10.5.36",
-                "sebastian/environment": "^6.1.0",
-                "spatie/laravel-ignition": "^2.9.1"
+                "sebastian/environment": "^6.1.0"
             },
             "type": "library",
             "extra": {
