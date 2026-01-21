@@ -22,7 +22,7 @@ class ExecuteSolutionController
 
         $solution = $request->getRunnableSolution();
 
-        $solution->run($request->input('parameters', []));
+        $solution->run($request->get('parameters', []));
 
         return response()->noContent();
     }

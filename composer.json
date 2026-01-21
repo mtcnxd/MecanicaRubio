@@ -17,6 +17,8 @@
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.21",
         "laravel/tinker": "^2.8",
+        "spatie/ignition": "^1.15",
+        "spatie/laravel-ignition": "^2.1",
         "symfony/framework-bundle": "6.3.*",
         "yajra/laravel-datatables-oracle": "^10.11"
     },
