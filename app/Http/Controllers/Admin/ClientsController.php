@@ -125,7 +125,27 @@ class ClientsController extends Controller
         ]);
     }
 
-    public function getServicesByClient(Request $request)
+    public function getAll()
+    {
+        $clients = Client::all();
+
+        return Response()->json([
+            "success" => true,
+            "data" => $clients            
+        ]);
+    }
+
+    public function getClientInfo(Request $request)
+    {
+        $client = Client::find($request->clientId);
+
+        return Response()->json([
+            "success" => true,
+            "data" => $client
+        ]);
+    }
+
+    public function getServices(Request $request)
     {
         $client = Client::find($request->clientId);
 

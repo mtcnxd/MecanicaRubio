@@ -70,9 +70,9 @@ Route::controller(ClientsController::class)->group(function () {
     
     // Routes for Phone Aplication
     Route::prefix('client')->group(function () {
-        Route::get('getAll', 'getAll')->name('clients.getClientsList');
-        Route::get('getClientInfo','getClientInfo')->name('clients.getClientInfo');
-        Route::get('getServices/{clientId}', 'getServicesByClient')->name('clients.getServicesByClient');
+        Route::get('getAll', 'getAll')->name('clients.getAll');
+        Route::get('getClientInfo/{clientId}','getClientInfo')->name('clients.getClientInfo');
+        Route::get('getServices/{clientId}', 'getServices')->name('clients.getServices');
     });
 });
 
