@@ -29,6 +29,8 @@ class createCalendarEvent extends Command
      */
     public function handle(Telegram $telegram)
     {
+        $telegram->send("Process started");
+
         $servicesCreatedCounter = 0;
 
         $services = Service::where('created_at','>', Carbon::now()->subDays(10))
