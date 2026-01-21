@@ -127,7 +127,7 @@ class ClientsController extends Controller
 
     public function getServicesByClient(Request $request)
     {
-        $client = Clients::find($request->clientId);
+        $client = Client::find($request->clientId);
 
         return Response()->json([
             "success" => true,
