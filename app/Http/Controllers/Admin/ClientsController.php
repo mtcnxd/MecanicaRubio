@@ -130,7 +130,7 @@ class ClientsController extends Controller
         $client = Client::find($request->clientId);
 
         foreach ($client->services as $service) {
-            $services = [
+            $services[] = [
                 'carId'  => $service->car_id,
                 'fault'  => $service->fault,
                 'status' => $service->status,
