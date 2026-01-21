@@ -129,9 +129,20 @@ class ClientsController extends Controller
     {
         $client = Client::find($request->clientId);
 
+        foreach ($client->services as $service) {
+            $services = [
+                'carId'  => $service->car_id,
+                'fault'  => $service->fault,
+                'status' => $service->status,
+                'start'  => $service->entry_date,
+                'finished' => $service->finished_date,
+                'total' => $service->total
+            ];
+        }
+
         return Response()->json([
             "success" => true,
-            "data" => $client->services
+            "data" => $services
         ]);
     }
 }
