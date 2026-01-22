@@ -31,9 +31,9 @@ class BitsoData extends Model
     public function currentGainOrLost(string $book)
     {
         $result        = 0.0;
-        $purchaseValue = $this->purchase_value;
-        $currentValue  = $this->currentPurchaseValue($book); 
-        $result        = ($currentValue - $purchaseValue) / $currentValue;
+        $purchasePrice = $this->price;
+        $currentPrice  = $this->currentPurchaseValue($book); 
+        $result        = ($currentPrice - $purchasePrice) / $currentPrice;
 
         return $result * 100;
     }
@@ -51,7 +51,6 @@ class BitsoData extends Model
 
     public function currentPurchaseValue(string $book)
     {
-        $price = $this->getTickerByBook($book)->last;
-        return ($price * $this->amount);
+        return $this->getTickerByBook($book)->last;
     }
 }

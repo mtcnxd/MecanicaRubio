@@ -2,19 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ControllerAjax;
-use App\Http\Controllers\Admin\CarsController;
 use App\Http\Controllers\Admin\QuotesController;
-use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\FinanceController;
-use App\Http\Controllers\Admin\PayrollController;
 use App\Http\Controllers\Admin\CalendarController;
-use App\Http\Controllers\Admin\ExpensesController;
+
 use App\Http\Controllers\Admin\{
-    ServicesController,
-    Employees,
-    Investments,
+    CarsController,ClientsController,PayrollController,ExpensesController,ServicesController,Employees,Investments
 };
+
 use App\Http\Controllers\Api\{
     Employee
 };
@@ -86,11 +81,10 @@ Route::group(['controller' => ServicesController::class], function(){
     Route::post('getItemInformation', 'getItemInformation')->name('services.getItemInformation');
     Route::get('getServiceItems', 'getServiceItems')->name('services.getServiceItems');
     Route::get('getDataTableServices', 'getDataTableServices')->name('getDataTableServices');
+
+    Route::post('createItemInvoice', 'createItemInvoice')->name('createItemInvoice');
+    Route::post('removeItemInvoice', 'removeItemInvoice')->name('removeItemInvoice');
 });
-
-Route::post('createItemInvoice', [ServicesController::class, 'createItemInvoice'])->name('createItemInvoice');
-
-Route::post('removeItemInvoice', [ServicesController::class, 'removeItemInvoice'])->name('removeItemInvoice');
 
 Route::post('/finance/close', [FinanceController::class, 'close'])->name('finance.close');
 

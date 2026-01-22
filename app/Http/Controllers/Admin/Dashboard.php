@@ -6,10 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Models\Charts;
-use App\Models\Expense;
-use App\Models\Payroll;
-use App\Models\Service;
+use App\Models\{Charts,Expense,Payroll,Service};
 
 class Dashboard extends Controller
 {
@@ -28,8 +25,6 @@ class Dashboard extends Controller
             ->where('status', 'Entregado')
             ->first()->avg;
 
-        return view('admin.reports.dashboard', 
-            compact('expense','payroll','charts','data')
-        );
+        return view('admin.reports.dashboard', compact('expense','payroll','charts','data'));
     }
 }

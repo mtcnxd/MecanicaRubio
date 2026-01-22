@@ -9,19 +9,19 @@ use App\Http\Controllers\Auth\LoginController;
 
 use App\Http\Controllers\Admin\{
     CarsController,
-    UsersController,
-    QuotesController,
-    ClientsController,
-    FinanceController,
-    PayrollController,
     CalendarController,
+    ClientsController,
+    Dashboard,
+    Employees,
     ExpensesController,
+    FinanceController,
+    Investments,
+    PayrollController,
+    Profile,
+    QuotesController,
     ServicesController,
     Settings,
-    Employees,
-    Investments,
-    Profile,
-    Dashboard
+    UsersController
 };
 
 /*
