@@ -32,7 +32,7 @@ class BitsoData extends Model
     {
         $result        = 0.0;
         $purchasePrice = $this->price;
-        $currentPrice  = $this->currentPurchaseValue($book); 
+        $currentPrice  = $this->currentPrice($book); 
         $result        = ($currentPrice - $purchasePrice) / $currentPrice;
 
         return $result * 100;
@@ -49,8 +49,14 @@ class BitsoData extends Model
         }
     }
 
-    public function currentPurchaseValue(string $book)
+    public function currentPrice(string $book)
     {
         return $this->getTickerByBook($book)->last;
+    }
+
+    public function currentPurchaseValue(string $book)
+    {
+        $currentPrice = $this->getTickerByBook($book)->last;
+        return ($currentPrice * $this->amount);
     }
 }

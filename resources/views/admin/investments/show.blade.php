@@ -7,7 +7,7 @@
 @extends('includes.body')
 
 @section('content')
-<div class="window-container" style="margin-bottom: 50px;">
+<div class="window-container">
     @include('includes.alert')
     <h6 class="window-title shadow text-uppercase fw-bold">
         <span class="ms-3">{{ $investment->name }}</span>
