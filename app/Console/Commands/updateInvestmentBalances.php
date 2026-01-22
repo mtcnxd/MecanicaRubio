@@ -2,11 +2,12 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use App\Models\Investment;
+use Illuminate\Support\Number;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Notifications\Telegram;
-use Carbon\Carbon;
 
 class updateInvestmentBalances extends Command
 {
@@ -41,9 +42,11 @@ class updateInvestmentBalances extends Command
                     ]);
                 }
             });
+
+            $all = Investment::all();
     
             $telegram->send(
-                sprintf('Process finished at %s', Carbon::now())
+                sprintf("Process finished at: %s \n\rToday total amount: <b>%s</b>", Carbon::now(), Number::currency($all->sum('current_amount')))
             );        
         }
 
