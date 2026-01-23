@@ -18,12 +18,13 @@ class ClientController extends Controller
                 'name'  => $client->name,
                 'email' => $client->email,
                 'phone' => $client->phone,
+                'status' => $client->status,
             ];
         }
 
         return Response()->json([
             "success" => true,
-            "data" => $clients            
+            "data" => $clientsResults            
         ]);
     }
 
