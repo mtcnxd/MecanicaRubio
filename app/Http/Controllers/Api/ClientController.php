@@ -16,8 +16,8 @@ class ClientController extends Controller
             $clientsResults[] = [
                 'id'    => $client->id,
                 'name'  => $client->name,
-                'email' => $client->email,
-                'phone' => $client->phone,
+                'email' => !is_null($client->email) ? $client->email : '',
+                'phone' => !is_null($client->phone) ? $client->phone : '',
                 'status' => $client->status,
             ];
         }
