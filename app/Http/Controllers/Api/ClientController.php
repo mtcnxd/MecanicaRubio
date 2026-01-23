@@ -12,6 +12,15 @@ class ClientController extends Controller
     {
         $clients = Client::all();
 
+        foreach ($clients as $client) {
+            $clientsResults[] = [
+                'id'    => $client->id,
+                'name'  => $client->name,
+                'email' => $client->email,
+                'phone' => $client->phone,
+            ];
+        }
+
         return Response()->json([
             "success" => true,
             "data" => $clients            
