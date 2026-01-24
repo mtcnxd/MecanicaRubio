@@ -82,6 +82,7 @@ Route::group(['controller' => ServicesController::class], function(){
     Route::get('getServiceItems', 'getServiceItems')->name('services.getServiceItems');
     Route::get('getDataTableServices', 'getDataTableServices')->name('getDataTableServices');
 
+    // Change method type
     Route::get('changeQuoteToService', 'changeQuoteToService')->name('services.change.quote');
 
     Route::post('createItemInvoice', 'createItemInvoice')->name('createItemInvoice');
