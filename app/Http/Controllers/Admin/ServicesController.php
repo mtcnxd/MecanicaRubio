@@ -5,33 +5,41 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Mail;
 use Carbon\Carbon;
-use App\Models\{
-    Client, Service, ServiceItems
-};
-
+use App\Models\{Client, Service, ServiceItems};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Notifications\Telegram;
 use App\Http\Controllers\Admin\ChartsController;
 use App\Http\Controllers\Support\MailController;
+use App\Services\ServicesService;
+use App\Traits\Notificator;
 
 class ServicesController extends Controller
 {
-    public function index(Service $service)
+    use Notificator;
+
+    public function __construct(ServicesService $servicesService)
     {
-        // Server side processing
+        $this->servicesService = $servicesService;
+    }
+
+    public function index()
+    {
+        /**
+         * Server side processing
+         */
+        
+        $service = $this->servicesService->all();
         return view('admin.services.index', compact('service'));
     }
 
     public function create(Client $clients)
     {
-        return view('admin.services.create', 
-            compact('clients')
-        );
+        return view('admin.services.create', compact('clients'));
     }
 
-    public function store(Request $request, Telegram $telegram)
+    public function store(Request $request)
     {
         $isQuote = isset($request->quote) ? true :false;
         
@@ -45,7 +53,7 @@ class ServicesController extends Controller
             try {
                 $latestServiceCreated = Service::latest()->first();
 
-                $telegram->send(
+                $this->notify(
                     sprintf("<b>New service created ID:</b> %s \n\r<b>Client name:</b> %s \n\r<b>Car model:</b> %s \n\r<b>Fault:</b> %s", 
                         $latestServiceCreated->id,
                         $latestServiceCreated->client->name,
@@ -132,6 +140,16 @@ class ServicesController extends Controller
         return to_route('services.index');
     }
 
+    public function search(Request $request)
+    {
+        $services = $this->servicesService->findByCriteria($request->all());
+
+        return response()->json([
+            "success" => true,
+            "data"    => $services
+        ]);
+    }
+
     public function createServicePDF(Request $request)
     {
         $service = Service::find($request->serviceid);
@@ -173,11 +191,16 @@ class ServicesController extends Controller
         ]);
     }
 
-    public function changeQuoteToService(Request $request)
+    public function fromQuoteToService(Request $request)
     {
         try {
             Service::where('id', $request->id)->update([
                 'quote' => false
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'La cotizacion es ahora un servicio',
             ]);
         }
 
@@ -187,11 +210,6 @@ class ServicesController extends Controller
                 'message' => $err->getMessage(),
             ]);
         }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'La cotizacion es ahora un servicio',
-        ]);
     }
 
     public function createItemInvoice(Request $request)

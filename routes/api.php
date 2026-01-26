@@ -59,14 +59,13 @@ Route::group(['controller' => PayrollController::class], function() {
 
 // Clients
 Route::group(['prefix' => 'clients'], function(){
-    // Internal routes for ajax requests
-    Route::controller(ClientsController::class)->group(function () {
+    Route::controller(ClientsController::class, )->group(function () {
         Route::get('delete', 'destroy')->name('client.delete');
         Route::get('search', 'search')->name('client.search');
         Route::get('searchPostalCode', 'searchPostalCode')->name('client.searchPostalCode');        
     });
 
-    // Routes for Phone Aplication
+    // TODO: change the name of this controller to ClientsController
     Route::controller(App\Http\Controllers\Api\ClientController::class)->group(function () {
         Route::get('all', 'getAll')->name('clients.getAll');
         Route::get('info/{clientId}','getInfo')->name('clients.getInfo');
@@ -75,28 +74,32 @@ Route::group(['prefix' => 'clients'], function(){
     });
 });
 
-// Services
-Route::group(['controller' => ServicesController::class], function(){    
+Route::group(['prefix' => 'services', 'controller' => ServicesController::class], function(){
+    Route::get('search', 'search')->name('services.search');
+
     Route::post('createServicePDF', 'createServicePDF')->name('services.createServicePDF');
     Route::post('getItemInformation', 'getItemInformation')->name('services.getItemInformation');
+    
+    Route::get('fromQuoteToService', 'fromQuoteToService')->name('services.change.quote');
     Route::get('getServiceItems', 'getServiceItems')->name('services.getServiceItems');
     Route::get('getDataTableServices', 'getDataTableServices')->name('getDataTableServices');
-
-    // Change method type
-    Route::get('changeQuoteToService', 'changeQuoteToService')->name('services.change.quote');
 
     Route::post('createItemInvoice', 'createItemInvoice')->name('createItemInvoice');
     Route::post('removeItemInvoice', 'removeItemInvoice')->name('removeItemInvoice');
 });
 
-Route::post('/finance/close', [FinanceController::class, 'close'])->name('finance.close');
+Route::group(['prefix' => 'finance'], function(){
+    Route::controller(FinanceController::class)->group(function() {
+        Route::post('close', 'close')->name('finance.close');
+        Route::post('createBalancePDF', 'createBalancePDF')->name('finance.createBalancePDF');
+    });
 
-Route::post('createBalancePDF', [FinanceController::class, 'createBalancePDF'])->name('finance.createBalancePDF');
-
-Route::post('deleteItem', [ExpensesController::class, 'deleteItem'])->name('expenses.deleteItem');
+    Route::controller(ExpensesController::class)->group(function(){
+        Route::post('deleteItem', 'deleteItem')->name('expenses.deleteItem');
+        Route::post('getImageAttached', 'getImageAttached')->name('getImageAttached');
+    });
+});
 
 Route::post('getEvent', [CalendarController::class, 'getEvent'])->name('calendar.getEvent');
-
-Route::post('getImageAttached', [ExpensesController::class, 'getImageAttached'])->name('getImageAttached');
 
 Route::get('/bitso/destroy', [Investments::class, 'destroy'])->name('bitso.destroy');

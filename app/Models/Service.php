@@ -39,7 +39,7 @@ class Service extends Model
 
     public function car()
     {
-        return $this->belongsTo(Cars::class, 'car_id');
+        return $this->belongsTo(Car::class, 'car_id');
     }
 
     public function serviceItems()

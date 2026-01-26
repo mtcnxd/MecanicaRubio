@@ -3,18 +3,28 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
-use App\Models\Cars;
+use App\Models\Car;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Services\CarService;
 use App\Http\Controllers\Notifications\Telegram;
+use App\Traits\Notificator;
 
 class CarsController extends Controller
 {
+    use Notificator;
+
+    public function __construct(CarService $carService)
+    {
+        $this->carService = $carService;
+    }
+
     public function index()
     {
-        $cars = Cars::all();   
+        $cars = $this->carService->all();
+
         return view ('admin.cars.index', compact('cars'));
     }
 
@@ -31,16 +41,16 @@ class CarsController extends Controller
         $request->merge(['client_id' => $request->client]);
         
         try {
-            Cars::create($request->except('_method','_token'));
-
-            session()->flash('success', 'Los datos se guardaron correctamente');
+            $this->carService->create($request->except('_method','_token'));
             
-            Telegram::send(
+            $this->notify(
                 sprintf("<b>New car created:</b> %s <b>Model:</b> %s", $request->brand, $request->model)
             );
+
+            session()->flash('success', 'Los datos se guardaron correctamente');
         }
         
-        catch (Exception $err){
+        catch (\Exception $err){
             session()->flash('warning', sprintf('Error al crear auto | %s ', $err->getMessage()));
 		}
 
@@ -49,7 +59,7 @@ class CarsController extends Controller
 
     public function show(string $id)
     {
-        $car = Cars::find($id);
+        $car = $this->carService->find($id);
 
         $services = DB::table('autos')
             ->join('services', 'services.car_id', 'autos.id')
@@ -129,7 +139,7 @@ class CarsController extends Controller
 
     public function SearchCar(Request $request)
     {
-        $cars = Cars::where(function($query) use ($request) {
+        $cars = Car::where(function($query) use ($request) {
             $query->orWhere('brand','like', '%'.$request->text.'%')
                   ->orWhere('model','like', '%'.$request->text.'%');
         });

@@ -2,27 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Exception;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Client;
+use App\Services\ClientService;
 use App\Traits\Notificator;
-use App\Services\ClientServices;
 
 class ClientsController extends Controller
 {
     use Notificator;
 
-    public function __construct(ClientServices $clientServices)
+    public function __construct(ClientService $clientService)
     {
-        $this->clientServices = $clientServices;
+        $this->clientService = $clientService;
     }
 
-    public function index(Client $client)
+    public function index()
     {
-        $clients = $client->where('status','Activo')->get();
+        $clients = $this->clientService->all();
 
         return view ('admin.clients.index', compact('clients'));
     }
@@ -35,7 +32,7 @@ class ClientsController extends Controller
     public function store(Request $request)
     {
         try {
-            $client = $this->clientServices->create($request->except('_method','_token'));
+            $client = $this->clientService->create($request->except('_method','_token'));
             
             $this->notify(
                 sprintf("<b>New client created:</b> %s <b>Phone:</b> %s", $request->name, $request->phone)
@@ -44,7 +41,7 @@ class ClientsController extends Controller
             session()->flash('success', sprintf('El cliente %s se guardó correctamente', $request->name));
         }
         
-        catch (Exception $err){
+        catch (\Exception $err){
             session()->flash('warning', sprintf('Error al crear cliente | %s ', $err->getMessage()));
 		}
 
@@ -53,51 +50,47 @@ class ClientsController extends Controller
 
     public function show(string $id)
     {
-        $client = Client::find($id);
+        $client = $this->clientService->find($id);
 
         return view('admin.clients.show', compact('client'));
     }
 
     public function edit(string $id)
     {
-        $client = Client::find($id);
+        $client = $this->clientService->find($id);
 
         return view('admin.clients.edit', compact('client'));
     }
 
     public function update(Request $request, string $id)
     {
-        // TODO: validate if $id can be a Client model instance
-        $client = Client::find($id);
+        try {
+            $this->clientService->update($id, $request->except('_method','_token'));
+            session()->flash('success', sprintf("El cliente %s se actualizo correctamente", $request->name));
+        }
+        
+        catch (\Exception $err){
+            session()->flash('warning', sprintf('Error al actualizar | %s ', $err->getMessage()));
+        }
 
-        $this->clientServices->update($client, $request->except('_method','_token'));
-
-        return to_route('clients.index')->with('message', 'El registro se actualizo correctamente');
+        return to_route('clients.index');
     }
 
     public function destroy(Request $request)
     {
-        $client = Client::find($request->id);
-
-        $this->clientServices->delete($client);
+        $this->clientService->delete($request->id);
 
         return Response()->json([
+            'success' => true,
             'message' => 'El cliente se elimino correctamente'
         ]);
     }
 
     public function search(Request $request)
     {
-        $result = Client::select('id', 'name')
-            ->where(function($query) use ($request) {
-                $query->where('name', 'like', '%'.$request->name.'%')
-                    ->orWhere('phone', 'like', '%'.$request->name.'%');
-            })
-            ->get();
-
         return Response()->json([
             "success" => true,
-            "data"    => $result
+            "data"    => $this->clientService->findByCriteria($request->all())
         ]);
     }
 
