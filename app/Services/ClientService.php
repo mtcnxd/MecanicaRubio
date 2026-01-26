@@ -47,14 +47,15 @@ class ClientService
 
     public function findByCriteria(array $criteria)
     {
-        return Client::where(function($query) use ($criteria) {
-            if (isset($criteria['name'])){
-                $query->where('name','LIKE', '%'.$criteria['name'].'%');
-            }
+        return Client::select('id','name','phone','email','status')
+            ->where(function($query) use ($criteria) {
+                if (isset($criteria['name'])){
+                    $query->where('name','LIKE', '%'.$criteria['name'].'%');
+                }
 
-            if(isset($criteria['id'])){
-                $query->where('id', $criteria['id']);
-            }
-        })->get();
+                if(isset($criteria['id'])){
+                    $query->where('id', $criteria['id']);
+                }
+            })->get();
     }    
 }
