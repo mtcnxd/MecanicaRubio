@@ -87,9 +87,26 @@ class ClientsController extends Controller
 
     public function search(Request $request)
     {
+        $response = $this->clientService->findByCriteria($request->all());
+
+        /*
+            TODO: Revisar este bloque, no deberia ser necesario hacer este foreach
+            ya que el servicio deberia devolver los datos en el formato correcto
+        */
+
+        foreach ($response as $row) {
+            $response[] = [
+                'id' => $row->id,
+                'name' => $row->name,
+                'phone' => $row->phone,
+                'email' => $row->email ? : '',
+                'status' => $row->status
+            ];
+        }
+
         return Response()->json([
             "success" => true,
-            "data"    => $this->clientService->findByCriteria($request->all())
+            "data"    => $response
         ]);
     }
 
