@@ -27,9 +27,10 @@ class Client extends Model
         'updated_at'
     ];
 
-    protected $casts = [
-        'email' => 'string',
-    ];
+    public function getEmailAttribute($value)
+    {
+        return $value ?? '';
+    }
 
     public function services()
     {
