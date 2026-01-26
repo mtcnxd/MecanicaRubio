@@ -61,11 +61,9 @@ Route::group(['controller' => PayrollController::class], function() {
 Route::group(['prefix' => 'clients'], function(){
     // Internal routes for ajax requests
     Route::controller(ClientsController::class)->group(function () {
-        Route::post('delete', 'destroy')->name('client.delete');
-        Route::post('searchPostalCode', 'searchPostalCode')->name('client.searchPostalCode');        
-        
-        // New routes for deprecates olds methods
+        Route::get('delete', 'destroy')->name('client.delete');
         Route::get('search', 'search')->name('client.search');
+        Route::get('searchPostalCode', 'searchPostalCode')->name('client.searchPostalCode');        
     });
 
     // Routes for Phone Aplication

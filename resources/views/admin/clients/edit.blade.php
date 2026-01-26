@@ -165,7 +165,7 @@
         if (element.value.length >= 4){
             $.ajax({
                 url: "{{ route('client.searchPostalCode') }}",
-                method: 'POST',
+                method: 'GET',
                 data: {
                     postcode:element.value
                 },
@@ -186,7 +186,7 @@
         if (this.value.length > 3) {
             $.ajax({
                 url:"{{ route('client.searchPostalCode') }}",
-                method: 'POST',
+                method: 'GET',
                 data:{
                     address:this.value
                 },
