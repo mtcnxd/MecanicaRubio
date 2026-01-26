@@ -102,30 +102,18 @@ class ClientsController extends Controller
     }
 
     // Deprecates this method by search when search admites the search by postcode
-    public function searchByPostcode(Request $request)
+    public function searchPostalCode(Request $request)
     {
         $result = DB::table('postalcodes')
-            ->where('postalcode', $request->postcode)
-            ->orderBy('address')
+            ->where(function ($query) use ($request) {
+                $query->where('postalcode', 'like', '%'.$request->postcode.'%')
+                    ->where('address', 'like', '%'.$request->address.'%');
+            })
             ->get();
 
         return Response()->json([
             "success" => true,
             "data"    => $result
-        ]);
-    }
-
-    // Deprecates this method by search when search admites the search by postcode
-    public function searchByAddress(Request $request)
-    {
-        $addresses = DB::table('postalcodes')
-            ->where('address','LIKE', "%".$request->address."%")
-            ->limit(15)
-            ->get();
-
-        return response()->json([
-            "success" => true,
-            "data"    => $addresses
         ]);
     }
 }

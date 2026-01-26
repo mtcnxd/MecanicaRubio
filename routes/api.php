@@ -62,8 +62,7 @@ Route::group(['prefix' => 'clients'], function(){
     // Internal routes for ajax requests
     Route::controller(ClientsController::class)->group(function () {
         Route::post('delete', 'destroy')->name('client.delete');
-        Route::post('searchByPostcode', 'searchByPostcode')->name('client.searchByPostcode');    
-        Route::post('searchByAddress', 'searchByAddress')->name('client.searchByAddress');    
+        Route::post('searchPostalCode', 'searchPostalCode')->name('client.searchPostalCode');        
         
         // New routes for deprecates olds methods
         Route::get('search', 'search')->name('client.search');
