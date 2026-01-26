@@ -32,8 +32,21 @@ class ServicesService
             })->get();
     }
 
-    public function createPDF(Service $service)
+    public function createPDF(string $id)
     {
-        dd($service);
+        $service = Service::find($id);
+
+        $path = public_path('images/mainlogo.png');
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $image = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($image);
+
+        $pdf = \PDF::loadView('admin.templates.pdf_invoice', [
+            "title"   => 'COTIZACION',
+            "service" => $service,
+            "image"   => $base64,
+        ]);
+
+        return $pdf->download('invoice.pdf');
     }
 }

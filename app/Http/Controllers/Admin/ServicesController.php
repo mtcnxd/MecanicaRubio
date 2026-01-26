@@ -3,15 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use DB;
-use Mail;
 use Carbon\Carbon;
 use App\Models\{Client, Service, ServiceItems};
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Notifications\Telegram;
-use App\Http\Controllers\Admin\ChartsController;
-use App\Http\Controllers\Support\MailController;
 use App\Services\ServicesService;
 use App\Traits\Notificator;
 
@@ -80,16 +75,6 @@ class ServicesController extends Controller
     public function show(string $id)
     {
         $service = Service::find($id);
-        /*
-        try {
-            // MailController::sendQuoteEmail($service);
-            // MailController::serviceComplete($service);
-        }
-
-        catch (\Exception $e) {
-            session()->flash('success', $e->getMessage());
-        }
-        */
         return view('admin.services.show', compact('service'));
     }
 
@@ -119,7 +104,7 @@ class ServicesController extends Controller
 
         if ($request->status == 'Entregado'){
             try {
-                Telegram::send(
+                $this->notify(
                     sprintf("<b>Service completed:</b> #%s - %s \n\r<b>Client:</b> %s \n\r<b>Fault:</b> %s \n\r<b>Total:</b> $%s", 
                         $service->id,
                         $service->car->brand ." ". $service->car->model,
@@ -152,20 +137,7 @@ class ServicesController extends Controller
 
     public function createServicePDF(Request $request)
     {
-        $service = Service::find($request->serviceid);
-
-        $path = public_path('images/mainlogo.png');
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $image = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($image);
-
-        $pdf = \PDF::loadView('admin.templates.pdf_invoice', [
-            "title"   => 'COTIZACION',
-            "service" => $service,
-            "image"   => $base64,
-        ]);
-        
-        return $pdf->download('invoice.pdf');
+        return $this->servicesService->createPDF($request->serviceid);
     }
 
     public function getServiceItems(Request $request)

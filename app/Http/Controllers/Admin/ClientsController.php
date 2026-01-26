@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ClientService;
@@ -97,7 +96,7 @@ class ClientsController extends Controller
     // Deprecates this method by search when search admites the search by postcode
     public function searchPostalCode(Request $request)
     {
-        $result = DB::table('postalcodes')
+        $result = \DB::table('postalcodes')
             ->where(function ($query) use ($request) {
                 $query->where('postalcode', 'like', '%'.$request->postcode.'%')
                     ->where('address', 'like', '%'.$request->address.'%');
