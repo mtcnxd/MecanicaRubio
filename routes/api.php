@@ -64,6 +64,9 @@ Route::group(['prefix' => 'clients'], function(){
         Route::post('delete', 'destroy')->name('client.delete');
         Route::post('searchByPostcode', 'searchByPostcode')->name('client.searchByPostcode');    
         Route::post('searchByAddress', 'searchByAddress')->name('client.searchByAddress');    
+        
+        // New routes for deprecates olds methods
+        Route::get('search', 'search')->name('client.search');
     });
 
     // Routes for Phone Aplication

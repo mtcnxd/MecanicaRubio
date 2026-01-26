@@ -4,17 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use Exception;
 use Carbon\Carbon;
-use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Notifications\Telegram;
+use App\Models\Client;
+use App\Traits\Notificator;
+use App\Services\ClientServices;
 
 class ClientsController extends Controller
 {
-    public function index()
+    use Notificator;
+
+    public function __construct(ClientServices $clientServices)
     {
-        $clients = Client::where('status','Activo')->get();
+        $this->clientServices = $clientServices;
+    }
+
+    public function index(Client $client)
+    {
+        $clients = $client->where('status','Activo')->get();
 
         return view ('admin.clients.index', compact('clients'));
     }
@@ -26,21 +34,14 @@ class ClientsController extends Controller
 
     public function store(Request $request)
     {
-        $contactExists = Client::where('phone', $request->phone)->first();
-
-        if ($contactExists){
-            session()->flash('warning', 'El número de teléfono ya esta registrado');
-            return to_route('clients.index');
-        }
-
         try {
-            Client::insert($request->except('_method','_token'));
-
-            session()->flash('success', sprintf('El cliente %s se guardó correctamente', $request->name));
+            $client = $this->clientServices->create($request->except('_method','_token'));
             
-            Telegram::send(
+            $this->notify(
                 sprintf("<b>New client created:</b> %s <b>Phone:</b> %s", $request->name, $request->phone)
             );
+
+            session()->flash('success', sprintf('El cliente %s se guardó correctamente', $request->name));
         }
         
         catch (Exception $err){
@@ -66,39 +67,41 @@ class ClientsController extends Controller
 
     public function update(Request $request, string $id)
     {
+        // TODO: validate if $id can be a Client model instance
         $client = Client::find($id);
-        
-        $client->update($request->except('_method','_token'));
 
-        return to_route('clients.index')
-            ->with('message', 'El registro se actualizo correctamente');
+        $this->clientServices->update($client, $request->except('_method','_token'));
+
+        return to_route('clients.index')->with('message', 'El registro se actualizo correctamente');
     }
 
     public function destroy(Request $request)
     {
         $client = Client::find($request->id);
-        
-        $client->update([
-            'status' => 'Eliminado'
-        ]);
+
+        $this->clientServices->delete($client);
 
         return Response()->json([
             'message' => 'El cliente se elimino correctamente'
         ]);
     }
 
-    public function getClientsList(Request $request)
+    public function search(Request $request)
     {
-        $data = Client::select('id','name')
-            ->where('name', 'like', '%'.$request->name.'%')
+        $result = Client::select('id', 'name')
+            ->where(function($query) use ($request) {
+                $query->where('name', 'like', '%'.$request->name.'%')
+                    ->orWhere('phone', 'like', '%'.$request->name.'%');
+            })
             ->get();
 
         return Response()->json([
             "success" => true,
-            "data"    => $data
+            "data"    => $result
         ]);
     }
 
+    // Deprecates this method by search when search admites the search by postcode
     public function searchByPostcode(Request $request)
     {
         $result = DB::table('postalcodes')
@@ -112,6 +115,7 @@ class ClientsController extends Controller
         ]);
     }
 
+    // Deprecates this method by search when search admites the search by postcode
     public function searchByAddress(Request $request)
     {
         $addresses = DB::table('postalcodes')

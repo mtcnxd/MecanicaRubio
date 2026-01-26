@@ -1,11 +1,14 @@
 <?php
 
+namespace App\Services;
 
-class ClientServices
+use App\Models\Cars;
+
+class CarServices
 {
-    public funcion createClient() : Client
+    public function createCar($info) : Cars
     {
-        $client = null;
-        return $client;
+        $car = Cars::create($info);
+        return $car;
     }
 }

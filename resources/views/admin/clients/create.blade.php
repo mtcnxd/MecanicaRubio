@@ -124,9 +124,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $('#name').on('keyup', function(){
-        if (this.value.length >= 5){
+        if (this.value.length >= 4){
             $.ajax({
-                url: "{{ route('clients.getClientsList') }}",
+                url: "{{ route('client.search') }}",
                 method: "GET",
                 data: {
                     name:this.value

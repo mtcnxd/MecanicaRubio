@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use DB;
-use App\Models\Client;
-use App\Models\Service;
 use Illuminate\Http\Request;
+use App\Models\{Client, Service};
 use App\Http\Controllers\Controller;
 
 class QuotesController extends Controller
@@ -29,9 +28,4 @@ class QuotesController extends Controller
         $service = Service::find($id);
         return view('admin.services.quotes_show', compact('service'));
     }
-
-    public function destroy(string $id)
-    {
-        //
-    }  
 }
