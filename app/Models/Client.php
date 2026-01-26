@@ -27,6 +27,10 @@ class Client extends Model
         'updated_at'
     ];
 
+    protected $casts = [
+        'email' => 'string',
+    ];
+
     public function services()
     {
         return $this->hasMany(Service::class, 'client_id');
