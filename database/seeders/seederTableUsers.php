@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class seederTableUsers extends Seeder
@@ -18,8 +20,8 @@ class seederTableUsers extends Seeder
             'name'  => 'Marcos Tzuc Cen',
             'phone' => '9991112233',
             'email' => 'mtc.nxd@gmail.com',
-            'password' => Hash::make('Tucm+1985'),
-            'status' => 'Active',
+            'password' => Hash::make('nodoubt'),
+            'status' => 'Activo',
             'rol'    => 'Admin',
             'remember_token' => false,
             'created_at'   => Carbon::now(),

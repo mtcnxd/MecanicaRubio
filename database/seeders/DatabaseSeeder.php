@@ -7,13 +7,15 @@ use DB;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Database\Seeders\seederTableUsers;
+use Database\Seeders\seederTableInvestments;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
         $this->call([
-            seederTableUsers::class
+            seederTableUsers::class,
+            seederTableInvestments::class,
         ]);
     }
 }

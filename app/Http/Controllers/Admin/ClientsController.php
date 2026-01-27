@@ -41,7 +41,7 @@ class ClientsController extends Controller
         }
         
         catch (\Exception $err){
-            session()->flash('warning', sprintf('Error al crear cliente | %s ', $err->getMessage()));
+            session()->flash('warning', sprintf('Ocurrio un error | %s ', $err->getMessage()));
 		}
 
         return to_route('clients.index');
