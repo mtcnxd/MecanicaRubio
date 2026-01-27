@@ -44,6 +44,8 @@ class ServicesController extends Controller
         
         Service::create($request->except('_token'));
 
+        // $this->servicesService->create($request->except('_token'));
+
         if (!$isQuote){
             try {
                 $latestServiceCreated = Service::latest()->first();

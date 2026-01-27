@@ -11,7 +11,7 @@ class ServicesService
         return Service::all();
     }
 
-    public function create($data)
+    public function create(array $data) : Service
     {
         return Service::create($data);
     }
