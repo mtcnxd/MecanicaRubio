@@ -10,21 +10,9 @@ class ClientController extends Controller
 {
     public function getAll()
     {
-        $clients = Client::all();
-
-        foreach ($clients as $client) {
-            $clientsResults[] = [
-                'id'    => $client->id,
-                'name'  => $client->name,
-                'email' => !is_null($client->email) ? $client->email : '',
-                'phone' => !is_null($client->phone) ? $client->phone : '',
-                'status' => $client->status,
-            ];
-        }
-
         return Response()->json([
             "success" => true,
-            "data" => $clientsResults            
+            "data" => Client::all()            
         ]);
     }
 
