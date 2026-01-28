@@ -8,7 +8,7 @@ class ClientService
 {
     public function all()
     {
-        return Client::where('status', 'Activo')->get();
+        return Client::where('status', 'Activo')->orderBy('name')->get();
     }
 
     public function find(string $id)
