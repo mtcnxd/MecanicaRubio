@@ -12,7 +12,7 @@ class ClientController extends Controller
     {
         return Response()->json([
             "success" => true,
-            "data" => Client::all()            
+            "data" => Client::select('id','name','email','phone','status')->orderBy('name')->get()            
         ]);
     }
 
